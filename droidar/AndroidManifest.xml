@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="de.rwth"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <application
+        android:debuggable="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name" >
+        <activity android:name="TechDemoLauncher" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--
+             IMPORTANT: The following activities have to be added to each project 
+			which imports the DroidAR Library
+        -->
+
+        <activity
+            android:name="system.ArActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape" >
+        </activity>
+
+        <!-- Custom List is used to easily display lists of any type of object -->
+        <activity android:name="gui.CustomListActivity" >
+        </activity>
+
+        <!-- the error handler will be automatically displayed when an error appears -->
+        <activity
+            android:name="system.ErrorHandler"
+            android:process=":myexeptionprocess"
+            android:taskAffinity="system.ErrorHandler" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <data android:mimeType="errors/myUnhandleCatcher" />
+            </intent-filter>
+        </activity>
+
+        <!-- is needed to display information on application startup -->
+        <activity
+            android:name="gui.InfoScreen"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+
+        <!-- an activity to easily display any kind of ui -->
+        <activity
+            android:name="gui.simpleUI.SimpleUIv1"
+            android:theme="@android:style/Theme.Translucent" >
+        </activity>
+    </application>
+
+    <!--
+         The minimum sdk version is set to 3 because all the methods should 
+		work for devices with android 1.5 as well. The development version is set 
+		to 1.6 to get access to stuff like high res. screens (eg samsung galaxy tab)
+    -->
+    <uses-sdk android:minSdkVersion="5" />
+
+    <!--
+         IMPORTANT: The following permissions should also be added to each project 
+		which uses the DroidAR Library
+    -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature android:glEsVersion="0x00020000" />
+
+    <!--
+         This should be added to to allow the fullscreen mode to big screen 
+		devices like the samsung galaxy tab
+    -->
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />
+
+</manifest>

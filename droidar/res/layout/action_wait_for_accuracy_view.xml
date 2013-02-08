@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="horizontal" android:id="@+id/awfa_layout">
+	<ImageView android:layout_width="wrap_content"
+		android:src="@android:drawable/ic_dialog_map" android:layout_margin="3dip" android:id="@+id/awfa_image" android:layout_gravity="center_vertical" android:layout_height="wrap_content"></ImageView>
+	<LinearLayout android:id="@+id/linearLayout1"
+		android:orientation="vertical"
+		android:layout_width="wrap_content" android:layout_margin="2dip" android:layout_gravity="center_vertical" android:layout_height="wrap_content">
+		<TextView android:textAppearance="?android:attr/textAppearanceSmall"
+			android:layout_height="wrap_content" android:id="@+id/awfa_accText" android:layout_width="fill_parent" android:text="Position Accuracy X meters"></TextView>
+		<ProgressBar style="?android:attr/progressBarStyleHorizontal" android:layout_height="wrap_content" android:id="@+id/awfa_steps" android:layout_width="fill_parent"></ProgressBar>
+		<Button android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="fill_parent" android:id="@+id/awfa_warning" android:layout_height="35dip" android:layout_margin="5dip" android:text="Enable GPS"></Button>
+	</LinearLayout>
+	<ProgressBar android:id="@+id/progressBar1" android:layout_width="wrap_content" style="?android:attr/progressBarStyleSmall" android:layout_height="wrap_content" android:layout_gravity="center_vertical"></ProgressBar>
+
+</LinearLayout>

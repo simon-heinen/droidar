@@ -1,0 +1,17 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:padding="10dp">
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:id="@+id/Calibration_Dialog_Text" />
+
+	
+
+
+
+
+<LinearLayout android:id="@+id/LinearLayout01" android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="horizontal" android:layout_gravity="center_vertical|center_horizontal"><Button android:id="@+id/Button01" android:layout_height="wrap_content" android:layout_weight="1" android:layout_margin="10dip" android:layout_width="fill_parent"></Button><Button android:id="@+id/Button02" android:layout_height="wrap_content" android:layout_weight="1" android:layout_margin="10dip" android:layout_width="fill_parent"></Button><Button android:id="@+id/Button03" android:layout_height="wrap_content" android:layout_weight="1" android:layout_margin="10dip" android:layout_width="fill_parent"></Button><Button android:id="@+id/Button04" android:layout_height="wrap_content" android:layout_weight="1" android:layout_margin="10dip" android:layout_width="fill_parent"></Button>
+</LinearLayout>
+
+
+
+</LinearLayout>
