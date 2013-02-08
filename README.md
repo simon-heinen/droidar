@@ -9,6 +9,30 @@ DroidAR Mobile Locationbased Augmented Reality Framework for Android
 " target="_blank"><img src="http://img.youtube.com/vi/v2zyj9hPiDo/0.jpg" 
 alt="World Wide Web Consortium Home" width="240" height="180" border="10" /></a>
 
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=8GtVcQN0CpY
+" target="_blank"><img src="http://img.youtube.com/vi/8GtVcQN0CpY/0.jpg" 
+alt="World Wide Web Consortium Home" width="240" height="180" border="10" /></a>
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=brlNkKmw8IY
+" target="_blank"><img src="http://img.youtube.com/vi/brlNkKmw8IY/0.jpg" 
+alt="World Wide Web Consortium Home" width="240" height="180" border="10" /></a>
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=e0Xc00Csrg0
+" target="_blank"><img src="http://img.youtube.com/vi/e0Xc00Csrg0/0.jpg" 
+alt="World Wide Web Consortium Home" width="240" height="180" border="10" /></a>
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=w5BrHLnG4no
+" target="_blank"><img src="http://img.youtube.com/vi/w5BrHLnG4no/0.jpg" 
+alt="World Wide Web Consortium Home" width="240" height="180" border="10" /></a>
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=FH9vJ684j_U
+" target="_blank"><img src="http://img.youtube.com/vi/FH9vJ684j_U/0.jpg" 
+alt="World Wide Web Consortium Home" width="240" height="180" border="10" /></a>
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=fEd0HORzStQ
+" target="_blank"><img src="http://img.youtube.com/vi/fEd0HORzStQ/0.jpg" 
+alt="World Wide Web Consortium Home" width="240" height="180" border="10" /></a>
+
 
 <h1><a name="Project_overview"></a>Project overview<a href="#Project_overview" class="section_anchor"></a></h1><p>An framework for Augmented Reality on Android. Location based AR and marker based AR are both possible. Scroll down to see some more <strong>Demo Videos</strong> </p><p>Also read the wiki articles for more detailed information about DroidAR. </p><p><table class="wikitable"><tr><td style="border: 1px solid #ccc; padding: 5px;"> 
 <object width="640" height="360"><param name="movie" value="http://www.youtube.com/v/v2zyj9hPiDo?version=3&amp;hl=de_DE"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/v2zyj9hPiDo?version=3&amp;hl=de_DE" type="application/x-shockwave-flash" width="640" height="360" allowscriptaccess="always" allowfullscreen="true"></embed></object>
