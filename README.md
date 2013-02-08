@@ -1,7 +1,7 @@
 DroidAR
 =======
 
-An framework for Augmented Reality on Android. Location based AR and marker based AR are both possible. 
+DroidAR is a framework for Augmented Reality on Android. Location based AR and marker based AR are both possible. 
 
 Also read the wiki articles for more detailed information about DroidAR.
 
@@ -49,7 +49,14 @@ There are some rules to allow an easy integration of your code and changes:
 
 Now when you save the code is formatted automatically. This will avoid commit conflicts and changes in the code can be reviewed more easily. 
 
+Details
+=======
 
+Location based AR and marker based AR are both possible. This framework can be used for many different scenarios, there are already some demo applications available.
+- Foodstep recognition & Indoor in AR
+- Locationbased Gaming & Crowdsourcing Framework
+Since the initial creation of the prototype of an augmented reality development tool in 2010, it was continuously improved and new features were added. The created development tool (SDK) enables other programmers to integrate augmented reality in their own applications.
+We provided the SDK without charge with an Open Source License for non-commercial projects. It has since evolved into one of the most used open source augmented reality SDKs for the Android platform. The regular feedback from the developers as well as its application in seminars and practical project seminars, where the SDK was used as basis for their projects, greatly aided its improvement. The framework meets and raises interests and is currently being used by numerous developers around the globe. The recorded numbers of the site are about 1500 website visits per month with an increasing tendency. Also, 83% of the about 3200 developers return to the website following their initial visit.
 
 Installation
 =======
