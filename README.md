@@ -36,6 +36,17 @@ alt="World Wide Web Consortium Home" width="240" height="180" border="10" /></a>
 " target="_blank"><img src="http://img.youtube.com/vi/fEd0HORzStQ/0.jpg" 
 alt="World Wide Web Consortium Home" width="240" height="180" border="10" /></a>
 
+Contributing to the code
+=======
+
+Contributing to DroidAR is easy on GitHub (that's the main reason why we switched from Google Code). There are some rules to allow an easy integration of your code and changes:
+
+- You have to use the default code formatting style of Eclipse
+- You should enable auto formatting whenever you save a file. This way you can't forget to format: Go to Preferences->Java->Editor->Save Actions and enable "Format source code" and "Organize imports". 
+
+Now when you save the code is formatted automatically. This will avoid commit conflicts and changes in the code can be reviewed more easily. 
+
+
 
 Installation
 =======
