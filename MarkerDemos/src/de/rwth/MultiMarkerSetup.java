@@ -95,8 +95,9 @@ public class MultiMarkerSetup extends MarkerDetectionSetup {
 
 			@Override
 			public void setObjRotation(float[] rotMatrix) {
-				if (targetMesh != null)
+				if (targetMesh != null) {
 					targetMesh.setRotationMatrix(rotMatrix);
+				}
 			}
 		});
 	}
@@ -120,7 +121,8 @@ public class MultiMarkerSetup extends MarkerDetectionSetup {
 	@Override
 	public void _c_addActionsToEvents(EventManager eventManager,
 			CustomGLSurfaceView arView, SystemUpdater updater) {
-		arView.onTouchMoveAction = new ActionMoveCameraBuffered(camera, 5, 25);
+		arView.addOnTouchMoveListener(new ActionMoveCameraBuffered(camera, 5,
+				25));
 		Action rot = new ActionRotateCameraBuffered(camera);
 		updater.addObjectToUpdateCycle(rot);
 		eventManager.addOnOrientationChangedAction(rot);
