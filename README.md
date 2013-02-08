@@ -6,7 +6,7 @@ DroidAR Mobile Locationbased Augmented Reality Framework for Android
 
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=v2zyj9hPiDo
-"><img src="http://img.youtube.com/vi/v2zyj9hPiDo/0.jpg" 
+" target="_blank"><img src="http://img.youtube.com/vi/v2zyj9hPiDo/0.jpg" 
 alt="World Wide Web Consortium Home" width="240" height="180" border="10" /></a>
 
 
