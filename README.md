@@ -11,23 +11,18 @@ alt="World Wide Web Consortium Home" width="240" height="180" border="10" /></a>
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=8GtVcQN0CpY
 " target="_blank"><img src="http://img.youtube.com/vi/8GtVcQN0CpY/0.jpg" 
 alt="World Wide Web Consortium Home" width="240" height="180" border="10" /></a>
-
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=brlNkKmw8IY
 " target="_blank"><img src="http://img.youtube.com/vi/brlNkKmw8IY/0.jpg" 
 alt="World Wide Web Consortium Home" width="240" height="180" border="10" /></a>
-
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=e0Xc00Csrg0
 " target="_blank"><img src="http://img.youtube.com/vi/e0Xc00Csrg0/0.jpg" 
 alt="World Wide Web Consortium Home" width="240" height="180" border="10" /></a>
-
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=w5BrHLnG4no
 " target="_blank"><img src="http://img.youtube.com/vi/w5BrHLnG4no/0.jpg" 
 alt="World Wide Web Consortium Home" width="240" height="180" border="10" /></a>
-
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=FH9vJ684j_U
 " target="_blank"><img src="http://img.youtube.com/vi/FH9vJ684j_U/0.jpg" 
 alt="World Wide Web Consortium Home" width="240" height="180" border="10" /></a>
-
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=fEd0HORzStQ
 " target="_blank"><img src="http://img.youtube.com/vi/fEd0HORzStQ/0.jpg" 
 alt="World Wide Web Consortium Home" width="240" height="180" border="10" /></a>
