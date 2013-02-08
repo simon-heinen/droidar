@@ -234,11 +234,10 @@ public class Color {
 
 	@Override
 	public boolean equals(Object other) {
-		return other instanceof Color ? 
-			this.toIntARGB() == ((Color) other).toIntARGB() : 
-			false;
+		return other instanceof Color ? this.toIntARGB() == ((Color) other)
+				.toIntARGB() : false;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return this.toIntARGB();

@@ -19,7 +19,7 @@ import android.os.SystemClock;
  * @author Spobo
  * 
  */
-public class GL1Renderer extends GLRenderer  {
+public class GL1Renderer extends GLRenderer {
 
 	private static final String LOG_TAG = "GLRenderer";
 
@@ -61,6 +61,7 @@ public class GL1Renderer extends GLRenderer  {
 	private EfficientList<Renderable> elementsToRender = new EfficientList<Renderable>();
 
 	private boolean readyToPickPixel;
+
 	@Override
 	public void onDrawFrame(GL10 gl) {
 

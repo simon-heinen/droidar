@@ -91,6 +91,7 @@ public class AnimationFaceToCamera extends GLAnimation {
 	}
 
 	Vec absolutePosition = new Vec();
+
 	private void updateRotation(Updateable parent) {
 		if (parent instanceof MeshComponent) {
 			absolutePosition.setToZero();

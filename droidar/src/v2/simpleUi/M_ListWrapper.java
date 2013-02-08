@@ -88,6 +88,6 @@ public abstract class M_ListWrapper<T> implements ModifierInterface {
 		if (currentContainer != null)
 			return currentContainer.save();
 		return false;
-	} 
+	}
 
 }

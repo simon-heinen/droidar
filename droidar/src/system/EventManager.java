@@ -90,15 +90,18 @@ public class EventManager implements LocationListener, SensorEventListener {
 		myInstance = instance;
 	}
 
-	public void registerListeners(Activity targetActivity, boolean useAccelAndMagnetoSensors) {
+	public void registerListeners(Activity targetActivity,
+			boolean useAccelAndMagnetoSensors) {
 		myTargetActivity = targetActivity;
 		registerSensorUpdates(targetActivity, useAccelAndMagnetoSensors);
 		registerLocationUpdates();
 
 	}
 
-	protected void registerSensorUpdates(Activity myTargetActivity, boolean useAccelAndMagnetoSensors) {
-		SensorManager sensorManager = (SensorManager) myTargetActivity.getSystemService(Context.SENSOR_SERVICE);
+	protected void registerSensorUpdates(Activity myTargetActivity,
+			boolean useAccelAndMagnetoSensors) {
+		SensorManager sensorManager = (SensorManager) myTargetActivity
+				.getSystemService(Context.SENSOR_SERVICE);
 
 		if (useAccelAndMagnetoSensors) {
 			/*
@@ -108,14 +111,19 @@ public class EventManager implements LocationListener, SensorEventListener {
 			 * events. The update rate is set by SENSOR_DELAY_GAME to a high
 			 * frequency required to react on fast device movement
 			 */
-			Sensor magnetSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-			sensorManager.registerListener(this, magnetSensor, SensorManager.SENSOR_DELAY_GAME);
-			Sensor accelSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-			sensorManager.registerListener(this, accelSensor, SensorManager.SENSOR_DELAY_GAME);
+			Sensor magnetSensor = sensorManager
+					.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+			sensorManager.registerListener(this, magnetSensor,
+					SensorManager.SENSOR_DELAY_GAME);
+			Sensor accelSensor = sensorManager
+					.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+			sensorManager.registerListener(this, accelSensor,
+					SensorManager.SENSOR_DELAY_GAME);
 		} else {
 			// Register orientation Sensor Listener:
 			Sensor orientationSensor = sensorManager.getDefaultSensor(11);// Sensor.TYPE_ROTATION_VECTOR);
-			sensorManager.registerListener(this, orientationSensor, SensorManager.SENSOR_DELAY_GAME);
+			sensorManager.registerListener(this, orientationSensor,
+					SensorManager.SENSOR_DELAY_GAME);
 		}
 	}
 
@@ -129,13 +137,17 @@ public class EventManager implements LocationListener, SensorEventListener {
 	public boolean registerLocationUpdates() {
 
 		if (myTargetActivity == null) {
-			Log.e(LOG_TAG, "The target activity was undefined while " + "trying to register for location updates");
+			Log.e(LOG_TAG, "The target activity was undefined while "
+					+ "trying to register for location updates");
 		}
 
 		try {
-			return SimpleLocationManager.getInstance(myTargetActivity).requestLocationUpdates(this);
+			return SimpleLocationManager.getInstance(myTargetActivity)
+					.requestLocationUpdates(this);
 		} catch (Exception e) {
-			Log.e(LOG_TAG, "There was an error registering the " + "EventManger for location-updates. The phone might be " + "in airplane-mode..");
+			Log.e(LOG_TAG, "There was an error registering the "
+					+ "EventManger for location-updates. The phone might be "
+					+ "in airplane-mode..");
 			e.printStackTrace();
 		}
 		return false;
@@ -166,7 +178,8 @@ public class EventManager implements LocationListener, SensorEventListener {
 
 				// else sensor input is set to orientation mode
 				if (event.sensor.getType() == 11) {// Sensor.TYPE_ROTATION_VECTOR)
-					onOrientationChangedList.get(i).onOrientationChanged(values);
+					onOrientationChangedList.get(i)
+							.onOrientationChanged(values);
 				}
 			}
 		}
@@ -178,7 +191,9 @@ public class EventManager implements LocationListener, SensorEventListener {
 			for (int i = 0; i < onLocationChangedList.size(); i++) {
 				LocationEventListener l = onLocationChangedList.get(i);
 				if (!l.onLocationChanged(location)) {
-					Log.w(LOG_TAG, "Action " + l + " returned false so it will be " + "removed from the location listener list!");
+					Log.w(LOG_TAG, "Action " + l
+							+ " returned false so it will be "
+							+ "removed from the location listener list!");
 					getOnLocationChangedAction().remove(l);
 				}
 			}
@@ -200,10 +215,12 @@ public class EventManager implements LocationListener, SensorEventListener {
 		Log.i(LOG_TAG, "Status change of " + provider + ": " + status);
 		if (myTargetActivity != null) {
 			if (!registerLocationUpdates()) {
-				Log.d(LOG_TAG, "EventManager was already contained in " + "to the listener list of SimpleLocationManager");
+				Log.d(LOG_TAG, "EventManager was already contained in "
+						+ "to the listener list of SimpleLocationManager");
 			}
 		} else {
-			Log.w(LOG_TAG, "Didnt handle onStatusChanged of " + provider + "(status=" + status + ")");
+			Log.w(LOG_TAG, "Didnt handle onStatusChanged of " + provider
+					+ "(status=" + status + ")");
 		}
 
 	}
@@ -270,7 +287,8 @@ public class EventManager implements LocationListener, SensorEventListener {
 				boolean result = true;
 
 				for (int i = 0; i < onTrackballEventList.size(); i++) {
-					result &= onTrackballEventList.get(i).onTrackballEvent(x, y, null);
+					result &= onTrackballEventList.get(i).onTrackballEvent(x,
+							y, null);
 				}
 
 				return result;
@@ -284,7 +302,8 @@ public class EventManager implements LocationListener, SensorEventListener {
 		}
 		Command commandForThisKey = myOnKeyPressedCommandList.get(keyCode);
 		if (commandForThisKey != null) {
-			Log.d("Command", "Key with command was pressed so executing " + commandForThisKey);
+			Log.d("Command", "Key with command was pressed so executing "
+					+ commandForThisKey);
 			return commandForThisKey.execute();
 		}
 		return false;
@@ -313,7 +332,8 @@ public class EventManager implements LocationListener, SensorEventListener {
 			}
 			return currentLocation;
 		} else {
-			Log.e(LOG_TAG, "Couldn't receive Location object for current location");
+			Log.e(LOG_TAG,
+					"Couldn't receive Location object for current location");
 		}
 
 		// if its still null set it to a default geo-object:
@@ -362,7 +382,8 @@ public class EventManager implements LocationListener, SensorEventListener {
 		if (onTrackballEventList != null) {
 			boolean result = true;
 			for (int i = 0; i < onTrackballEventList.size(); i++) {
-				result &= onTrackballEventList.get(i).onTrackballEvent(event.getX(), event.getY(), event);
+				result &= onTrackballEventList.get(i).onTrackballEvent(
+						event.getX(), event.getY(), event);
 			}
 			return result;
 		}
@@ -401,7 +422,9 @@ public class EventManager implements LocationListener, SensorEventListener {
 	 */
 	public GeoObj getZeroPositionLocationObject() {
 		if (zeroPos == null) {
-			Log.d(LOG_TAG, "Zero pos was not yet received! " + "The last known position of the device will be used " + "at the zero position.");
+			Log.d(LOG_TAG, "Zero pos was not yet received! "
+					+ "The last known position of the device will be used "
+					+ "at the zero position.");
 			zeroPos = getCurrentLocationObject().copy();
 		}
 		return zeroPos;
@@ -415,15 +438,18 @@ public class EventManager implements LocationListener, SensorEventListener {
 		}
 	}
 
-	public void resumeEventListeners(Activity targetActivity, boolean useAccelAndMagnetoSensors) {
+	public void resumeEventListeners(Activity targetActivity,
+			boolean useAccelAndMagnetoSensors) {
 		registerListeners(targetActivity, useAccelAndMagnetoSensors);
 	}
 
 	public void pauseEventListeners() {
-		SensorManager sensorManager = (SensorManager) myTargetActivity.getSystemService(Context.SENSOR_SERVICE);
+		SensorManager sensorManager = (SensorManager) myTargetActivity
+				.getSystemService(Context.SENSOR_SERVICE);
 		sensorManager.unregisterListener(this);
 
-		SimpleLocationManager.getInstance(myTargetActivity).pauseLocationManagerUpdates();
+		SimpleLocationManager.getInstance(myTargetActivity)
+				.pauseLocationManagerUpdates();
 	}
 
 }

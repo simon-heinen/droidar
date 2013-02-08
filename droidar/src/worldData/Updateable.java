@@ -1,6 +1,5 @@
 package worldData;
 
-
 public interface Updateable {
 
 	/**

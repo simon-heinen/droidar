@@ -100,9 +100,9 @@ public class ObjParser {
 				shapeList.add(indiceArray);
 
 			} else if (type.equals(TEXCOORD)) {
-				TexturCoord texCoord = new TexturCoord(Float
-						.parseFloat(lineElements.nextToken()), Float
-						.parseFloat(lineElements.nextToken()));
+				TexturCoord texCoord = new TexturCoord(
+						Float.parseFloat(lineElements.nextToken()),
+						Float.parseFloat(lineElements.nextToken()));
 				textureList.add(texCoord);
 			} else if (type.equals(NORMAL)) {
 				Vec normal = new Vec();
@@ -174,8 +174,8 @@ public class ObjParser {
 						else
 							texture.append(textureName);
 
-						int bmResourceID = resources.getIdentifier(texture
-								.toString(), null, null);
+						int bmResourceID = resources.getIdentifier(
+								texture.toString(), null, null);
 						// Bitmap b =
 						// Utils.makeBitmapFromResourceId(bmResourceID);
 						// textureAtlas.addBitmapAsset(new BitmapAsset(

@@ -3,7 +3,7 @@ package gl;
 import android.opengl.GLSurfaceView.Renderer;
 import android.os.SystemClock;
 
-public abstract class GLRenderer implements Renderer{
+public abstract class GLRenderer implements Renderer {
 
 	/**
 	 * The maximum fps rate for the renderer. 40fps to be not so cpu intense

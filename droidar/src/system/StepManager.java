@@ -48,12 +48,17 @@ public class StepManager implements SensorEventListener {
 	private void registerSensors(Context context) {
 		// register acceleraion sensor
 
-		sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+		sensorManager = (SensorManager) context
+				.getSystemService(Context.SENSOR_SERVICE);
 
-		Sensor magnetSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-		sensorManager.registerListener(this, magnetSensor, SensorManager.SENSOR_DELAY_GAME);
-		Sensor accelSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		sensorManager.registerListener(this, accelSensor, SensorManager.SENSOR_DELAY_GAME);
+		Sensor magnetSensor = sensorManager
+				.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+		sensorManager.registerListener(this, magnetSensor,
+				SensorManager.SENSOR_DELAY_GAME);
+		Sensor accelSensor = sensorManager
+				.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		sensorManager.registerListener(this, accelSensor,
+				SensorManager.SENSOR_DELAY_GAME);
 
 	}
 
@@ -104,14 +109,16 @@ public class StepManager implements SensorEventListener {
 			int x0 = (vhPointer - 1 - t + vhSize + vhSize) % vhSize;
 			int x1 = (vhPointer - 1 + vhSize) % vhSize;
 			if (stepDetecWindow[(vhPointer - 1 - t + vhSize + vhSize) % vhSize] != null) {
-				double check = FloatMath.sqrt((stepDetecWindow[x0][0] - stepDetecWindow[x1][0])
-						* (stepDetecWindow[x0][0] - stepDetecWindow[x1][0])
-						+ (stepDetecWindow[x0][1] - stepDetecWindow[x1][1])
-						* (stepDetecWindow[x0][1] - stepDetecWindow[x1][1])
-						+ (stepDetecWindow[x0][2] - stepDetecWindow[x1][2])
-						* (stepDetecWindow[x0][2] - stepDetecWindow[x1][2]));
+				double check = FloatMath
+						.sqrt((stepDetecWindow[x0][0] - stepDetecWindow[x1][0])
+								* (stepDetecWindow[x0][0] - stepDetecWindow[x1][0])
+								+ (stepDetecWindow[x0][1] - stepDetecWindow[x1][1])
+								* (stepDetecWindow[x0][1] - stepDetecWindow[x1][1])
+								+ (stepDetecWindow[x0][2] - stepDetecWindow[x1][2])
+								* (stepDetecWindow[x0][2] - stepDetecWindow[x1][2]));
 				if (check >= minStepPeakSize) {
-					// Log.i(LOG_TAG, "Detected step with t = " + t + ", peakSize = " + minStepPeakSize + " < " + check);
+					// Log.i(LOG_TAG, "Detected step with t = " + t +
+					// ", peakSize = " + minStepPeakSize + " < " + check);
 					return true;
 				}
 			}
@@ -130,16 +137,19 @@ public class StepManager implements SensorEventListener {
 	 * @param bearing
 	 * @return
 	 */
-	public static Location newLocationOneStepFurther(Location l, double d, double bearing) {
+	public static Location newLocationOneStepFurther(Location l, double d,
+			double bearing) {
 		bearing = Math.toRadians(bearing);
 		double R = 6378100; // m equatorial radius
 		double lat1 = Math.toRadians(l.getLatitude());
 		double lon1 = Math.toRadians(l.getLongitude());
 		double dr = d / R;
-		double lat2 = Math.asin(Math.sin(lat1) * Math.cos(dr) + Math.cos(lat1) * Math.sin(dr) * Math.cos(bearing));
+		double lat2 = Math.asin(Math.sin(lat1) * Math.cos(dr) + Math.cos(lat1)
+				* Math.sin(dr) * Math.cos(bearing));
 		double lon2 = lon1
-				+ Math.atan2(Math.sin(bearing) * Math.sin(d / R) * Math.cos(lat1), Math.cos(d / R) - Math.sin(lat1)
-						* Math.sin(lat2));
+				+ Math.atan2(
+						Math.sin(bearing) * Math.sin(d / R) * Math.cos(lat1),
+						Math.cos(d / R) - Math.sin(lat1) * Math.sin(lat2));
 
 		Location ret = new Location("LOCMOV");
 		ret.setLatitude(Math.toDegrees(lat2));
@@ -186,7 +196,8 @@ public class StepManager implements SensorEventListener {
 	ActionUseCameraAngles2 compassAzimuthCalcer = new ActionUseCameraAngles2() {
 
 		@Override
-		public void onAnglesUpdated(float pitch, float roll, float compassAzimuth) {
+		public void onAnglesUpdated(float pitch, float roll,
+				float compassAzimuth) {
 			orientation = compassAzimuth;
 		}
 	};
@@ -196,23 +207,29 @@ public class StepManager implements SensorEventListener {
 
 		switch (event.sensor.getType()) {
 		case Sensor.TYPE_ACCELEROMETER:
-			bufferedAccel[0] = alpha * bufferedAccel[0] + (1 - alpha) * event.values[0];
-			bufferedAccel[1] = alpha * bufferedAccel[1] + (1 - alpha) * event.values[1];
-			bufferedAccel[2] = alpha * bufferedAccel[2] + (1 - alpha) * event.values[2];
+			bufferedAccel[0] = alpha * bufferedAccel[0] + (1 - alpha)
+					* event.values[0];
+			bufferedAccel[1] = alpha * bufferedAccel[1] + (1 - alpha)
+					* event.values[1];
+			bufferedAccel[2] = alpha * bufferedAccel[2] + (1 - alpha)
+					* event.values[2];
 
 			float x = event.values[0] - bufferedAccel[0];
 			float y = event.values[1] - bufferedAccel[1];
 			float z = event.values[2] - bufferedAccel[2];
-			float[] b = {x,y,z};
-			
+			float[] b = { x, y, z };
+
 			last_acc_events = b;
 			compassAzimuthCalcer.onAccelChanged(bufferedAccel);
 			break;
 
 		case Sensor.TYPE_MAGNETIC_FIELD:
-			bufferedMagneto[0] = magnetoalpha * bufferedMagneto[0] + (1 - magnetoalpha) * event.values[0];
-			bufferedMagneto[1] = magnetoalpha * bufferedMagneto[1] + (1 - magnetoalpha) * event.values[1];
-			bufferedMagneto[2] = magnetoalpha * bufferedMagneto[2] + (1 - magnetoalpha) * event.values[2];
+			bufferedMagneto[0] = magnetoalpha * bufferedMagneto[0]
+					+ (1 - magnetoalpha) * event.values[0];
+			bufferedMagneto[1] = magnetoalpha * bufferedMagneto[1]
+					+ (1 - magnetoalpha) * event.values[1];
+			bufferedMagneto[2] = magnetoalpha * bufferedMagneto[2]
+					+ (1 - magnetoalpha) * event.values[2];
 			compassAzimuthCalcer.onMagnetChanged(bufferedMagneto);
 			break;
 		}

@@ -53,10 +53,10 @@ public abstract class SimpleCustomView extends View {
 		Bitmap b = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
 		Canvas c = new Canvas(b);
 		Paint p = new Paint();
-		
+
 		p.setStyle(Paint.Style.STROKE);
 		p.setStrokeWidth(20);
-		int alpha=255;
+		int alpha = 255;
 		p.setColor(Color.rgb(50, 0, 0));
 		p.setAlpha(alpha);
 		c.drawLine(0, 0, size, size, p);
@@ -69,15 +69,17 @@ public abstract class SimpleCustomView extends View {
 		p.setColor(Color.YELLOW);
 		p.setAlpha(alpha);
 		c.drawLine(size / 2, 0, size / 2, size, p);
-		
-		float[] filterKernel={1,0,0, 0,1,0, 0,0,1};		
-		//ImageTransform.improveSaturation(b, b, filterKernel, 1, 1, 1, 255, 255);
+
+		float[] filterKernel = { 1, 0, 0, 0, 1, 0, 0, 0, 1 };
+		// ImageTransform.improveSaturation(b, b, filterKernel, 1, 1, 1, 255,
+		// 255);
 
 		return b;
 	}
 
 	private void setRandomColor(Paint p, int alpha) {
-		p.setColor(Color.argb(alpha, (int)(Math.random()*255), (int)(Math.random()*255), (int)(Math.random()*255)));
+		p.setColor(Color.argb(alpha, (int) (Math.random() * 255),
+				(int) (Math.random() * 255), (int) (Math.random() * 255)));
 	}
 
 	public Bitmap createDummyBitmap2() {

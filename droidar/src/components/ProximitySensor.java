@@ -48,7 +48,8 @@ public abstract class ProximitySensor implements Entity {
 				if (position != null) {
 					float currentDistance = Vec.distance(position,
 							myCamera.getPosition());
-					checkCurrentDistance(obj, obj.getMeshComp(), currentDistance);
+					checkCurrentDistance(obj, obj.getMeshComp(),
+							currentDistance);
 					return true;
 				} else {
 					Log.w(LOG_TAG, "MeshComp of target Obj was null!");

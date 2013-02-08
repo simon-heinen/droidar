@@ -34,11 +34,11 @@ public class DefaultListItemView extends LinearLayout {
 	public void setToMetaInfo(Context context, MetaInfos metaInfos) {
 		shortDescr.setText(metaInfos.getShortDescr());
 		longDescr.setText(metaInfos.getLongDescrAsString());
-		
+
 		if (metaInfos.getColor() != null) {
 			color2.setBackgroundColor(metaInfos.getColor().toIntRGB());
 		}
-		
+
 		Bitmap image = metaInfos.getIcon(context);
 		if (image != null) {
 			icon.setImageBitmap(image);

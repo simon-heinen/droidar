@@ -11,7 +11,6 @@ public class NameGenerator {
 	private List<String> endConsonants = new ArrayList<String>();
 	private List<String> nameInstructions = new ArrayList<String>();
 
-	
 	public NameGenerator() {
 		String demoVocals[] = { "a", "e", "i", "o", "u", "ei", "ai", "ou", "j",
 				"ji", "y", "oi", "au", "oo" };

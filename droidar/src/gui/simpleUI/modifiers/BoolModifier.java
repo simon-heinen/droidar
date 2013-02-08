@@ -18,7 +18,8 @@ public abstract class BoolModifier extends AbstractModifier {
 	public View getView(Context context) {
 		LinearLayout l = new LinearLayout(context);
 		l.setGravity(Gravity.CENTER_VERTICAL);
-		l.setPadding(SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING);
+		l.setPadding(SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING,
+				SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING);
 
 		LayoutParams p = new LinearLayout.LayoutParams(
 				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 2);

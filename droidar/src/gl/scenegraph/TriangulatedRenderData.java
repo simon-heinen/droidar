@@ -19,14 +19,12 @@ public class TriangulatedRenderData extends RenderData {
 
 	@Override
 	public void updateShape(ArrayList<Vec> shapeArray) {
-		 setVertexArray(turnShapeToFloatArray(shapeArray));
-		  setIndeceArray(triangulationOfShape(shapeArray));
+		setVertexArray(turnShapeToFloatArray(shapeArray));
+		setIndeceArray(triangulationOfShape(shapeArray));
 	}
 
-	
-
 	public void setIndeceArray(short[] s) {
-		indexBuffer= GLUtilityClass.createAndInitShortBuffer(s);
+		indexBuffer = GLUtilityClass.createAndInitShortBuffer(s);
 	}
 
 	/**
@@ -77,9 +75,9 @@ public class TriangulatedRenderData extends RenderData {
 			gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
 			gl.glNormalPointer(GL10.GL_FLOAT, 0, normalsBuffer);
 		}
-		
-		gl.glDrawElements(drawMode, indexBuffer.limit(), GL10.GL_UNSIGNED_SHORT,
-				indexBuffer);
+
+		gl.glDrawElements(drawMode, indexBuffer.limit(),
+				GL10.GL_UNSIGNED_SHORT, indexBuffer);
 
 		// Disable the vertices buffer.
 		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);

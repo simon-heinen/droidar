@@ -69,9 +69,8 @@ public class CommandSetWrapperToValue extends UndoableCommand {
 	@Override
 	public boolean override_do() {
 		if (myW == null) {
-			Log
-					.e("Command Error",
-							"CommandSetWrapperToValue.doMethod: wrapper object is null!");
+			Log.e("Command Error",
+					"CommandSetWrapperToValue.doMethod: wrapper object is null!");
 			return false;
 		}
 		switch (mode) {
@@ -96,9 +95,8 @@ public class CommandSetWrapperToValue extends UndoableCommand {
 			myW.setTo(mySource.getObject());
 			return true;
 		}
-		Log
-				.e("Command Error",
-						"CommandSetWrapperToValue.doMethod: mode wasn't set correctly!");
+		Log.e("Command Error",
+				"CommandSetWrapperToValue.doMethod: mode wasn't set correctly!");
 		return false;
 	}
 
@@ -114,9 +112,7 @@ public class CommandSetWrapperToValue extends UndoableCommand {
 				+ ") to value (object=" + o.getClass() + ")");
 		if (o instanceof String) {
 			if (mode == Type.None || mode == Type.String) {
-				Log
-						.d("Commands",
-								"    -> Setting string-wrapper to value=" + o);
+				Log.d("Commands", "    -> Setting string-wrapper to value=" + o);
 				myW.setTo((String) o);
 				return true;
 			}
@@ -180,9 +176,8 @@ public class CommandSetWrapperToValue extends UndoableCommand {
 			return true;
 		}
 
-		Log
-				.e("Command Error",
-						"CommandSetWrapperToValue.undoMethod: mode wasn't set correctly!");
+		Log.e("Command Error",
+				"CommandSetWrapperToValue.undoMethod: mode wasn't set correctly!");
 		return false;
 	}
 

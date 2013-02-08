@@ -59,7 +59,8 @@ public abstract class ActionUseCameraAngles2 implements
 	}
 
 	/**
-	 * @return the correctly rotated matrix which can then be used in OpenGL e.g.
+	 * @return the correctly rotated matrix which can then be used in OpenGL
+	 *         e.g.
 	 */
 	public float[] getRotateMatrixAccordingToDeviceOrientation() {
 		if (EventManager.isTabletDevice) {
@@ -102,7 +103,8 @@ public abstract class ActionUseCameraAngles2 implements
 	public void onRotationMatrixUpdated(float[] updatedRotationMatrix) {
 		SensorManager.getOrientation(updatedRotationMatrix, o);
 		float magnet = o[0] * rad2deg + 90;
-		if (magnet<0 )magnet+=360;
+		if (magnet < 0)
+			magnet += 360;
 		onAnglesUpdated(o[1] * rad2deg, -o[2] * rad2deg, magnet);
 	}
 

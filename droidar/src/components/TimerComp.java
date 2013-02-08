@@ -42,7 +42,7 @@ public class TimerComp implements Entity {
 
 	@Override
 	public void setMyParent(Updateable parent) {
-		myParent=parent;
+		myParent = parent;
 	}
 
 }

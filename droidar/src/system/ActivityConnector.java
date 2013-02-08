@@ -88,8 +88,8 @@ public class ActivityConnector {
 	public Object loadObjFromNewlyCreatedActivity(Activity theNewActivity) {
 		if (theNewActivity == null)
 			return null;
-		String key = theNewActivity.getIntent().getExtras().getString(
-				KEY_IDENTIFIER);
+		String key = theNewActivity.getIntent().getExtras()
+				.getString(KEY_IDENTIFIER);
 		Object o = getObj(key);
 		// TODO remove o from the hashmap now?:
 		// myHashMap.remove(key);

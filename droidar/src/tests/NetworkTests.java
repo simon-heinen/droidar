@@ -160,6 +160,4 @@ public class NetworkTests extends SimpleTesting {
 
 	}
 
-	
-
 }

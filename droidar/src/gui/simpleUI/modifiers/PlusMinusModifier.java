@@ -86,7 +86,8 @@ public abstract class PlusMinusModifier extends AbstractModifier {
 			l2.addView(l5);
 		}
 		l.addView(l2);
-		l.setPadding(SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING);
+		l.setPadding(SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING,
+				SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING);
 
 		if (getTheme() != null) {
 			getTheme().applyOuter1(l);

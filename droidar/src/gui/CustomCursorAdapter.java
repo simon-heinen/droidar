@@ -112,7 +112,8 @@ public class CustomCursorAdapter extends SimpleCursorAdapter implements
 
 		return context.getContentResolver().query(People.CONTENT_URI, null,
 
-		buffer == null ? null : buffer.toString(), args, PeopleColumns.NAME + " ASC");
+		buffer == null ? null : buffer.toString(), args,
+				PeopleColumns.NAME + " ASC");
 
 	}
 

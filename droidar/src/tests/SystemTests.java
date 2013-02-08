@@ -42,8 +42,8 @@ public class SystemTests extends SimpleTesting {
 		}
 		// make sure no elements were removed automatically
 		assertTrue(l.size() == 20);
-		assertTrue(l.getFirst()==10);
-		assertTrue(l.getFirst()==10);
+		assertTrue(l.getFirst() == 10);
+		assertTrue(l.getFirst() == 10);
 
 	}
 

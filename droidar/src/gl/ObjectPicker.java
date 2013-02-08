@@ -330,7 +330,6 @@ public class ObjectPicker {
 	 * @return
 	 */
 	public static float rgb565to888(float f) {
-		
 
 		return 1 << 1;
 	}

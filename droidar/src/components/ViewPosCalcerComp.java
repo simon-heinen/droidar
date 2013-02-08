@@ -58,9 +58,9 @@ public abstract class ViewPosCalcerComp implements Entity {
 		Log.e(LOG_TAG, "Set parent called which is not "
 				+ "implemented for this component!");
 	}
-	
+
 	/**
-	 * This will be called in constant time intervals 
+	 * This will be called in constant time intervals
 	 * 
 	 * @param parent
 	 * @param targetVec

@@ -189,8 +189,8 @@ public class StaticDemoSetup extends Setup {
 
 			MeshComponent button = GLFactory.getInstance().newTexturedSquare(
 					"simpleUiId",
-					IO.loadBitmapFromView(v, MeasureSpec.makeMeasureSpec(400, MeasureSpec.AT_MOST),
-							LayoutParams.WRAP_CONTENT));
+					IO.loadBitmapFromView(v, MeasureSpec.makeMeasureSpec(400,
+							MeasureSpec.AT_MOST), LayoutParams.WRAP_CONTENT));
 			button.setOnClickCommand(new CommandShowToast(getActivity(),
 					"Thanks alot"));
 

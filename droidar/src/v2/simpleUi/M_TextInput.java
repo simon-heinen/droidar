@@ -36,7 +36,8 @@ public abstract class M_TextInput implements ModifierInterface, UiDecoratable {
 	public M_TextInput() {
 	}
 
-	public M_TextInput(boolean editable, boolean isLongText, boolean horizontalScrollable) {
+	public M_TextInput(boolean editable, boolean isLongText,
+			boolean horizontalScrollable) {
 		setLongText(isLongText);
 		setEditable(editable);
 		setHorizontalScrollable(horizontalScrollable);
@@ -73,11 +74,16 @@ public abstract class M_TextInput implements ModifierInterface, UiDecoratable {
 	@Override
 	public View getView(Context context) {
 		LinearLayout container = new LinearLayout(context);
-		container.setPadding(DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING);
+		container.setPadding(DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING,
+				DEFAULT_PADDING);
 
 		container.setGravity(Gravity.CENTER_VERTICAL);
-		LayoutParams p = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, weightOfDescription);
-		LinearLayout.LayoutParams p2 = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, weightOfInputText);
+		LayoutParams p = new LinearLayout.LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT,
+				weightOfDescription);
+		LinearLayout.LayoutParams p2 = new LinearLayout.LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT,
+				weightOfInputText);
 		if (isLongText()) {
 			int m = 8;
 			p2.setMargins(2 * m, m, 2 * m, m);
@@ -112,8 +118,10 @@ public abstract class M_TextInput implements ModifierInterface, UiDecoratable {
 
 		if (myDecorator != null) {
 			int currentLevel = myDecorator.getCurrentLevel();
-			myDecorator.decorate(context, nameText, currentLevel + 1, UiDecorator.TYPE_INFO_TEXT);
-			myDecorator.decorate(context, editText, currentLevel + 1, UiDecorator.TYPE_EDIT_TEXT);
+			myDecorator.decorate(context, nameText, currentLevel + 1,
+					UiDecorator.TYPE_INFO_TEXT);
+			myDecorator.decorate(context, editText, currentLevel + 1,
+					UiDecorator.TYPE_EDIT_TEXT);
 		}
 		return container;
 	}

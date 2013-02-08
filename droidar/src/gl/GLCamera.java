@@ -77,10 +77,10 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 * 
 	 * The order is z,x,y achses.
 	 * 
-	 * The camera rotation angles (positive and COUNTERCLOCKWISE !!)
-	 * extracted from the rotation matrix. These values will only be calculated
-	 * if an angleUpdateListener is set or
-	 * {@link GLCamera#forceAngleCalculation} is set to true
+	 * The camera rotation angles (positive and COUNTERCLOCKWISE !!) extracted
+	 * from the rotation matrix. These values will only be calculated if an
+	 * angleUpdateListener is set or {@link GLCamera#forceAngleCalculation} is
+	 * set to true
 	 */
 	@Deprecated
 	private float[] cameraAnglesInDegree = new float[3];

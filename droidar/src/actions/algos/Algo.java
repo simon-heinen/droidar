@@ -9,7 +9,8 @@ public abstract class Algo {
 		return null;
 	}
 
-	public boolean execute(float[] targetValues, float[] newValues, float bufferSize) {
+	public boolean execute(float[] targetValues, float[] newValues,
+			float bufferSize) {
 		Log.e("algo class error", "execute(3 params) not catched");
 		return false;
 	}

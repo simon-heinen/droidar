@@ -29,7 +29,8 @@ public abstract class ImageModifier extends AbstractModifier {
 				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1);
 
 		LinearLayout l = new LinearLayout(context);
-		l.setPadding(SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING);
+		l.setPadding(SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING,
+				SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING);
 		l.setOrientation(LinearLayout.VERTICAL);
 
 		TextView t = new TextView(context);
@@ -52,8 +53,7 @@ public abstract class ImageModifier extends AbstractModifier {
 		g.setAdapter(new BaseAdapter() {
 
 			@Override
-			public View getView(int position, View convertView,
-					ViewGroup parent) {
+			public View getView(int position, View convertView, ViewGroup parent) {
 				ImageView iv;
 				if (convertView instanceof ImageView) {
 					iv = (ImageView) convertView;

@@ -14,7 +14,7 @@ public class CameraViewForOldDevices extends CameraView {
 	public void setPreviewAccordingToScreenOrientation(int width, int height) {
 		Parameters p = myCamera.getParameters();
 		int orientation = getContext().getResources().getConfiguration().orientation;
-		System.out.println("orientation="+orientation);
+		System.out.println("orientation=" + orientation);
 		if (orientation == Configuration.ORIENTATION_PORTRAIT) {
 			p.set("orientation", "portrait");
 			p.set("rotation", 90);

@@ -24,7 +24,8 @@ public class AndroidDeviceOnlyTests extends SimpleTesting {
 					@Override
 					public void returnResult(String result) {
 						try {
-							System.out.println("result should be 14 and is "+result);
+							System.out.println("result should be 14 and is "
+									+ result);
 							assertTrue(Integer.getInteger(result) == 14);
 						} catch (Exception e) {
 							e.printStackTrace();

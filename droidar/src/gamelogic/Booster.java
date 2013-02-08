@@ -77,12 +77,11 @@ public class Booster extends GameElement {
 	@Override
 	public void generateViewGUI(ModifierGroup s) {
 		if (myValue >= 0)
-			s.addModifier(new InfoText(
-					" +" + myValue + " by " + myName, Gravity.RIGHT));
+			s.addModifier(new InfoText(" +" + myValue + " by " + myName,
+					Gravity.RIGHT));
 		else
 			s.addModifier(new InfoText(" " + myValue + " by " + myName,
 					Gravity.RIGHT));
 	}
-
 
 }

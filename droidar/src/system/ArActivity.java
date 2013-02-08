@@ -11,7 +11,7 @@ import android.view.MenuItem;
 
 /**
  * This is an example activity which demonstrates how to use a Setup object. It
- * wraps the Setup object and forwards all needed events to it. 
+ * wraps the Setup object and forwards all needed events to it.
  * 
  * @author Simon Heinen
  * 

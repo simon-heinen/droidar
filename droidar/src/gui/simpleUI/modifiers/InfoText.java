@@ -21,8 +21,8 @@ public class InfoText extends AbstractModifier {
 	}
 
 	/**
-	 * This constructor produces a comment like text-representation which
-	 * gets a Normal2 style (see {@link Theme} for more informations)
+	 * This constructor produces a comment like text-representation which gets a
+	 * Normal2 style (see {@link Theme} for more informations)
 	 * 
 	 * @param text
 	 * @param gravity
@@ -51,7 +51,9 @@ public class InfoText extends AbstractModifier {
 			e.setLayoutParams(p2);
 			e.setText(myText);
 			l.addView(e);
-			l.setPadding(SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING);
+			l.setPadding(SimpleUIv1.DEFAULT_PADDING,
+					SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING,
+					SimpleUIv1.DEFAULT_PADDING);
 
 			if (getTheme() != null) {
 				getTheme().applyOuter1(l);
@@ -64,7 +66,9 @@ public class InfoText extends AbstractModifier {
 			TextView t = new TextView(context);
 			t.setText(myText);
 			t.setGravity(myGravity);
-			t.setPadding(SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING);
+			t.setPadding(SimpleUIv1.DEFAULT_PADDING,
+					SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING,
+					SimpleUIv1.DEFAULT_PADDING);
 
 			if (getTheme() != null)
 				getTheme().applyNormal2(t);

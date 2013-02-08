@@ -38,8 +38,8 @@ public abstract class M_WebView implements ModifierInterface {
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 				if (url != null && url.startsWith("market://")) {
 					try {
-						Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri
-								.parse(url));
+						Intent marketIntent = new Intent(Intent.ACTION_VIEW,
+								Uri.parse(url));
 						marketIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY
 								| Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 						context.startActivity(marketIntent);

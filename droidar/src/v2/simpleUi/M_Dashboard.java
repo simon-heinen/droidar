@@ -30,7 +30,7 @@ public class M_Dashboard extends M_Container {
 
 	private View get2ItemViewFor(ModifierInterface left,
 			ModifierInterface right, Context context) {
-		M_HalfHalf line = new M_HalfHalf(left, right, 70,true);
+		M_HalfHalf line = new M_HalfHalf(left, right, 70, true);
 		return line.getView(context);
 	}
 }

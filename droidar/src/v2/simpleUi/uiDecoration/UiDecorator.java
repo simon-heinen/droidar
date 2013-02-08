@@ -98,7 +98,7 @@ public interface UiDecorator {
 	 */
 	public boolean decorate(Context context, ImageView targetView,
 			final int level, int type);
-	
+
 	/**
 	 * @param context
 	 * @param targetView

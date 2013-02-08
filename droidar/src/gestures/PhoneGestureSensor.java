@@ -95,18 +95,17 @@ public class PhoneGestureSensor implements SensorEventListener {
 			sensor.addDetector(new LookingDetector());
 			return this;
 		}
-		
 
 		/**
 		 * Adds a detector for the UPPERCUT gesture.
 		 * 
 		 * @return The builder instance for method chaining.
-		 */		
+		 */
 		public Builder withUppercutDetection() {
 			sensor.addDetector(new UppercutDetector());
 			return this;
 		}
-		
+
 		/**
 		 * Adds a detector for the FULL_TURN gesture.
 		 * 
@@ -196,7 +195,7 @@ public class PhoneGestureSensor implements SensorEventListener {
 	 * The weight for the high pass filter when filtering out gravity.
 	 */
 	private final float alpha = 0.8f;
-	
+
 	/**
 	 * The minimal amount of time between to gestures in milliseconds.
 	 */
@@ -290,11 +289,12 @@ public class PhoneGestureSensor implements SensorEventListener {
 
 		return result;
 	}
-	
+
 	/**
 	 * Gets the current readings of the magnetic field sensor.
 	 * 
-	 * @param event The SensorEvent that occurred.
+	 * @param event
+	 *            The SensorEvent that occurred.
 	 * @return The readings of the magnetic sensor.
 	 */
 	private float[] getMagneticField(SensorEvent event) {
@@ -306,7 +306,7 @@ public class PhoneGestureSensor implements SensorEventListener {
 			result[1] = event.values[1];
 			result[2] = event.values[2];
 		}
-		
+
 		return result;
 	}
 
@@ -343,7 +343,7 @@ public class PhoneGestureSensor implements SensorEventListener {
 		// TODO: check if we should handle this
 
 	}
-	
+
 	@Override
 	public void onSensorChanged(SensorEvent event) {
 		float[] linearAcceleration = getLinearAcceleration(event);
@@ -382,8 +382,7 @@ public class PhoneGestureSensor implements SensorEventListener {
 		sensorManager.registerListener(this,
 				sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
 				SensorManager.SENSOR_DELAY_GAME);
-		
-		
+
 	}
 
 	/**

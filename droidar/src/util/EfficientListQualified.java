@@ -1,6 +1,5 @@
 package util;
 
-
 /**
  * this {@link EfficientList} subclass should work like the default
  * {@link EfficientList} and when you usse insertWithDefinedQuality a second
@@ -92,8 +91,8 @@ public class EfficientListQualified<T> extends EfficientList<T> {
 		Log.d("EfficientList", "myLength=" + myLength);
 		for (int i = 0; i < myArray.length; i++) {
 			if (myArray[i] != null) {
-				Log.d("EfficientList", "entry " + i + "="
-						+ myArray[i].getClass());
+				Log.d("EfficientList",
+						"entry " + i + "=" + myArray[i].getClass());
 			} else {
 				Log.d("EfficientList", "entry " + i + "=null");
 			}

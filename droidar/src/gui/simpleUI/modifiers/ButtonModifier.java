@@ -43,7 +43,7 @@ public abstract class ButtonModifier extends AbstractModifier {
 		b.setPadding(p, p, p, p);
 
 		l.addView(b);
-		int p2=4;
+		int p2 = 4;
 		l.setPadding(p2, p2, p2, p2);
 
 		return l;

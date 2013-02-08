@@ -72,7 +72,7 @@ public class EfficientListTests extends SimpleTesting {
 		e.add(s, 1);
 		e.add(s2, 2);
 		e.add(s3, 1.5f);
-		//e.printDebugInfos();
+		// e.printDebugInfos();
 		assertTrue(e.myLength == 3);
 		assertTrue(e.getArrayCopy()[0] == s);
 		assertTrue(e.getArrayCopy()[1] == s3);

@@ -52,8 +52,9 @@ public class CommandSetWrapperToValue2 extends UndoableCommand {
 
 	@Override
 	public synchronized boolean override_do(Object transfairObject) {
-		Log.d("Commands", "Trying to set selection (is="
-				+ mySelectionTarget.getObject() + ") to " + transfairObject);
+		Log.d("Commands",
+				"Trying to set selection (is=" + mySelectionTarget.getObject()
+						+ ") to " + transfairObject);
 		if (transfairObject instanceof Wrapper) {
 			mySelectionBackup = (mySelectionTarget).getObject();
 			mySelectionTarget.setTo(((Wrapper) transfairObject).getObject());

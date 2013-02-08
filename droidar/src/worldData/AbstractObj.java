@@ -43,12 +43,12 @@ public abstract class AbstractObj implements HasInfosInterface, ListItem,
 	public Updateable getMyParent() {
 		return myParent;
 	}
-	
+
 	@Override
 	public void setMyParent(Updateable parent) {
-		myParent=parent;
+		myParent = parent;
 	}
-	
+
 	@Override
 	public Command getListClickCommand() {
 		return myListClickCommand;

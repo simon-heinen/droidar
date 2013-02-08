@@ -47,7 +47,6 @@ public class ActionWASDMovement extends Action {
 		myMaxSpeed = maxSpeed;
 	}
 
-
 	@Override
 	public boolean onTouchMove(MotionEvent e1, MotionEvent e2,
 			float screenDeltaX, float screenDeltaY) {
@@ -86,8 +85,8 @@ public class ActionWASDMovement extends Action {
 			// Vec.getOrthogonalHorizontal(accelerationVec);
 
 			Vec yDir = new Vec(yFactor, 0, 0);
-			yDir.rotateAroundZAxis(180 - myTargetCamera.getCameraAnglesInDegree()[0]
-					);
+			yDir.rotateAroundZAxis(180 - myTargetCamera
+					.getCameraAnglesInDegree()[0]);
 
 			// System.out.println("yDir="+yDir);
 

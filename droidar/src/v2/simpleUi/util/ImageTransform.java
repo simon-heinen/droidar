@@ -29,7 +29,8 @@ public class ImageTransform {
 		int width = bitmap.getWidth();
 		int height = bitmap.getHeight();
 
-		Bitmap result = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_4444);
+		Bitmap result = Bitmap.createBitmap(width, height,
+				Bitmap.Config.ARGB_4444);
 		Canvas canvas = new Canvas(result);
 		Rect rect = new Rect(0, 0, width, height);
 		RectF roundCornerFrameRect = new RectF(rect);

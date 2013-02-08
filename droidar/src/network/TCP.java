@@ -28,8 +28,8 @@ public class TCP {
 			try {
 				mySocket = new Socket(serverIp, serverPort);
 				myWriter = new PrintWriter(mySocket.getOutputStream());
-				myReader = new BufferedReader(new InputStreamReader(mySocket
-						.getInputStream()));
+				myReader = new BufferedReader(new InputStreamReader(
+						mySocket.getInputStream()));
 			} catch (UnknownHostException e) {
 				e.printStackTrace();
 			} catch (IOException e) {

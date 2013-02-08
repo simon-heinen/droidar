@@ -51,7 +51,7 @@ public class InfoScreen extends Activity {
 				s.setBackgroundColor(infos.backgroundColor.toIntARGB());
 			LinearLayout linLayBox = infos.getLinLayout();
 			fixPossibleParentProblem(linLayBox);
-			s.addView(linLayBox); 
+			s.addView(linLayBox);
 			if (!infos.closeInstantly()) {
 				infos.getLinLayout().addView(newCloseButton(infos));
 			} else {

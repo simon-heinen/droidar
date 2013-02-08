@@ -62,9 +62,9 @@ public class LookingDetector implements PhoneGestureDetector {
 			 * 1.0 (the rate will approach 1 but never quite reach it).
 			 */
 
-			gestureProbability += 
-					(STABILITY_THRESHOLD - sensorData.absoluteAcceleration)
-					/ STABILITY_THRESHOLD * PROBABILITY_INCREASE
+			gestureProbability += (STABILITY_THRESHOLD - sensorData.absoluteAcceleration)
+					/ STABILITY_THRESHOLD
+					* PROBABILITY_INCREASE
 					* (1 - gestureProbability);
 		} else {
 			gestureProbability *= (1 - PROBABILITY_DECAY);

@@ -89,8 +89,7 @@ public class ProximitySensorForOtherObjects implements Entity {
 		if (list != null) {
 			for (int i = 0; i < list.myLength; i++) {
 				if (list.get(i) != obj && list.get(i) instanceof Obj) {
-					Vec objPos = ((Obj) list.get(i))
-							.getPosition();
+					Vec objPos = ((Obj) list.get(i)).getPosition();
 					if (objPos != null) {
 						float currentDistance = Vec.distance(
 								myMesh.getPosition(), objPos);

@@ -92,12 +92,17 @@ public class ImageTransform {
 	 * @param filterKernel
 	 *            has to be a 3x3 matrix so float[9]. The kernal which will keep
 	 *            all color values like they are is filterKernel={1,0,0, 0,1,0,
-	 *            0,0,1}. 
-	 * @param mOverInWMinInB from 0 to 1
-	 * @param gammaValue from 0 to 1
-	 * @param mOutWMinOutB from 0 to 1
-	 * @param mInBlack from 0 to 255
-	 * @param mOutBlack from 0 to 255
+	 *            0,0,1}.
+	 * @param mOverInWMinInB
+	 *            from 0 to 1
+	 * @param gammaValue
+	 *            from 0 to 1
+	 * @param mOutWMinOutB
+	 *            from 0 to 1
+	 * @param mInBlack
+	 *            from 0 to 255
+	 * @param mOutBlack
+	 *            from 0 to 255
 	 */
 	public static void improveSaturation(Bitmap sourceBitmap,
 			Bitmap resultBitmap, float[] filterKernel, float mOverInWMinInB,

@@ -44,15 +44,18 @@ public abstract class M_LongModifier extends M_TextModifier {
 		}
 	}
 
-	private static void setMinMaxFilterFor(EditText e, final Long min, final Long max) {
+	private static void setMinMaxFilterFor(EditText e, final Long min,
+			final Long max) {
 		e.addTextChangedListener(new TextWatcher() {
 
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
 			}
 
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
 			}
 
 			@Override
@@ -80,7 +83,8 @@ public abstract class M_LongModifier extends M_TextModifier {
 			return saveLong(Long.parseLong(newValue));
 		} catch (NumberFormatException e) {
 			// TODO show toast?
-			Log.e("EditScreen", "The entered value for " + getVarName() + " was no number!");
+			Log.e("EditScreen", "The entered value for " + getVarName()
+					+ " was no number!");
 		}
 		getEditText().requestFocus();
 		return false;

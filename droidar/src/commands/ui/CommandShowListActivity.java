@@ -81,10 +81,8 @@ public class CommandShowListActivity extends Command {
 
 			return true;
 		} else {
-			Log
-					.d(
-							"Commands",
-							"No activity will be created because you did not pass a CanBeShownInList-Class of ListItems in the Wrapper!");
+			Log.d("Commands",
+					"No activity will be created because you did not pass a CanBeShownInList-Class of ListItems in the Wrapper!");
 		}
 
 		return false;

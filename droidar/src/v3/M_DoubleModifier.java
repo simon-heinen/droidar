@@ -25,7 +25,8 @@ public abstract class M_DoubleModifier extends M_TextModifier {
 
 	@Override
 	public void applyTextFilterIfNeeded(EditText e) {
-		e.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+		e.setInputType(InputType.TYPE_CLASS_NUMBER
+				| InputType.TYPE_NUMBER_FLAG_DECIMAL);
 		if (minimumValue != null && maximumValue != null) {
 			setMinMaxFilterFor(e, minimumValue, maximumValue);
 		}
@@ -42,15 +43,18 @@ public abstract class M_DoubleModifier extends M_TextModifier {
 		}
 	}
 
-	private static void setMinMaxFilterFor(EditText e, final Double min, final Double max) {
+	private static void setMinMaxFilterFor(EditText e, final Double min,
+			final Double max) {
 		e.addTextChangedListener(new TextWatcher() {
 
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
 			}
 
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
 			}
 
 			@Override
@@ -78,7 +82,8 @@ public abstract class M_DoubleModifier extends M_TextModifier {
 			return saveDouble(Double.parseDouble(newValue));
 		} catch (NumberFormatException e) {
 			// TODO show toast?
-			Log.e("EditScreen", "The entered value for " + getVarName() + " was no number!");
+			Log.e("EditScreen", "The entered value for " + getVarName()
+					+ " was no number!");
 		}
 		getEditText().requestFocus();
 		return false;

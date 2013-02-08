@@ -2,7 +2,6 @@ package gl;
 
 import javax.microedition.khronos.opengles.GL10;
 
-
 /**
  * Use this interface for custom rendering
  * 

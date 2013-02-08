@@ -119,12 +119,15 @@ public abstract class ListModifier extends AbstractModifier {
 		listView.addView(scrollContainer);
 		listView.addView(myListView);
 
-		listView.setPadding(SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING,
-				SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING);
-		listControls.setPadding(SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING,
-				SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING);
-		myListView.setPadding(SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING,
-				SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING);
+		listView.setPadding(SimpleUIv1.DEFAULT_PADDING,
+				SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING,
+				SimpleUIv1.DEFAULT_PADDING);
+		listControls.setPadding(SimpleUIv1.DEFAULT_PADDING,
+				SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING,
+				SimpleUIv1.DEFAULT_PADDING);
+		myListView.setPadding(SimpleUIv1.DEFAULT_PADDING,
+				SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING,
+				SimpleUIv1.DEFAULT_PADDING);
 		if (getTheme() != null) {
 			getTheme().applyOuter1(listView);
 			getTheme().applyOuter2(listControls);

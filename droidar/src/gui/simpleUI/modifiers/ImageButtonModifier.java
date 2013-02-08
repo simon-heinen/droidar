@@ -58,7 +58,7 @@ public abstract class ImageButtonModifier extends AbstractModifier {
 
 	public void disableButton() {
 		l.removeView(b);
-		
+
 	}
 
 	public abstract void onClick();

@@ -23,7 +23,8 @@ import android.widget.TextView;
  * @author Spobo
  * 
  */
-public abstract class M_TextModifier implements ModifierInterface, UiDecoratable {
+public abstract class M_TextModifier implements ModifierInterface,
+		UiDecoratable {
 	private EditText editText;
 	private UiDecorator myDecorator;
 	private boolean editable = true;
@@ -39,7 +40,8 @@ public abstract class M_TextModifier implements ModifierInterface, UiDecoratable
 	public M_TextModifier() {
 	}
 
-	public M_TextModifier(boolean editable, boolean isLongText, boolean horizontalScrollable) {
+	public M_TextModifier(boolean editable, boolean isLongText,
+			boolean horizontalScrollable) {
 		setLongText(isLongText);
 		setEditable(editable);
 		setHorizontalScrollable(horizontalScrollable);
@@ -70,8 +72,12 @@ public abstract class M_TextModifier implements ModifierInterface, UiDecoratable
 		LinearLayout l = new LinearLayout(context);
 		l.setGravity(Gravity.CENTER_VERTICAL);
 
-		LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, weightOfDescription);
-		LinearLayout.LayoutParams p2 = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, weightOfInputText);
+		LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT,
+				weightOfDescription);
+		LinearLayout.LayoutParams p2 = new LinearLayout.LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT,
+				weightOfInputText);
 
 		TextView t = new TextView(context);
 		t.setLayoutParams(p);
@@ -103,12 +109,15 @@ public abstract class M_TextModifier implements ModifierInterface, UiDecoratable
 		applyTextFilterIfNeeded(editText);
 
 		l.addView(editText);
-		l.setPadding(DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING);
+		l.setPadding(DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING,
+				DEFAULT_PADDING);
 
 		if (myDecorator != null) {
 			int level = myDecorator.getCurrentLevel();
-			myDecorator.decorate(context, t, level + 1, UiDecorator.TYPE_INFO_TEXT);
-			myDecorator.decorate(context, editText, level + 1, UiDecorator.TYPE_EDIT_TEXT);
+			myDecorator.decorate(context, t, level + 1,
+					UiDecorator.TYPE_INFO_TEXT);
+			myDecorator.decorate(context, editText, level + 1,
+					UiDecorator.TYPE_EDIT_TEXT);
 		}
 
 		return l;
@@ -157,12 +166,14 @@ public abstract class M_TextModifier implements ModifierInterface, UiDecoratable
 							editText.setEnabled(false);
 						} else {
 							editText.setEnabled(true);
-							editText.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+							editText.getBackground().setColorFilter(Color.GRAY,
+									PorterDuff.Mode.MULTIPLY);
 							editText.setOnClickListener(myNotEditableInfo);
 						}
 					} else {
 						editText.setOnClickListener(null);
-						editText.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
+						editText.getBackground().setColorFilter(Color.WHITE,
+								PorterDuff.Mode.MULTIPLY);
 						editText.setEnabled(true);
 					}
 

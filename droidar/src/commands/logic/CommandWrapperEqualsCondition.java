@@ -60,8 +60,9 @@ public class CommandWrapperEqualsCondition extends Command {
 			}
 			return false;
 		case Bool:
-			Log.d("Commands", "myBool=" + myBValue + " wrapperBool="
-					+ myW.getBooleanValue());
+			Log.d("Commands",
+					"myBool=" + myBValue + " wrapperBool="
+							+ myW.getBooleanValue());
 			if (myW.equals(myBValue)) {
 				return myCommand.execute();
 			} else if (myElseCommand != null) {
@@ -100,8 +101,9 @@ public class CommandWrapperEqualsCondition extends Command {
 			}
 			return false;
 		case Bool:
-			Log.d("Commands", "myBool=" + myBValue + " wrapperBool="
-					+ myW.getBooleanValue());
+			Log.d("Commands",
+					"myBool=" + myBValue + " wrapperBool="
+							+ myW.getBooleanValue());
 			if (myW.equals(myBValue)) {
 				return myCommand.execute(transfairObject);
 			} else if (myElseCommand != null) {

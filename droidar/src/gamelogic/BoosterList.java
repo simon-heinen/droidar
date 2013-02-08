@@ -6,8 +6,8 @@ public class BoosterList extends GameElementList<Booster> {
 		int length = length();
 		float finalValue = originalValue;
 		for (int i = 0; i < length; i++) {
-			finalValue = getAllItems().get(i)
-					.getValue(finalValue, originalValue);
+			finalValue = getAllItems().get(i).getValue(finalValue,
+					originalValue);
 		}
 		return finalValue;
 	}
