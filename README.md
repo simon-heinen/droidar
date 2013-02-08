@@ -3,7 +3,14 @@ droidar
 
 DroidAR Mobile Locationbased Augmented Reality Framework for Android
 
-<iframe width="640" height="360" src="https://www.youtube.com/embed/v2zyj9hPiDo?rel=0" frameborder="0" allowfullscreen></iframe>
+
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=
+v2zyj9hPiDo
+"><img src="http://img.youtube.com/vi/
+v2zyj9hPiDo
+/0.jpg" alt="World Wide Web Consortium Home" width="72" height="46" border="0" /></a>
+
 
 <h1><a name="Project_overview"></a>Project overview<a href="#Project_overview" class="section_anchor"></a></h1><p>An framework for Augmented Reality on Android. Location based AR and marker based AR are both possible. Scroll down to see some more <strong>Demo Videos</strong> </p><p>Also read the wiki articles for more detailed information about DroidAR. </p><p><table class="wikitable"><tr><td style="border: 1px solid #ccc; padding: 5px;"> 
 <object width="640" height="360"><param name="movie" value="http://www.youtube.com/v/v2zyj9hPiDo?version=3&amp;hl=de_DE"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/v2zyj9hPiDo?version=3&amp;hl=de_DE" type="application/x-shockwave-flash" width="640" height="360" allowscriptaccess="always" allowfullscreen="true"></embed></object>
