@@ -1,9 +1,8 @@
 DroidAR
 =======
 
-DroidAR is a framework for Augmented Reality on Android. Location based AR and marker based AR are both possible. 
-
-Also read the [wiki articles](https://github.com/bitstars/droidar/wiki/_pages) for more detailed information about DroidAR.
+DroidAR is a framework for Augmented Reality on Android. Location based AR and marker based AR are both possible.
+Also read the [wiki articles](https://github.com/bitstars/droidar/wiki/_pages) (or the [FAQ](https://github.com/bitstars/droidar/wiki/FAQ)) for more detailed information about DroidAR.
 
 This framework can be used for many different scenarios, there are already some demo applications available (check the videos below).
 For the latest news about DroidAR also visit our [blog](http://droidar.blogspot.com/).
