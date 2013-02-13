@@ -3,13 +3,13 @@ DroidAR
 
 DroidAR is a framework for Augmented Reality on Android. Location based AR and marker based AR are both possible. 
 
-Also read the wiki articles for more detailed information about DroidAR.
+Also read the [wiki articles](https://github.com/bitstars/droidar/wiki/_pages) for more detailed information about DroidAR.
 
-This framework can be used for many different scenarios, there are already some demo applications available (check the videos and the download section).
+This framework can be used for many different scenarios, there are already some demo applications available (check the videos below).
 
-For the latest news also visit our blog: http://droidar.blogspot.com/
+For the latest news about DroidAR also visit our [blog](http://droidar.blogspot.com/)
 
-DroidAR is available under commercial license, or can be freely downloaded and used under the GNU GPL v3 ( http://www.gnu.org/licenses/gpl.html ) license.
+DroidAR is available under commercial license, or can be freely downloaded and used under [the GNU GPL v3 license](http://www.gnu.org/licenses/gpl.html).
 
 Demo Videos
 =======
