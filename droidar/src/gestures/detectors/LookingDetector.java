@@ -3,6 +3,7 @@ package gestures.detectors;
 import gestures.PhoneGesture;
 import gestures.PhoneGestureDetector;
 import gestures.SensorData;
+import gestures.StandardPhoneGesture;
 
 /**
  * A detector which detects if the user is holding the phone stable for a
@@ -35,7 +36,7 @@ public class LookingDetector implements PhoneGestureDetector {
 
 	@Override
 	public PhoneGesture getType() {
-		return PhoneGesture.LOOKING;
+		return StandardPhoneGesture.LOOKING;
 	}
 
 	@Override

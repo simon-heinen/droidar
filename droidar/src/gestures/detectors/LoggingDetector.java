@@ -4,6 +4,7 @@ import android.util.Log;
 import gestures.PhoneGesture;
 import gestures.PhoneGestureDetector;
 import gestures.SensorData;
+import gestures.StandardPhoneGesture;
 
 /**
  * A dummy detector that's simply printing out the measured sensor data to the
@@ -34,7 +35,7 @@ public class LoggingDetector implements PhoneGestureDetector {
 
 	@Override
 	public PhoneGesture getType() {
-		return PhoneGesture.NONE;
+		return StandardPhoneGesture.NONE;
 	}
 
 	@Override
