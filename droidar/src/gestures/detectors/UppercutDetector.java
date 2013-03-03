@@ -3,6 +3,7 @@ package gestures.detectors;
 import gestures.PhoneGesture;
 import gestures.PhoneGestureDetector;
 import gestures.SensorData;
+import gestures.StandardPhoneGesture;
 import util.Vec;
 
 public class UppercutDetector implements PhoneGestureDetector {
@@ -18,7 +19,7 @@ public class UppercutDetector implements PhoneGestureDetector {
 
 	@Override
 	public PhoneGesture getType() {
-		return PhoneGesture.UPPERCUT;
+		return StandardPhoneGesture.UPPERCUT;
 	}
 
 	@Override
