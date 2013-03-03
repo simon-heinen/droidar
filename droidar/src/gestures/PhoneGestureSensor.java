@@ -72,7 +72,7 @@ public class PhoneGestureSensor implements SensorEventListener {
 		 * @return The builder instance for method chaining.
 		 */
 		public Builder withMinimumConfidence(float confidence) {
-			sensor.addDetector(new DummyDetector(PhoneGesture.NONE, confidence));
+			sensor.addDetector(new DummyDetector(StandardPhoneGesture.NONE, confidence));
 			return this;
 		}
 
@@ -183,7 +183,7 @@ public class PhoneGestureSensor implements SensorEventListener {
 	/**
 	 * The last propagated gesture.
 	 */
-	private PhoneGesture lastGesture = PhoneGesture.NONE;
+	private PhoneGesture lastGesture = StandardPhoneGesture.NONE;
 
 	/**
 	 * The gravity vector indicating the measured values of gravity along the
@@ -319,7 +319,7 @@ public class PhoneGestureSensor implements SensorEventListener {
 	private void propagateEvent(PhoneGesture phoneGesture) {
 		long currentTime = System.currentTimeMillis();
 
-		if ((lastGesture != PhoneGesture.NONE && currentTime - lastEvent < gestureTimeout)
+		if ((lastGesture != StandardPhoneGesture.NONE && currentTime - lastEvent < gestureTimeout)
 				|| lastGesture == phoneGesture) {
 			return;
 		}
@@ -361,7 +361,7 @@ public class PhoneGestureSensor implements SensorEventListener {
 		}
 
 		propagateEvent(mostProbableDetector != null ? mostProbableDetector
-				.getType() : PhoneGesture.NONE);
+				.getType() : StandardPhoneGesture.NONE);
 	}
 
 	/**

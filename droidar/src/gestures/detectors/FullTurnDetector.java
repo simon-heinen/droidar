@@ -6,6 +6,7 @@ import android.hardware.SensorManager;
 import gestures.PhoneGesture;
 import gestures.PhoneGestureDetector;
 import gestures.SensorData;
+import gestures.StandardPhoneGesture;
 
 /**
  * The FullTurnDetector can be used to determine whether the player has
@@ -51,7 +52,7 @@ public class FullTurnDetector implements PhoneGestureDetector {
 
 	@Override
 	public PhoneGesture getType() {
-		return PhoneGesture.FULL_TURN;
+		return StandardPhoneGesture.FULL_TURN;
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package gestures.detectors;
 import gestures.PhoneGesture;
 import gestures.PhoneGestureDetector;
 import gestures.SensorData;
+import gestures.StandardPhoneGesture;
 
 /**
  * A detector to detect "Slashing" movements by simple peak detection.
@@ -30,7 +31,7 @@ public class SlashDetector implements PhoneGestureDetector {
 
 	@Override
 	public PhoneGesture getType() {
-		return PhoneGesture.SLASH;
+		return StandardPhoneGesture.SLASH;
 	}
 
 	@Override

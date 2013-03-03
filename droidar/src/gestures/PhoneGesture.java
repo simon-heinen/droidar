@@ -1,25 +1,14 @@
 package gestures;
 
 /**
- * A list of possible gesture types. The gesture is explicitly called
- * **Phone**Gesture in order to avoid confusion with e.g. touch gestures that
- * can be performed on the screen. PhoneGestures involve moving the whole phone
- * (i.e. physical movement through space).
+ * To identify gestures in a structured way, we're making use of the
+ * "Extensible Enum Pattern". When creating your own gestures, create an enum
+ * that implements this interface and you will be able to pass instances of your
+ * enum in the required locations (e.g. PhoneGestureDetector.getType()).
  * 
- * @author marmat (Martin Matysiak)
+ * @see https://blogs.oracle.com/darcy/entry/enums_and_mixins
+ * @author kaktus621@gmail.com (Martin Matysiak)
  */
-public enum PhoneGesture {
-	/* No gesture detected with confidence */
-	NONE,
-	/* A simple slashing gesture */
-	SLASH,
-	/* User holds the phone in a stable position, as if looking at it */
-	LOOKING,
-	/* A "punching" gesture that goes vertically upwards */
-	UPPERCUT,
-	/*
-	 * A "360° turn" of the player (i.e., the player's nose faces all
-	 * georgraphic directions once)
-	 */
-	FULL_TURN
+public interface PhoneGesture {
+
 }
