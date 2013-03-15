@@ -51,7 +51,7 @@ Details
 =======
 
 Location based AR and marker based AR are both possible. This framework can be used for many different scenarios, there are already some demo applications available.
-- Foodstep recognition & Indoor in AR
+- Footstep recognition & Indoor AR
 - Locationbased Gaming & Crowdsourcing Framework
 
 Since the initial creation of the prototype of an augmented reality development tool in 2010, it was continuously improved and new features were added. The created development tool (SDK) enables other programmers to integrate augmented reality in their own applications.
