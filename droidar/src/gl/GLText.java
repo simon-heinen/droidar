@@ -73,7 +73,7 @@ public class GLText extends MeshComponent {
 		}
 	}
 
-	private void loadText(String text) {
+	protected void loadText(String text) {
 		int textLength = text.length();
 		for (int i = 0; i < textLength; i++) {
 			MeshComponent m = loadCharMesh("" + text.charAt(i), i, textLength);
@@ -83,7 +83,7 @@ public class GLText extends MeshComponent {
 
 	}
 
-	private MeshComponent loadCharMesh(String s, int charNr, int textLenght) {
+	protected MeshComponent loadCharMesh(String s, int charNr, int textLenght) {
 		MeshComponent value = loadFromMap(s);
 		if (value == null) {
 			value = createNewCharMesh(s);
@@ -100,23 +100,25 @@ public class GLText extends MeshComponent {
 	}
 
 	private void registerValueInMap(String key, MeshComponent value) {
-		if (myTextMap != null)
+		if (myTextMap != null) {
 			myTextMap.put(key, value);
+		}
 	}
 
 	private MeshComponent loadFromMap(String key) {
-		if (myTextMap != null)
+		if (myTextMap != null) {
 			return myTextMap.get(key);
+		}
 		return null;
 	}
 
-	private MeshComponent createNewCharMesh(String s) {
+	protected MeshComponent createNewCharMesh(String s) {
 		MeshComponent mesh = GLFactory.getInstance().newTexturedSquare(
 				"char" + s, generateText(s), CHAR_SIZE);
 		return mesh;
 	}
 
-	private Bitmap generateText(String s) {
+	protected Bitmap generateText(String s) {
 		TextView v = new TextView(myContext);
 		v.setTypeface(null, Typeface.BOLD);
 		v.setText(s);
