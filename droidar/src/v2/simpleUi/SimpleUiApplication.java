@@ -22,14 +22,14 @@ import android.content.Context;
  * 
  */
 public class SimpleUiApplication extends Application {
-	private HashMap<String, Object> transfairList;
+	private HashMap<String, Object> transferList;
 	private static Context context;
 
-	public HashMap<String, Object> getTransfairList() {
-		if (transfairList == null) {
-			transfairList = new HashMap<String, Object>();
+	public HashMap<String, Object> getTransferList() {
+		if (transferList == null) {
+			transferList = new HashMap<String, Object>();
 		}
-		return transfairList;
+		return transferList;
 	}
 
 	@Override

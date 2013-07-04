@@ -92,7 +92,7 @@ public abstract class DefaultARSetup extends Setup {
 		rotateGLCameraAction = new ActionRotateCameraBuffered(camera);
 
 		arView.addOnTouchMoveListener(wasdAction);
-		eventManager.addOnOrientationChangedAction(rotateGLCameraAction);
+		// eventManager.addOnOrientationChangedAction(rotateGLCameraAction);
 		eventManager.addOnTrackballAction(new ActionMoveCameraBuffered(camera,
 				5, 25));
 		eventManager.addOnLocationChangedAction(new ActionCalcRelativePos(
@@ -112,11 +112,12 @@ public abstract class DefaultARSetup extends Setup {
 	}
 
 	protected void callAddObjectsToWorldIfNotCalledAlready() {
-		if (!addObjCalledOneTieme)
+		if (!addObjCalledOneTieme) {
 			addObjectsTo(myRenderer, world, GLFactory.getInstance());
-		else
+		} else {
 			Log.w(LOG_TAG, "callAddObjectsToWorldIfNotCalledAlready() "
 					+ "called more then one time!");
+		}
 		addObjCalledOneTieme = true;
 	}
 

@@ -10,11 +10,12 @@ import gl.scenegraph.MeshComponent;
 import gl.scenegraph.Shape;
 import gui.GuiSetup;
 
+import java.util.ArrayList;
+
 import javax.microedition.khronos.opengles.GL10;
 
 import system.DefaultARSetup;
 import system.EventManager;
-import util.EfficientList;
 import util.Vec;
 import util.Wrapper;
 import worldData.Entity;
@@ -34,11 +35,11 @@ public class LightningSetup extends DefaultARSetup {
 
 	private static float zMoveFactor = 1f;
 
-	private Wrapper targetMoveWrapper;
+	private final Wrapper targetMoveWrapper;
 
 	private LightSource spotLight;
 
-	private Obj lightObject;
+	private final Obj lightObject;
 
 	public LightningSetup() {
 		super();
@@ -47,7 +48,7 @@ public class LightningSetup extends DefaultARSetup {
 	}
 
 	@Override
-	public boolean _a2_initLightning(EfficientList<LightSource> lights) {
+	public boolean _a2_initLightning(ArrayList<LightSource> lights) {
 		lights.add(LightSource.newDefaultAmbientLight(GL10.GL_LIGHT0));
 		spotLight = LightSource.newDefaultDefuseLight(GL10.GL_LIGHT1, new Vec(
 				0, 0, 0));
@@ -145,15 +146,16 @@ public class LightningSetup extends DefaultARSetup {
 				if (targetMoveWrapper.getObject() instanceof Obj) {
 					MoveComp mover = ((Obj) targetMoveWrapper.getObject())
 							.getComp(MoveComp.class);
-					if (mover != null)
+					if (mover != null) {
 						mover.myTargetPos.z -= zMoveFactor;
-					else {
+					} else {
 						Vec pos = ((Obj) targetMoveWrapper.getObject())
 								.getPosition();
-						if (pos != null)
+						if (pos != null) {
 							pos.z -= zMoveFactor;
-						else
+						} else {
 							Log.e(LOG_TAG, "Cant move object, has no position!");
+						}
 					}
 					return true;
 				}
@@ -167,15 +169,16 @@ public class LightningSetup extends DefaultARSetup {
 				if (targetMoveWrapper.getObject() instanceof Obj) {
 					MoveComp mover = ((Obj) targetMoveWrapper.getObject())
 							.getComp(MoveComp.class);
-					if (mover != null)
+					if (mover != null) {
 						mover.myTargetPos.z += zMoveFactor;
-					else {
+					} else {
 						Vec pos = ((Obj) targetMoveWrapper.getObject())
 								.getPosition();
-						if (pos != null)
+						if (pos != null) {
 							pos.z += zMoveFactor;
-						else
+						} else {
 							Log.e(LOG_TAG, "Cant move object, has no position!");
+						}
 					}
 					return true;
 				}

@@ -3,11 +3,11 @@ package gl;
 import gl.textures.TextureManager;
 
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import util.EfficientList;
 import util.Log;
 import util.Vec;
 import android.opengl.GLU;
@@ -36,11 +36,12 @@ public class GL1Renderer extends GLRenderer {
 	 * there is a global maximum of 8 lights in the complete OpenGL ES
 	 * environment and not only per world
 	 */
-	private EfficientList<LightSource> myLights;
+	private ArrayList<LightSource> myLights;
 
-	public EfficientList<LightSource> getMyLights() {
-		if (myLights == null)
-			myLights = new EfficientList<LightSource>();
+	public ArrayList<LightSource> getMyLights() {
+		if (myLights == null) {
+			myLights = new ArrayList<LightSource>();
+		}
 		return myLights;
 	}
 
@@ -58,15 +59,16 @@ public class GL1Renderer extends GLRenderer {
 			.toFloatBuffer();
 	private static final boolean FLASH_SCREEN = false;
 
-	private EfficientList<Renderable> elementsToRender = new EfficientList<Renderable>();
+	private final ArrayList<Renderable> elementsToRender = new ArrayList<Renderable>();
 
 	private boolean readyToPickPixel;
 
 	@Override
 	public void onDrawFrame(GL10 gl) {
 
-		if (pauseRenderer)
+		if (pauseRenderer) {
 			startPauseLoop();
+		}
 
 		final long currentTime = SystemClock.uptimeMillis();
 
@@ -101,7 +103,7 @@ public class GL1Renderer extends GLRenderer {
 
 			// Clears the screen and depth buffer.
 			gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
-			for (int i = 0; i < elementsToRender.myLength; i++) {
+			for (int i = 0; i < elementsToRender.size(); i++) {
 				// Reset the modelview matrix
 				gl.glLoadIdentity();
 				elementsToRender.get(i).render(gl, null);
@@ -162,9 +164,9 @@ public class GL1Renderer extends GLRenderer {
 	 * @param gl
 	 */
 	public void enableLights(GL10 gl) {
-		if (myLights.myLength > 0) {
+		if (myLights.size() > 0) {
 			gl.glEnable(GL10.GL_LIGHTING);
-			for (int i = 0; i < myLights.myLength; i++) {
+			for (int i = 0; i < myLights.size(); i++) {
 				myLights.get(i).switchOn(gl);
 			}
 		}
@@ -172,7 +174,7 @@ public class GL1Renderer extends GLRenderer {
 
 	public void disableLights(GL10 gl) {
 		gl.glDisable(GL10.GL_LIGHTING);
-		for (int i = 0; i < myLights.myLength; i++) {
+		for (int i = 0; i < myLights.size(); i++) {
 			myLights.get(i).switchOff(gl);
 		}
 	}
@@ -227,11 +229,13 @@ public class GL1Renderer extends GLRenderer {
 		 */
 		gl.glMatrixMode(GL10.GL_MODELVIEW);
 
-		if (useLightning)
+		if (useLightning) {
 			enableLights(gl);
+		}
 
-		if (USE_FOG)
+		if (USE_FOG) {
 			addFog(gl);
+		}
 
 		/*
 		 * update this here to get a goot init value for lastTimeInMs

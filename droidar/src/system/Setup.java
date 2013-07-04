@@ -17,6 +17,8 @@ import gui.simpleUI.EditItem;
 import gui.simpleUI.ModifierGroup;
 import gui.simpleUI.SimpleUIv1;
 
+import java.util.ArrayList;
+
 import javax.microedition.khronos.opengles.GL10;
 
 import listeners.SetupListener;
@@ -108,8 +110,8 @@ public abstract class Setup {
 	/**
 	 * TODO make this accessible
 	 */
-	private boolean gotoFullScreenMode = true;
-	private boolean useAccelAndMagnetoSensors;
+	private final boolean gotoFullScreenMode = true;
+	private final boolean useAccelAndMagnetoSensors;
 
 	private GuiSetup guiSetup;
 
@@ -312,7 +314,7 @@ public abstract class Setup {
 	 *            add all the {@link LightSource}s you want to use to this list
 	 * @return true if lightning should be enabled
 	 */
-	public boolean _a2_initLightning(EfficientList<LightSource> lights) {
+	public boolean _a2_initLightning(ArrayList<LightSource> lights) {
 		lights.add(LightSource.newDefaultAmbientLight(GL10.GL_LIGHT0));
 		lights.add(LightSource.newDefaultSpotLight(GL10.GL_LIGHT1, new Vec(5,
 				5, 5), new Vec(0, 0, 0)));

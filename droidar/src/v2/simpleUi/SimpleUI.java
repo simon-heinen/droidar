@@ -178,9 +178,9 @@ public class SimpleUI extends Activity {
 			Object itemToDisplay) {
 
 		String newKey = new Date().toString() + itemToDisplay.toString();
-		getApplication(c).getTransfairList().put(newKey, itemToDisplay);
+		getApplication(c).getTransferList().put(newKey, itemToDisplay);
 		if (DEBUG)
-			getApplication(c).getTransfairList();
+			getApplication(c).getTransferList();
 		return newKey;
 	}
 
@@ -201,12 +201,12 @@ public class SimpleUI extends Activity {
 						Log.w(LOG_TAG, "new application and already "
 								+ "loaded application were not "
 								+ "equal! Replacing old reference");
-					tr = application.getTransfairList();
+					tr = application.getTransferList();
 				}
 				application = app;
 				// try to resque all the objects from the old list:
 				if (tr != null)
-					application.getTransfairList().putAll(tr);
+					application.getTransferList().putAll(tr);
 			}
 		}
 		if (application == null) {
@@ -218,7 +218,7 @@ public class SimpleUI extends Activity {
 
 	private Object loadObjectFromTransfairList(String key) {
 		HashMap<String, Object> transfairList = getApplication(this)
-				.getTransfairList();
+				.getTransferList();
 		if (key == null) {
 			if (DEBUG)
 				Log.i(LOG_TAG, "passed key was null, will"
