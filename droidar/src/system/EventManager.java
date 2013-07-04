@@ -119,6 +119,10 @@ public class EventManager implements LocationListener, SensorEventListener {
 					.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 			sensorManager.registerListener(this, accelSensor,
 					SensorManager.SENSOR_DELAY_GAME);
+			Sensor sensorFusion = sensorManager
+					.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+			sensorManager.registerListener(this, sensorFusion,
+					SensorManager.SENSOR_DELAY_GAME);
 		} else {
 			// Register orientation Sensor Listener:
 			Sensor orientationSensor = sensorManager.getDefaultSensor(11);// Sensor.TYPE_ROTATION_VECTOR);
@@ -175,9 +179,8 @@ public class EventManager implements LocationListener, SensorEventListener {
 				if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
 					onOrientationChangedList.get(i).onMagnetChanged(values);
 				}
-
 				// else sensor input is set to orientation mode
-				if (event.sensor.getType() == 11) {// Sensor.TYPE_ROTATION_VECTOR)
+				if (event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
 					onOrientationChangedList.get(i)
 							.onOrientationChanged(values);
 				}

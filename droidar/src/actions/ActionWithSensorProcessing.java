@@ -15,7 +15,7 @@ public abstract class ActionWithSensorProcessing extends Action {
 
 	private static final String LOG_TAG = "ActionWithSensorProcessing";
 
-	private GLCamRotationController myTargetCamera;
+	private final GLCamRotationController myTargetCamera;
 
 	public Algo magnetAlgo;
 	public Algo accelAlgo;
@@ -35,7 +35,7 @@ public abstract class ActionWithSensorProcessing extends Action {
 	private boolean orientationDataChanged;
 	private float[] myNewOrientValues;
 
-	private float[] unrotatedMatrix = Calculus.createIdentityMatrix();
+	private final float[] unrotatedMatrix = Calculus.createIdentityMatrix();
 	private float[] rotationMatrix = Calculus.createIdentityMatrix();
 
 	private final int screenRotation;
@@ -58,10 +58,11 @@ public abstract class ActionWithSensorProcessing extends Action {
 	@Override
 	public synchronized boolean onAccelChanged(float[] values) {
 
-		if (accelAlgo != null)
+		if (accelAlgo != null) {
 			myNewAccelValues = accelAlgo.execute(values);
-		else
+		} else {
 			myNewAccelValues = values;
+		}
 		accelChanged = true;
 		return true;
 
@@ -69,10 +70,11 @@ public abstract class ActionWithSensorProcessing extends Action {
 
 	@Override
 	public synchronized boolean onMagnetChanged(float[] values) {
-		if (magnetAlgo != null)
+		if (magnetAlgo != null) {
 			myNewMagnetValues = magnetAlgo.execute(values);
-		else
+		} else {
 			myNewMagnetValues = values;
+		}
 		magnetoChanged = true;
 		return true;
 
@@ -80,10 +82,11 @@ public abstract class ActionWithSensorProcessing extends Action {
 
 	@Override
 	public synchronized boolean onOrientationChanged(float[] values) {
-		if (orientAlgo != null)
+		if (orientAlgo != null) {
 			myNewOrientValues = orientAlgo.execute(values);
-		else
+		} else {
 			myNewOrientValues = values;
+		}
 		orientationDataChanged = true;
 		return true;
 
@@ -96,30 +99,33 @@ public abstract class ActionWithSensorProcessing extends Action {
 				// if accel or magnet changed:
 				if (accelChanged) {
 					accelChanged = false;
-					if (accelBufferAlgo != null)
+					if (accelBufferAlgo != null) {
 						accelBufferAlgo.execute(myAccelValues,
 								myNewAccelValues, timeDelta);
-					else
+					} else {
 						myAccelValues = myNewAccelValues;
+					}
 				}
 				if (magnetoChanged) {
 					magnetoChanged = false;
-					if (magnetBufferAlgo != null)
+					if (magnetBufferAlgo != null) {
 						magnetBufferAlgo.execute(myMagnetValues,
 								myNewMagnetValues, timeDelta);
-					else
+					} else {
 						myMagnetValues = myNewMagnetValues;
+					}
 				}
 				// first calc the unrotated matrix:
 				SensorManager.getRotationMatrix(unrotatedMatrix, null,
 						myAccelValues, myMagnetValues);
 			} else if (orientationDataChanged) {
 				orientationDataChanged = false;
-				if (orientationBufferAlgo != null)
+				if (orientationBufferAlgo != null) {
 					orientationBufferAlgo.execute(myOrientValues,
 							myNewOrientValues, timeDelta);
-				else
+				} else {
 					myOrientValues = myNewOrientValues;
+				}
 				GLUtilityClass.getRotationMatrixFromVector(unrotatedMatrix,
 						myOrientValues);
 			}
