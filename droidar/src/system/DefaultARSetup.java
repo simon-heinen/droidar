@@ -90,6 +90,7 @@ public abstract class DefaultARSetup extends Setup {
 			CustomGLSurfaceView arView, SystemUpdater updater) {
 		wasdAction = new ActionWASDMovement(camera, 25, 50, 20);
 		rotateGLCameraAction = new ActionRotateCameraBuffered(camera);
+		eventManager.addOnOrientationChangedAction(rotateGLCameraAction);
 
 		arView.addOnTouchMoveListener(wasdAction);
 		// eventManager.addOnOrientationChangedAction(rotateGLCameraAction);

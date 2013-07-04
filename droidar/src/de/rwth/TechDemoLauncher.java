@@ -26,6 +26,7 @@ import de.rwth.setups.DebugSetup;
 import de.rwth.setups.FarAwayPOIScenarioSetup;
 import de.rwth.setups.FastChangingTextSetup;
 import de.rwth.setups.GameDemoSetup;
+import de.rwth.setups.GeoPosTestSetup;
 import de.rwth.setups.GraphCreationSetup;
 import de.rwth.setups.GraphMovementTestSetup;
 import de.rwth.setups.LargeWorldsSetup;
@@ -53,6 +54,7 @@ public class TechDemoLauncher extends Activity {
 		LinearLayout l = ((LinearLayout) findViewById(R.id.demoScreenLinView));
 		l.removeAllViews();
 
+		showSetup("GeoPosTestSetup", new GeoPosTestSetup());
 		showSetup("Demo Setup", new StaticDemoSetup());
 		showSetup("Animation Demo", new DebugSetup());
 		showSetup("Game Demo", new GameDemoSetup());

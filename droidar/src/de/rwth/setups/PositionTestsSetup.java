@@ -27,20 +27,20 @@ import commands.ui.CommandShowToast;
 public class PositionTestsSetup extends Setup {
 
 	protected static final int ZDELTA = 5;
-	private GLCamera camera;
-	private World world;
-	private ActionCalcRelativePos gpsAction;
-	private GeoObj posA;
-	private GeoObj posB;
-	private GeoObj posC;
-	private GeoObj posD;
-	private GeoObj posE;
+	private final GLCamera camera;
+	private final World world;
+	private final ActionCalcRelativePos gpsAction;
+	private final GeoObj posA;
+	private final GeoObj posB;
+	private final GeoObj posC;
+	private final GeoObj posD;
+	private final GeoObj posE;
 
 	public PositionTestsSetup() {
 		camera = new GLCamera();
 		world = new World(camera);
 		gpsAction = new ActionCalcRelativePos(world, camera);
-		posA = new GeoObj(50.780231, 6.065505);
+		posA = new GeoObj(50.778922, 6.060461);
 		posB = new GeoObj(50.780815, 6.06662);
 		posC = new GeoObj(50.780557, 6.06735);
 		posD = new GeoObj(50.779892, 6.065955);
