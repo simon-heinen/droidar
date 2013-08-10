@@ -11,8 +11,7 @@ DroidAR is available under commercial license (contact us http://bitstars.com/?p
 
 Contributing to the code
 =======
-
-Contributing to DroidAR is easy on GitHub (that's the main reason why we switched from Google Code). 
+I would be great if you want to help working on the code, fixing bugs, refactorings and adding you own ideas. Contributing to DroidAR is easy on GitHub (that's the main reason why we switched from Google Code). 
 
 1. Click "Fork" do your changes in your local copy of DroidAR 
 2. When you are done commite all changes to you online copy 
