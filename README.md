@@ -13,6 +13,7 @@ Contributing to the code
 =======
 
 Contributing to DroidAR is easy on GitHub (that's the main reason why we switched from Google Code). 
+
 1. Click "Fork" do your changes in your local copy of DroidAR 
 2. When you are done commite all changes to you online copy 
 3. Send a Pull-Request to via the Github webpage ([see Pull-Requests for more infos](https://help.github.com/articles/using-pull-requests)). 
