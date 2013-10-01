@@ -81,4 +81,4 @@ target="_blank"><img src="https://lh3.ggpht.com/6s2gdlZZPh80h7QvDc6JD7Y4nF3ap3Ej
 alt="Temple Treasure" width="240" height="150" border="10" /></a>
 <a href="https://play.google.com/store/apps/details?id=de.interactivepioneers.chioapp&hl=en
 " target="_blank"><img src="https://lh6.ggpht.com/cQL1gDDzcvwoiS1tqBA8MVWD2i98RfcZnbq1ZKWgf_ei-qb0_MSFAoKgk7RA6BMKjjs=w300-rw" 
-alt="CHIO Aachen" width="240" height="240" border="10" /></a>
+alt="CHIO Aachen" width="150" height="150" border="10" /></a>
