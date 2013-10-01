@@ -32,6 +32,7 @@ Demo Videos
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=v2zyj9hPiDo
 " target="_blank"><img src="http://img.youtube.com/vi/v2zyj9hPiDo/0.jpg" 
 alt="Link to the DroidAR video" width="240" height="180" border="10" /></a>
+
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=8GtVcQN0CpY
 " target="_blank"><img src="http://img.youtube.com/vi/8GtVcQN0CpY/0.jpg" 
 alt="Link to the DroidAR video" width="240" height="180" border="10" /></a>
