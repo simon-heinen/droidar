@@ -170,9 +170,9 @@ public class GDXConnection implements Renderable {
 				return 1;
 			}
 
-			@Override
-			public void setIcon(Pixmap[] pixmaps) {
-			}
+//			@Override
+//			public void setIcon(Pixmap[] pixmaps) {
+//			}
 
 			@Override
 			public void setContinuousRendering(boolean isContinuous) {

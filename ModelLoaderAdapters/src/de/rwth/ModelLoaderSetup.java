@@ -38,9 +38,12 @@ public class ModelLoaderSetup extends DefaultARSetup {
 		this.fileName = fileName;
 		this.textureName = textureName;
 		targetMoveWrapper = new Wrapper();
+		
+		//instantiated light here, since the method _a2_initLightning() is no longer overridden
+		spotLight = LightSource.newDefaultDefuseLight(GL10.GL_LIGHT1, new Vec(0, 0, 0));
 	}
 
-	@Override
+	//@Override
 	public boolean _a2_initLightning(EfficientList<LightSource> lights) {
 		spotLight = LightSource.newDefaultDefuseLight(GL10.GL_LIGHT1, new Vec(
 				0, 0, 0));
@@ -53,6 +56,7 @@ public class ModelLoaderSetup extends DefaultARSetup {
 			GLFactory objectFactory) {
 		this.renderer = renderer;
 		final Obj lightObject = new Obj();
+		
 		spotLight.setPosition(new Vec(1, 1, 1));
 		MeshComponent circle = objectFactory.newCircle(null);
 		circle.setRotation(new Vec(0.2f, 0.2f, 0.2f));
