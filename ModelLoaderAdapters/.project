@@ -30,11 +30,4 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>DroidAR_src</name>
-			<type>2</type>
-			<locationURI>_android_DroidAR_d5fd9f8d/src</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>
