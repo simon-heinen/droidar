@@ -14,21 +14,21 @@ public class DemoMain extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		LinearLayout l = new LinearLayout(this);
-		l.addView(newButton("jaiqua-mesh.xml iii", "nskingr.jpg"));
-		l.addView(newButton("robot-mesh.xml", "r2skin.jpg"));
-		l.addView(newButton("boy_low.g3dt", "boy_lowpoly_color.png"));
-		l.addView(newButton("blobbie_world_test.dae",
-				"world_blobbie_blocks.png"));
+		l.addView(newButton("data/jaiqua-mesh.xml iii", "data/nskingr.jpg"));
+		l.addView(newButton("data/robot-mesh.xml", "data/r2skin.jpg"));
+		l.addView(newButton("data/boy_low.g3dt", "data/boy_lowpoly_color.png"));
+		l.addView(newButton("data/blobbie_world_test.dae",
+				"data/world_blobbie_blocks.png"));
 
-		l.addView(newButton("knight.md2", "knight.jpg"));
+		l.addView(newButton("data/knight.md2", "data/knight.jpg"));
 
-		l.addView(newButton("redWhiteHouse.dae", "redWhiteHouse/texture0.jpg"));
+		l.addView(newButton("data/redWhiteHouse.dae", "data/redWhiteHouse/texture0.jpg"));
 
 		l.addView(newButton("qbob/world_blobbie_brushes.g3dt",
 				"qbob/world_blobbie_blocks.png"));
-		// l.addView(newButton("multipleuvs.g3dt", "multipleuvs_1.png",
+		// l.addView(newButton("data/multipleuvs.g3dt", "data/multipleuvs_1.png",
 		// "multipleuvs_2.png"));
-		l.addView(newButton("head.obj", null));
+		l.addView(newButton("data/head.obj", null));
 
 		l.setOrientation(LinearLayout.VERTICAL);
 		setContentView(l);

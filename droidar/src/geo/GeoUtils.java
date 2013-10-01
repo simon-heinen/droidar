@@ -265,7 +265,13 @@ public class GeoUtils {
 		// try to open the url:
 		try {
 			String url = generateUrl(startPos, destPos, byWalk);
-			Document kml = getDocumentFromUrl(url);
+			
+			//kml does not work anymore, see a solution in http://stackoverflow.com/questions/11745314/why-retrieving-google-directions-for-android-using-kml-data-is-not-working-anymo/11745316#11745316
+//			Document kml = getDocumentFromUrl(url);
+			
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document kml = db.parse( url );
 
 			if (kml.getElementsByTagName("GeometryCollection").getLength() > 0) {
 
@@ -349,6 +355,7 @@ public class GeoUtils {
 		return null;
 	}
 
+	@Deprecated
 	private Document getDocumentFromUrl(String url) throws IOException,
 			MalformedURLException, ProtocolException,
 			FactoryConfigurationError, ParserConfigurationException,
