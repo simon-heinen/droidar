@@ -66,8 +66,8 @@ import android.widget.Button;
  * style='mso-tab-count: 1'>      </span><span class=SpellE><span
  * style='color:#7F007F'>android:taskAffinity</span></span><span
  * style='color:black'>=</span><i><span style='color:#2A00FF'>&quot;<span
- * class=SpellE>v2.simpleUi.util.ErrorHandler</span>&quot;</span></i><span
- * style='color: teal'>&gt;</span><o:p></o:p></span>
+ * class=SpellE>tools.ErrorHandler</span>&quot;</span></i><span style='color:
+ * teal'>&gt;</span><o:p></o:p></span>
  * </p>
  * 
  * <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height: normal;mso-layout-grid-align:none;text-autospace:none'>
