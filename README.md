@@ -7,7 +7,24 @@ Also read the [wiki articles](https://github.com/bitstars/droidar/wiki/_pages) (
 This framework can be used for many different scenarios, there are already some demo applications available (check the videos below).
 For the latest news about DroidAR also visit our [blog](http://droidar.blogspot.com/).
 
-DroidAR is available under commercial license (contact us http://bitstars.com/?page_id=2 for more details) and can be downloaded and used for non commercial use under the GNU GPL v3 ( http://www.gnu.org/licenses/gpl.html ) license.
+DroidAR is available under commercial license (contact us http://http://bitstars.com/about/team/ for more details) and can be downloaded and used for non commercial use under the GNU GPL v3 ( http://www.gnu.org/licenses/gpl.html ) license.
+
+Contributing to the code
+=======
+I would be great if you want to help working on the code, fixing bugs, refactorings and adding you own ideas. Contributing to DroidAR is easy on GitHub (that's the main reason why we switched from Google Code). 
+
+1. Click "Fork", check out your fork and do your changes in your local copy of DroidAR 
+2. When you are done commite all changes to you online copy 
+3. Send a Pull-Request to via the Github webpage ([see Pull-Requests for more infos](https://help.github.com/articles/using-pull-requests)). 
+4. I will review your changes and merge them in the main repository so that everyone can use them.
+
+There are some rules to allow an easy integration of your code and changes:
+
+- You have to use the default code formatting style of Eclipse
+- You should enable auto formatting whenever you save a file. This way you can't forget to format: Go to Preferences->Java->Editor->Save Actions and enable "Format source code" and "Organize imports". 
+
+Now when you save the code is formatted automatically. This will avoid commit conflicts and changes in the code can be reviewed more easily. 
+
 
 Demo Videos
 =======
@@ -15,6 +32,7 @@ Demo Videos
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=v2zyj9hPiDo
 " target="_blank"><img src="http://img.youtube.com/vi/v2zyj9hPiDo/0.jpg" 
 alt="Link to the DroidAR video" width="240" height="180" border="10" /></a>
+
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=8GtVcQN0CpY
 " target="_blank"><img src="http://img.youtube.com/vi/8GtVcQN0CpY/0.jpg" 
 alt="Link to the DroidAR video" width="240" height="180" border="10" /></a>
@@ -34,18 +52,6 @@ alt="Link to the DroidAR video" width="240" height="180" border="10" /></a>
 " target="_blank"><img src="http://img.youtube.com/vi/fEd0HORzStQ/0.jpg" 
 alt="Link to the DroidAR video" width="240" height="180" border="10" /></a>
 
-Contributing to the code
-=======
-
-Contributing to DroidAR is easy on GitHub (that's the main reason why we switched from Google Code). 
-Click "Fork" do your changes in your local copy of DroidAR and then push it back to the DroidAR repository. I will make a short instructions video about this soon.
-
-There are some rules to allow an easy integration of your code and changes:
-
-- You have to use the default code formatting style of Eclipse
-- You should enable auto formatting whenever you save a file. This way you can't forget to format: Go to Preferences->Java->Editor->Save Actions and enable "Format source code" and "Organize imports". 
-
-Now when you save the code is formatted automatically. This will avoid commit conflicts and changes in the code can be reviewed more easily. 
 
 Details
 =======
@@ -68,3 +74,13 @@ A new instructions video is comming soon. You can watch the old one here:
 alt="Link to the DroidAR video" width="240" height="180" border="10" /></a>
 
 [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/b0e941873eef1822c01f7ce9e5296630 "githalytics.com")](http://githalytics.com/bitstars/droidar)
+
+Applications using DroidAR
+=======
+<a href="https://play.google.com/store/apps/details?id=com.thoughtshastra.templetreasure" 
+target="_blank"><img src="https://lh3.ggpht.com/6s2gdlZZPh80h7QvDc6JD7Y4nF3ap3EjrZ_pqrRKhho7XuJpcKBOC94mYN27M54jIXQS=h900-rw" 
+alt="Temple Treasure" width="240" height="150" border="10" /></a>
+   
+<a href="https://play.google.com/store/apps/details?id=de.interactivepioneers.chioapp&hl=en
+" target="_blank"><img src="https://lh6.ggpht.com/cQL1gDDzcvwoiS1tqBA8MVWD2i98RfcZnbq1ZKWgf_ei-qb0_MSFAoKgk7RA6BMKjjs=w300-rw" 
+alt="CHIO Aachen" width="150" height="150" border="10" /></a>

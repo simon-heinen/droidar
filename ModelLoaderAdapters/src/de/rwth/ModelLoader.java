@@ -11,11 +11,11 @@ import android.util.Log;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g3d.loaders.collada.ColladaLoader;
+//import com.badlogic.gdx.graphics.g3d.loaders.collada.ColladaLoader;
 import com.badlogic.gdx.graphics.g3d.loaders.g3d.G3dLoader;
 import com.badlogic.gdx.graphics.g3d.loaders.g3d.G3dtLoader;
 import com.badlogic.gdx.graphics.g3d.loaders.md2.MD2Loader;
-import com.badlogic.gdx.graphics.g3d.loaders.ogre.OgreXmlLoader;
+//import com.badlogic.gdx.graphics.g3d.loaders.ogre.OgreXmlLoader;
 import com.badlogic.gdx.graphics.g3d.loaders.wavefront.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.materials.Material;
 import com.badlogic.gdx.graphics.g3d.materials.TextureAttribute;
@@ -70,9 +70,9 @@ public abstract class ModelLoader implements gl.Renderable {
 			e.printStackTrace();
 		}
 
-		if (fileName.endsWith(".dae"))
-			model = ColladaLoader.loadStillModel(Gdx.files.internal(fileName));
-		else if (fileName.endsWith(".obj"))
+		/*if (fileName.endsWith(".dae"))
+			model = ColladaLoader.loadStillModel(Gdx.files.internal(fileName));*/
+		/*else*/ if (fileName.endsWith(".obj"))
 			model = new ObjLoader().loadObj(Gdx.files.internal(fileName), true);
 		else if (fileName.endsWith(".g3d"))
 			model = G3dLoader.loadStillModel(Gdx.files.internal(fileName));
@@ -88,17 +88,17 @@ public abstract class ModelLoader implements gl.Renderable {
 			}
 		}
 
-		else if (fileName.endsWith(".xml")) {
-			FileHandle skeletonFile = Gdx.files.internal(fileName.replace(
-					"mesh.xml", "skeleton.xml"));
-			skeletonModel = new OgreXmlLoader().load(
-					Gdx.files.internal(fileName), skeletonFile);
-			if (texture != null) {
-				Material mat = new Material("mat", new TextureAttribute(
-						texture, 0, "s_tex"));
-				model.setMaterial(mat);
-			}
-		}
+//		else if (fileName.endsWith(".xml")) {
+//			FileHandle skeletonFile = Gdx.files.internal(fileName.replace(
+//					"mesh.xml", "skeleton.xml"));
+//			skeletonModel = new OgreXmlLoader().load(
+//					Gdx.files.internal(fileName), skeletonFile);
+//			if (texture != null) {
+//				Material mat = new Material("mat", new TextureAttribute(
+//						texture, 0, "s_tex"));
+//				model.setMaterial(mat);
+//			}
+//		}
 
 		else if (fileName.endsWith(".g3dt")) {
 			keyFramedModel = G3dtLoader.loadKeyframedModel(
