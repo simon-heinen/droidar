@@ -455,4 +455,14 @@ public class EventManager implements LocationListener, SensorEventListener {
 				.pauseLocationManagerUpdates();
 	}
 
+	/**
+	 * see {@link SimpleLocationManager#setMaxNrOfBufferedLocations(int)}
+	 * 
+	 * @param maxNrOfBufferedLocations
+	 */
+	public void setMaxNrOfBufferedLocations(int maxNrOfBufferedLocations) {
+		SimpleLocationManager.getInstance(myTargetActivity)
+				.setMaxNrOfBufferedLocations(maxNrOfBufferedLocations);
+	}
+
 }

@@ -28,7 +28,7 @@ public abstract class SimpleLocationManager {
 
 	private static SimpleLocationManager instance;
 
-	private Context context;
+	private final Context context;
 	private LocationListener gpslistener;
 	private ArrayList<LocationListener> myListeners;
 	private OnStepListener stepListener;
@@ -64,14 +64,16 @@ public abstract class SimpleLocationManager {
 	}
 
 	public static SimpleLocationManager getInstance(Context context) {
-		if (instance == null)
+		if (instance == null) {
 			instance = new ConcreteSimpleLocationManager(context);
+		}
 		return instance;
 	}
 
 	public static boolean resetInstance() {
-		if (instance == null)
+		if (instance == null) {
 			return false;
+		}
 		instance.pauseLocationManagerUpdates();
 		instance = null;
 		return true;
@@ -160,8 +162,9 @@ public abstract class SimpleLocationManager {
 	public Location getCurrentLocation(int accuracy) {
 
 		Location l = getCurrentBUfferedLocation();
-		if (l != null)
+		if (l != null) {
 			return l;
+		}
 
 		if (context != null) {
 			try {
@@ -196,8 +199,9 @@ public abstract class SimpleLocationManager {
 	public Location getCurrentLocation() {
 
 		Location l = getCurrentBUfferedLocation();
-		if (l != null)
+		if (l != null) {
 			return l;
+		}
 
 		Log.w(LOG_TAG, "buffered current location object was null, "
 				+ "will use the one from the android LocationManager!");
@@ -217,8 +221,9 @@ public abstract class SimpleLocationManager {
 							+ " location providers");
 					for (int i = lm.getAllProviders().size() - 1; i >= 0; i--) {
 						l = lm.getLastKnownLocation(lm.getAllProviders().get(i));
-						if (l != null)
+						if (l != null) {
 							break;
+						}
 					}
 				} catch (Exception e) {
 				}
@@ -259,8 +264,9 @@ public abstract class SimpleLocationManager {
 					provider = possibleProvider;
 				}
 			}
-			if (provider == null)
+			if (provider == null) {
 				Log.w(LOG_TAG, "No location-provider alternative " + "found!");
+			}
 		}
 
 		if (!provider.equals(LocationManager.GPS_PROVIDER)) {
@@ -309,10 +315,11 @@ public abstract class SimpleLocationManager {
 					Log.d(LOG_TAG, "    > distance=" + steplength);
 					Location location = getCurrentBUfferedLocation();
 
-					if (location != null)
+					if (location != null) {
 						Log.i(LOG_TAG,
 								"location.getAccuracy()="
 										+ location.getAccuracy());
+					}
 
 					if (location != null) {
 						if (location.getAccuracy() < minimumAverageAccuracy) {
@@ -353,8 +360,9 @@ public abstract class SimpleLocationManager {
 	}
 
 	private boolean addToListeners(LocationListener locationListener) {
-		if (myListeners == null)
+		if (myListeners == null) {
 			myListeners = new ArrayList<LocationListener>();
+		}
 		if (!myListeners.contains(locationListener)) {
 			Log.i(LOG_TAG, "Adding listener " + locationListener + " to list");
 			myListeners.add(locationListener);
@@ -363,5 +371,15 @@ public abstract class SimpleLocationManager {
 		return false;
 
 	}
+
+	/**
+	 * @param maxNrOfBufferedLocations
+	 *            the nr of locations in the location buffer. the lower the
+	 *            number the faster it will move to the newes position but it
+	 *            will also become more fragile to outliers in the measurements.
+	 *            the default value is 15
+	 */
+	public abstract void setMaxNrOfBufferedLocations(
+			int maxNrOfBufferedLocations);
 
 }
