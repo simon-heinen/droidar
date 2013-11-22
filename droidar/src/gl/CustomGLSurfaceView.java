@@ -86,6 +86,7 @@ public class CustomGLSurfaceView extends GLSurfaceView implements
 
 		// Use a surface format with an Alpha channel:
 		this.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+		this.setZOrderMediaOverlay(true);
 	}
 
 	@Override
@@ -113,8 +114,9 @@ public class CustomGLSurfaceView extends GLSurfaceView implements
 	}
 
 	public void addOnTouchMoveListener(TouchMoveListener onTouchListener) {
-		if (onTouchListeners == null)
+		if (onTouchListeners == null) {
 			this.onTouchListeners = new ArrayList<TouchMoveListener>();
+		}
 		this.onTouchListeners.add(onTouchListener);
 	}
 
