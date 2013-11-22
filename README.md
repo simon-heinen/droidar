@@ -77,6 +77,8 @@ alt="Link to the DroidAR video" width="240" height="180" border="10" /></a>
 
 Applications using DroidAR
 =======
+(If you use DroidAR in your application you can write us a mail to be added hiere)
+
 <a href="https://play.google.com/store/apps/details?id=com.thoughtshastra.templetreasure" 
 target="_blank"><img src="https://lh3.ggpht.com/6s2gdlZZPh80h7QvDc6JD7Y4nF3ap3EjrZ_pqrRKhho7XuJpcKBOC94mYN27M54jIXQS=h900-rw" 
 alt="Temple Treasure" width="240" height="150" border="10" /></a>
