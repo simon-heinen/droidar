@@ -133,8 +133,8 @@ public class GraphCreationSetup extends Setup {
 	private GeoObj newWaypoint() {
 		final GeoObj p = new GeoObj();
 
-		p.setMyPosition(camera.getGPSPositionVec());
-
+		//p.setMyPosition(camera.getGPSPositionVec());
+		p.setVirtualPosition(Vec.getNewRandomPosInXYPlane(camera.getPosition(), 5, 20));
 		Log.d(LOG_TAG, "new geoObj with virtual pos=" + p.getVirtualPosition());
 
 		MeshComponent myShape = GLFactory.getInstance().newDiamond(null);

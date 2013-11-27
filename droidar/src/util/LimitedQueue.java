@@ -10,6 +10,13 @@ public class LimitedQueue<E> extends LinkedList<E> {
 		this.limit = limit;
 	}
 
+	public void setLimit(int limit) {
+		this.limit = limit;
+		while (size() > limit) {
+			remove();
+		}
+	}
+
 	@Override
 	public boolean add(E o) {
 		super.add(o);

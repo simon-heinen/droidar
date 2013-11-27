@@ -26,7 +26,7 @@ public class ConcreteSimpleLocationManager extends SimpleLocationManager {
 	private Location currentPosition;
 	private LimitedQueue<Location> lastPositions;
 
-	private float mimProb = 0.5f; // TODO
+	private final float mimProb = 0.5f; // TODO
 
 	private Location lastStepPos;
 
@@ -125,6 +125,15 @@ public class ConcreteSimpleLocationManager extends SimpleLocationManager {
 		// System.out.println("nLat=" + nLat);
 
 		return true;
+	}
+
+	@Override
+	public void setMaxNrOfBufferedLocations(int maxNrOfBufferedLocations) {
+		if (lastPositions == null) {
+			lastPositions = new LimitedQueue<Location>(maxNrOfBufferedLocations);
+		} else {
+			lastPositions.setLimit(maxNrOfBufferedLocations);
+		}
 	}
 
 	private void addToLastLocationsList(Location location) {

@@ -4,6 +4,7 @@ import geo.GeoObj;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import logger.ARLogger;
 import system.EventManager;
 import util.Calculus;
 import util.HasDebugInformation;
@@ -68,9 +69,9 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 * This lock has to be used to not override the matrix while it is displayed
 	 * by opengl
 	 */
-	private Object rotMatrLock = new Object();
+	private final Object rotMatrLock = new Object();
 	private int matrixOffset = 0;
-	private float[] invRotMatrix = Calculus.createIdentityMatrix();
+	private final float[] invRotMatrix = Calculus.createIdentityMatrix();
 
 	/**
 	 * use a {@link ActionUseCameraAngles2} instead
@@ -83,12 +84,12 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 * set to true
 	 */
 	@Deprecated
-	private float[] cameraAnglesInDegree = new float[3];
+	private final float[] cameraAnglesInDegree = new float[3];
 	float[] initDir = new float[4];
-	private float[] rotDirection = new float[4];
+	private final float[] rotDirection = new float[4];
 	// public boolean forceAngleCalculation = false;
 
-	private MoveComp myMover = new MoveComp(3);
+	private final MoveComp myMover = new MoveComp(3);
 
 	public GLCamera() {
 	}
@@ -124,10 +125,11 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	@Override
 	@Deprecated
 	public void setRotation(Vec rotation) {
-		if (myRotationVec == null)
+		if (myRotationVec == null) {
 			myRotationVec = rotation;
-		else
+		} else {
 			myRotationVec.setToVec(rotation);
+		}
 	}
 
 	public void setNewPosition(Vec cameraPosition) {
@@ -344,6 +346,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 		glLoadRotation(gl, myRotationVec);
 
 		// set the point where to rotate around
+		//ARLogger.debug("GLCAMERA","Render Camera Position:\nx:" + myPosition.x+"\ny:"+myPosition.y+"\nz:"+myPosition.z);
 		glLoadPosition(gl, myPosition);
 	}
 
@@ -388,10 +391,11 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	}
 
 	private void glLoadPosition(GL10 gl, Vec vec) {
-		if (vec != null)
+		if (vec != null) {
 			// if you want to set the center to 0 0 5 you have to move the
 			// camera -5 units OUT of the screen
 			gl.glTranslatef(-vec.x, -vec.y, -vec.z);
+		}
 	}
 
 	private void glLoadRotation(GL10 gl, Vec vec) {
@@ -489,8 +493,9 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	@Deprecated
 	public void resetBufferedAngle() {
 		Log.d(LOG_TAG, "Reseting camera rotation in resetBufferedAngle()!");
-		if ((myNewRotationVec != null) && (sensorInputEnabled))
+		if ((myNewRotationVec != null) && (sensorInputEnabled)) {
 			myNewRotationVec.setToZero();
+		}
 	}
 
 	/**
@@ -603,10 +608,11 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 
 	@Override
 	public void setPosition(Vec position) {
-		if (myPosition == null)
+		if (myPosition == null) {
 			myPosition = position;
-		else
+		} else {
 			myPosition.setToVec(position);
+		}
 	}
 
 	/**
@@ -642,11 +648,17 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 * @return a Vector with x=Longitude, y=Latitude, z=Altitude
 	 */
 	public Vec getGPSPositionVec() {
-		GeoObj devicePos = EventManager.getInstance()
+		GeoObj zeroPos = EventManager.getInstance()
 				.getZeroPositionLocationObject();
 		return GeoObj.calcGPSPosition(this.getPosition(),
-				devicePos.getLatitude(), devicePos.getLongitude(),
-				devicePos.getAltitude());
+				zeroPos.getLatitude(), zeroPos.getLongitude(),
+				zeroPos.getAltitude());
+	}
+
+	public void setGpsPos(GeoObj newPos) {
+		Vec pos = newPos.getVirtualPosition(EventManager.getInstance()
+				.getZeroPositionLocationObject());
+		setNewPosition(pos);
 	}
 
 	/**

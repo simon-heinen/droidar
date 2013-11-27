@@ -272,7 +272,7 @@ public class ObjectPicker {
 
 	public static byte[] getByteArrayFromColor(Color c) {
 		final byte[] b = new byte[4];
-		boolean isOld = Setup.isOldDeviceWhereNothingWorksAsExpected;
+		boolean isOld = false; //Setup.isOldDeviceWhereNothingWorksAsExpected;
 		b[0] = floatToByteColorValue(c.red, isOld);
 		b[1] = floatToByteColorValue(c.green, isOld);
 		b[2] = floatToByteColorValue(c.blue, isOld);

@@ -64,7 +64,7 @@
 		work for devices with android 1.5 as well. The development version is set 
 		to 1.6 to get access to stuff like high res. screens (eg samsung galaxy tab)
     -->
-    <uses-sdk android:minSdkVersion="5" />
+    <uses-sdk android:minSdkVersion="9" />
 
     <!--
          IMPORTANT: The following permissions should also be added to each project 

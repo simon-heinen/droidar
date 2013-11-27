@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import preview.CameraView;
 import listeners.SetupListener;
 import util.EfficientList;
 import util.Log;
@@ -45,12 +46,10 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-
 import commands.Command;
 import commands.CommandGroup;
 import commands.system.CommandDeviceVibrate;
 import commands.undoable.CommandProcessor;
-
 import de.rwth.R;
 
 /**
@@ -73,8 +72,6 @@ public abstract class Setup {
 	public static int defaultArLayoutId = R.layout.defaultlayout;
 
 	private static final String LOG_TAG = "Setup";
-
-	public static boolean isOldDeviceWhereNothingWorksAsExpected;
 
 	public static boolean displaySetupStepLogging = true;
 	private static final String STEP0 = "Resetting all static stuff, singletons, etc..";
@@ -326,35 +323,17 @@ public abstract class Setup {
 	public void initializeCamera() {
 
 		debugLogDoSetupStep(STEP7);
-		myCameraView = initCameraView(myTargetActivity);
+		myCameraView = initCameraView(getActivity());
 
 	}
 
 	private void addOverlaysAndShowInfoScreen() {
 		debugLogDoSetupStep(STEP11);
-		InfoScreenSettings infoScreenData = new InfoScreenSettings(
-				myTargetActivity);
-		if (isOldDeviceWhereNothingWorksAsExpected) {
-			Log.d(LOG_TAG, "This is an old device (old Android version)");
-			addOverlaysInCrazyOrder();
-
-			debugLogDoSetupStep(STEP12);
-			_f_addInfoScreen(infoScreenData);
-			if (!infoScreenData.closeInstantly()) {
-				/*
-				 * on old devices the info-dialog isn't necessary to fix the
-				 * wrong order of the overlays, so it only has to be displayed
-				 * if wanted by the developer
-				 */
-				showInfoDialog(infoScreenData);
-			}
-		} else {
-			addOverlays();
-
-			debugLogDoSetupStep(STEP12);
-			_f_addInfoScreen(infoScreenData);
-			showInfoDialog(infoScreenData);
-		}
+		InfoScreenSettings infoScreenData = new InfoScreenSettings(getActivity());
+		addOverlays();
+		debugLogDoSetupStep(STEP12);
+		_f_addInfoScreen(infoScreenData);
+		showInfoDialog(infoScreenData);
 	}
 
 	private void initAllSingletons() {
@@ -365,13 +344,12 @@ public abstract class Setup {
 		 * instead of resetInstance
 		 */
 
-		initEventManagerInstance(this.getActivity());
+		initEventManagerInstance(getActivity());
 		SimpleLocationManager.resetInstance();
 		TextureManager.resetInstance();
 		TaskManager.resetInstance();
 		GLFactory.resetInstance();
-		ObjectPicker.resetInstance(new CommandDeviceVibrate(myTargetActivity,
-				30));
+		ObjectPicker.resetInstance(new CommandDeviceVibrate(getActivity(),30));
 		CommandProcessor.resetInstance();
 		FeedbackReports.resetInstance(); // TODO really reset it?
 
@@ -387,11 +365,8 @@ public abstract class Setup {
 	}
 
 	protected CameraView initCameraView(Activity a) {
-		if (isOldDeviceWhereNothingWorksAsExpected) {
-			return new CameraViewForOldDevices(a);
-		} else {
-			return new CameraView(a);
-		}
+		
+		return new CameraView(a);
 	}
 
 	/**
@@ -411,12 +386,6 @@ public abstract class Setup {
 		ActivityConnector.getInstance().startActivity(myTargetActivity,
 				InfoScreen.class, infoScreenData);
 
-	}
-
-	private void addOverlaysInCrazyOrder() {
-		addGLSurfaceOverlay();
-		addCameraOverlay();
-		addGUIOverlay();
 	}
 
 	private void addOverlays() {
@@ -451,29 +420,14 @@ public abstract class Setup {
 	}
 
 	private static void loadDeviceDependentSettings(Activity activity) {
-		if (Integer.parseInt(android.os.Build.VERSION.SDK) <= Build.VERSION_CODES.DONUT) {
-			/*
-			 * Here is the problem: OpenGL seems to have rounding errors on
-			 * different gpus (see ObjectPicker.floatToByteColorValue) Thus the
-			 * G1 need a different value than a Nexus 1 eg.. TODO how to solve
-			 * this problem?
-			 */
-			isOldDeviceWhereNothingWorksAsExpected = true;
-			if (activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-				screenOrientation = Surface.ROTATION_0;
-			} else {
-				screenOrientation = Surface.ROTATION_90;
-			}
-		} else {
-			try {
-				Display display = ((WindowManager) activity
-						.getSystemService(Activity.WINDOW_SERVICE))
-						.getDefaultDisplay();
-				screenOrientation = (Integer) display.getClass()
-						.getMethod("getRotation", null).invoke(display, null);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		try {
+			Display display = ((WindowManager) activity
+					.getSystemService(Activity.WINDOW_SERVICE))
+					.getDefaultDisplay();
+			screenOrientation = (Integer) display.getClass()
+					.getMethod("getRotation", null).invoke(display, null);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -674,7 +628,7 @@ public abstract class Setup {
 	}
 
 	public CustomGLSurfaceView initOpenGLView(GLRenderer glRenderer2) {
-		CustomGLSurfaceView arView = new CustomGLSurfaceView(myTargetActivity);
+		CustomGLSurfaceView arView = new CustomGLSurfaceView(getActivity());
 		arView.setRenderer(glRenderer2);
 		return arView;
 	}
@@ -841,7 +795,7 @@ public abstract class Setup {
 	public final void pauseCameraPreview() {
 		if (myCameraView != null) {
 			Log.d(LOG_TAG, "Pausing camera preview " + myCameraView);
-			myCameraView.pause();
+			myCameraView.onPause();
 		}
 	}
 

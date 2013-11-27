@@ -19,8 +19,7 @@ import android.widget.EditText;
 import de.rwth.R;
 
 /**
- * use the {@link v2.simpleUi.util.ErrorHandler} instead
- * </br></br></br></br></br></br>
+ * use the {@link tools.ErrorHandler} instead </br></br></br></br></br></br>
  * 
  * Register the {@link ErrorHandler} like this: </br>
  * Thread.setDefaultUncaughtExceptionHandler(new ErrorHandler(currentActivity));
@@ -187,8 +186,9 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 	 */
 	@Deprecated
 	public ErrorHandler() {
-		if (defaultHandler == null)
+		if (defaultHandler == null) {
 			defaultHandler = Thread.getDefaultUncaughtExceptionHandler();
+		}
 	}
 
 	/**
@@ -198,8 +198,9 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 	 */
 	public ErrorHandler(Activity a) {
 		setCurrentActivity(a);
-		if (defaultHandler == null)
+		if (defaultHandler == null) {
 			defaultHandler = Thread.getDefaultUncaughtExceptionHandler();
+		}
 	}
 
 	public static void showErrorLog(Activity a, Exception errorToShow,
@@ -264,8 +265,9 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 		a.setTitle(ERROR_ACTIVITY_TITLE);
 		EditText myTextView = (EditText) a.findViewById(ERROR_TEXT_VIEW_ID);
 		myErrorText = addDebugInfosToErrorMessage(a, myErrorText);
-		if (myTextView != null && myErrorText != null)
+		if (myTextView != null && myErrorText != null) {
 			myTextView.setText(myErrorText);
+		}
 
 		if (myDeveloperMailAdress != null) {
 			enableMailButton(a, myTextView);

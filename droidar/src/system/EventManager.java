@@ -102,33 +102,18 @@ public class EventManager implements LocationListener, SensorEventListener {
 			boolean useAccelAndMagnetoSensors) {
 		SensorManager sensorManager = (SensorManager) myTargetActivity
 				.getSystemService(Context.SENSOR_SERVICE);
-
-		if (useAccelAndMagnetoSensors) {
-			/*
-			 * To register the EventManger for magnet- and accelerometer-sensor
-			 * events, two Sensor-objects have to be obtained and then the
-			 * EventManager is set as the Listener for these type of sensor
-			 * events. The update rate is set by SENSOR_DELAY_GAME to a high
-			 * frequency required to react on fast device movement
-			 */
-			Sensor magnetSensor = sensorManager
-					.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-			sensorManager.registerListener(this, magnetSensor,
-					SensorManager.SENSOR_DELAY_GAME);
-			Sensor accelSensor = sensorManager
-					.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-			sensorManager.registerListener(this, accelSensor,
-					SensorManager.SENSOR_DELAY_GAME);
-			Sensor sensorFusion = sensorManager
-					.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
-			sensorManager.registerListener(this, sensorFusion,
-					SensorManager.SENSOR_DELAY_GAME);
-		} else {
-			// Register orientation Sensor Listener:
-			Sensor orientationSensor = sensorManager.getDefaultSensor(11);// Sensor.TYPE_ROTATION_VECTOR);
-			sensorManager.registerListener(this, orientationSensor,
-					SensorManager.SENSOR_DELAY_GAME);
-		}
+		
+			sensorManager = (SensorManager) myTargetActivity.getApplicationContext()
+					.getSystemService(Context.SENSOR_SERVICE);
+	
+			Sensor accelSensor =  sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+			Sensor sensorFusion = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+			Sensor magnetSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+			
+			sensorManager.registerListener(this, accelSensor,SensorManager.SENSOR_DELAY_NORMAL);
+			sensorManager.registerListener(this, magnetSensor,SensorManager.SENSOR_DELAY_NORMAL);
+			sensorManager.registerListener(this,sensorFusion,SensorManager.SENSOR_DELAY_NORMAL);
+				
 	}
 
 	/**
@@ -164,9 +149,10 @@ public class EventManager implements LocationListener, SensorEventListener {
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		if (event.accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE) {
-			return;
-		}
+		//if (event.accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE &&
+		//	event.sensor.getType() != Sensor.TYPE_ACCELEROMETER) {
+		//	return;
+		//}
 		float[] values = event.values.clone();
 
 		if (onOrientationChangedList != null) {
@@ -175,6 +161,7 @@ public class EventManager implements LocationListener, SensorEventListener {
 
 				if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
 					onOrientationChangedList.get(i).onAccelChanged(values);
+					
 				}
 				if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
 					onOrientationChangedList.get(i).onMagnetChanged(values);
@@ -453,6 +440,16 @@ public class EventManager implements LocationListener, SensorEventListener {
 
 		SimpleLocationManager.getInstance(myTargetActivity)
 				.pauseLocationManagerUpdates();
+	}
+
+	/**
+	 * see {@link SimpleLocationManager#setMaxNrOfBufferedLocations(int)}
+	 * 
+	 * @param maxNrOfBufferedLocations
+	 */
+	public void setMaxNrOfBufferedLocations(int maxNrOfBufferedLocations) {
+		SimpleLocationManager.getInstance(myTargetActivity)
+				.setMaxNrOfBufferedLocations(maxNrOfBufferedLocations);
 	}
 
 }
