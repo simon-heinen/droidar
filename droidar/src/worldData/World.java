@@ -6,6 +6,7 @@ import gl.Renderable;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import logger.ARLogger;
 import system.Container;
 import util.EfficientList;
 import util.Log;
@@ -84,6 +85,7 @@ public class World implements RenderableEntity, Container<RenderableEntity> {
 
 	@Override
 	public void render(GL10 gl, Renderable parent) {
+		//ARLogger.debug(LOG_TAG,"Rendering at " + System.nanoTime()/1000/1000);
 		// TODO reconstruct why this order is important! or wrong..
 		glLoadScreenPosition(gl);
 		myCamera.render(gl, this);
@@ -120,6 +122,7 @@ public class World implements RenderableEntity, Container<RenderableEntity> {
 
 	@Override
 	public boolean update(float timeDelta, Updateable parent) {
+		//ARLogger.debug(LOG_TAG, "onUpdate Called: " + System.nanoTime()/1000/1000);
 		setMyParent(parent);
 		myCamera.update(timeDelta, this);
 		if (container != null) {

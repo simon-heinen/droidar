@@ -55,7 +55,7 @@ public class TechDemoLauncher extends Activity {
 		l.removeAllViews();
 
 		showSetup("GeoPosTestSetup", new GeoPosTestSetup());
-		showSetup("Demo Setup", new StaticDemoSetup());
+		//showSetup("Demo Setup", new StaticDemoSetup(null));
 		showSetup("Animation Demo", new DebugSetup());
 		showSetup("Game Demo", new GameDemoSetup());
 		showSetup("'Too far away' scenario", new FarAwayPOIScenarioSetup());

@@ -348,7 +348,7 @@ public abstract class Setup {
 		SimpleLocationManager.resetInstance();
 		TextureManager.resetInstance();
 		TaskManager.resetInstance();
-		GLFactory.resetInstance();
+		//GLFactory.resetInstance();
 		ObjectPicker.resetInstance(new CommandDeviceVibrate(getActivity(),30));
 		CommandProcessor.resetInstance();
 		FeedbackReports.resetInstance(); // TODO really reset it?
@@ -572,7 +572,7 @@ public abstract class Setup {
 		// the main.xml layout is loaded and the guiSetup is created for
 		// customization. then the customized view is added to overlayView
 		View sourceView = View.inflate(activity, defaultArLayoutId, null);
-		guiSetup = new GuiSetup(this, sourceView);
+		//guiSetup = new GuiSetup(this, sourceView);
 
 		_e2_addElementsToGuiSetup(getGuiSetup(), activity);
 		addDroidARInfoBox(activity);

@@ -15,9 +15,9 @@ import gui.simpleUI.Theme;
 import gui.simpleUI.Theme.ThemeColors;
 import gui.simpleUI.modifiers.Headline;
 import gui.simpleUI.modifiers.InfoText;
+import setup.ArSetup;
 import system.ErrorHandler;
 import system.EventManager;
-import system.Setup;
 import util.IO;
 import util.Vec;
 import worldData.Obj;
@@ -32,13 +32,12 @@ import android.view.View;
 import android.view.View.MeasureSpec;
 import android.widget.Button;
 import android.widget.LinearLayout.LayoutParams;
-
 import commands.Command;
 import commands.ui.CommandShowToast;
-
 import de.rwth.R;
+import entry.ISetupEntry;
 
-public class StaticDemoSetup extends Setup {
+public class StaticDemoSetup extends ArSetup {
 
 	private static final float MIN_DIST = 15f;
 	private static final float MAX_DIST = 55f;
@@ -49,6 +48,12 @@ public class StaticDemoSetup extends Setup {
 	GLCamera camera;
 
 	private TimeModifier timeModifier;
+	
+	public StaticDemoSetup(ISetupEntry pEntry) {
+		super(pEntry);
+		// TODO Auto-generated constructor stub
+	}
+
 
 	@Override
 	public void _a_initFieldsIfNecessary() {
@@ -214,7 +219,7 @@ public class StaticDemoSetup extends Setup {
 		Obj treangle = new Obj();
 		MeshComponent treangleMesh = GLFactory.getInstance().newTexturedSquare(
 				"worldIconId",
-				IO.loadBitmapFromId(myTargetActivity, R.drawable.icon));
+				IO.loadBitmapFromId(getActivity(), R.drawable.icon));
 		treangleMesh.setPosition(new Vec(0, -8, 1));
 		treangleMesh.setRotation(new Vec(0, 0, 0));
 		treangleMesh.addChild(new AnimationFaceToCamera(camera, 0.5f));

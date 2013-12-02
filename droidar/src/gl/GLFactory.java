@@ -43,11 +43,18 @@ public class GLFactory {
 	private static final String LOG_TAG = "GLFactory";
 
 	private static GLFactory myInstance = new GLFactory();
+	
+	private static Object mMutex = new Object();
 
 	private GLFactory() {
 	}
 
 	public static GLFactory getInstance() {
+		synchronized(mMutex){
+			if(myInstance == null){
+				myInstance = new GLFactory();
+			}
+		}
 		return myInstance;
 	}
 
@@ -557,10 +564,6 @@ public class GLFactory {
 		p.add(p4);
 
 		return p;
-	}
-
-	public static void resetInstance() {
-		myInstance = new GLFactory();
 	}
 
 	public MeshComponent newCube() {

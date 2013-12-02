@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Interface</type>
+    <coordinates>
+      <x>190</x>
+      <y>30</y>
+      <w>280</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Interface&gt;&gt;
+ISetupEntry 
+--
+getActivity():Activity
+getType():ArType
+getAugmentedView():AugmentedView</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>130</x>
+      <y>230</y>
+      <w>210</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>ArActivity
+--
+mType: ArType.ACTIVITY
+mSetup: ArSetup</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>350</x>
+      <y>230</y>
+      <w>210</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>ArFragment
+--
+mType: ArType.FRAGMENT
+mSetup: ArSetup</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>350</x>
+      <y>120</y>
+      <w>110</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;80;60;90;110</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>200</x>
+      <y>120</y>
+      <w>110</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>90;30;40;70;30;110</additional_attributes>
+  </element>
+</diagram>

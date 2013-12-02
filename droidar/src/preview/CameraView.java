@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.util.List;
 
 import logger.ARLogger;
+import system.EventManager;
 import system.FrameChangeThread;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
@@ -56,6 +58,9 @@ public class CameraView extends SurfaceView implements
 			releaseCamera();
 			ARLogger.exception(LOG_TAG, "Unable to set camear preview display", e);
 		}
+		if(showInPortrait()){
+			mCamera.setDisplayOrientation(90);
+		}
 	}
 
 	@Override
@@ -95,6 +100,8 @@ public class CameraView extends SurfaceView implements
 		Size optimalSize = getOptimalPreviewSize(sizes, width, height);
 
 		parameters.setPreviewSize(optimalSize.width, optimalSize.height);
+		
+		adjustOrientation(parameters);
 		
 		try {
 			mCamera.setParameters(parameters);
@@ -181,6 +188,23 @@ public class CameraView extends SurfaceView implements
 			}
 		}
 		return result;
+	}
+	
+	private boolean showInPortrait(){
+		boolean ret = false;
+		if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT &&
+				!EventManager.isTabletDevice){
+			ret = true;
+		}
+		
+		return ret;
+	}
+	
+	private void adjustOrientation(Parameters params){
+		if(showInPortrait()){
+			params.set("orientation", "portrait");
+			params.set("rotation", "90");
+		}
 	}
 
 	@Override

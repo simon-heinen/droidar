@@ -1,5 +1,6 @@
 package gui;
 
+import setup.ArSetup;
 import system.Setup;
 import system.TaskManager;
 import util.Log;
@@ -43,19 +44,14 @@ public class GuiSetup {
 	private LinearLayout bottomRightView;
 
 	private RelativeLayout main;
-	private Setup mySetup;
+	private ArSetup mySetup;
 	/**
 	 * will be set to true in {@link GuiSetup} constructor on default
 	 */
 	private boolean vibrationEnabled;
 	private CommandDeviceVibrate vibrateCommand;
 
-	/**
-	 * @param setup
-	 * @param source
-	 *            the xml layout converted into a view
-	 */
-	public GuiSetup(Setup setup, View source) {
+	public GuiSetup(ArSetup setup, View source) {
 
 		mySetup = setup;
 		Log.d(LOG_TAG, "GuiSetup init");
@@ -77,6 +73,8 @@ public class GuiSetup {
 				.findViewById(R.id.LinLay_bottomRight);
 
 	}
+	
+	
 
 	public void addButtonToBottomView(Command a, String buttonText) {
 		addButtonToView(bottomView, a, buttonText);
@@ -163,7 +161,7 @@ public class GuiSetup {
 				Log.d(LOG_TAG,
 						"Trying to enable vibration feedback for UI actions");
 				vibrateCommand = new CommandDeviceVibrate(
-						mySetup.myTargetActivity, VIBRATION_DURATION_IN_MS);
+						mySetup.getActivity(), VIBRATION_DURATION_IN_MS);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
