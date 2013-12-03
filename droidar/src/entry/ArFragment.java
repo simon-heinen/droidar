@@ -18,9 +18,7 @@ public class ArFragment extends Fragment implements ISetupEntry {
 	private ArType mType = ArType.FRAGMENT;
 	
 	public ArFragment(){
-		//mSetup = new StaticDemoSetup(this);
-//		mSetup = new StaticDemoSetup(this);
-//		mSetup.onCreate();
+
 	}
 	
 	@Override
@@ -56,8 +54,8 @@ public class ArFragment extends Fragment implements ISetupEntry {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		mSetup = new StaticDemoSetup(this);
-		mOverlayView = new AugmentedView(getActivity());
+		mSetup = createSetup();
+		mOverlayView = createAugmentedView(getActivity());
 		mOverlayView.getRenderer().setUseLightning(mSetup._a2_initLightning(mOverlayView.getRenderer().getMyLights()));
 		mSetup.onCreate();
 		mSetup.onStart();
@@ -104,9 +102,11 @@ public class ArFragment extends Fragment implements ISetupEntry {
 		super.onDestroy();
 	}
 
-	//////////////////////////////////////////////
-	// Android Overrides
-	//////////////////////////////////////////////
+	protected ArSetup createSetup(){
+		return new StaticDemoSetup(this);
+	}
 	
-
+	protected AugmentedView createAugmentedView(Activity activity){
+		return new AugmentedView(activity);
+	}
 }

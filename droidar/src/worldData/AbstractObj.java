@@ -15,110 +15,113 @@ import commands.Command;
 public abstract class AbstractObj implements HasInfosInterface, ListItem,
 		SelectionListener, EditItem, RenderableEntity {
 
-	private MetaInfos myInfoObj;
-	private Command myListClickCommand;
-	private Command myListLongClickCommand;
-	private ItemGuiListener myItemGuiListener;
-	private Command myOnClickCommand;
-	private Command myOnDoubleClickCommand;
-	private Command myOnLongClickCommand;
-	private Command myOnMapClickCommand;
-	private Updateable myParent;
+	private MetaInfos mInfoObj;
+	private Command mListClickCommand;
+	private Command mListLongClickCommand;
+	private ItemGuiListener mItemGuiListener;
+	private Command mOnClickCommand;
+	private Command mOnDoubleClickCommand;
+	private Command mOnLongClickCommand;
+	private Command mOnMapClickCommand;
+	private Updateable mParent;
 
 	@Override
 	public MetaInfos getInfoObject() {
-		if (myInfoObj == null)
-			myInfoObj = new MetaInfos(this);
-		return myInfoObj;
+		if (mInfoObj == null) {
+			mInfoObj = new MetaInfos(this);
+		}
+		return mInfoObj;
 	}
 
 	@Override
 	public boolean HasInfoObject() {
-		if (myInfoObj != null)
+		if (mInfoObj != null) {
 			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public Updateable getMyParent() {
-		return myParent;
+		return mParent;
 	}
 
 	@Override
 	public void setMyParent(Updateable parent) {
-		myParent = parent;
+		mParent = parent;
 	}
 
 	@Override
 	public Command getListClickCommand() {
-		return myListClickCommand;
+		return mListClickCommand;
 	}
 
 	@Override
 	public Command getListLongClickCommand() {
-		return myListLongClickCommand;
+		return mListLongClickCommand;
 	}
 
 	@Override
 	public Command getOnClickCommand() {
-		return myOnClickCommand;
+		return mOnClickCommand;
 	}
 
 	@Override
 	public Command getOnDoubleClickCommand() {
-		return myOnDoubleClickCommand;
+		return mOnDoubleClickCommand;
 	}
 
 	@Override
 	public Command getOnLongClickCommand() {
-		return myOnLongClickCommand;
+		return mOnLongClickCommand;
 	}
 
 	@Override
 	public Command getOnMapClickCommand() {
-		return myOnMapClickCommand;
+		return mOnMapClickCommand;
 	}
 
 	@Override
 	public void setOnClickCommand(Command c) {
-		myOnClickCommand = c;
+		mOnClickCommand = c;
 	}
 
 	@Override
 	public void setOnDoubleClickCommand(Command c) {
-		myOnDoubleClickCommand = c;
+		mOnDoubleClickCommand = c;
 	}
 
 	@Override
 	public void setOnLongClickCommand(Command c) {
-		myOnLongClickCommand = c;
+		mOnLongClickCommand = c;
 	}
 
 	@Override
 	public void setOnMapClickCommand(Command c) {
-		myOnMapClickCommand = c;
+		mOnMapClickCommand = c;
 	}
 
 	public void setListClickCommand(Command clickCommand) {
-		myListClickCommand = clickCommand;
+		mListClickCommand = clickCommand;
 	}
 
 	public void setListLongClickCommand(Command longClickCommand) {
-		myListLongClickCommand = longClickCommand;
+		mListLongClickCommand = longClickCommand;
 	}
 
 	@Override
 	public View getMyListItemView(View viewToUseIfNotNull, ViewGroup parentView) {
-		if (myItemGuiListener != null)
-			return myItemGuiListener.requestItemView(viewToUseIfNotNull,
+		if (mItemGuiListener != null) {
+			return mItemGuiListener.requestItemView(viewToUseIfNotNull,
 					parentView);
+		}
 		Log.d("GUI", "    -> Loading default view for " + this.getClass());
 		return getInfoObject().getDefaultListItemView(viewToUseIfNotNull,
 				parentView);
 	}
 
-	public void setMyItemGuiListener(ItemGuiListener myItemGuiListener) {
-		this.myItemGuiListener = myItemGuiListener;
+	public void setmItemGuiListener(ItemGuiListener mItemGuiListener) {
+		this.mItemGuiListener = mItemGuiListener;
 	}
 
 	@Override
@@ -128,8 +131,9 @@ public abstract class AbstractObj implements HasInfosInterface, ListItem,
 
 	@Override
 	public String toString() {
-		if (HasInfoObject())
+		if (HasInfoObject()) {
 			return getInfoObject().getShortDescr();
+		}
 		return super.toString();
 	}
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.microedition.khronos.opengles.GL10;
 
 import logger.ARLogger;
+import system.DefaultARSetup;
 import system.EventManager;
 import system.Setup;
 import system.SimpleLocationManager;
@@ -22,12 +23,10 @@ import android.view.Surface;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-
 import commands.Command;
 import commands.CommandGroup;
 import commands.system.CommandDeviceVibrate;
 import commands.undoable.CommandProcessor;
-
 import entry.ArType;
 import entry.ISetupEntry;
 import gamelogic.FeedbackReports;
@@ -38,6 +37,12 @@ import gl.textures.TextureManager;
 import gui.GuiSetup;
 import gui.InfoScreenSettings;
 
+/**
+ * Extend this class and implement all abstract methods to initialize your AR
+ * application. More information can be found in the JavaDoc of the specific
+ * methods and for a simple default AR setup use the {@link DefaultARSetup}
+ * 
+ */
 public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 
 	private static final String LOG_TAG = "ArSetup";
@@ -48,16 +53,17 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 	private Thread mWorldThread;
 	private static Integer mScreenOrientation = Surface.ROTATION_90;
 
-	public ArSetup(){
-		
-	}
+	/**
+	 * Constructor.
+	 * @param pEntry - {@link entry.ArFragment} or {@link entry.ArActivity}
+	 */
 	public ArSetup(ISetupEntry pEntry) {
 		mEntry = pEntry;
 	}
 
 	/**
 	 * Default initialization is {@link Surface#ROTATION_90}, use landscape on
-	 * default mode if the initialization does not work
+	 * default mode if the initialization does not work.
 	 * 
 	 * @return {@link Surface#ROTATION_0} or {@link Surface#ROTATION_180} would
 	 *         mean portrait mode and 90 and 270 would mean landscape mode
@@ -82,17 +88,9 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 
 	/**
 	 * This method has to be executed in the activity which want to display the
-	 * AR content. In your activity do something like this:
+	 * AR content.
 	 * 
-	 * <pre>
-	 * public void onCreate(Bundle savedInstanceState) {
-	 * 	super.onCreate(savedInstanceState);
-	 * 	new MySetup(this).run();
-	 * }
-	 * </pre>
-	 * 
-	 * @param target
-	 * 
+	 * @param pEntry - {@link entry.ArFragment} or {@link entry.ArActivity}
 	 */
 	public void run(ISetupEntry pEntry) {
 		mEntry = pEntry;
@@ -146,6 +144,10 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 	}
 
+	/**
+	 * Retrieve the system updater.
+	 * @return - {@link worldData.SystemUpdater}
+	 */
 	public SystemUpdater getSystemUpdater() {
 		return mWorldUpdater;
 	}
@@ -172,9 +174,11 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 	 * You can create and set a subclass of {@link EventManager} here. To set
 	 * the instance use
 	 * {@link EventManager#initInstance(android.content.Context, EventManager)}
+	 * 
+	 * @param activity - {@link android.app.Activity}
 	 */
-	public void initEventManagerInstance(Activity a) {
-		EventManager.initInstance(a, new EventManager());
+	public void initEventManagerInstance(Activity activity) {
+		EventManager.initInstance(activity, new EventManager());
 	}
 
 	/**
@@ -186,7 +190,6 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 	 *            See {@link InfoScreenSettings}
 	 */
 	public void _f_addInfoScreen(InfoScreenSettings infoScreenData) {
-		Log.d(LOG_TAG, "Info screen will be closed instantly");
 		infoScreenData.setCloseInstantly();
 	}
 
@@ -210,8 +213,8 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Retrieve the gui setup.
+	 * @return {@link GuiSetup}
 	 */
 	public GuiSetup getGuiSetup() {
 		return mGuiSetup;
@@ -228,6 +231,11 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 		return true;
 	}
 
+	/**
+	 * Create options menu.
+	 * @param menu - {@link Menu}
+	 * @return - {@link boolean} true if successfully created
+	 */
 	public boolean onCreateOptionsMenu(Menu menu) {
 		if (mOptionsMenuCommands != null) {
 			return fillMenuWithCommandsFromCommandgroup(menu,
@@ -236,8 +244,10 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 		return false;
 	}
 
-	/*
-	 * is used by the GuiSetup class to add elements to the options menu
+	/**
+	 * Add items to the options menu. 
+	 * @param menuItem - {@link Command}
+	 * @param menuItemText - {@link String} text displayed
 	 */
 	public void addItemToOptionsMenu(Command menuItem, String menuItemText) {
 		if (mOptionsMenuCommands == null) {
@@ -247,6 +257,12 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 		mOptionsMenuCommands.add(menuItem);
 	}
 
+	/**
+	 * 
+	 * @param featureId - {@link int} feature id
+	 * @param item - {@link MenuItem}
+	 * @return - {@link boolean} true if successfully
+	 */
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		if (featureId == Window.FEATURE_OPTIONS_PANEL) {
 			if (mOptionsMenuCommands != null) {
@@ -261,31 +277,53 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 		TextureManager.reloadTexturesIfNeeded();
 	}
 
+	/**
+	 * Pause the event manager thread. 
+	 */
 	public void pauseEventManager() {
 		EventManager.getInstance().pauseEventListeners();
 	}
 
+	/**
+	 * Resume the event manager thread. 
+	 */
 	public void resumeEventManager() {
 		EventManager.getInstance().resumeEventListeners(getActivity(), true);
 	}
 
+	/**
+	 * Pause the updater thread. 
+	 */
 	public void pauseUpdater() {
 		if (mWorldUpdater != null) {
-			Log.d(LOG_TAG, "Pausing world updater now");
 			mWorldUpdater.pauseUpdater();
 		}
 	}
 
+	/**
+	 * Resume the updater thread.
+	 */
 	public void resumeUpdater() {
 		if (mWorldUpdater != null) {
 			mWorldUpdater.resumeUpdater();
 		}
 	}
 
-	public boolean onKeyDown(Activity a, int keyCode, KeyEvent event) {
+	/**
+	 * Handle user touch events.
+	 * @param activity - {@link android.app.Activity}
+	 * @param keyCode - {@link int} key code
+	 * @param event - {@link KeyEvent}
+	 * @return - {@link boolean} true if action is successful
+	 */
+	public boolean onKeyDown(Activity activity, int keyCode, KeyEvent event) {
 		return EventManager.getInstance().onKeyDown(keyCode, event);
 	}
 
+	/**
+	 * Retrieve the screen width based on orientation.
+	 * @return - float
+	 */
 	public float getScreenWidth() {
 		if (getScreenOrientation() == Surface.ROTATION_90
 				|| getScreenOrientation() == Surface.ROTATION_270) {
@@ -297,6 +335,10 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 		}
 	}
 
+	/**
+	 * Retrieve the screen height based on orientation.
+	 * @return - float
+	 */
 	public float getScreenHeigth() {
 		if (getScreenOrientation() == Surface.ROTATION_90
 				|| getScreenOrientation() == Surface.ROTATION_270) {
