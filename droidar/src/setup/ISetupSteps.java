@@ -3,7 +3,6 @@ package setup;
 import geo.GeoObj;
 import gl.CustomGLSurfaceView;
 import gl.GL1Renderer;
-import gl.GLCamera;
 import gl.GLFactory;
 import gl.LightSource;
 import gui.GuiSetup;
@@ -11,15 +10,15 @@ import gui.GuiSetup;
 import java.util.ArrayList;
 
 import system.EventManager;
-import system.Setup;
-import actions.Action;
-import actions.ActionCalcRelativePos;
-import actions.ActionRotateCameraBuffered;
+import worldData.SystemUpdater;
 import android.app.Activity;
 import android.widget.FrameLayout;
-import worldData.SystemUpdater;
-import worldData.World;
 
+/**
+ * These are the necessary steps required for a {@link ArSetup} and to allow 
+ * flexibility in the library.
+ *
+ */
 public interface ISetupSteps {
 	
 	/**
@@ -29,24 +28,24 @@ public interface ISetupSteps {
 	 * field initialization here is a difference to doing it right in the
 	 * constructor, because normally a Setup object is created not directly
 	 * before it is used to start the AR view. So placing your field
-	 * initialization here normaly means to reduce the amount of created objects
+	 * initialization here normally means to reduce the amount of created objects
 	 * if you are using more then one Setup.
 	 * 
 	 */
-	public void _a_initFieldsIfNecessary();
+	void initFieldsIfNecessary();
 	
 	/**
-	 * If you don't override this method it will create 2 default
+	 * If you don't override this method it will create 2 default.
 	 * {@link LightSource}s
 	 * 
 	 * @param lights
 	 *            add all the {@link LightSource}s you want to use to this list
 	 * @return true if lightning should be enabled
 	 */
-	public boolean _a2_initLightning(ArrayList<LightSource> lights);
+	boolean initLightning(ArrayList<LightSource> lights);
 	
 	/**
-	 * first you should create a new {@link GLCamera} and a new {@link World}
+	 * first you should create a new {@link gl.GLCamera} and a new {@link World}
 	 * and then you can use the {@link GLFactory} object to add objects to the
 	 * created world. When your world is build, add it to the
 	 * {@link GL1Renderer} object by calling
@@ -60,12 +59,12 @@ public interface ISetupSteps {
 	 * @param currentPosition
 	 *            might be null if no position information is available!
 	 */
-	public void _b_addWorldsToRenderer(GL1Renderer glRenderer,
+	void addWorldsToRenderer(GL1Renderer glRenderer,
 			GLFactory objectFactory, GeoObj currentPosition);
 	
 	/**
-	 * This method should be used to add {@link Action}s to the
-	 * {@link EventManager} and the {@link CustomGLSurfaceView} to specify the
+	 * This method should be used to add {@link actions.Action}s to the
+	 * {@link system.EventManager} and the {@link gl.CustomGLSurfaceView} to specify the
 	 * input-mechanisms. <br>
 	 * <br>
 	 * 
@@ -80,28 +79,28 @@ public interface ISetupSteps {
 	 * camera)); </b> <br>
 	 * <br>
 	 * 
-	 * The {@link ActionRotateCameraBuffered} rotates the virtualCamera and the
-	 * {@link ActionCalcRelativePos} calculates the virtual position of the
+	 * The {@link actions.ActionRotateCameraBuffered} rotates the virtualCamera and the
+	 * {@link actions.ActionCalcRelativePos} calculates the virtual position of the
 	 * camera and all the items in the virtual world. There are more
-	 * {@link Action}s which can be defined in the {@link EventManager}, for
+	 * {@link actions.Action}s which can be defined in the {@link system.EventManager}, for
 	 * example for keystrokes or other input types.<br>
 	 * <br>
 	 * 
 	 * For more examples take a look at the different Setup examples.
 	 * 
-	 * @param eventManager
+	 * @param eventManager - {@link system.EventManager}
 	 * 
 	 * @param arView
 	 *            The {@link CustomGLSurfaceView#addOnTouchMoveAction(Action)}
 	 *            -method can be used to react on touch-screen input
-	 * @param worldUpdater
+	 * @param updater - {@link SystemUpdater}
 	 */
-	public void _c_addActionsToEvents(EventManager eventManager,
+	void addActionsToEvents(EventManager eventManager,
 			CustomGLSurfaceView arView, SystemUpdater updater);
 	
 	/**
-	 * All elements (normally that should only be {@link World}s) which should
-	 * be updated have to be added to the {@link SystemUpdater}. This update
+	 * All elements (normally that should only be {@link worldData.World}s) which should
+	 * be updated have to be added to the {@link system.SystemUpdater}. This update
 	 * process is independent to the rendering process and can be used for all
 	 * system-logic which has to be done periodically
 	 * 
@@ -109,35 +108,33 @@ public interface ISetupSteps {
 	 *            add anything you want to update to this updater via
 	 *            {@link SystemUpdater#addObjectToUpdateCycle(worldData.Updateable)}
 	 */
-	public abstract void _d_addElementsToUpdateThread(SystemUpdater updater);
+	void addElementsToUpdateThread(SystemUpdater updater);
 	
 
 	/**
 	 * here you can define or load any view you want and add it to the overlay
 	 * View. If this method is implemented, the
-	 * _e2_addElementsToGuiSetup()-method wont be called automatically
+	 * addElementsToGuiSetup()-method wont be called automatically
 	 * 
 	 * @param overlayView
 	 *            here you have to add your created view
 	 * @param activity
 	 *            use this as the context for new views
 	 */
-	public void _e1_addElementsToOverlay(FrameLayout overlayView,
-			Activity activity);
+	void addElementsToOverlay(FrameLayout overlayView, Activity activity);
 	
 	/**
 	 * Here you can add UI-elements like buttons to the predefined design
 	 * (main.xml). If you want to overlay your own design, just override the
-	 * {@link Setup}._e1_addElementsToOverlay() method and leave this one here
+	 * {@link ArSetup}.addElementsToOverlay() method and leave this one here
 	 * empty.
 	 * 
-	 * @param guiSetup
+	 * @param guiSetup - {@link GuiSetup}
 	 * @param activity
 	 *            this is the same activity you can get with
-	 *            {@link Setup#myTargetActivity} but its easier to access this
+	 *            {@link ArSetup#getActivity()} but its easier to access this
 	 *            way
 	 */
-	public abstract void _e2_addElementsToGuiSetup(GuiSetup guiSetup,
-			Activity activity);
+	void addElementsToGuiSetup(GuiSetup guiSetup, Activity activity);
 
 }

@@ -1,16 +1,12 @@
 package listeners;
 
-import system.Setup;
-
 /**
  * this listener interface can be used to enable feedback for the user and for
  * debugging purpose. To get an overview over the different steps take a look at
- * the constants in the {@link Setup}-class
+ * the constants in the {@link setup.ArSetup}-class
  * 
  * Any custom setup can add additional steps by using the doSetupStep()-method
  * provided by the Setup-class.
- * 
- * @author Spobo
  * 
  */
 public interface SetupListener {

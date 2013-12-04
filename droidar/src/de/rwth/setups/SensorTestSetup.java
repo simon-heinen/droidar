@@ -10,9 +10,9 @@ import gl.animations.AnimationRotate;
 import gl.scenegraph.MeshComponent;
 import gl.scenegraph.Shape;
 import gui.GuiSetup;
+import setup.ArSetup;
 import system.ErrorHandler;
 import system.EventManager;
-import system.Setup;
 import util.Vec;
 import worldData.SystemUpdater;
 import worldData.World;
@@ -28,11 +28,10 @@ import actions.ActionRotateCameraUnbuffered;
 import actions.ActionRotateCameraUnbuffered2;
 import actions.ActionUseCameraAngles2;
 import android.app.Activity;
-
 import commands.Command;
+import entry.ISetupEntry;
 
-public class SensorTestSetup extends Setup {
-
+public class SensorTestSetup extends ArSetup {
 	private GLCamera camera;
 	private World world;
 	private Action rotActionB1;
@@ -44,7 +43,7 @@ public class SensorTestSetup extends Setup {
 	private Action rotActionB2;
 
 	@Override
-	public void _a_initFieldsIfNecessary() {
+	public void initFieldsIfNecessary() {
 		// allow the user to send error reports to the developer:
 		ErrorHandler.enableEmailReports("droidar.rwth@gmail.com",
 				"Error in DroidAR App");
@@ -66,7 +65,7 @@ public class SensorTestSetup extends Setup {
 	}
 
 	@Override
-	public void _b_addWorldsToRenderer(GL1Renderer renderer,
+	public void addWorldsToRenderer(GL1Renderer renderer,
 			GLFactory objectFactory, GeoObj currentPosition) {
 
 		world = new World(camera);
@@ -122,7 +121,7 @@ public class SensorTestSetup extends Setup {
 	}
 
 	@Override
-	public void _c_addActionsToEvents(EventManager eventManager,
+	public void addActionsToEvents(EventManager eventManager,
 			CustomGLSurfaceView arView, SystemUpdater updater) {
 		arView.addOnTouchMoveAction(new ActionBufferedCameraAR(camera));
 		eventManager.addOnOrientationChangedAction(rotActionB1);
@@ -144,7 +143,7 @@ public class SensorTestSetup extends Setup {
 	}
 
 	@Override
-	public void _d_addElementsToUpdateThread(SystemUpdater worldUpdater) {
+	public void addElementsToUpdateThread(SystemUpdater worldUpdater) {
 		worldUpdater.addObjectToUpdateCycle(world);
 		worldUpdater.addObjectToUpdateCycle(rotActionB1);
 		worldUpdater.addObjectToUpdateCycle(rotActionB3);
@@ -155,7 +154,7 @@ public class SensorTestSetup extends Setup {
 	}
 
 	@Override
-	public void _e2_addElementsToGuiSetup(GuiSetup guiSetup, Activity activity) {
+	public void addElementsToGuiSetup(GuiSetup guiSetup, Activity activity) {
 		guiSetup.addButtonToBottomView(new myRotateAction(rotActionB1),
 				"Camera Buffered 1");
 		guiSetup.addButtonToBottomView(new myRotateAction(rotActionB2),

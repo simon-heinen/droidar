@@ -1,5 +1,6 @@
 package de.rwth.setups;
 
+import entry.ISetupEntry;
 import gl.Color;
 import gl.CustomGLSurfaceView;
 import gl.GL1Renderer;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import system.DefaultARSetup;
+import setup.DefaultArSetup;
 import system.EventManager;
 import util.Vec;
 import util.Wrapper;
@@ -29,7 +30,7 @@ import android.util.Log;
 
 import commands.Command;
 
-public class LightningSetup extends DefaultARSetup {
+public class LightningSetup extends DefaultArSetup {
 
 	protected static final String LOG_TAG = "LightningSetup";
 
@@ -42,13 +43,12 @@ public class LightningSetup extends DefaultARSetup {
 	private final Obj lightObject;
 
 	public LightningSetup() {
-		super();
 		lightObject = new Obj();
 		targetMoveWrapper = new Wrapper(lightObject);
 	}
 
 	@Override
-	public boolean _a2_initLightning(ArrayList<LightSource> lights) {
+	public boolean initLightning(ArrayList<LightSource> lights) {
 		lights.add(LightSource.newDefaultAmbientLight(GL10.GL_LIGHT0));
 		spotLight = LightSource.newDefaultDefuseLight(GL10.GL_LIGHT1, new Vec(
 				0, 0, 0));
@@ -124,9 +124,9 @@ public class LightningSetup extends DefaultARSetup {
 	}
 
 	@Override
-	public void _c_addActionsToEvents(EventManager eventManager,
+	public void addActionsToEvents(EventManager eventManager,
 			CustomGLSurfaceView arView, SystemUpdater updater) {
-		super._c_addActionsToEvents(eventManager, arView, updater);
+		super.addActionsToEvents(eventManager, arView, updater);
 
 		// clear some inputs set in default methods
 		eventManager.getOnLocationChangedAction().clear();
@@ -137,8 +137,8 @@ public class LightningSetup extends DefaultARSetup {
 	}
 
 	@Override
-	public void _e2_addElementsToGuiSetup(GuiSetup guiSetup, Activity activity) {
-		super._e2_addElementsToGuiSetup(guiSetup, activity);
+	public void addElementsToGuiSetup(GuiSetup guiSetup, Activity activity) {
+		super.addElementsToGuiSetup(guiSetup, activity);
 		guiSetup.addButtonToBottomView(new Command() {
 
 			@Override

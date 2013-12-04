@@ -5,13 +5,10 @@ import java.util.ArrayList;
 import javax.microedition.khronos.opengles.GL10;
 
 import logger.ARLogger;
-import system.DefaultARSetup;
 import system.EventManager;
-import system.Setup;
 import system.SimpleLocationManager;
 import system.TaskManager;
 import util.EfficientList;
-import util.Log;
 import util.Vec;
 import worldData.SystemUpdater;
 import android.app.Activity;
@@ -23,13 +20,14 @@ import android.view.Surface;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+
 import commands.Command;
 import commands.CommandGroup;
 import commands.system.CommandDeviceVibrate;
 import commands.undoable.CommandProcessor;
+
 import entry.ArType;
 import entry.ISetupEntry;
-import gamelogic.FeedbackReports;
 import gl.GLFactory;
 import gl.LightSource;
 import gl.ObjectPicker;
@@ -40,11 +38,10 @@ import gui.InfoScreenSettings;
 /**
  * Extend this class and implement all abstract methods to initialize your AR
  * application. More information can be found in the JavaDoc of the specific
- * methods and for a simple default AR setup use the {@link DefaultARSetup}
+ * methods and for a simple default AR setup use the {@link setup.DefaultARSetup}
  * 
  */
 public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
-
 	private static final String LOG_TAG = "ArSetup";
 	private CommandGroup mOptionsMenuCommands;
 	private ISetupEntry mEntry;
@@ -52,12 +49,33 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 	private SystemUpdater mWorldUpdater;
 	private Thread mWorldThread;
 	private static Integer mScreenOrientation = Surface.ROTATION_90;
+	
+	//magic numbers
+	private static final int VIBRATEDURATION = 30;
+	private static final int XLIGHTPOS = 5;
+	private static final int YLIGHTPOS = 5;
+	private static final int ZLIGHTPOS = 5;
 
 	/**
 	 * Constructor.
 	 * @param pEntry - {@link entry.ArFragment} or {@link entry.ArActivity}
 	 */
 	public ArSetup(ISetupEntry pEntry) {
+		mEntry = pEntry;
+	}
+	
+	/**
+	 * Constructor.
+	 */
+	public ArSetup() {
+		this(null);
+	}
+	
+	/**
+	 * Set the entry for this setup. 
+	 * @param pEntry - {@link entry.ISetupEntry}
+	 */
+	public void setEntry(ISetupEntry pEntry) {
 		mEntry = pEntry;
 	}
 
@@ -69,7 +87,7 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 	 *         mean portrait mode and 90 and 270 would mean landscape mode
 	 *         (should be the same on tablets and mobile devices
 	 */
-	public int getScreenOrientation() {
+	public static int getScreenOrientation() {
 		if (mScreenOrientation == null) {
 			ARLogger.error(LOG_TAG, "screenOrientation was not set! Will "
 					+ "asume default 90 degree rotation for screen");
@@ -79,11 +97,15 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 	}
 
 	/**
-	 * @return This will just return {@link Setup#myTargetActivity}. Direct
+	 * @return This will just return {@link ArSetup#getActivity()}. Direct
 	 *         access to this field is also possible
 	 */
 	public Activity getActivity() {
-		return mEntry.getActivity();
+		if (mEntry == null) {
+			return null;
+		} else {
+			return mEntry.getActivity();
+		}
 	}
 
 	/**
@@ -93,7 +115,9 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 	 * @param pEntry - {@link entry.ArFragment} or {@link entry.ArActivity}
 	 */
 	public void run(ISetupEntry pEntry) {
-		mEntry = pEntry;
+		if (pEntry != null) {
+			mEntry = pEntry;
+		}
 
 		setFullScreen();
 
@@ -103,22 +127,31 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 
 		EventManager.getInstance().registerListeners(getActivity(), true);
 
-		_a_initFieldsIfNecessary();
+		initFieldsIfNecessary();
 
-		_b_addWorldsToRenderer(mEntry.getAugmentedView().getRenderer(),
+		addWorldsToRenderer(mEntry.getAugmentedView().getRenderer(),
 				GLFactory.getInstance(), EventManager.getInstance()
 						.getCurrentLocationObject());
 
-		_c_addActionsToEvents(EventManager.getInstance(), mEntry
+		addActionsToEvents(EventManager.getInstance(), mEntry
 				.getAugmentedView().getGLSurfaceView(), mWorldUpdater);
 
-		_d_addElementsToUpdateThread(mWorldUpdater);
+		addElementsToUpdateThread(mWorldUpdater);
 
-		_e1_addElementsToOverlay(mEntry.getAugmentedView(), getActivity());
+		addElementsToOverlay(mEntry.getAugmentedView(), getActivity());
 		
 		mWorldThread = new Thread(mWorldUpdater);
 		mWorldThread.start();
 		
+	}
+	
+	/**
+	 * This method has to be executed in the activity which want to display the
+	 * AR content.
+	 * 
+	 */
+	public void run() {
+		run(null);
 	}
 
 	private void setFullScreen() {
@@ -153,10 +186,10 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 	}
 
 	@Override
-	public boolean _a2_initLightning(ArrayList<LightSource> lights) {
+	public boolean initLightning(ArrayList<LightSource> lights) {
 		lights.add(LightSource.newDefaultAmbientLight(GL10.GL_LIGHT0));
-		lights.add(LightSource.newDefaultSpotLight(GL10.GL_LIGHT1, new Vec(5,
-				5, 5), new Vec(0, 0, 0)));
+		lights.add(LightSource.newDefaultSpotLight(GL10.GL_LIGHT1, new Vec(XLIGHTPOS,
+				YLIGHTPOS, ZLIGHTPOS), new Vec(0, 0, 0)));
 		return true;
 	}
 
@@ -165,9 +198,8 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 		SimpleLocationManager.resetInstance();
 		TextureManager.resetInstance();
 		TaskManager.resetInstance();
-		ObjectPicker.resetInstance(new CommandDeviceVibrate(getActivity(), 30));
+		ObjectPicker.resetInstance(new CommandDeviceVibrate(getActivity(), VIBRATEDURATION));
 		CommandProcessor.resetInstance();
-		FeedbackReports.resetInstance(); // TODO really reset it?
 	}
 
 	/**
@@ -189,7 +221,7 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 	 * @param infoScreenData
 	 *            See {@link InfoScreenSettings}
 	 */
-	public void _f_addInfoScreen(InfoScreenSettings infoScreenData) {
+	public void addInfoScreen(InfoScreenSettings infoScreenData) {
 		infoScreenData.setCloseInstantly();
 	}
 
@@ -206,10 +238,10 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 	}
 
 	@Override
-	public void _e1_addElementsToOverlay(FrameLayout overlayView,
+	public void addElementsToOverlay(FrameLayout overlayView,
 			Activity activity) {
 		mGuiSetup = new GuiSetup(this, mEntry.getAugmentedView().getGuiView());
-		_e2_addElementsToGuiSetup(getGuiSetup(), activity);
+		addElementsToGuiSetup(getGuiSetup(), activity);
 	}
 
 	/**

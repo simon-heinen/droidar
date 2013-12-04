@@ -9,7 +9,6 @@ import java.util.HashMap;
 import javax.microedition.khronos.opengles.GL10;
 
 import listeners.SelectionListener;
-import system.Setup;
 import util.Log;
 import util.Wrapper;
 

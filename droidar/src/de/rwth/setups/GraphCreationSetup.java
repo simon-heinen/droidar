@@ -13,9 +13,9 @@ import gl.animations.AnimationPulse;
 import gl.scenegraph.MeshComponent;
 import gui.GuiSetup;
 import gui.MetaInfos;
+import setup.ArSetup;
 import system.ErrorHandler;
 import system.EventManager;
-import system.Setup;
 import util.EfficientList;
 import util.EfficientListQualified;
 import util.Vec;
@@ -29,11 +29,11 @@ import actions.ActionRotateCameraBuffered;
 import android.app.Activity;
 import android.util.Log;
 import android.widget.EditText;
-
 import commands.Command;
 import commands.ui.CommandShowEditScreen;
+import entry.ISetupEntry;
 
-public class GraphCreationSetup extends Setup {
+public class GraphCreationSetup extends ArSetup {
 
 	private static final String LOG_TAG = "GraphCreationSetup";
 	private GeoGraph myGraph;
@@ -45,7 +45,7 @@ public class GraphCreationSetup extends Setup {
 	private MetaInfos i;
 
 	@Override
-	public void _a_initFieldsIfNecessary() {
+	public void initFieldsIfNecessary() {
 		// allow the user to send error reports to the developer:
 		ErrorHandler.enableEmailReports("droidar.rwth@gmail.com",
 				"Error in GraphCreationSetup");
@@ -63,13 +63,13 @@ public class GraphCreationSetup extends Setup {
 	}
 
 	@Override
-	public void _b_addWorldsToRenderer(GL1Renderer renderer,
+	public void addWorldsToRenderer(GL1Renderer renderer,
 			GLFactory objectFactory, GeoObj currentPosition) {
 		renderer.addRenderElement(world);
 	}
 
 	@Override
-	public void _c_addActionsToEvents(EventManager eventManager,
+	public void addActionsToEvents(EventManager eventManager,
 			CustomGLSurfaceView arView, SystemUpdater updater) {
 		arView.addOnTouchMoveAction(new ActionBufferedCameraAR(camera));
 		Action rot = new ActionRotateCameraBuffered(camera);
@@ -83,12 +83,12 @@ public class GraphCreationSetup extends Setup {
 	}
 
 	@Override
-	public void _d_addElementsToUpdateThread(SystemUpdater worldUpdater) {
+	public void addElementsToUpdateThread(SystemUpdater worldUpdater) {
 		worldUpdater.addObjectToUpdateCycle(world);
 	}
 
 	@Override
-	public void _e2_addElementsToGuiSetup(GuiSetup guiSetup, Activity activity) {
+	public void addElementsToGuiSetup(GuiSetup guiSetup, Activity activity) {
 		final EditText editText = guiSetup.addSearchbarToView(
 				guiSetup.getTopView(), findWayToWaypoint(), "Waypoint name..");
 
@@ -149,7 +149,7 @@ public class GraphCreationSetup extends Setup {
 		});
 
 		myShape.setOnLongClickCommand(new CommandShowEditScreen(
-				myTargetActivity, p));
+				getActivity(), p));
 
 		return p;
 	}

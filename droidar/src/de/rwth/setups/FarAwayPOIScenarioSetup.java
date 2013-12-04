@@ -5,25 +5,25 @@ import gl.GL1Renderer;
 import gl.GLFactory;
 import gui.GuiSetup;
 import gui.RadarView;
-import system.DefaultARSetup;
+import setup.DefaultArSetup;
 import util.Vec;
 import worldData.SystemUpdater;
 import worldData.World;
 import android.app.Activity;
 import android.util.Log;
-
 import commands.Command;
 import commands.ui.CommandShowToast;
 import components.SimpleTooFarAwayComp;
+import entry.ISetupEntry;
 
-public class FarAwayPOIScenarioSetup extends DefaultARSetup {
+public class FarAwayPOIScenarioSetup extends DefaultArSetup {
 
 	private String LOG_TAG = "FarAwayPOIScenarioSetup";
 	private RadarView radar;
-
+	
 	@Override
-	public void _a_initFieldsIfNecessary() {
-		super._a_initFieldsIfNecessary();
+	public void initFieldsIfNecessary() {
+		super.initFieldsIfNecessary();
 		radar = new RadarView(getActivity(), (int) (getScreenWidth() / 3),
 				getCamera(), getWorld().getAllItems());
 	}
@@ -40,14 +40,14 @@ public class FarAwayPOIScenarioSetup extends DefaultARSetup {
 	}
 
 	@Override
-	public void _d_addElementsToUpdateThread(SystemUpdater updater) {
-		super._d_addElementsToUpdateThread(updater);
+	public void addElementsToUpdateThread(SystemUpdater updater) {
+		super.addElementsToUpdateThread(updater);
 		updater.addObjectToUpdateCycle(radar);
 	}
 
 	@Override
-	public void _e2_addElementsToGuiSetup(GuiSetup guiSetup, Activity activity) {
-		super._e2_addElementsToGuiSetup(guiSetup, activity);
+	public void addElementsToGuiSetup(GuiSetup guiSetup, Activity activity) {
+		super.addElementsToGuiSetup(guiSetup, activity);
 		guiSetup.addViewToTop(radar);
 		guiSetup.addButtonToBottomView(new Command() {
 

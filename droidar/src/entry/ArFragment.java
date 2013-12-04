@@ -10,19 +10,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import de.rwth.setups.StaticDemoSetup;
 
-public class ArFragment extends Fragment implements ISetupEntry {
-	
-	
+/**
+ * Container that acts as the glue between the {@link setup.ArSetup} and the {@link preview.AugmentedView}.
+ * Manages the life cycle and acts the entry point to the android application.  
+ * To implement your own {@link setup.ArSetup} extend this class and override {@link entry.ArFragment#createSetup()}.
+ * To implement your own {@link preview.AugmentedView} extend this class and 
+ * override {@link entry.ArFragment#createAugmentedView(Activity)}.
+ */
+public class ArFragment extends Fragment implements ISetupEntry {	
 	private ArSetup mSetup;
 	private AugmentedView mOverlayView;	
 	private ArType mType = ArType.FRAGMENT;
 	
-	public ArFragment(){
-
-	}
-	
 	@Override
-	public ArType getType(){
+	public ArType getType() {
 		return mType;
 	}
 
@@ -31,13 +32,6 @@ public class ArFragment extends Fragment implements ISetupEntry {
 		return mOverlayView;
 	}	
 	
-	////////////////////////////////////////////////
-	// Android Life Cycle For Fragments
-	// Notes: onCreateView is called every time
-	//        the fragment is made visible
-	//        onDestoryView is called every time
-	//        the fragment is put into the backstack
-	/////////////////////////////////////////////////
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,14 +43,15 @@ public class ArFragment extends Fragment implements ISetupEntry {
 		return mOverlayView;
 	}
 	
-	
-
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		mSetup = createSetup();
+		if (mSetup.getActivity() == null) {
+			mSetup.setEntry(this);
+		}
 		mOverlayView = createAugmentedView(getActivity());
-		mOverlayView.getRenderer().setUseLightning(mSetup._a2_initLightning(mOverlayView.getRenderer().getMyLights()));
+		mOverlayView.getRenderer().setUseLightning(mSetup.initLightning(mOverlayView.getRenderer().getMyLights()));
 		mSetup.onCreate();
 		mSetup.onStart();
 		mSetup.run(this);
@@ -85,7 +80,6 @@ public class ArFragment extends Fragment implements ISetupEntry {
 		mSetup.onPause();
 	}
 
-
 	@Override
 	public void onStop() {
 		super.onStop();
@@ -102,11 +96,11 @@ public class ArFragment extends Fragment implements ISetupEntry {
 		super.onDestroy();
 	}
 
-	protected ArSetup createSetup(){
+	protected ArSetup createSetup() {
 		return new StaticDemoSetup(this);
 	}
 	
-	protected AugmentedView createAugmentedView(Activity activity){
+	protected AugmentedView createAugmentedView(Activity activity) {
 		return new AugmentedView(activity);
 	}
 }

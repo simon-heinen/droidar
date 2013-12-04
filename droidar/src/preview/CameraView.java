@@ -16,6 +16,9 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+/**
+ * CameraView. Can be extended for custom functionality. 
+ */
 public class CameraView extends SurfaceView implements 
 				SurfaceHolder.Callback,
 				Camera.PreviewCallback,
@@ -28,13 +31,27 @@ public class CameraView extends SurfaceView implements
 	private FrameChangeThread mOnFrameChange;
 	private boolean mPause = false;
 	
+	//magic numbers
+	private static final int ROTATE_90_DEG = 90;
+	private static final int BITSIZE = 8;
+	
+	/**
+	 * Constructor needed by {@link SurfaceView}.
+	 * @param context - {@link Context}
+	 */
 	public CameraView(Context context) {
 		super(context);
 		mOnFrameChange = new FrameChangeThread(this);
 		intiCameraView(context);
 	}
 
-	public CameraView(Context context,FrameChangeThread thread, AttributeSet attrs) {
+	/**
+	 * Constructor needed by {@link SurfaceView}.
+	 * @param context - {@link Context}
+	 * @param thread - {@link system.FrameChangeThread}
+	 * @param attrs - {@link AttributeSet}
+	 */
+	public CameraView(Context context, FrameChangeThread thread, AttributeSet attrs) {
 		super(context, attrs);
 		mOnFrameChange = new FrameChangeThread(this);
 		intiCameraView(context);
@@ -43,7 +60,7 @@ public class CameraView extends SurfaceView implements
 	private void intiCameraView(Context context) {
 		mSurfaceHolder = getHolder();
 		mSurfaceHolder.addCallback(this);
-		ARLogger.debug(LOG_TAG,"Camera surface holder created.");
+		ARLogger.debug(LOG_TAG, "Camera surface holder created.");
 	}
 
 	@Override
@@ -58,8 +75,8 @@ public class CameraView extends SurfaceView implements
 			releaseCamera();
 			ARLogger.exception(LOG_TAG, "Unable to set camear preview display", e);
 		}
-		if(showInPortrait()){
-			mCamera.setDisplayOrientation(90);
+		if (showInPortrait()) {
+			mCamera.setDisplayOrientation(ROTATE_90_DEG);
 		}
 	}
 
@@ -80,9 +97,9 @@ public class CameraView extends SurfaceView implements
 	
 	@Override
 	public void onPreviewFrame(byte[] data, Camera camera) {
-		if(mOnFrameChange.isAvailable()){
+		if (mOnFrameChange.isAvailable()) {
 			mOnFrameChange.nextFrame(data);
-		}else if(!mPause){
+		} else if (!mPause) {
 			mCamera.addCallbackBuffer(data);
 		}
 		
@@ -93,7 +110,7 @@ public class CameraView extends SurfaceView implements
 	 * Sets the camera's parameters. Sets the optimal preview size
 	 * based on the width and height given.
 	 */
-	public void setCameraParameters(int width, int height) {
+	private void setCameraParameters(int width, int height) {
 
 		Parameters parameters = mCamera.getParameters();
 		List<Size> sizes = parameters.getSupportedPreviewSizes();
@@ -110,26 +127,27 @@ public class CameraView extends SurfaceView implements
 		}
 	}
 	
-	private void addPreviewCallback(){
-			mCamera.setPreviewCallbackWithBuffer(this);
+	private void addPreviewCallback() {
+		mCamera.setPreviewCallbackWithBuffer(this);
 	}
 	
-	private void setCallBackBuffer(int width, int height){
+	private void setCallBackBuffer(int width, int height) {
 		Camera.Parameters parameters = mCamera.getParameters();
 		PixelFormat pixelFormat = new PixelFormat();
 		PixelFormat.getPixelFormatInfo(
 				parameters.getPreviewFormat(), 
 				pixelFormat);
-		
-		int bufSize = ((width*height)*pixelFormat.bitsPerPixel)/8;
+		int bufSize = ((width * height) * pixelFormat.bitsPerPixel) / BITSIZE;
 		byte[] buffer = new byte[bufSize];
 		mCamera.addCallbackBuffer(buffer);
 		
-        ARLogger.debug(LOG_TAG,"Camera parameters: Size: "+bufSize+", Height: "+height+", Width: "+width+", pixelformat: "+pixelFormat.toString() );
+        ARLogger.debug(LOG_TAG, "Camera parameters: Size: "
+        			+ bufSize + ", Height: " + height + ", Width: " + width
+        			+ ", pixelformat: " + pixelFormat.toString());
 	}
 
 	/**
-	 * Properly resume the Camera
+	 * Properly resume the Camera.
 	 */
 	public void resumeCamera() {
 		mPause = false;
@@ -141,7 +159,9 @@ public class CameraView extends SurfaceView implements
 		}
 	}
 
-	
+	/**
+	 * Pause the camera.
+	 */
 	public void onPause() {
 		mPause = true;
 		if (mCamera != null) {
@@ -151,7 +171,7 @@ public class CameraView extends SurfaceView implements
 	}
 
 	/**
-	 * Properly stop and release the camera
+	 * Properly stop and release the camera.
 	 */
 	public void releaseCamera() {
 		mPause = true;
@@ -159,13 +179,13 @@ public class CameraView extends SurfaceView implements
 			mCamera.stopPreview();
 			mCamera.release();
 			mCamera = null;
-			ARLogger.debug(LOG_TAG,"Camera released.");
+			ARLogger.debug(LOG_TAG, "Camera released.");
 		}
 	}
 	
 	
 	/**
-	 * Returns the optimal preview size given the width and height
+	 * Returns the optimal preview size given the width and height.
 	 * @param sizes
 	 * @param width
 	 * @param height
@@ -190,18 +210,18 @@ public class CameraView extends SurfaceView implements
 		return result;
 	}
 	
-	private boolean showInPortrait(){
+	private boolean showInPortrait() {
 		boolean ret = false;
-		if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT &&
-				!EventManager.isTabletDevice){
+		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT 
+				&& !EventManager.isTabletDevice) {
 			ret = true;
 		}
 		
 		return ret;
 	}
 	
-	private void adjustOrientation(Parameters params){
-		if(showInPortrait()){
+	private void adjustOrientation(Parameters params) {
+		if (showInPortrait()) {
 			params.set("orientation", "portrait");
 			params.set("rotation", "90");
 		}
@@ -209,12 +229,16 @@ public class CameraView extends SurfaceView implements
 
 	@Override
 	public void reAddCallbackBuffer(byte[] frame) {
-		if(!mPause){
+		if (!mPause) {
 			mCamera.addCallbackBuffer(frame);
 		}
 	}
 	
-	public FrameChangeThread getFrameUpdater(){
+	/**
+	 * Get the frame updater.
+	 * @return - {@link system.FrameChangeThread}
+	 */
+	public FrameChangeThread getFrameUpdater() {
 		return mOnFrameChange;
 	}
 

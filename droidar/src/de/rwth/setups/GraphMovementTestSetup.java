@@ -1,20 +1,20 @@
 package de.rwth.setups;
 
+import entry.ISetupEntry;
 import geo.DefaultNodeEdgeListener;
 import geo.GeoGraph;
 import geo.GeoObj;
 import gl.CustomGLSurfaceView;
 import gl.GL1Renderer;
 import gl.GLFactory;
-import system.DefaultARSetup;
+import setup.DefaultArSetup;
 import system.EventManager;
 import util.EfficientList;
 import util.Vec;
 import worldData.SystemUpdater;
 import worldData.World;
 
-public class GraphMovementTestSetup extends DefaultARSetup {
-
+public class GraphMovementTestSetup extends DefaultArSetup {
 	@Override
 	public void addObjectsTo(GL1Renderer renderer, World world,
 			GLFactory objectFactory) {
@@ -46,10 +46,10 @@ public class GraphMovementTestSetup extends DefaultARSetup {
 	}
 
 	@Override
-	public void _c_addActionsToEvents(EventManager eventManager,
+	public void addActionsToEvents(EventManager eventManager,
 			CustomGLSurfaceView arView, SystemUpdater updater) {
 
-		super._c_addActionsToEvents(eventManager, arView, updater);
+		super.addActionsToEvents(eventManager, arView, updater);
 		eventManager.getOnLocationChangedAction().clear();
 	}
 

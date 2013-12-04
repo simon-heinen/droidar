@@ -1,5 +1,6 @@
 package de.rwth.setups;
 
+import entry.ISetupEntry;
 import gl.GL1Renderer;
 import gl.GLFactory;
 import gl.GLText;
@@ -8,14 +9,13 @@ import gui.GuiSetup;
 
 import java.util.HashMap;
 
-import system.DefaultARSetup;
+import setup.DefaultArSetup;
 import worldData.Obj;
 import worldData.World;
 import android.app.Activity;
-
 import commands.Command;
 
-public class FastChangingTextSetup extends DefaultARSetup {
+public class FastChangingTextSetup extends DefaultArSetup {
 
 	HashMap<String, MeshComponent> textMap = new HashMap<String, MeshComponent>();
 	private GLText text;
@@ -24,7 +24,7 @@ public class FastChangingTextSetup extends DefaultARSetup {
 	public void addObjectsTo(GL1Renderer renderer, World world,
 			GLFactory objectFactory) {
 
-		text = new GLText("11223344swrvgweln@@@@", myTargetActivity, textMap,
+		text = new GLText("11223344swrvgweln@@@@", getActivity(), textMap,
 				getCamera());
 
 		Obj o = new Obj();
@@ -33,8 +33,8 @@ public class FastChangingTextSetup extends DefaultARSetup {
 	}
 
 	@Override
-	public void _e2_addElementsToGuiSetup(GuiSetup guiSetup, Activity activity) {
-		super._e2_addElementsToGuiSetup(guiSetup, activity);
+	public void addElementsToGuiSetup(GuiSetup guiSetup, Activity activity) {
+		super.addElementsToGuiSetup(guiSetup, activity);
 		guiSetup.addSearchbarToView(guiSetup.getBottomView(), new Command() {
 
 			@Override

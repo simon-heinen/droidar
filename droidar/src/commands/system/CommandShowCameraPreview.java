@@ -1,12 +1,12 @@
 package commands.system;
 
-import system.Setup;
+import setup.ArSetup;
 
 import commands.undoable.UndoableCommand;
 
 public class CommandShowCameraPreview extends UndoableCommand {
 
-	private Setup mySetup;
+	private ArSetup mySetup;
 	private boolean showCameraPreview;
 
 	/**
@@ -14,26 +14,28 @@ public class CommandShowCameraPreview extends UndoableCommand {
 	 * @param show
 	 *            false=camera is switched off
 	 */
-	public CommandShowCameraPreview(Setup setup, boolean show) {
+	public CommandShowCameraPreview(ArSetup setup, boolean show) {
 		mySetup = setup;
 		showCameraPreview = show;
 	}
 
 	@Override
 	public boolean override_do() {
-		if (showCameraPreview)
-			mySetup.resumeCameraPreview();
-		else
-			mySetup.pauseCameraPreview();
+//TODO: Fix
+//		if (showCameraPreview)
+//			mySetup.resumeCameraPreview();
+//		else
+//			mySetup.pauseCameraPreview();
 		return true;
 	}
 
 	@Override
 	public boolean override_undo() {
-		if (showCameraPreview)
-			mySetup.pauseCameraPreview();
-		else
-			mySetup.resumeCameraPreview();
+//TODO: Fix
+//		if (showCameraPreview)
+//			mySetup.pauseCameraPreview();
+//		else
+//			mySetup.resumeCameraPreview();
 		return true;
 	}
 

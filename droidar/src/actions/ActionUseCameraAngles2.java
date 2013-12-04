@@ -1,8 +1,8 @@
 package actions;
 
 import listeners.eventManagerListeners.OrientationChangedListener;
+import setup.ArSetup;
 import system.EventManager;
-import system.Setup;
 import android.hardware.SensorManager;
 import android.view.Surface;
 
@@ -26,7 +26,7 @@ public abstract class ActionUseCameraAngles2 implements
 	private int screenRotation;
 
 	public ActionUseCameraAngles2() {
-		screenRotation = Setup.getScreenOrientation();
+		screenRotation = ArSetup.getScreenOrientation();
 	}
 
 	@Override

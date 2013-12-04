@@ -1,5 +1,6 @@
 package de.rwth.setups;
 
+import entry.ISetupEntry;
 import geo.GeoObj;
 import gl.Color;
 import gl.CustomGLSurfaceView;
@@ -8,8 +9,8 @@ import gl.GLCamera;
 import gl.GLFactory;
 import gl.scenegraph.MeshComponent;
 import gui.GuiSetup;
+import setup.ArSetup;
 import system.EventManager;
-import system.Setup;
 import util.Vec;
 import worldData.SystemUpdater;
 import worldData.World;
@@ -24,7 +25,7 @@ import commands.DebugCommandPositionEvent;
 import commands.ui.CommandInUiThread;
 import commands.ui.CommandShowToast;
 
-public class PositionTestsSetup extends Setup {
+public class PositionTestsSetup extends ArSetup {
 
 	protected static final int ZDELTA = 5;
 	private final GLCamera camera;
@@ -49,12 +50,12 @@ public class PositionTestsSetup extends Setup {
 	}
 
 	@Override
-	public void _a_initFieldsIfNecessary() {
+	public void initFieldsIfNecessary() {
 
 	}
 
 	@Override
-	public void _b_addWorldsToRenderer(GL1Renderer renderer,
+	public void addWorldsToRenderer(GL1Renderer renderer,
 			GLFactory objectFactory, GeoObj currentPosition) {
 
 		spawnObj(posA, GLFactory.getInstance().newCircle(Color.green()));
@@ -67,7 +68,7 @@ public class PositionTestsSetup extends Setup {
 	}
 
 	@Override
-	public void _c_addActionsToEvents(EventManager eventManager,
+	public void addActionsToEvents(EventManager eventManager,
 			CustomGLSurfaceView arView, SystemUpdater updater) {
 		arView.addOnTouchMoveListener(new ActionMoveCameraBuffered(camera, 5,
 				25));
@@ -82,12 +83,12 @@ public class PositionTestsSetup extends Setup {
 	}
 
 	@Override
-	public void _d_addElementsToUpdateThread(SystemUpdater updater) {
+	public void addElementsToUpdateThread(SystemUpdater updater) {
 		updater.addObjectToUpdateCycle(world);
 	}
 
 	@Override
-	public void _e2_addElementsToGuiSetup(GuiSetup guiSetup, Activity activity) {
+	public void addElementsToGuiSetup(GuiSetup guiSetup, Activity activity) {
 		guiSetup.setRightViewAllignBottom();
 
 		guiSetup.addImangeButtonToRightView(R.drawable.arrow_up_float,
@@ -144,7 +145,7 @@ public class PositionTestsSetup extends Setup {
 			public void executeInUiThread() {
 				Vec pos = camera.getGPSPositionVec();
 				String text = "latitude=" + pos.y + ", longitude=" + pos.x;
-				CommandShowToast.show(myTargetActivity, text);
+				CommandShowToast.show(getActivity(), text);
 			}
 		}, "Show Camera GPS pos");
 
@@ -156,7 +157,7 @@ public class PositionTestsSetup extends Setup {
 						.getCurrentLocationObject();
 				String text = "latitude=" + pos.getLatitude() + ", longitude="
 						+ pos.getLongitude();
-				CommandShowToast.show(myTargetActivity, text);
+				CommandShowToast.show(getActivity(), text);
 			}
 		}, "Show real GPS pos");
 
@@ -168,7 +169,7 @@ public class PositionTestsSetup extends Setup {
 						.getZeroPositionLocationObject();
 				String text = "latitude=" + pos.getLatitude() + ", longitude="
 						+ pos.getLongitude();
-				CommandShowToast.show(myTargetActivity, text);
+				CommandShowToast.show(getActivity(), text);
 			}
 		}, "Show zero GPS pos");
 	}
@@ -192,7 +193,7 @@ public class PositionTestsSetup extends Setup {
 
 		mesh.setPosition(Vec.getNewRandomPosInXYPlane(new Vec(), 0.1f, 1f));
 		x.setComp(mesh);
-		CommandShowToast.show(myTargetActivity, "Object spawned at "
+		CommandShowToast.show(getActivity(), "Object spawned at "
 				+ x.getMySurroundGroup().getPosition());
 		world.add(x);
 	}

@@ -11,6 +11,7 @@ import java.util.List;
 import listeners.eventManagerListeners.LocationEventListener;
 import listeners.eventManagerListeners.OrientationChangedListener;
 import listeners.eventManagerListeners.TrackBallEventListener;
+import logger.ARLogger;
 import util.Log;
 import android.app.Activity;
 import android.content.Context;
@@ -24,7 +25,6 @@ import android.location.LocationListener;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-
 import commands.Command;
 
 /**
@@ -109,10 +109,12 @@ public class EventManager implements LocationListener, SensorEventListener {
 			Sensor accelSensor =  sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 			Sensor sensorFusion = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
 			Sensor magnetSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-			
-			sensorManager.registerListener(this, accelSensor,SensorManager.SENSOR_DELAY_NORMAL);
-			sensorManager.registerListener(this, magnetSensor,SensorManager.SENSOR_DELAY_NORMAL);
-			sensorManager.registerListener(this,sensorFusion,SensorManager.SENSOR_DELAY_NORMAL);
+			ARLogger.debug(LOG_TAG, "Registering Sensors: \nAccel>: " + accelSensor 
+							+ "\nRotatationVector>: " + sensorFusion 
+							+ "\nMagnet>: " + magnetSensor);
+			sensorManager.registerListener(this, accelSensor,SensorManager.SENSOR_DELAY_GAME);
+			sensorManager.registerListener(this, magnetSensor,SensorManager.SENSOR_DELAY_GAME);
+			sensorManager.registerListener(this,sensorFusion,SensorManager.SENSOR_DELAY_GAME);
 				
 	}
 

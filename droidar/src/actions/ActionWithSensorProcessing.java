@@ -2,8 +2,8 @@ package actions;
 
 import gl.GLCamRotationController;
 import gl.GLUtilityClass;
+import setup.ArSetup;
 import system.EventManager;
-import system.Setup;
 import util.Calculus;
 import worldData.Updateable;
 import actions.algos.Algo;
@@ -43,7 +43,7 @@ public abstract class ActionWithSensorProcessing extends Action {
 	public ActionWithSensorProcessing(GLCamRotationController targetCamera) {
 		myTargetCamera = targetCamera;
 		initAlgos();
-		screenRotation = Setup.getScreenOrientation();
+		screenRotation = ArSetup.getScreenOrientation();
 	}
 
 	protected abstract void initAlgos();

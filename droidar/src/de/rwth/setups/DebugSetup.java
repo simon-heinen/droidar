@@ -17,9 +17,9 @@ import gl.scenegraph.MeshComponent;
 import gl.scenegraph.RenderList;
 import gl.scenegraph.Shape;
 import gui.GuiSetup;
+import setup.ArSetup;
 import system.ErrorHandler;
 import system.EventManager;
-import system.Setup;
 import util.IO;
 import util.Log;
 import util.Vec;
@@ -34,7 +34,6 @@ import actions.ActionWASDMovement;
 import android.app.Activity;
 import android.widget.Button;
 import android.widget.TextView;
-
 import commands.Command;
 import commands.CommandGroup;
 import commands.DebugCommandPositionEvent;
@@ -43,8 +42,8 @@ import commands.logic.CommandSetWrapperToValue2;
 import commands.system.CameraSetARInputCommand;
 import commands.system.CommandPlaySound;
 import commands.ui.CommandShowToast;
-
 import de.rwth.R;
+import entry.ISetupEntry;
 
 /**
  * This setup demonstrates the possible animations, camera movement, textured
@@ -53,7 +52,7 @@ import de.rwth.R;
  * @author Spobo
  * 
  */
-public class DebugSetup extends Setup {
+public class DebugSetup extends ArSetup {
 
 	protected static final String LOG_TAG = "DebugSetup";
 	// World radar;
@@ -66,7 +65,7 @@ public class DebugSetup extends Setup {
 	private TimeModifier timeModifier;
 
 	@Override
-	public void _a_initFieldsIfNecessary() {
+	public void initFieldsIfNecessary() {
 
 		// allow the user to send error reports to the developer:
 		ErrorHandler.enableEmailReports("droidar.rwth@gmail.com",
@@ -77,7 +76,7 @@ public class DebugSetup extends Setup {
 	}
 
 	@Override
-	public void _b_addWorldsToRenderer(GL1Renderer renderer,
+	public void addWorldsToRenderer(GL1Renderer renderer,
 			GLFactory objectFactory, GeoObj currentPosition) {
 
 		camera = new GLCamera(new Vec(0, 0, 1));
@@ -93,7 +92,7 @@ public class DebugSetup extends Setup {
 		initNTest(world);
 
 		world.add(objectFactory.newTextObject("text Input", new Vec(10, 1, 1),
-				myTargetActivity, camera));
+				getActivity(), camera));
 
 		addTestGeoObj(world, camera);
 
@@ -119,7 +118,7 @@ public class DebugSetup extends Setup {
 			MeshComponent triangleMesh = GLFactory.getInstance()
 					.newTexturedSquare(
 							"elefantId",
-							IO.loadBitmapFromId(myTargetActivity,
+							IO.loadBitmapFromId(getActivity(),
 									R.drawable.elephant64));
 			triangleMesh.setScale(new Vec(10, 10, 10));
 			triangleMesh.addChild(new AnimationFaceToCamera(camera, 0.5f));
@@ -131,7 +130,7 @@ public class DebugSetup extends Setup {
 			MeshComponent triangleMesh = GLFactory.getInstance()
 					.newTexturedSquare(
 							"hippoId",
-							IO.loadBitmapFromId(myTargetActivity,
+							IO.loadBitmapFromId(getActivity(),
 									R.drawable.hippopotamus64));
 			triangleMesh.addChild(new AnimationFaceToCamera(camera, 0.5f));
 			triangleMesh.setScale(new Vec(10, 10, 10));
@@ -148,7 +147,7 @@ public class DebugSetup extends Setup {
 			MeshComponent triangleMesh = GLFactory.getInstance()
 					.newTexturedSquare(
 							"pandaId",
-							IO.loadBitmapFromId(myTargetActivity,
+							IO.loadBitmapFromId(getActivity(),
 									R.drawable.panda64));
 			triangleMesh.addChild(new AnimationFaceToCamera(camera, 0.5f));
 			triangleMesh.setScale(new Vec(10, 10, 10));
@@ -164,7 +163,7 @@ public class DebugSetup extends Setup {
 			MeshComponent triangleMesh = GLFactory.getInstance()
 					.newTexturedSquare(
 							"elefantId",
-							IO.loadBitmapFromId(myTargetActivity,
+							IO.loadBitmapFromId(getActivity(),
 									R.drawable.elephant64));
 			triangleMesh.setScale(new Vec(10, 10, 10));
 			triangleMesh.addChild(new AnimationFaceToCamera(camera, 0.5f));
@@ -177,7 +176,7 @@ public class DebugSetup extends Setup {
 			MeshComponent triangleMesh = GLFactory.getInstance()
 					.newTexturedSquare(
 							"hippoId",
-							IO.loadBitmapFromId(myTargetActivity,
+							IO.loadBitmapFromId(getActivity(),
 									R.drawable.hippopotamus64));
 			triangleMesh.addChild(new AnimationFaceToCamera(camera, 0.5f));
 			triangleMesh.setScale(new Vec(10, 10, 10));
@@ -194,7 +193,7 @@ public class DebugSetup extends Setup {
 			MeshComponent triangleMesh = GLFactory.getInstance()
 					.newTexturedSquare(
 							"pandaId",
-							IO.loadBitmapFromId(myTargetActivity,
+							IO.loadBitmapFromId(getActivity(),
 									R.drawable.panda64));
 			triangleMesh.addChild(new AnimationFaceToCamera(camera, 0.5f));
 			triangleMesh.setScale(new Vec(10, 10, 10));
@@ -205,16 +204,16 @@ public class DebugSetup extends Setup {
 		{
 			// transform android ui elements into opengl models:
 
-			TextView tv = new TextView(myTargetActivity);
+			TextView tv = new TextView(getActivity());
 			tv.setTextColor(Color.white().toIntARGB());
 			tv.setTextSize(20);
 			tv.setText("! Hallo !");
 
-			Button b = new Button(myTargetActivity);
+			Button b = new Button(getActivity());
 			b.setText("Click Me");
 			MeshComponent button = GLFactory.getInstance().newTexturedSquare(
 					"buttonId", IO.loadBitmapFromView(b));
-			button.setOnClickCommand(new CommandShowToast(myTargetActivity,
+			button.setOnClickCommand(new CommandShowToast(getActivity(),
 					"Thanks alot"));
 
 			button.addChild(new AnimationFaceToCamera(camera, 0.5f));
@@ -271,7 +270,7 @@ public class DebugSetup extends Setup {
 		Obj treangle = new Obj();
 		MeshComponent treangleMesh = GLFactory.getInstance().newTexturedSquare(
 				"worldIconId",
-				IO.loadBitmapFromId(myTargetActivity, R.drawable.icon));
+				IO.loadBitmapFromId(getActivity(), R.drawable.icon));
 		treangleMesh.setPosition(new Vec(0, -2, 1));
 		treangleMesh.setRotation(new Vec(0, 0, 0));
 		treangleMesh.addChild(new AnimationFaceToCamera(camera, 0.5f));
@@ -317,7 +316,7 @@ public class DebugSetup extends Setup {
 	}
 
 	@Override
-	public void _c_addActionsToEvents(EventManager eventManager,
+	public void addActionsToEvents(EventManager eventManager,
 			CustomGLSurfaceView arView, SystemUpdater updater) {
 
 		ActionWASDMovement wasdAction = new ActionWASDMovement(camera, 25f,
@@ -339,14 +338,14 @@ public class DebugSetup extends Setup {
 	}
 
 	@Override
-	public void _d_addElementsToUpdateThread(SystemUpdater worldUpdater) {
+	public void addElementsToUpdateThread(SystemUpdater worldUpdater) {
 		// add the created world to be updated:
 		worldUpdater.addObjectToUpdateCycle(world);
 
 	}
 
 	@Override
-	public void _e2_addElementsToGuiSetup(GuiSetup guiSetup, Activity activity) {
+	public void addElementsToGuiSetup(GuiSetup guiSetup, Activity activity) {
 
 		guiSetup.setBottomBackroundColor(new Color(0.5f, 0.5f, 0.5f, 0.4f)
 				.toIntARGB());

@@ -8,9 +8,9 @@ import gl.GLCamera;
 import gl.GLFactory;
 import gl.scenegraph.MeshComponent;
 import gui.GuiSetup;
+import setup.ArSetup;
 import system.ErrorHandler;
 import system.EventManager;
-import system.Setup;
 import util.Vec;
 import worldData.MoveComp;
 import worldData.Obj;
@@ -22,12 +22,11 @@ import actions.ActionCalcRelativePos;
 import actions.ActionMoveCameraBuffered;
 import actions.ActionRotateCameraBuffered;
 import android.app.Activity;
-
 import commands.Command;
 import components.ViewPosCalcerComp;
+import entry.ISetupEntry;
 
-public class PlaceObjectsSetupTwo extends Setup {
-
+public class PlaceObjectsSetupTwo extends ArSetup {
 	private GLCamera camera;
 	private World world;
 	private ViewPosCalcerComp viewPosCalcer;
@@ -35,7 +34,7 @@ public class PlaceObjectsSetupTwo extends Setup {
 	private MoveComp moveComp;
 
 	@Override
-	public void _a_initFieldsIfNecessary() {
+	public void initFieldsIfNecessary() {
 
 		// allow the user to send error reports to the developer:
 		ErrorHandler.enableEmailReports("droidar.rwth@gmail.com",
@@ -59,14 +58,14 @@ public class PlaceObjectsSetupTwo extends Setup {
 	}
 
 	@Override
-	public void _b_addWorldsToRenderer(GL1Renderer renderer,
+	public void addWorldsToRenderer(GL1Renderer renderer,
 			GLFactory objectFactory, GeoObj currentPosition) {
 		world.add(newObject());
 		renderer.addRenderElement(world);
 	}
 
 	@Override
-	public void _c_addActionsToEvents(EventManager eventManager,
+	public void addActionsToEvents(EventManager eventManager,
 			CustomGLSurfaceView arView, SystemUpdater updater) {
 		arView.addOnTouchMoveAction(new ActionBufferedCameraAR(camera));
 		Action rot = new ActionRotateCameraBuffered(camera);
@@ -80,12 +79,12 @@ public class PlaceObjectsSetupTwo extends Setup {
 	}
 
 	@Override
-	public void _d_addElementsToUpdateThread(SystemUpdater worldUpdater) {
+	public void addElementsToUpdateThread(SystemUpdater worldUpdater) {
 		worldUpdater.addObjectToUpdateCycle(world);
 	}
 
 	@Override
-	public void _e2_addElementsToGuiSetup(GuiSetup guiSetup, Activity context) {
+	public void addElementsToGuiSetup(GuiSetup guiSetup, Activity context) {
 		guiSetup.addButtonToTopView(new Command() {
 
 			@Override

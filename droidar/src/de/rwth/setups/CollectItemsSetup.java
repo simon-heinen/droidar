@@ -10,9 +10,9 @@ import gl.scenegraph.MeshComponent;
 import gl.scenegraph.Shape;
 import gui.GuiSetup;
 import gui.InfoScreenSettings;
+import setup.ArSetup;
 import system.ErrorHandler;
 import system.EventManager;
-import system.Setup;
 import util.Vec;
 import worldData.Obj;
 import worldData.SystemUpdater;
@@ -22,20 +22,19 @@ import actions.ActionCalcRelativePos;
 import actions.ActionMoveCameraBuffered;
 import actions.ActionRotateCameraBuffered;
 import android.app.Activity;
-
 import commands.ui.CommandShowToast;
 import components.ProximitySensor;
-
 import de.rwth.R;
+import entry.ISetupEntry;
 
-public class CollectItemsSetup extends Setup {
+public class CollectItemsSetup extends ArSetup {
 
 	private GLCamera camera;
 	private World world;
 	private int catchedNumber;
 
 	@Override
-	public void _a_initFieldsIfNecessary() {
+	public void initFieldsIfNecessary() {
 		// allow the user to send error reports to the developer:
 		ErrorHandler.enableEmailReports("droidar.rwth@gmail.com",
 				"Error in CollectItemsSetup");
@@ -43,7 +42,7 @@ public class CollectItemsSetup extends Setup {
 	}
 
 	@Override
-	public void _b_addWorldsToRenderer(GL1Renderer renderer,
+	public void addWorldsToRenderer(GL1Renderer renderer,
 			GLFactory objectFactory, GeoObj currentPosition) {
 
 		camera = new GLCamera(new Vec(0, 0, 1));
@@ -70,7 +69,7 @@ public class CollectItemsSetup extends Setup {
 			public void onObjectIsCloseToCamera(GLCamera myCamera2, Obj obj,
 					MeshComponent m, float currentDistance) {
 				catchedNumber++;
-				new CommandShowToast(myTargetActivity, "You got me "
+				new CommandShowToast(getActivity(), "You got me "
 						+ catchedNumber + " times").execute();
 				itemMesh.setPosition(Vec.getNewRandomPosInXYPlane(
 						camera.getPosition(), 5, 20));
@@ -83,7 +82,7 @@ public class CollectItemsSetup extends Setup {
 	}
 
 	@Override
-	public void _c_addActionsToEvents(EventManager eventManager,
+	public void addActionsToEvents(EventManager eventManager,
 			CustomGLSurfaceView arView, SystemUpdater updater) {
 		ActionMoveCameraBuffered move = new ActionMoveCameraBuffered(camera, 5,
 				25);
@@ -97,18 +96,18 @@ public class CollectItemsSetup extends Setup {
 	}
 
 	@Override
-	public void _d_addElementsToUpdateThread(SystemUpdater worldUpdater) {
+	public void addElementsToUpdateThread(SystemUpdater worldUpdater) {
 
 		worldUpdater.addObjectToUpdateCycle(world);
 
 	}
 
 	@Override
-	public void _e2_addElementsToGuiSetup(GuiSetup guiSetup, Activity context) {
+	public void addElementsToGuiSetup(GuiSetup guiSetup, Activity context) {
 	}
 
 	@Override
-	public void _f_addInfoScreen(InfoScreenSettings infoScreenData) {
+	public void addInfoScreen(InfoScreenSettings infoScreenData) {
 		infoScreenData
 				.addText("There will an object spawned close to you which you have to collect!");
 		infoScreenData

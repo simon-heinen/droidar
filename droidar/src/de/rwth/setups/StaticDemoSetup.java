@@ -49,14 +49,16 @@ public class StaticDemoSetup extends ArSetup {
 
 	private TimeModifier timeModifier;
 	
-	public StaticDemoSetup(ISetupEntry pEntry) {
+	public StaticDemoSetup(){
+		super();
+	}
+	
+	public StaticDemoSetup(ISetupEntry pEntry){
 		super(pEntry);
-		// TODO Auto-generated constructor stub
 	}
 
-
 	@Override
-	public void _a_initFieldsIfNecessary() {
+	public void initFieldsIfNecessary() {
 
 		// allow the user to send error reports to the developer:
 		ErrorHandler.enableEmailReports("droidar.rwth@gmail.com",
@@ -65,7 +67,7 @@ public class StaticDemoSetup extends ArSetup {
 	}
 
 	@Override
-	public void _b_addWorldsToRenderer(GL1Renderer renderer,
+	public void addWorldsToRenderer(GL1Renderer renderer,
 			GLFactory objectFactory, GeoObj currentPosition) {
 
 		camera = new GLCamera(new Vec(0, 0, 1));
@@ -229,7 +231,7 @@ public class StaticDemoSetup extends ArSetup {
 	}
 
 	@Override
-	public void _c_addActionsToEvents(EventManager eventManager,
+	public void addActionsToEvents(EventManager eventManager,
 			CustomGLSurfaceView arView, SystemUpdater updater) {
 
 		ActionWASDMovement wasdAction = new ActionWASDMovement(camera, 25f,
@@ -249,14 +251,14 @@ public class StaticDemoSetup extends ArSetup {
 	}
 
 	@Override
-	public void _d_addElementsToUpdateThread(SystemUpdater worldUpdater) {
+	public void addElementsToUpdateThread(SystemUpdater worldUpdater) {
 		// add the created world to be updated:
 		worldUpdater.addObjectToUpdateCycle(world);
 
 	}
 
 	@Override
-	public void _e2_addElementsToGuiSetup(GuiSetup guiSetup, Activity activity) {
+	public void addElementsToGuiSetup(GuiSetup guiSetup, Activity activity) {
 
 		guiSetup.setBottomMinimumHeight(50);
 		guiSetup.setBottomViewCentered();
@@ -281,5 +283,4 @@ public class StaticDemoSetup extends ArSetup {
 		}, "T-1");
 
 	}
-
 }

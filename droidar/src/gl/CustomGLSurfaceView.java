@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import listeners.eventManagerListeners.TouchMoveListener;
+import setup.ArSetup;
 import system.EventManager;
-import system.Setup;
 import system.TouchEventInterface;
 import util.Log;
 import android.content.Context;
@@ -68,7 +68,7 @@ public class CustomGLSurfaceView extends GLSurfaceView implements
 			setDebugFlags(DEBUG_CHECK_GL_ERROR | DEBUG_LOG_GL_CALLS);
 		}
 
-		int screenOrientation = Setup.getScreenOrientation();
+		int screenOrientation = ArSetup.getScreenOrientation();
 		if (screenOrientation == Surface.ROTATION_90
 				|| screenOrientation == Surface.ROTATION_270) {
 			LANDSCAPE_MODE = true;

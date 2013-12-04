@@ -7,8 +7,8 @@ import gl.GL1Renderer;
 import gl.GLCamera;
 import gl.GLFactory;
 import gui.GuiSetup;
+import logger.ARLogger;
 import system.EventManager;
-import util.Log;
 import util.Vec;
 import worldData.SystemUpdater;
 import worldData.World;
@@ -40,6 +40,16 @@ public abstract class DefaultArSetup extends ArSetup {
 	private ActionRotateCameraBuffered mRotateGLCameraAction;
 	private ActionWaitForAccuracy mMinAccuracyAction;
 	
+	//magic numbers
+	private static final int XREDUCTION = 25;
+	private static final int YREDUCTION = 50;
+	private static final int MAXWASDSPEED = 20;	
+	private static final int TRACKBALLFACTOR = 5;
+	private static final int TOUCHSCREENFACTOR = 25;
+	private static final float MINGPSACCURACY = 24.0f;
+	private static final int MAXGPSPOSUPDATECOUNT = 10;
+
+	
 	/**
 	 * Constructor.
 	 * @param pEntry - {@link ISetupEntry}
@@ -49,9 +59,26 @@ public abstract class DefaultArSetup extends ArSetup {
 		super(pEntry);
 		mWaitForValidGps = pWaitForValidGps;
 	}
+	
+	/**
+	 * Constructor. By default the {@link setup.DefaultArSetup#mWaitForValidGps} if set to false.
+	 */
+	public DefaultArSetup() {
+		super();
+		mWaitForValidGps = false;
+	}
+	
+	/**
+	 * Constructor. 
+	 * @param pWaitForValidGps - {@link boolean} true if you want to wait for gps before drawing
+	 */
+	public DefaultArSetup(boolean pWaitForValidGps) {
+		super();
+		mWaitForValidGps = pWaitForValidGps;
+	}
 
 	@Override
-	public void _a_initFieldsIfNecessary() {
+	public void initFieldsIfNecessary() {
 		mCamera = new GLCamera(new Vec(0, 0, 2));
 		mWorld = new World(mCamera);
 	}
@@ -73,7 +100,7 @@ public abstract class DefaultArSetup extends ArSetup {
 	}
 
 	@Override
-	public void _b_addWorldsToRenderer(GL1Renderer glRenderer,
+	public void addWorldsToRenderer(GL1Renderer glRenderer,
 			GLFactory objectFactory, GeoObj currentPosition) {
 		mRenderer = glRenderer;
 		if (!mWaitForValidGps) {
@@ -82,26 +109,33 @@ public abstract class DefaultArSetup extends ArSetup {
 		}
 		glRenderer.addRenderElement(mWorld);
 	}
-
+	
 	@Override
-	public void _c_addActionsToEvents(final EventManager eventManager,
+	public void addActionsToEvents(final EventManager eventManager,
 			CustomGLSurfaceView arView, SystemUpdater updater) {
-		mWasdAction = new ActionWASDMovement(mCamera, 25, 50, 20);
+		mWasdAction = new ActionWASDMovement(mCamera, 
+											XREDUCTION, 
+											YREDUCTION, 
+											MAXWASDSPEED);
 		mRotateGLCameraAction = new ActionRotateCameraBuffered(mCamera);
 		eventManager.addOnOrientationChangedAction(mRotateGLCameraAction);
 
 		arView.addOnTouchMoveListener(mWasdAction);
-		eventManager.addOnTrackballAction(new ActionMoveCameraBuffered(mCamera,5, 25));
+		eventManager.addOnTrackballAction(new ActionMoveCameraBuffered(mCamera,
+																		TRACKBALLFACTOR, 
+																		TOUCHSCREENFACTOR));
 		eventManager.addOnLocationChangedAction(new ActionCalcRelativePos(mWorld, mCamera));
 		
 		if (mWaitForValidGps) {
-			mMinAccuracyAction = new ActionWaitForAccuracy(getActivity(), 24.0f, 10) {
+			mMinAccuracyAction = new ActionWaitForAccuracy(getActivity(), 
+															MINGPSACCURACY, 
+															MAXGPSPOSUPDATECOUNT) {
 				@Override
 				public void minAccuracyReachedFirstTime(Location l,
 						ActionWaitForAccuracy a) {
 					callAddObjectsToWorldIfNotCalledAlready();
 					if (!eventManager.getOnLocationChangedAction().remove(a)) {
-						Log.e(LOG_TAG,
+						ARLogger.debug(LOG_TAG, 
 								"Could not remove minAccuracyAction from the onLocationChangedAction list");
 					}
 				}
@@ -118,14 +152,14 @@ public abstract class DefaultArSetup extends ArSetup {
 	}
 
 	@Override
-	public void _d_addElementsToUpdateThread(SystemUpdater updater) {
+	public void addElementsToUpdateThread(SystemUpdater updater) {
 		updater.addObjectToUpdateCycle(mWorld);
 		updater.addObjectToUpdateCycle(mWasdAction);
 		updater.addObjectToUpdateCycle(mRotateGLCameraAction);
 	}
 
 	@Override
-	public void _e2_addElementsToGuiSetup(GuiSetup guiSetup, Activity activity) {
+	public void addElementsToGuiSetup(GuiSetup guiSetup, Activity activity) {
 		
 	}
 	

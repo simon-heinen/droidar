@@ -1,7 +1,6 @@
 package gui;
 
 import setup.ArSetup;
-import system.Setup;
 import system.TaskManager;
 import util.Log;
 import util.Wrapper;

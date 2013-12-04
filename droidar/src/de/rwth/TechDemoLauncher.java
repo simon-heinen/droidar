@@ -1,12 +1,10 @@
 package de.rwth;
 
-import system.ArActivity;
+import setup.ArSetup;
 import system.ErrorHandler;
 import system.EventManager;
-import system.Setup;
 import tests.AndroidDeviceOnlyTests;
 import tests.EfficientListTests;
-import tests.GameLogicTests;
 import tests.GeoTests;
 import tests.GlTests;
 import tests.IOTests;
@@ -25,7 +23,6 @@ import de.rwth.setups.CollectItemsSetup;
 import de.rwth.setups.DebugSetup;
 import de.rwth.setups.FarAwayPOIScenarioSetup;
 import de.rwth.setups.FastChangingTextSetup;
-import de.rwth.setups.GameDemoSetup;
 import de.rwth.setups.GeoPosTestSetup;
 import de.rwth.setups.GraphCreationSetup;
 import de.rwth.setups.GraphMovementTestSetup;
@@ -36,6 +33,7 @@ import de.rwth.setups.PlaceObjectsSetupTwo;
 import de.rwth.setups.PositionTestsSetup;
 import de.rwth.setups.SensorTestSetup;
 import de.rwth.setups.StaticDemoSetup;
+import entry.ArActivity;
 
 public class TechDemoLauncher extends Activity {
 	@Override
@@ -55,9 +53,8 @@ public class TechDemoLauncher extends Activity {
 		l.removeAllViews();
 
 		showSetup("GeoPosTestSetup", new GeoPosTestSetup());
-		//showSetup("Demo Setup", new StaticDemoSetup(null));
+		showSetup("Demo Setup", new StaticDemoSetup());
 		showSetup("Animation Demo", new DebugSetup());
-		showSetup("Game Demo", new GameDemoSetup());
 		showSetup("'Too far away' scenario", new FarAwayPOIScenarioSetup());
 		showSetup("Large worlds", new LargeWorldsSetup());
 		showSetup("Changing text Demo", new FastChangingTextSetup());
@@ -96,7 +93,7 @@ public class TechDemoLauncher extends Activity {
 
 	}
 
-	private void showSetup(String string, final Setup aSetupInstance) {
+	private void showSetup(String string, final ArSetup aSetupInstance) {
 		((LinearLayout) findViewById(R.id.demoScreenLinView))
 				.addView(new SimpleButton(string) {
 					@Override
@@ -139,7 +136,6 @@ public class TechDemoLauncher extends Activity {
 			new IOTests(this).run();
 			new WorldTests().run();
 			new AndroidDeviceOnlyTests(this).run();
-			new GameLogicTests().run();
 			new GlTests().run();
 
 			new CommandShowToast(this, "All tests succeded on this device :)")
