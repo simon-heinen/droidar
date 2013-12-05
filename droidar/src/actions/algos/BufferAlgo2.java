@@ -1,15 +1,18 @@
 package actions.algos;
-
+/**
+ * Another form of the {@link actions.algos.BufferAlgo1} class.
+ *
+ */
 public class BufferAlgo2 extends Algo {
 
-	private float myBuffer;
+	private float mBuffer;
 
 	/**
 	 * @param buffer
 	 *            has to be between 0 and 1 (try 0.2)
 	 */
 	public BufferAlgo2(float buffer) {
-		myBuffer = buffer;
+		mBuffer = buffer;
 	}
 
 	@Override
@@ -21,7 +24,7 @@ public class BufferAlgo2 extends Algo {
 	}
 
 	private float morph(float t, float v) {
-		return t + (v - t) * myBuffer;
+		return t + (v - t) * mBuffer;
 	}
 
 }

@@ -1,7 +1,7 @@
 package actions.algos;
 
 /**
- * implementation of the function <br>
+ * implementation of the function. <br>
  * 
  * <pre>
  *       /              0  		for       |x| < a   
@@ -25,16 +25,20 @@ package actions.algos;
  */
 public class BufferAlgo1 extends Algo {
 
-	private final float a;
-	private final float b;
-	private final float m;
-	private final float n;
+	private final float mA;
+	private final float mB;
+	private final float mM;
+	private final float mN;
 
+	/**
+	 * @param a - upper bound buffer
+	 * @param b - lower bound buffer
+	 */
 	public BufferAlgo1(float a, float b) {
-		this.a = a;
-		this.b = b;
-		m = 1f / (b - a);
-		n = a / (a - b);
+		this.mA = a;
+		this.mB = b;
+		mM = 1f / (b - a);
+		mN = a / (a - b);
 	}
 
 	@Override
@@ -53,17 +57,21 @@ public class BufferAlgo1 extends Algo {
 	private float morph(float v, float newV) {
 		float x = newV - v;
 		if (x >= 0) {
-			if (x < a)
+			if (x < mA) {
 				return v; // v+0*x
-			if (b <= x)
+			}
+			if (mB <= x) {
 				return newV; // v+1*x
-			return v + x * m + n;
+			}
+			return v + x * mM + mN;
 		} else {
-			if (-x < a)
+			if (-x < mA) {
 				return v;
-			if (b <= -x)
+			}
+			if (mB <= -x) {
 				return newV;
-			return v + x * m + n;
+			}
+			return v + x * mM + mN;
 		}
 	}
 
