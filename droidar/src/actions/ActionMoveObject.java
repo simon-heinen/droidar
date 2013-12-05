@@ -6,13 +6,18 @@ import util.Wrapper;
 import worldData.MoveComp;
 import worldData.Obj;
 
+/**
+ * An action to move an object along the axis.
+ *
+ */
 public class ActionMoveObject extends ActionDoAlongAxis {
 
-	private Wrapper target;
+	private Wrapper mTarget;
 
 	/**
-	 * @param wrapper
-	 * @param camera
+	 * Constructor.
+	 * @param wrapper - {@link util.Wrapper}
+	 * @param camera - {@link gl.GLCamera}
 	 * @param trackballFactor
 	 *            should be around 2-15
 	 * @param touchscreenFactor
@@ -22,13 +27,14 @@ public class ActionMoveObject extends ActionDoAlongAxis {
 	public ActionMoveObject(Wrapper wrapper, GLCamera camera,
 			float trackballFactor, float touchscreenFactor) {
 		super(camera, trackballFactor, touchscreenFactor);
-		target = wrapper;
+		mTarget = wrapper;
 	}
 
 	@Override
 	public void doAlongViewAxis(float x, float y) {
-		if (target != null && target.getObject() instanceof Obj)
-			foundObj((Obj) target.getObject(), x, y);
+		if (mTarget != null && mTarget.getObject() instanceof Obj) {
+			foundObj((Obj) mTarget.getObject(), x, y);
+		}
 	}
 
 	private void foundObj(Obj obj, float x, float y) {

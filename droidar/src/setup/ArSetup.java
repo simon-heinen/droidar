@@ -20,12 +20,10 @@ import android.view.Surface;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-
 import commands.Command;
 import commands.CommandGroup;
 import commands.system.CommandDeviceVibrate;
 import commands.undoable.CommandProcessor;
-
 import entry.ArType;
 import entry.ISetupEntry;
 import gl.GLFactory;
@@ -231,7 +229,7 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 					.getSystemService(Activity.WINDOW_SERVICE))
 					.getDefaultDisplay();
 			mScreenOrientation = (Integer) display.getClass()
-					.getMethod("getRotation", null).invoke(display, null);
+					.getMethod("getRotation", new Class<?>[]{}).invoke(display, new Object[]{});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -356,6 +354,7 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 	 * Retrieve the screen width based on orientation.
 	 * @return - float
 	 */
+	@SuppressWarnings("deprecation")
 	public float getScreenWidth() {
 		if (getScreenOrientation() == Surface.ROTATION_90
 				|| getScreenOrientation() == Surface.ROTATION_270) {
@@ -371,6 +370,7 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 	 * Retrieve the screen height based on orientation.
 	 * @return - float
 	 */
+	@SuppressWarnings("deprecation")
 	public float getScreenHeigth() {
 		if (getScreenOrientation() == Surface.ROTATION_90
 				|| getScreenOrientation() == Surface.ROTATION_270) {
@@ -384,6 +384,7 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 
 	@Override
 	public void onCreate() {
+		ARLogger.debug(LOG_TAG, "onCreate");
 		initAllSingletons();
 		mWorldUpdater = new SystemUpdater();
 	}

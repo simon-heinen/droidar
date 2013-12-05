@@ -16,13 +16,16 @@ import android.view.MotionEvent;
  */
 public abstract class ActionDoAlongAxis extends Action {
 
-	protected GLCamera myTargetCamera;
-	private float myTrackballFactor;
-	private final float myTouchscreenReductionFactor;
-	private Vec movementVec = new Vec();
+	private GLCamera mTargetCamera;
+	private float mTrackballFactor;
+	private final float mTouchscreenReductionFactor;
+	private Vec mMovementVec = new Vec();
+	
+	private static final int CIRCLE = 360;
 
 	/**
-	 * @param camera
+	 * Constructor.
+	 * @param camera - {@link gl.GLCamera}
 	 * @param trackballFactor
 	 *            should be around 2-15
 	 * @param touchscreenFactor
@@ -31,14 +34,14 @@ public abstract class ActionDoAlongAxis extends Action {
 	 */
 	public ActionDoAlongAxis(GLCamera camera, float trackballFactor,
 			float touchscreenFactor) {
-		myTargetCamera = camera;
-		myTrackballFactor = trackballFactor;
-		myTouchscreenReductionFactor = touchscreenFactor;
+		mTargetCamera = camera;
+		mTrackballFactor = trackballFactor;
+		mTouchscreenReductionFactor = touchscreenFactor;
 	}
 
 	@Override
 	public boolean onTrackballEvent(float x, float y, MotionEvent event) {
-		AlignAcordingToViewAxes(x * myTrackballFactor, -y * myTrackballFactor);
+		alignAcordingToViewAxes(x * mTrackballFactor, -y * mTrackballFactor);
 
 		return true;
 	}
@@ -47,8 +50,8 @@ public abstract class ActionDoAlongAxis extends Action {
 	public boolean onTouchMove(MotionEvent e1, MotionEvent e2,
 			float screenDeltaX, float screenDeltaY) {
 
-		AlignAcordingToViewAxes(screenDeltaX / myTouchscreenReductionFactor,
-				-screenDeltaY / myTouchscreenReductionFactor);
+		alignAcordingToViewAxes(screenDeltaX / mTouchscreenReductionFactor,
+				-screenDeltaY / mTouchscreenReductionFactor);
 		return true;
 	}
 
@@ -56,19 +59,29 @@ public abstract class ActionDoAlongAxis extends Action {
 	 * This is where the magic happens. The input movement is mapped according
 	 * to the virtual camera rotation around the z axis to do the movement
 	 * "along the axes"
-	 * 
-	 * @param x
-	 * @param y
 	 */
-	private void AlignAcordingToViewAxes(float x, float y) {
-		movementVec.x = x;
-		movementVec.y = y;
-		movementVec.rotateAroundZAxis(360 - (myTargetCamera
+	private void alignAcordingToViewAxes(float x, float y) {
+		mMovementVec.x = x;
+		mMovementVec.y = y;
+		mMovementVec.rotateAroundZAxis(CIRCLE - (mTargetCamera
 				.getCameraAnglesInDegree()[0]));
-		doAlongViewAxis(movementVec.x, movementVec.y);
+		doAlongViewAxis(mMovementVec.x, mMovementVec.y);
 
 	}
+	
+	/**
+	 * Get the target camera.
+	 * @return - {@link gl.GLCamera}
+	 */
+	public GLCamera getTargetCamera() {
+		return mTargetCamera;
+	}
 
-	public abstract void doAlongViewAxis(float x, float y);
+	/**
+	 * Perform some action along the view axis.
+	 * @param x - axis
+	 * @param y - axis
+	 */
+	abstract void doAlongViewAxis(float x, float y);
 
 }

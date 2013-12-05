@@ -13,11 +13,11 @@ import android.view.MotionEvent;
  */
 public class ActionBufferedCameraAR extends Action {
 
-	// x is the short side of the screen (in landscape mode)
-	private final float TOUCH_SENSITY_X;
-	// y is the long side of the screen
-	private final float TOUCH_SENSITY_Y;
-	private GLCamera myTargetCamera;
+	private static final float DEFAULT_X_TOUCH_SENSITY = 2;
+	private static final float DEFAULT_Y_TOUCH_SENSITY = 36;
+	private final float mXTouchSensity;
+	private final float mYTouchSensity;
+	private GLCamera mTargetCamera;
 
 	/**
 	 * @param glCamera
@@ -29,33 +29,33 @@ public class ActionBufferedCameraAR extends Action {
 	 */
 	public ActionBufferedCameraAR(GLCamera glCamera, float sensityX,
 			float sensityY) {
-		myTargetCamera = glCamera;
-		TOUCH_SENSITY_X = sensityX;
-		TOUCH_SENSITY_Y = sensityY;
+		mTargetCamera = glCamera;
+		mXTouchSensity = sensityX;
+		mYTouchSensity = sensityY;
 	}
 
 	/**
-	 * uses default accuracy
+	 * uses default accuracy.
 	 * 
-	 * @param camera
+	 * @param camera - {@link gl.GLCamera}
 	 */
 	public ActionBufferedCameraAR(GLCamera camera) {
-		this(camera, 2, 36);
+		this(camera, DEFAULT_X_TOUCH_SENSITY, DEFAULT_Y_TOUCH_SENSITY);
 	}
 
 	@Override
 	public boolean onTouchMove(MotionEvent e1, MotionEvent e2,
 			float screenDeltaX, float screenDeltaY) {
-		screenDeltaX = screenDeltaX / TOUCH_SENSITY_X;
-		screenDeltaY = -screenDeltaY / TOUCH_SENSITY_Y;
-		myTargetCamera.changeZAngleBuffered(screenDeltaX);
-		myTargetCamera.changeZPositionBuffered(screenDeltaY);
+		screenDeltaX = screenDeltaX / mXTouchSensity;
+		screenDeltaY = -screenDeltaY / mYTouchSensity;
+		mTargetCamera.changeZAngleBuffered(screenDeltaX);
+		mTargetCamera.changeZPositionBuffered(screenDeltaY);
 		return true;
 	}
 
 	@Override
 	public boolean onReleaseTouchMove() {
-		myTargetCamera.resetBufferedAngle();
+		mTargetCamera.resetBufferedAngle();
 		return true;
 	}
 

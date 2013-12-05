@@ -14,6 +14,7 @@ public final class ARLogger {
 	 * Used to determine message what type of message is begin received.
 	 */
 	private static enum MessageType {
+		VERBOSE,
 		INFO,
 		DEBUG,
 		WARNING,
@@ -110,6 +111,16 @@ public final class ARLogger {
 		logMessage(MessageType.WARNING, affixId(id, message), null);
 	}
 	
+	/**
+	 * Create a verbose message with an internal location.
+	 * @param id - location or class name
+	 * @param message - message displayed
+	 */
+	public static void verbose(String id, String message) {
+		logMessage(MessageType.WARNING, affixId(id, message), null);
+	}
+
+	
 	private static String affixId(String id, String message) {
 		if (id.equals("")) {
 			return message;
@@ -120,6 +131,9 @@ public final class ARLogger {
 	
 	private static void logMessage(MessageType type, String message, Exception exception) {
 		switch(type) {
+		case VERBOSE:
+			Log.v(LOG_TAG, message);
+			break;
 		case INFO:
 			Log.i(LOG_TAG, message);
 			break;
@@ -138,5 +152,4 @@ public final class ARLogger {
 			break;
 		}
 	}
-
 }

@@ -20,11 +20,10 @@ import actions.Action;
 import actions.ActionBufferedCameraAR;
 import actions.ActionCalcRelativePos;
 import actions.ActionMoveCameraBuffered;
-import actions.ActionPlaceObject;
 import actions.ActionRotateCameraBuffered;
 import android.app.Activity;
+
 import commands.Command;
-import entry.ISetupEntry;
 
 public class PlaceObjectsSetup extends ArSetup {
 	private GLCamera camera;
@@ -63,13 +62,13 @@ public class PlaceObjectsSetup extends ArSetup {
 			CustomGLSurfaceView arView, SystemUpdater updater) {
 		arView.addOnTouchMoveAction(new ActionBufferedCameraAR(camera));
 		Action rot1 = new ActionRotateCameraBuffered(camera);
-		Action rot2 = new ActionPlaceObject(camera, placeObjectWrapper, 50);
+		//Action rot2 = new ActionPlaceObject(camera, placeObjectWrapper, 50);
 
 		updater.addObjectToUpdateCycle(rot1);
-		updater.addObjectToUpdateCycle(rot2);
+		//updater.addObjectToUpdateCycle(rot2);
 
 		eventManager.addOnOrientationChangedAction(rot1);
-		eventManager.addOnOrientationChangedAction(rot2);
+		//eventManager.addOnOrientationChangedAction(rot2);
 		eventManager.addOnTrackballAction(new ActionMoveCameraBuffered(camera,
 				5, 25));
 		eventManager.addOnLocationChangedAction(new ActionCalcRelativePos(

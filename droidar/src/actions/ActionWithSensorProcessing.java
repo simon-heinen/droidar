@@ -10,167 +10,175 @@ import actions.algos.Algo;
 import android.hardware.SensorManager;
 import android.view.MotionEvent;
 import android.view.Surface;
-
+/**
+ * Base action for those that need sensor data to perform specific tasks. 
+ * TODO: Refactor this class. 
+ */
 public abstract class ActionWithSensorProcessing extends Action {
 
 	private static final String LOG_TAG = "ActionWithSensorProcessing";
+	private static final int SENSOR_ARRAY_SIZE = 3;
+	private final GLCamRotationController mTargetCamera;
 
-	private final GLCamRotationController myTargetCamera;
+	private Algo mMagnetAlgo;
+	private Algo mAccelAlgo;
+	private Algo mOrientAlgo;
+	private Algo mAccelBufferAlgo;
+	private Algo mMagnetBufferAlgo;
+	private Algo mOrientationBufferAlgo;
 
-	public Algo magnetAlgo;
-	public Algo accelAlgo;
-	public Algo orientAlgo;
-	public Algo accelBufferAlgo;
-	public Algo magnetBufferAlgo;
-	public Algo orientationBufferAlgo;
+	private float[] mAccelValues = new float[SENSOR_ARRAY_SIZE];
+	private float[] mMagnetValues = new float[SENSOR_ARRAY_SIZE];
+	private float[] mOrientValues = new float[SENSOR_ARRAY_SIZE];
 
-	private float[] myAccelValues = new float[3];
-	private float[] myMagnetValues = new float[3];
-	private float[] myOrientValues = new float[3];
+	private boolean mAccelChanged;
+	private float[] mNewAccelValues;
+	private boolean mMagnetoChanged;
+	private float[] mNewMagnetValues;
+	private boolean mOrientationDataChanged;
+	private float[] mNewOrientValues;
 
-	private boolean accelChanged;
-	private float[] myNewAccelValues;
-	private boolean magnetoChanged;
-	private float[] myNewMagnetValues;
-	private boolean orientationDataChanged;
-	private float[] myNewOrientValues;
+	private final float[] mUnrotatedMatrix = Calculus.createIdentityMatrix();
+	private float[] mRotationMatrix = Calculus.createIdentityMatrix();
 
-	private final float[] unrotatedMatrix = Calculus.createIdentityMatrix();
-	private float[] rotationMatrix = Calculus.createIdentityMatrix();
+	private final int mScreenRotation;
 
-	private final int screenRotation;
-
+	/**
+	 * Constructor.
+	 * @param targetCamera - {@link gl.GLCamRotationController}
+	 */
 	public ActionWithSensorProcessing(GLCamRotationController targetCamera) {
-		myTargetCamera = targetCamera;
+		mTargetCamera = targetCamera;
 		initAlgos();
-		screenRotation = ArSetup.getScreenOrientation();
+		mScreenRotation = ArSetup.getScreenOrientation();
 	}
-
-	protected abstract void initAlgos();
 
 	@Override
 	public boolean onTouchMove(MotionEvent e1, MotionEvent e2,
 			float screenDeltaX, float screenDeltaY) {
-		myTargetCamera.changeZAngleBuffered(screenDeltaY);
+		mTargetCamera.changeZAngleBuffered(screenDeltaY);
 		return true;
 	}
 
 	@Override
 	public synchronized boolean onAccelChanged(float[] values) {
-
-		if (accelAlgo != null) {
-			myNewAccelValues = accelAlgo.execute(values);
+		if (mAccelAlgo != null) {
+			mNewAccelValues = mAccelAlgo.execute(values);
 		} else {
-			myNewAccelValues = values;
+			mNewAccelValues = values;
 		}
-		accelChanged = true;
+		mAccelChanged = true;
 		return true;
-
 	}
 
 	@Override
 	public synchronized boolean onMagnetChanged(float[] values) {
-		if (magnetAlgo != null) {
-			myNewMagnetValues = magnetAlgo.execute(values);
+		if (mMagnetAlgo != null) {
+			mNewMagnetValues = mMagnetAlgo.execute(values);
 		} else {
-			myNewMagnetValues = values;
+			mNewMagnetValues = values;
 		}
-		magnetoChanged = true;
+		mMagnetoChanged = true;
 		return true;
-
 	}
 
 	@Override
 	public synchronized boolean onOrientationChanged(float[] values) {
-		if (orientAlgo != null) {
-			myNewOrientValues = orientAlgo.execute(values);
+		if (mOrientAlgo != null) {
+			mNewOrientValues = mOrientAlgo.execute(values);
 		} else {
-			myNewOrientValues = values;
+			mNewOrientValues = values;
 		}
-		orientationDataChanged = true;
+		mOrientationDataChanged = true;
 		return true;
-
 	}
 
 	@Override
 	public synchronized boolean update(float timeDelta, Updateable parent) {
-		if (magnetoChanged || accelChanged || orientationDataChanged) {
-			if (magnetoChanged || accelChanged) {
-				// if accel or magnet changed:
-				if (accelChanged) {
-					accelChanged = false;
-					if (accelBufferAlgo != null) {
-						accelBufferAlgo.execute(myAccelValues,
-								myNewAccelValues, timeDelta);
+		if (mMagnetoChanged || mAccelChanged || mOrientationDataChanged) {
+			if (mMagnetoChanged || mAccelChanged) {
+				if (mAccelChanged) {
+					mAccelChanged = false;
+					if (mAccelBufferAlgo != null) {
+						mAccelBufferAlgo.execute(mAccelValues,
+								mNewAccelValues, timeDelta);
 					} else {
-						myAccelValues = myNewAccelValues;
+						mAccelValues = mNewAccelValues;
 					}
 				}
-				if (magnetoChanged) {
-					magnetoChanged = false;
-					if (magnetBufferAlgo != null) {
-						magnetBufferAlgo.execute(myMagnetValues,
-								myNewMagnetValues, timeDelta);
+				if (mMagnetoChanged) {
+					mMagnetoChanged = false;
+					if (mMagnetBufferAlgo != null) {
+						mMagnetBufferAlgo.execute(mMagnetValues,
+								mNewMagnetValues, timeDelta);
 					} else {
-						myMagnetValues = myNewMagnetValues;
+						mMagnetValues = mNewMagnetValues;
 					}
 				}
-				// first calc the unrotated matrix:
-				SensorManager.getRotationMatrix(unrotatedMatrix, null,
-						myAccelValues, myMagnetValues);
-			} else if (orientationDataChanged) {
-				orientationDataChanged = false;
-				if (orientationBufferAlgo != null) {
-					orientationBufferAlgo.execute(myOrientValues,
-							myNewOrientValues, timeDelta);
+				SensorManager.getRotationMatrix(mUnrotatedMatrix, null,
+						mAccelValues, mMagnetValues);
+			} else if (mOrientationDataChanged) {
+				mOrientationDataChanged = false;
+				if (mOrientationBufferAlgo != null) {
+					mOrientationBufferAlgo.execute(mOrientValues,
+							mNewOrientValues, timeDelta);
 				} else {
-					myOrientValues = myNewOrientValues;
+					mOrientValues = mNewOrientValues;
 				}
-				GLUtilityClass.getRotationMatrixFromVector(unrotatedMatrix,
-						myOrientValues);
+				GLUtilityClass.getRotationMatrixFromVector(mUnrotatedMatrix,
+						mOrientValues);
 			}
-
-			/*
-			 * Then in addition the values have to be remapped of the device is
-			 * used in landscape mode or if it is a tablet etc
-			 */
 
 			if (EventManager.isTabletDevice) {
-				/*
-				 * change accel sensor data according to
-				 * http://code.google.com/p
-				 * /libgdx/source/browse/trunk/backends/gdx
-				 * -backend-android/src/com
-				 * /badlogic/gdx/backends/android/AndroidInput.java
-				 */
-				SensorManager.remapCoordinateSystem(unrotatedMatrix,
+				SensorManager.remapCoordinateSystem(mUnrotatedMatrix,
 						SensorManager.AXIS_X, SensorManager.AXIS_Y,
-						rotationMatrix);
+						mRotationMatrix);
 			} else {
-				/*
-				 * TODO do this for all 4 rotation possibilities!
-				 */
-				if (screenRotation == Surface.ROTATION_90) {
-					// then rotate it according to the screen rotation:
-					SensorManager.remapCoordinateSystem(unrotatedMatrix,
+				if (mScreenRotation == Surface.ROTATION_90) {
+					SensorManager.remapCoordinateSystem(mUnrotatedMatrix,
 							SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X,
-							rotationMatrix);
+							mRotationMatrix);
 				} else {
-					/*
-					 * else its in portrait mode so no remapping needed
-					 */
-					rotationMatrix = unrotatedMatrix;
+					mRotationMatrix = mUnrotatedMatrix;
 				}
 			}
-			myTargetCamera.setRotationMatrix(rotationMatrix, 0);
+			mTargetCamera.setRotationMatrix(mRotationMatrix, 0);
 		}
 		return true;
 	}
 
 	@Override
 	public boolean onReleaseTouchMove() {
-		myTargetCamera.resetBufferedAngle();
+		mTargetCamera.resetBufferedAngle();
 		return true;
 	}
+	
+	
+	private void initAlgos() {
+		mMagnetAlgo = createMagnetAlgo();
+		mAccelAlgo = createAccelAlgo();
+		mOrientAlgo = createOrientAlgo();
+		mAccelBufferAlgo = createAccelBufferAlgo();
+		mMagnetBufferAlgo = createMagnetBufferAlgo();
+		mOrientationBufferAlgo = createOrientBufferAlgo();
+	};
+
+	
+	protected abstract Algo createMagnetAlgo();
+	
+	protected abstract Algo createAccelAlgo();
+	
+	protected abstract Algo createOrientAlgo();
+	
+	protected abstract Algo createMagnetBufferAlgo();
+	
+	protected abstract Algo createAccelBufferAlgo();
+	
+	protected abstract Algo createOrientBufferAlgo();
+
+	
+
+	
+	
 
 }

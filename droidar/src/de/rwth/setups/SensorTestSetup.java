@@ -20,16 +20,10 @@ import actions.Action;
 import actions.ActionBufferedCameraAR;
 import actions.ActionMoveCameraBuffered;
 import actions.ActionRotateCameraBuffered;
-import actions.ActionRotateCameraBuffered3;
-import actions.ActionRotateCameraBuffered4;
-import actions.ActionRotateCameraBufferedDebug;
-import actions.ActionRotateCameraBufferedDirect;
-import actions.ActionRotateCameraUnbuffered;
-import actions.ActionRotateCameraUnbuffered2;
 import actions.ActionUseCameraAngles2;
 import android.app.Activity;
+
 import commands.Command;
-import entry.ISetupEntry;
 
 public class SensorTestSetup extends ArSetup {
 	private GLCamera camera;
@@ -55,12 +49,12 @@ public class SensorTestSetup extends ArSetup {
 
 		camera = new GLCamera();
 		rotActionB1 = new ActionRotateCameraBuffered(camera);
-		rotActionB2 = new ActionRotateCameraBufferedDirect(camera);
-		rotActionB3 = new ActionRotateCameraBuffered3(camera);
-		rotActionB4 = new ActionRotateCameraBuffered4(camera);
-		new ActionRotateCameraBufferedDebug(camera);
-		rotActionUnB = new ActionRotateCameraUnbuffered(camera);
-		rotActionUnB2 = new ActionRotateCameraUnbuffered2(camera);
+//		rotActionB2 = new ActionRotateCameraBufferedDirect(camera);
+//		rotActionB3 = new ActionRotateCameraBuffered3(camera);
+//		rotActionB4 = new ActionRotateCameraBuffered4(camera);
+//		new ActionRotateCameraBufferedDebug(camera);
+//		rotActionUnB = new ActionRotateCameraUnbuffered(camera);
+//		rotActionUnB2 = new ActionRotateCameraUnbuffered2(camera);
 
 	}
 

@@ -4,7 +4,7 @@ import gl.GLCamera;
 
 /**
  * can be used to move the virtual camera when touching the screen or using the
- * trackball etc
+ * trackball etc.
  * 
  * @author Spobo
  * 
@@ -12,7 +12,8 @@ import gl.GLCamera;
 public class ActionMoveCameraBuffered extends ActionDoAlongAxis {
 
 	/**
-	 * @param camera
+	 * Constructor.
+	 * @param camera - {@link gl.GLCamera}
 	 * @param trackballFactor
 	 *            something like 5
 	 * @param touchscreenFactor
@@ -27,7 +28,7 @@ public class ActionMoveCameraBuffered extends ActionDoAlongAxis {
 
 	@Override
 	public void doAlongViewAxis(float x, float y) {
-		myTargetCamera.changeXYPositionBuffered(x, y);
+		getTargetCamera().changeXYPositionBuffered(x, y);
 	}
 
 }

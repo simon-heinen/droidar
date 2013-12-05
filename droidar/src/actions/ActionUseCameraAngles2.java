@@ -9,7 +9,7 @@ import android.view.Surface;
 /**
  * Register it in the
  * {@link EventManager#addOnOrientationChangedAction(OrientationChangedListener)}
- * and you will get updates whenever the angles change
+ * and you will get updates whenever the angles change.
  * 
  * @author Simon Heinen
  * 
@@ -17,29 +17,39 @@ import android.view.Surface;
 public abstract class ActionUseCameraAngles2 implements
 		OrientationChangedListener {
 
-	private float[] mag;
-	private float[] accel;
-	private boolean sensorRead;
-	float[] R = new float[16];
-	float[] outR = new float[16];
-	float[] I = new float[16];
-	private int screenRotation;
+	private static final int MATRIX_SIZE = 16;
+	private static final int CIRCLE = 360;
+	private static final int HALF_CIRCLE = CIRCLE / 2;
+	private static final int MIN_MATRIX_SIZE = 3;
+	private static final int FOURTH_OF_CIRCLE_DEG = 90;
+	
+	private float[] mMag;
+	private float[] mAccel;
+	private boolean mSensorRead;
+	private float[] mR = new float[MATRIX_SIZE];
+	private float[] mOutR = new float[MATRIX_SIZE];
+	private float[] mI = new float[MATRIX_SIZE];
+	private int mScreenRotation;
 
+	/**
+	 * Constructor.
+	 * 
+	 */
 	public ActionUseCameraAngles2() {
-		screenRotation = ArSetup.getScreenOrientation();
+		mScreenRotation = ArSetup.getScreenOrientation();
 	}
 
 	@Override
 	public boolean onMagnetChanged(float[] values) {
-		mag = values;
-		sensorRead = true;
+		mMag = values;
+		mSensorRead = true;
 		calcMatrix();
 		return true;
 	}
 
 	@Override
 	public boolean onAccelChanged(float[] values) {
-		accel = values;
+		mAccel = values;
 		calcMatrix();
 		return true;
 	}
@@ -51,10 +61,10 @@ public abstract class ActionUseCameraAngles2 implements
 	}
 
 	private void calcMatrix() {
-		if (mag != null && accel != null && sensorRead) {
-			sensorRead = false;
-			SensorManager.getRotationMatrix(R, I, accel, mag);
-			onRotationMatrixUpdated(R);
+		if (mMag != null && mAccel != null && mSensorRead) {
+			mSensorRead = false;
+			SensorManager.getRotationMatrix(mR, mI, mAccel, mMag);
+			onRotationMatrixUpdated(mR);
 		}
 	}
 
@@ -69,25 +79,25 @@ public abstract class ActionUseCameraAngles2 implements
 			 * /libgdx/source/browse/trunk/backends/gdx -backend-android/src/com
 			 * /badlogic/gdx/backends/android/AndroidInput.java
 			 */
-			SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_X,
-					SensorManager.AXIS_Y, outR);
+			SensorManager.remapCoordinateSystem(mR, SensorManager.AXIS_X,
+					SensorManager.AXIS_Y, mOutR);
 		} else {
 			/*
 			 * TODO do this for all 4 rotation possibilities!
 			 */
-			if (screenRotation == Surface.ROTATION_90) {
+			if (mScreenRotation == Surface.ROTATION_90) {
 				// then rotate it according to the screen rotation:
-				SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_Y,
-						SensorManager.AXIS_MINUS_X, outR);
+				SensorManager.remapCoordinateSystem(mR, SensorManager.AXIS_Y,
+						SensorManager.AXIS_MINUS_X, mOutR);
 			} else {
-				outR = R;
+				mOutR = mR;
 			}
 		}
-		return outR;
+		return mOutR;
 	}
 
-	private final float rad2deg = 180 / (float) Math.PI;
-	private float[] o = new float[3];
+	private final float mRad2deg = HALF_CIRCLE / (float) Math.PI;
+	private float[] mO = new float[MIN_MATRIX_SIZE];
 
 	/**
 	 * you can also use
@@ -98,14 +108,15 @@ public abstract class ActionUseCameraAngles2 implements
 	 * glCamera.setRotationMatrix(getRotateMatrixAccordingToDeviceOrientation(),
 	 * 0);
 	 * 
-	 * @param updatedRotationMatrix
+	 * @param updatedRotationMatrix - float[] contains the updated matrix
 	 */
 	public void onRotationMatrixUpdated(float[] updatedRotationMatrix) {
-		SensorManager.getOrientation(updatedRotationMatrix, o);
-		float magnet = o[0] * rad2deg + 90;
-		if (magnet < 0)
-			magnet += 360;
-		onAnglesUpdated(o[1] * rad2deg, -o[2] * rad2deg, magnet);
+		SensorManager.getOrientation(updatedRotationMatrix, mO);
+		float magnet = mO[0] * mRad2deg + FOURTH_OF_CIRCLE_DEG;
+		if (magnet < 0) {
+			magnet += CIRCLE;
+		}
+		onAnglesUpdated(mO[1] * mRad2deg, -mO[2] * mRad2deg, magnet);
 	}
 
 	/**

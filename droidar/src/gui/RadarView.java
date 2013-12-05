@@ -45,6 +45,7 @@ public class RadarView extends SimpleCustomView implements Updateable {
 	private UpdateTimer myTimer;
 	private float myUpdateSpeed = DEFAULT_UPDATE_SPEED;
 	private double myTouchScaleFactor = 5;
+	private volatile float mCameraAngleInDeg = -1;
 
 	private String debug;
 
@@ -186,8 +187,9 @@ public class RadarView extends SimpleCustomView implements Updateable {
 		 */
 		drawBackGround(canvas);
 
-		if (items != null)
+		if (items != null) {
 			drawItems(canvas);
+		}
 
 		paint.setColor(Color.BLACK);
 		drawCircle(canvas, myHalfSize, myHalfSize, myHalfSize / 30, paint);
@@ -201,6 +203,10 @@ public class RadarView extends SimpleCustomView implements Updateable {
 		if (debug != null) {
 			paint.setColor(Color.RED);
 			canvas.drawText(debug, 0, myHalfSize, paint);
+		}
+		
+		if (mCameraAngleInDeg > 0) {
+			setRotation(mCameraAngleInDeg);
 		}
 	}
 
@@ -331,7 +337,9 @@ public class RadarView extends SimpleCustomView implements Updateable {
 	@Override
 	public boolean update(float timeDelta, Updateable parent) {
 		if (myTimer.update(timeDelta, parent)) {
-			setRotation(myCamera.getCameraAnglesInDegree()[0]);
+			//setRotation(myCamera.getCameraAnglesInDegree()[0]);
+			mCameraAngleInDeg = myCamera.getCameraAnglesInDegree()[0];	
+			postInvalidate();
 		}
 		/*
 		 * TODO if view was removed from parent it can return false here!
