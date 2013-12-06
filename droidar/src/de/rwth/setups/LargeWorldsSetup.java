@@ -7,9 +7,9 @@ import gui.InfoScreenSettings;
 import setup.DefaultArSetup;
 import system.ErrorHandler;
 import util.Vec;
-import worldData.AbstractObj;
-import worldData.RenderQuadList;
-import worldData.World;
+import worlddata.AbstractObj;
+import worlddata.RenderQuadList;
+import worlddata.World;
 
 public class LargeWorldsSetup extends DefaultArSetup {
 	private static final int NUMBER_OF_OBJECTS = 1000;

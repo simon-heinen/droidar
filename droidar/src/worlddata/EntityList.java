@@ -1,39 +1,42 @@
-package worldData;
+package worlddata;
 
 import system.Container;
 import util.EfficientList;
 import util.Log;
-
+/**
+ *  Essentially a list class that contains multiple entities. 
+ */
 public class EntityList implements Entity, Container<Entity> {
 
 	private static final String LOG_TAG = "RenderList";
-	EfficientList<Entity> myItems = new EfficientList<Entity>();
-	private boolean isClearedAtLeastOnce;
-	private Updateable myParent;
+	private EfficientList<Entity> mItems = new EfficientList<Entity>();
+	private boolean mIsClearedAtLeastOnce;
+	private Updateable mParent;
 
 	@Override
 	public Updateable getMyParent() {
-		return myParent;
+		return mParent;
 	}
 
 	@Override
 	public void setMyParent(Updateable parent) {
-		myParent = parent;
+		mParent = parent;
 	}
 
 	@Override
 	public boolean update(float timeDelta, Updateable parent) {
 		setMyParent(parent);
-		for (int i = 0; i < myItems.myLength; i++) {
-			if (!myItems.get(i).update(timeDelta, parent)) {
-				Log.d(LOG_TAG, "Item " + myItems.get(i)
+		for (int i = 0; i < mItems.myLength; i++) {
+			if (!mItems.get(i).update(timeDelta, parent)) {
+				Log.d(LOG_TAG, "Item " + mItems.get(i)
 						+ " will now be removed from RenderList because it "
 						+ "is finished (returned false on update())");
-				myItems.remove(myItems.get(i));
+				mItems.remove(mItems.get(i));
 			}
 		}
-		if (myItems.myLength == 0)
+		if (mItems.myLength == 0) {
 			return false;
+		}
 		return true;
 	}
 
@@ -43,42 +46,43 @@ public class EntityList implements Entity, Container<Entity> {
 			Log.e(LOG_TAG, "Not allowed to add object to itself!");
 			return false;
 		}
-		return myItems.add(child);
+		return mItems.add(child);
 	}
 
 	@Override
 	public boolean remove(Entity child) {
-		return myItems.remove(child);
+		return mItems.remove(child);
 	}
 
 	@Override
 	public void clear() {
-		myItems.clear();
-		isClearedAtLeastOnce = true;
+		mItems.clear();
+		mIsClearedAtLeastOnce = true;
 	}
 
 	@Override
 	public boolean isCleared() {
-		return isClearedAtLeastOnce;
+		return mIsClearedAtLeastOnce;
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
 	public void removeEmptyItems() {
-		for (int i = 0; i < myItems.myLength; i++) {
-			if (((Container) myItems.get(i)).isCleared())
-				myItems.remove(myItems.get(i));
+		for (int i = 0; i < mItems.myLength; i++) {
+			if (((Container) mItems.get(i)).isCleared()) {
+				mItems.remove(mItems.get(i));
+			}
 		}
 	}
 
 	@Override
 	public int length() {
-		return myItems.myLength;
+		return mItems.myLength;
 	}
 
 	@Override
 	public EfficientList<Entity> getAllItems() {
-		return myItems;
+		return mItems;
 	}
 
 	@Override
@@ -88,6 +92,6 @@ public class EntityList implements Entity, Container<Entity> {
 
 	@Override
 	public boolean insert(int pos, Entity item) {
-		return myItems.insert(pos, item);
+		return mItems.insert(pos, item);
 	}
 }

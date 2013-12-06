@@ -8,8 +8,8 @@ import javax.microedition.khronos.opengles.GL10;
 
 import util.Log;
 import util.Vec;
-import worldData.Updateable;
-import worldData.Visitor;
+import worlddata.Updateable;
+import worlddata.Visitor;
 
 public class AnimationColorMorph extends GLAnimation {
 

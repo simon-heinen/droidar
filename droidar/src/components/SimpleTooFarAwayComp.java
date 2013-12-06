@@ -7,11 +7,10 @@ import gl.scenegraph.MeshComponent;
 import gl.scenegraph.Shape;
 import util.Log;
 import util.Vec;
-import worldData.MoveComp;
-import worldData.Obj;
-import worldData.Updateable;
+import worlddata.MoveComp;
+import worlddata.Obj;
+import worlddata.Updateable;
 import android.app.Activity;
-
 import commands.Command;
 import commands.ui.CommandShowToast;
 
@@ -87,7 +86,7 @@ public class SimpleTooFarAwayComp extends TooFarAwayComp {
 				.newDirectedPath(lineEndPos, null).getMyRenderData());
 		Vec pos = direction.setLength(direction.getLength() - 10);
 		pos.z -= 5;
-		mover.myTargetPos = pos;
+		mover.mTargetPos = pos;
 	}
 
 }

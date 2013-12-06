@@ -3,8 +3,7 @@ package commands.logic;
 import listeners.SelectionListener;
 import util.Log;
 import util.Wrapper;
-import worldData.AbstractObj;
-
+import worlddata.AbstractObj;
 import commands.undoable.UndoableCommand;
 
 /**

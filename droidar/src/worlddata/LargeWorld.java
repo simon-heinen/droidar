@@ -1,4 +1,4 @@
-package worldData;
+package worlddata;
 
 import gl.GLCamera;
 import gl.HasPosition;
@@ -19,9 +19,9 @@ import util.Vec;
 @Deprecated
 public class LargeWorld extends World {
 
-	private float myRenderDistance;
-	private float myRecalcDistanceMin;
-	private float myRecalcDistanceMax;
+	private float mRenderDistance;
+	private float mRecalcDistanceMin;
+	private float mRecalcDistanceMax;
 	private QuadTree<RenderableEntity> tree;
 
 	@SuppressWarnings("rawtypes")
@@ -33,9 +33,9 @@ public class LargeWorld extends World {
 	public LargeWorld(GLCamera glCamera, float renderDistance,
 			float recalcDistance) {
 		super(glCamera);
-		myRenderDistance = renderDistance;
-		myRecalcDistanceMin = -recalcDistance;
-		myRecalcDistanceMax = recalcDistance;
+		mRenderDistance = renderDistance;
+		mRecalcDistanceMin = -recalcDistance;
+		mRecalcDistanceMax = recalcDistance;
 		tree = new QuadTree<RenderableEntity>();
 
 		itemsListener = tree.new ResultListener() {
@@ -135,10 +135,10 @@ public class LargeWorld extends World {
 	private synchronized EfficientList<RenderableEntity> getList(float x,
 			float y) {
 		if (itemsInRange != null
-				&& needsNoRecalculation(x - oldX, myRecalcDistanceMin,
-						myRecalcDistanceMax)
-				&& needsNoRecalculation(y - oldY, myRecalcDistanceMin,
-						myRecalcDistanceMax)) {
+				&& needsNoRecalculation(x - oldX, mRecalcDistanceMin,
+						mRecalcDistanceMax)
+				&& needsNoRecalculation(y - oldY, mRecalcDistanceMin,
+						mRecalcDistanceMax)) {
 			return itemsInRange;
 		} else {
 			if (itemsInRange == null)
@@ -147,7 +147,7 @@ public class LargeWorld extends World {
 				itemsInRange.clear();
 			oldX = x;
 			oldY = y;
-			tree.findInArea(itemsListener, x, y, myRenderDistance);
+			tree.findInArea(itemsListener, x, y, mRenderDistance);
 			return itemsInRange;
 		}
 	}

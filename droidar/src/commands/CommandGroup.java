@@ -123,7 +123,7 @@ public class CommandGroup extends UndoableCommand implements Container<Command> 
 
 	@Override
 	public String toString() {
-		if (this.HasInfoObject())
+		if (this.hasInfoObject())
 			return "CG " + getInfoObject().getShortDescr();
 		return super.toString();
 	}

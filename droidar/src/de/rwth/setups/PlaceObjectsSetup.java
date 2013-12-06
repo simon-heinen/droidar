@@ -13,16 +13,15 @@ import system.ErrorHandler;
 import system.EventManager;
 import util.Vec;
 import util.Wrapper;
-import worldData.Obj;
-import worldData.SystemUpdater;
-import worldData.World;
+import worlddata.Obj;
+import worlddata.SystemUpdater;
+import worlddata.World;
 import actions.Action;
 import actions.ActionBufferedCameraAR;
 import actions.ActionCalcRelativePos;
 import actions.ActionMoveCameraBuffered;
 import actions.ActionRotateCameraBuffered;
 import android.app.Activity;
-
 import commands.Command;
 
 public class PlaceObjectsSetup extends ArSetup {

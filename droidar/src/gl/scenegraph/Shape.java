@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import javax.microedition.khronos.opengles.GL10;
 
 import util.Vec;
-import worldData.Visitor;
+import worlddata.Visitor;
 
 public class Shape extends MeshComponent {
 

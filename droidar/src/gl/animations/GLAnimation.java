@@ -1,8 +1,8 @@
 package gl.animations;
 
 import util.Log;
-import worldData.RenderableEntity;
-import worldData.Updateable;
+import worlddata.RenderableEntity;
+import worlddata.Updateable;
 
 /**
  * An animation can be used to do predefined movements (which might be continous

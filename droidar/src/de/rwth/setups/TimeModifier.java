@@ -5,9 +5,9 @@ import gl.Renderable;
 import javax.microedition.khronos.opengles.GL10;
 
 import util.Calculus;
-import worldData.RenderableEntity;
-import worldData.Updateable;
-import worldData.Visitor;
+import worlddata.RenderableEntity;
+import worlddata.Updateable;
+import worlddata.Visitor;
 import android.util.Log;
 
 public class TimeModifier implements RenderableEntity {

@@ -7,7 +7,7 @@ import gl.GLFactory;
 import gl.scenegraph.Shape;
 import setup.DefaultArSetup;
 import util.Vec;
-import worldData.World;
+import worlddata.World;
 
 public class TestSetup extends DefaultArSetup {
 	@Override

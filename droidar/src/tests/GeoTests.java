@@ -5,10 +5,9 @@ import geo.GeoObj;
 import gl.GLCamera;
 import gl.GLFactory;
 import util.Vec;
-import worldData.World;
+import worlddata.World;
 import actions.ActionCalcRelativePos;
 import android.util.Log;
-
 import commands.DebugCommandPositionEvent;
 
 public class GeoTests extends SimpleTesting {

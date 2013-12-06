@@ -4,7 +4,7 @@ import listeners.EventListener;
 import logger.ARLogger;
 import util.Log;
 import util.Vec;
-import worldData.Updateable;
+import worlddata.Updateable;
 import android.location.Location;
 import android.view.MotionEvent;
 

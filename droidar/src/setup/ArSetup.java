@@ -10,7 +10,7 @@ import system.SimpleLocationManager;
 import system.TaskManager;
 import util.EfficientList;
 import util.Vec;
-import worldData.SystemUpdater;
+import worlddata.SystemUpdater;
 import android.app.Activity;
 import android.view.Display;
 import android.view.KeyEvent;
@@ -177,7 +177,7 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 
 	/**
 	 * Retrieve the system updater.
-	 * @return - {@link worldData.SystemUpdater}
+	 * @return - {@link worlddata.SystemUpdater}
 	 */
 	public SystemUpdater getSystemUpdater() {
 		return mWorldUpdater;

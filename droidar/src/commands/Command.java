@@ -4,7 +4,7 @@ import gui.ListItem;
 import gui.MetaInfos;
 import listeners.ItemGuiListener;
 import util.Log;
-import worldData.HasInfosInterface;
+import worlddata.HasInfosInterface;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -71,7 +71,7 @@ public abstract class Command implements ListItem, HasInfosInterface {
 	}
 
 	@Override
-	public boolean HasInfoObject() {
+	public boolean hasInfoObject() {
 		if (myInfoObj != null)
 			return true;
 		return false;

@@ -7,8 +7,8 @@ import gl.scenegraph.MeshComponent;
 import gl.scenegraph.Shape;
 import system.Container;
 import util.Vec;
-import worldData.Obj;
-import worldData.World;
+import worlddata.Obj;
+import worlddata.World;
 
 public class WorldTests extends SimpleTesting {
 

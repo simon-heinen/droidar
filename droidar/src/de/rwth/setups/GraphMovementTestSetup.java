@@ -11,8 +11,8 @@ import setup.DefaultArSetup;
 import system.EventManager;
 import util.EfficientList;
 import util.Vec;
-import worldData.SystemUpdater;
-import worldData.World;
+import worlddata.SystemUpdater;
+import worlddata.World;
 
 public class GraphMovementTestSetup extends DefaultArSetup {
 	@Override

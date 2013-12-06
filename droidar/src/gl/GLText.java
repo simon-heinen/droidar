@@ -10,7 +10,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import util.Log;
 import util.Vec;
-import worldData.Visitor;
+import worlddata.Visitor;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;

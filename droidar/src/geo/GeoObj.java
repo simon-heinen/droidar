@@ -9,9 +9,9 @@ import util.EfficientList;
 import util.HasDebugInformation;
 import util.Log;
 import util.Vec;
-import worldData.Entity;
-import worldData.Obj;
-import worldData.Visitor;
+import worlddata.Entity;
+import worlddata.Obj;
+import worlddata.Visitor;
 import actions.ActionCalcRelativePos;
 import android.location.Address;
 import android.location.Location;
@@ -206,7 +206,7 @@ public class GeoObj extends Obj implements HasDebugInformation {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see worldData.Obj#getPosition()
+	 * @see worlddata.Obj#getPosition()
 	 */
 	@Override
 	public Vec getPosition() {

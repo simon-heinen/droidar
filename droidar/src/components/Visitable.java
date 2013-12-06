@@ -1,6 +1,6 @@
 package components;
 
-import worldData.Visitor;
+import worlddata.Visitor;
 
 public interface Visitable {
 	/**

@@ -10,8 +10,8 @@ import util.Calculus;
 import util.HasDebugInformation;
 import util.Log;
 import util.Vec;
-import worldData.MoveComp;
-import worldData.Updateable;
+import worlddata.MoveComp;
+import worlddata.Updateable;
 import actions.ActionUseCameraAngles2;
 import android.location.Location;
 import android.opengl.Matrix;
@@ -136,7 +136,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 		if (myPosition == null) {
 			myPosition = new Vec();
 		}
-		myMover.myTargetPos = cameraPosition;
+		myMover.mTargetPos = cameraPosition;
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 * @return the {@link Vec} (x,y,z)
 	 */
 	public Vec getMyNewPosition() {
-		return myMover.myTargetPos;
+		return myMover.mTargetPos;
 	}
 
 	public void setNewCameraOffset(Vec newCameraOffset) {
@@ -463,7 +463,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 * @param deltaY
 	 */
 	public synchronized void changeXYPositionBuffered(float deltaX, float deltaY) {
-		myMover.myTargetPos.add(deltaX, deltaY, 0);
+		myMover.mTargetPos.add(deltaX, deltaY, 0);
 	}
 
 	/**
@@ -533,7 +533,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 *            eg. -10 to move the camera 10 meters down
 	 */
 	public void changeZPositionBuffered(float deltaZ) {
-		myMover.myTargetPos.add(0, 0, deltaZ);
+		myMover.mTargetPos.add(0, 0, deltaZ);
 	}
 
 	/**
@@ -542,12 +542,12 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 */
 	public void resetPosition(boolean resetZValueToo) {
 		float pz = myPosition.z;
-		float npz = myMover.myTargetPos.z;
+		float npz = myMover.mTargetPos.z;
 		myPosition.setToZero();
-		myMover.myTargetPos.setToZero();
+		myMover.mTargetPos.setToZero();
 		if (!resetZValueToo) {
 			myPosition.z = pz;
-			myMover.myTargetPos.z = npz;
+			myMover.mTargetPos.z = npz;
 		}
 	}
 
@@ -559,7 +559,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	}
 
 	public void changeNewPosition(float deltaX, float deltaY, float deltaZ) {
-		myMover.myTargetPos.add(deltaX, deltaY, deltaZ);
+		myMover.mTargetPos.add(deltaX, deltaY, deltaZ);
 	}
 
 	/**
@@ -571,7 +571,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 *            the height of the camera
 	 */
 	public void setNewPosition(float x, float y, float z) {
-		myMover.myTargetPos.setTo(x, y, z);
+		myMover.mTargetPos.setTo(x, y, z);
 
 	}
 
@@ -582,7 +582,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 *            positive means north of zero pos (latitude direction)
 	 */
 	public void setNewPosition(float x, float y) {
-		myMover.myTargetPos.setTo(x, y);
+		myMover.mTargetPos.setTo(x, y);
 	}
 
 	public Vec getNewCameraOffset() {
@@ -681,7 +681,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	public void showDebugInformation() {
 		Log.w(LOG_TAG, "Infos about GLCamera:");
 		Log.w(LOG_TAG, "   > myPosition=" + myPosition);
-		Log.w(LOG_TAG, "   > myMover.myTargetPos=" + myMover.myTargetPos);
+		Log.w(LOG_TAG, "   > myMover.myTargetPos=" + myMover.mTargetPos);
 		Log.w(LOG_TAG, "   > myOffset=" + myOffset);
 		Log.w(LOG_TAG, "   > myNewOffset=" + myNewOffset);
 		Log.w(LOG_TAG, "   > myRotationVec=" + myRotationVec);

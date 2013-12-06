@@ -3,10 +3,10 @@ package components;
 import gl.scenegraph.MeshComponent;
 import util.Log;
 import util.Vec;
-import worldData.Entity;
-import worldData.Obj;
-import worldData.Updateable;
-import worldData.Visitor;
+import worlddata.Entity;
+import worlddata.Obj;
+import worlddata.Updateable;
+import worlddata.Visitor;
 
 /**
  * currently only for testing! not functional jet

@@ -3,8 +3,7 @@ package commands.logic;
 import util.Log;
 import util.Wrapper;
 import util.Wrapper.Type;
-import worldData.Obj;
-
+import worlddata.Obj;
 import commands.undoable.UndoableCommand;
 
 public class CommandSetWrapperToValue extends UndoableCommand {

@@ -1,4 +1,4 @@
-package worldData;
+package worlddata;
 
 import geo.Edge;
 import geo.GeoGraph;
@@ -51,8 +51,8 @@ public abstract class Visitor {
 	}
 
 	public boolean default_visit(Obj obj) {
-		EfficientList<Entity> x = obj.myComponents;
-		final int lenght = obj.myComponents.myLength;
+		EfficientList<Entity> x = obj.mComponents;
+		final int lenght = obj.mComponents.myLength;
 		for (int i = 0; i < lenght; i++) {
 			x.get(i).accept(this);
 		}

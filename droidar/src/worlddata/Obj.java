@@ -1,4 +1,4 @@
-package worldData;
+package worlddata;
 
 import gl.Color;
 import gl.HasColor;
@@ -13,16 +13,18 @@ import util.EfficientList;
 import util.Vec;
 
 import commands.Command;
-
+/**
+ * Base class for storing {@link worlddata.MeshComponent}.
+ */
 public class Obj extends AbstractObj implements HasPosition, HasColor {
 
-	EfficientList<Entity> myComponents = new EfficientList<Entity>();
+	EfficientList<Entity> mComponents = new EfficientList<Entity>();
 
 	public void setMyComponents(EfficientList<Entity> myComponents) {
-		this.myComponents = myComponents;
+		this.mComponents = myComponents;
 	}
 
-	private MeshComponent myGraphicsComponent;
+	private MeshComponent mGraphicsComponent;
 
 	/**
 	 * @return the same object as {@link Obj#getGraphicsComponent()}
@@ -39,37 +41,36 @@ public class Obj extends AbstractObj implements HasPosition, HasColor {
 		return getGraphicsComponent();
 	}
 
+	/**
+	 * @return - {@link gl.scenegraph.MeshComponent}
+	 */
 	public MeshComponent getGraphicsComponent() {
-		return myGraphicsComponent;
+		return mGraphicsComponent;
 	}
 
-	// public void updateComponents(Component component) {
-	// Log.e("Obj.update()", "update not catched from: " + component);
-	// }
-
 	/**
-	 * is called from time to time by the {@link World} Thread
+	 * is called from time to time by the {@link World} Thread.
 	 * 
 	 * @param timeDelta
 	 *            how many ms have passed since last update
+	 * @param parent - {@link worlddata.Updateable}
+	 * @return - true if process successful
 	 */
 	@Override
 	public boolean update(float timeDelta, Updateable parent) {
-		final int lenght = myComponents.myLength;
+		final int lenght = mComponents.myLength;
 		for (int i = 0; i < lenght; i++) {
-			if (myComponents.get(i) != null)
-				if (!myComponents.get(i).update(timeDelta, this)) {
-					remove(myComponents.get(i));
+			if (mComponents.get(i) != null) {
+				if (!mComponents.get(i).update(timeDelta, this)) {
+					remove(mComponents.get(i));
 				}
+			}
 		}
 		return true;
 	}
 
 	/**
-	 * @param uniqueCompName
-	 *            look into {@link Consts} and there the COMP_.. strings for
-	 *            component types
-	 * @param comp
+	 * @param comp - set the component
 	 */
 	public void setComp(Entity comp) {
 		// TODO rename to add.. and return boolean if could be added
@@ -77,8 +78,9 @@ public class Obj extends AbstractObj implements HasPosition, HasColor {
 		if (comp instanceof MeshComponent) {
 			setMyGraphicsComponent((MeshComponent) comp);
 		}
-		if (comp != null && myComponents.contains(comp) == -1)
-			myComponents.add(comp);
+		if (comp != null && mComponents.contains(comp) == -1) {
+			mComponents.add(comp);
+		}
 	}
 
 	/**
@@ -87,22 +89,26 @@ public class Obj extends AbstractObj implements HasPosition, HasColor {
 	 * use {@link Obj#setComp(Entity)} and pass the {@link MeshComponent} there
 	 * as a parameter!
 	 * 
-	 * @param newGraphicsComponent
+	 * @param newGraphicsComponent -  {@link gl.scenegraph.MeshComponent}
 	 */
 	@Deprecated
 	public void setMyGraphicsComponent(MeshComponent newGraphicsComponent) {
-		this.myGraphicsComponent = newGraphicsComponent;
+		this.mGraphicsComponent = newGraphicsComponent;
 	}
 
+	/**
+	 * @return - return list of Entity
+	 */
 	public EfficientList<Entity> getMyComponents() {
-		return myComponents;
+		return mComponents;
 	}
 
 	@Override
 	public void render(GL10 gl, Renderable parent) {
 
-		if (myGraphicsComponent == null)
+		if (mGraphicsComponent == null) {
 			return;
+		}
 
 		/*
 		 * nessecary for objects with picking disabled (wich cant be clicked).
@@ -123,7 +129,7 @@ public class Obj extends AbstractObj implements HasPosition, HasColor {
 			gl.glColor4f(1, 1, 1, 1);
 		}
 
-		myGraphicsComponent.render(gl, this);
+		mGraphicsComponent.render(gl, this);
 	}
 
 	@Override
@@ -134,42 +140,49 @@ public class Obj extends AbstractObj implements HasPosition, HasColor {
 			m.enableMeshPicking(this);
 		}
 	}
-
+	
+	/**
+	 * @param compToRemove - {@link worlddata.Entity} to remove
+	 * @return - true if successful
+	 */
 	public boolean remove(Entity compToRemove) {
-		if (compToRemove instanceof MeshComponent)
-			myGraphicsComponent = null;
-		return myComponents.remove(compToRemove);
+		if (compToRemove instanceof MeshComponent) {
+			mGraphicsComponent = null;
+		}
+		return mComponents.remove(compToRemove);
 	}
 
-	// public boolean accept(Visitor visitor) {
-	// return visitor.default_visit(this);
-	// }
-
 	/**
-	 * @param componentSubclass
+	 * @param componentSubclass - not sure
 	 * @return true if any of the {@link Obj} {@link Entity}s is a of the
 	 *         specified class
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public boolean hasComponent(Class componentSubclass) {
-		if (getComp(componentSubclass) != null)
+		if (getComp(componentSubclass) != null) {
 			return true;
+		}
 		return false;
 	}
 
+	/**
+	 * @param componentSubclass - class
+	 * @return - T
+	 */
 	@SuppressWarnings("unchecked")
 	public <T> T getComp(Class<T> componentSubclass) {
 
 		if (componentSubclass.isAssignableFrom(MeshComponent.class)) {
 			// Log.e(LOG_TAG, "Fast access to obj.meshcomp=" +
-			// myGraphicsComponent);
+			// mGraphicsComponent);
 			return (T) getGraphicsComponent();
 		}
 
-		for (int i = 0; i < myComponents.myLength; i++) {
-			Entity a = myComponents.get(i);
-			if (componentSubclass.isAssignableFrom(a.getClass()))
+		for (int i = 0; i < mComponents.myLength; i++) {
+			Entity a = mComponents.get(i);
+			if (componentSubclass.isAssignableFrom(a.getClass())) {
 				return (T) a;
+			}
 		}
 		return null;
 	}
@@ -177,16 +190,18 @@ public class Obj extends AbstractObj implements HasPosition, HasColor {
 	@Override
 	public Vec getPosition() {
 		MeshComponent g = getGraphicsComponent();
-		if (g != null)
+		if (g != null) {
 			return g.getPosition();
+		}
 		return null;
 	}
 
 	@Override
 	public void setPosition(Vec position) {
 		MeshComponent g = getGraphicsComponent();
-		if (g != null)
+		if (g != null) {
 			g.setPosition(position);
+		}
 	}
 
 	@Override
@@ -210,23 +225,4 @@ public class Obj extends AbstractObj implements HasPosition, HasColor {
 			g.setColor(c);
 		}
 	}
-
-	// public String getDebugInfos() {
-	// return myGraphicsComponent.toString();
-	// }
-
-	// public Component getComponent(String compName) {
-	// return myComponents.get(compName);
-	// }
-
-	// @Override
-	// public void setLongDescr(String info) {
-	// getMyInfoObject().setLongDescr(info);
-	// }
-
-	// @Override
-	// public void setShortDescr(String name) {
-	// myInfoObj.setShortDescr(name);
-	// }
-
 }

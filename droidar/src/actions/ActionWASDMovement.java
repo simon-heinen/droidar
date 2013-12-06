@@ -2,7 +2,7 @@ package actions;
 
 import gl.GLCamera;
 import util.Vec;
-import worldData.Updateable;
+import worlddata.Updateable;
 import android.view.MotionEvent;
 
 /**

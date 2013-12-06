@@ -9,9 +9,8 @@ import gl.scenegraph.MeshComponent;
 import util.EfficientList;
 import util.Log;
 import util.Vec;
-import worldData.Entity;
-import worldData.Obj;
-
+import worlddata.Entity;
+import worlddata.Obj;
 import components.ProximitySensor;
 
 public abstract class SimpleNodeEdgeListener implements NodeListener,

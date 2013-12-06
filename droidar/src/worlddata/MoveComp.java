@@ -1,8 +1,7 @@
-package worldData;
+package worlddata;
 
 import gl.HasPosition;
 import gl.Renderable;
-import gl.scenegraph.MeshComponent;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -10,7 +9,7 @@ import util.Vec;
 
 /**
  * This class can be used to move any {@link Entity} which implements the
- * {@link HasPosition} interface (like {@link Obj} or {@link MeshComponent})
+ * {@link HasPosition} interface (like {@link Obj} or {@link gl.scenegraph.MeshComponent}).
  * 
  * @author Spobo
  * 
@@ -18,12 +17,12 @@ import util.Vec;
 public class MoveComp implements RenderableEntity {
 
 	/**
-	 * this vector is the new position, where to send the {@link MeshComponent}
-	 * of the parent {@link HasPosition} to
+	 * this vector is the new position, where to send the {@link gl.scenegraph.MeshComponent}
+	 * of the parent {@link HasPosition} to.
 	 */
-	public Vec myTargetPos = new Vec();
-	private float mySpeedFactor;
-	private Updateable myParent;
+	public Vec mTargetPos = new Vec();
+	private float mSpeedFactor;
+	private Updateable mParent;
 
 	/**
 	 * @param speedFactor
@@ -31,7 +30,7 @@ public class MoveComp implements RenderableEntity {
 	 *            nearly like instant placing so values should be < 20!
 	 */
 	public MoveComp(float speedFactor) {
-		this.mySpeedFactor = speedFactor;
+		this.mSpeedFactor = speedFactor;
 	}
 
 	@Override
@@ -42,12 +41,12 @@ public class MoveComp implements RenderableEntity {
 
 	@Override
 	public Updateable getMyParent() {
-		return myParent;
+		return mParent;
 	}
 
 	@Override
 	public void setMyParent(Updateable parent) {
-		myParent = parent;
+		mParent = parent;
 	}
 
 	@Override
@@ -55,11 +54,12 @@ public class MoveComp implements RenderableEntity {
 		setMyParent(parent);
 		Vec pos = null;
 		// TODO remove these 2 lines later:
-		if (parent instanceof HasPosition)
+		if (parent instanceof HasPosition) {
 			pos = ((HasPosition) parent).getPosition();
+		}
 
 		if (pos != null) {
-			Vec.morphToNewVec(pos, myTargetPos, timeDelta * mySpeedFactor);
+			Vec.morphToNewVec(pos, mTargetPos, timeDelta * mSpeedFactor);
 
 		}
 		return true;

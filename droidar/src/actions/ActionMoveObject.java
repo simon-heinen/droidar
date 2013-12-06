@@ -3,8 +3,8 @@ package actions;
 import gl.GLCamera;
 import util.Vec;
 import util.Wrapper;
-import worldData.MoveComp;
-import worldData.Obj;
+import worlddata.MoveComp;
+import worlddata.Obj;
 
 /**
  * An action to move an object along the axis.
@@ -41,10 +41,10 @@ public class ActionMoveObject extends ActionDoAlongAxis {
 		MoveComp mc = obj.getComp(MoveComp.class);
 		Vec pos = obj.getPosition();
 		if (mc != null) {
-			if (mc.myTargetPos == null && pos != null) {
-				mc.myTargetPos = pos.copy();
+			if (mc.mTargetPos == null && pos != null) {
+				mc.mTargetPos = pos.copy();
 			}
-			mc.myTargetPos.add(x, y, 0.0f);
+			mc.mTargetPos.add(x, y, 0.0f);
 		} else if (pos != null) {
 			/*
 			 * if no move comp was found in the target object, the mesh itself

@@ -12,10 +12,10 @@ import system.EventManager;
 import util.EfficientList;
 import util.EfficientListQualified;
 import util.Log;
-import worldData.AbstractObj;
-import worldData.Updateable;
-import worldData.Visitor;
-import worldData.World;
+import worlddata.AbstractObj;
+import worlddata.Updateable;
+import worlddata.Visitor;
+import worlddata.World;
 
 /**
  * A {@link GeoGraph} is a simple graph which holds {@link GeoObj}s and supports
@@ -498,12 +498,12 @@ public class GeoGraph extends AbstractObj implements Container<GeoObj> {
 	@Override
 	public String toString() {
 		if (myNodes != null) {
-			if (HasInfoObject())
+			if (hasInfoObject())
 				return "GeoGraph '" + getInfoObject().getShortDescr()
 						+ "' (size=" + myNodes.myLength + ")";
 			return "GeoGraph <noname>(size=" + myNodes.myLength + ")";
 		} else {
-			if (HasInfoObject())
+			if (hasInfoObject())
 				return "GeoGraph '" + getInfoObject().getShortDescr()
 						+ "' (size=no objects in graph)";
 			return "GeoGraph <noname>(size=no objects in graph)";

@@ -12,14 +12,13 @@ import gui.GuiSetup;
 import setup.ArSetup;
 import system.EventManager;
 import util.Vec;
-import worldData.SystemUpdater;
-import worldData.World;
+import worlddata.SystemUpdater;
+import worlddata.World;
 import actions.ActionCalcRelativePos;
 import actions.ActionMoveCameraBuffered;
 import actions.ActionRotateCameraBuffered;
 import android.R;
 import android.app.Activity;
-
 import commands.Command;
 import commands.DebugCommandPositionEvent;
 import commands.ui.CommandInUiThread;

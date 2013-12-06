@@ -19,11 +19,10 @@ import util.EfficientList;
 import util.Log;
 import util.Vec;
 import util.Wrapper;
-import worldData.Obj;
-import worldData.RenderableEntity;
-import worldData.Updateable;
+import worlddata.Obj;
+import worlddata.RenderableEntity;
+import worlddata.Updateable;
 import android.opengl.Matrix;
-
 import commands.Command;
 import commands.undoable.UndoableCommand;
 

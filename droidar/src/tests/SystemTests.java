@@ -9,9 +9,8 @@ import util.LimitedQueue;
 import util.Log;
 import util.Vec;
 import util.Wrapper;
-import worldData.Entity;
-import worldData.Obj;
-
+import worlddata.Entity;
+import worlddata.Obj;
 import components.ProximitySensor;
 
 public class SystemTests extends SimpleTesting {

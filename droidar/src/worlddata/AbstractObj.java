@@ -1,4 +1,4 @@
-package worldData;
+package worlddata;
 
 import gui.ListItem;
 import gui.MetaInfos;
@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 
 import commands.Command;
 
+/**
+ * Default implementation for Objs. 
+ */
 public abstract class AbstractObj implements HasInfosInterface, ListItem,
 		SelectionListener, EditItem, RenderableEntity {
 
@@ -34,7 +37,7 @@ public abstract class AbstractObj implements HasInfosInterface, ListItem,
 	}
 
 	@Override
-	public boolean HasInfoObject() {
+	public boolean hasInfoObject() {
 		if (mInfoObj != null) {
 			return true;
 		}
@@ -101,10 +104,16 @@ public abstract class AbstractObj implements HasInfosInterface, ListItem,
 		mOnMapClickCommand = c;
 	}
 
+	/**
+	 * @param clickCommand - {@link commands.Command}
+	 */
 	public void setListClickCommand(Command clickCommand) {
 		mListClickCommand = clickCommand;
 	}
 
+	/**
+	 * @param longClickCommand - {@link commands.Command}
+	 */
 	public void setListLongClickCommand(Command longClickCommand) {
 		mListLongClickCommand = longClickCommand;
 	}
@@ -120,8 +129,11 @@ public abstract class AbstractObj implements HasInfosInterface, ListItem,
 				parentView);
 	}
 
-	public void setmItemGuiListener(ItemGuiListener mItemGuiListener) {
-		this.mItemGuiListener = mItemGuiListener;
+	/**
+	 * @param pItemGuiListener - {@link listeners.ItemGuiListener}
+	 */
+	public void setmItemGuiListener(ItemGuiListener pItemGuiListener) {
+		mItemGuiListener = pItemGuiListener;
 	}
 
 	@Override
@@ -131,7 +143,7 @@ public abstract class AbstractObj implements HasInfosInterface, ListItem,
 
 	@Override
 	public String toString() {
-		if (HasInfoObject()) {
+		if (hasInfoObject()) {
 			return getInfoObject().getShortDescr();
 		}
 		return super.toString();

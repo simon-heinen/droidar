@@ -8,7 +8,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import util.Log;
 import util.Vec;
-import worldData.Visitor;
+import worlddata.Visitor;
 
 /**
  * Great tutorials:

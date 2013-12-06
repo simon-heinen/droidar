@@ -10,7 +10,7 @@ import gui.GuiSetup;
 import java.util.ArrayList;
 
 import system.EventManager;
-import worldData.SystemUpdater;
+import worlddata.SystemUpdater;
 import android.app.Activity;
 import android.widget.FrameLayout;
 
@@ -49,7 +49,7 @@ public interface ISetupSteps {
 	 * and then you can use the {@link GLFactory} object to add objects to the
 	 * created world. When your world is build, add it to the
 	 * {@link GL1Renderer} object by calling
-	 * {@link GL1Renderer#addRenderElement(worldData.Renderable)}
+	 * {@link GL1Renderer#addRenderElement(worlddata.Renderable)}
 	 * 
 	 * @param glRenderer
 	 *            here you should add your world(s)
@@ -99,14 +99,14 @@ public interface ISetupSteps {
 			CustomGLSurfaceView arView, SystemUpdater updater);
 	
 	/**
-	 * All elements (normally that should only be {@link worldData.World}s) which should
+	 * All elements (normally that should only be {@link worlddata.World}s) which should
 	 * be updated have to be added to the {@link system.SystemUpdater}. This update
 	 * process is independent to the rendering process and can be used for all
 	 * system-logic which has to be done periodically
 	 * 
 	 * @param updater
 	 *            add anything you want to update to this updater via
-	 *            {@link SystemUpdater#addObjectToUpdateCycle(worldData.Updateable)}
+	 *            {@link SystemUpdater#addObjectToUpdateCycle(worlddata.Updateable)}
 	 */
 	void addElementsToUpdateThread(SystemUpdater updater);
 	

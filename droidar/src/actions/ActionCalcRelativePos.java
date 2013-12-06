@@ -4,7 +4,7 @@ import geo.GeoCalcer;
 import gl.GLCamera;
 import logger.ARLogger;
 import system.EventManager;
-import worldData.World;
+import worlddata.World;
 import android.location.Location;
 
 /**
@@ -60,7 +60,7 @@ public class ActionCalcRelativePos extends Action {
 
 	/**
 	 * Constructor.
-	 * @param world - {@link worldData.World}
+	 * @param world - {@link worlddata.World}
 	 * @param camera - {@link gl.GLCamera}
 	 */
 	public ActionCalcRelativePos(World world, GLCamera camera) {

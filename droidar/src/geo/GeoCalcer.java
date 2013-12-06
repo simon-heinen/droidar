@@ -2,8 +2,8 @@ package geo;
 
 import system.Container;
 import util.Log;
-import worldData.LargeWorld;
-import worldData.Visitor;
+import worlddata.LargeWorld;
+import worlddata.Visitor;
 
 public class GeoCalcer extends Visitor {
 

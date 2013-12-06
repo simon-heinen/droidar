@@ -1,7 +1,6 @@
 package commands.system;
 
-import worldData.SystemUpdater;
-
+import worlddata.SystemUpdater;
 import commands.undoable.UndoableCommand;
 
 public class CommandShowWorldAnimation extends UndoableCommand {

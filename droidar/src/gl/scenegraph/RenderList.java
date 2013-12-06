@@ -7,9 +7,9 @@ import javax.microedition.khronos.opengles.GL10;
 import system.Container;
 import util.EfficientList;
 import util.Log;
-import worldData.RenderableEntity;
-import worldData.Updateable;
-import worldData.Visitor;
+import worlddata.RenderableEntity;
+import worlddata.Updateable;
+import worlddata.Visitor;
 
 public class RenderList implements RenderableEntity,
 		Container<RenderableEntity> {

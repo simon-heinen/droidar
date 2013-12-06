@@ -14,15 +14,14 @@ import setup.ArSetup;
 import system.ErrorHandler;
 import system.EventManager;
 import util.Vec;
-import worldData.SystemUpdater;
-import worldData.World;
+import worlddata.SystemUpdater;
+import worlddata.World;
 import actions.Action;
 import actions.ActionBufferedCameraAR;
 import actions.ActionMoveCameraBuffered;
 import actions.ActionRotateCameraBuffered;
 import actions.ActionUseCameraAngles2;
 import android.app.Activity;
-
 import commands.Command;
 
 public class SensorTestSetup extends ArSetup {

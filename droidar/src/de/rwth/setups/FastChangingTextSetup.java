@@ -10,8 +10,8 @@ import gui.GuiSetup;
 import java.util.HashMap;
 
 import setup.DefaultArSetup;
-import worldData.Obj;
-import worldData.World;
+import worlddata.Obj;
+import worlddata.World;
 import android.app.Activity;
 import commands.Command;
 

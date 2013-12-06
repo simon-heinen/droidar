@@ -5,11 +5,11 @@ import gl.GLCamera;
 import gl.scenegraph.MeshComponent;
 import util.Log;
 import util.Vec;
-import worldData.Entity;
-import worldData.Obj;
-import worldData.UpdateTimer;
-import worldData.Updateable;
-import worldData.Visitor;
+import worlddata.Entity;
+import worlddata.Obj;
+import worlddata.UpdateTimer;
+import worlddata.Updateable;
+import worlddata.Visitor;
 
 public abstract class ProximitySensor implements Entity {
 

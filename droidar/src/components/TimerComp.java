@@ -1,11 +1,10 @@
 package components;
 
 import commands.Command;
-
-import worldData.Entity;
-import worldData.UpdateTimer;
-import worldData.Updateable;
-import worldData.Visitor;
+import worlddata.Entity;
+import worlddata.UpdateTimer;
+import worlddata.Updateable;
+import worlddata.Visitor;
 
 public class TimerComp implements Entity {
 

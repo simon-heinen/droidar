@@ -5,8 +5,8 @@ import gl.Renderable;
 import javax.microedition.khronos.opengles.GL10;
 
 import util.Vec;
-import worldData.Updateable;
-import worldData.Visitor;
+import worlddata.Updateable;
+import worlddata.Visitor;
 
 public class AnimationPulse extends GLAnimation {
 

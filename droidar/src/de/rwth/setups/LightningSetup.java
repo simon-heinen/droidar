@@ -19,15 +19,14 @@ import setup.DefaultArSetup;
 import system.EventManager;
 import util.Vec;
 import util.Wrapper;
-import worldData.Entity;
-import worldData.MoveComp;
-import worldData.Obj;
-import worldData.SystemUpdater;
-import worldData.World;
+import worlddata.Entity;
+import worlddata.MoveComp;
+import worlddata.Obj;
+import worlddata.SystemUpdater;
+import worlddata.World;
 import actions.ActionMoveObject;
 import android.app.Activity;
 import android.util.Log;
-
 import commands.Command;
 
 public class LightningSetup extends DefaultArSetup {
@@ -147,7 +146,7 @@ public class LightningSetup extends DefaultArSetup {
 					MoveComp mover = ((Obj) targetMoveWrapper.getObject())
 							.getComp(MoveComp.class);
 					if (mover != null) {
-						mover.myTargetPos.z -= zMoveFactor;
+						mover.mTargetPos.z -= zMoveFactor;
 					} else {
 						Vec pos = ((Obj) targetMoveWrapper.getObject())
 								.getPosition();
@@ -170,7 +169,7 @@ public class LightningSetup extends DefaultArSetup {
 					MoveComp mover = ((Obj) targetMoveWrapper.getObject())
 							.getComp(MoveComp.class);
 					if (mover != null) {
-						mover.myTargetPos.z += zMoveFactor;
+						mover.mTargetPos.z += zMoveFactor;
 					} else {
 						Vec pos = ((Obj) targetMoveWrapper.getObject())
 								.getPosition();

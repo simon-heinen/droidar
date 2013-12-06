@@ -6,7 +6,7 @@ import gl.GL1Renderer;
 import gl.GLFactory;
 import setup.DefaultArSetup;
 import util.Vec;
-import worldData.World;
+import worlddata.World;
 
 public class GeoPosTestSetup extends DefaultArSetup {
 	@Override

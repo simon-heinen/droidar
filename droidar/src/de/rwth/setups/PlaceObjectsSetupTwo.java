@@ -12,10 +12,10 @@ import setup.ArSetup;
 import system.ErrorHandler;
 import system.EventManager;
 import util.Vec;
-import worldData.MoveComp;
-import worldData.Obj;
-import worldData.SystemUpdater;
-import worldData.World;
+import worlddata.MoveComp;
+import worlddata.Obj;
+import worlddata.SystemUpdater;
+import worlddata.World;
 import actions.Action;
 import actions.ActionBufferedCameraAR;
 import actions.ActionCalcRelativePos;
@@ -43,13 +43,13 @@ public class PlaceObjectsSetupTwo extends ArSetup {
 		world = new World(camera);
 		viewPosCalcer = new ViewPosCalcerComp(camera, 150, 0.1f) {
 			@Override
-			public void onPositionUpdate(worldData.Updateable parent,
+			public void onPositionUpdate(worlddata.Updateable parent,
 					Vec targetVec) {
 				if (parent instanceof Obj) {
 					Obj obj = (Obj) parent;
 					MoveComp m = obj.getComp(MoveComp.class);
 					if (m != null) {
-						m.myTargetPos = targetVec;
+						m.mTargetPos = targetVec;
 					}
 				}
 			}

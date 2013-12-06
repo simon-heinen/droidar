@@ -1,4 +1,4 @@
-package worldData;
+package worlddata;
 
 import gl.CordinateAxis;
 import gl.GLCamera;

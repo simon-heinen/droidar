@@ -5,8 +5,8 @@ import gl.Renderable;
 import javax.microedition.khronos.opengles.GL10;
 
 import util.Log;
-import worldData.Updateable;
-import worldData.Visitor;
+import worlddata.Updateable;
+import worlddata.Visitor;
 
 public class AnimationShrink extends GLAnimation {
 
