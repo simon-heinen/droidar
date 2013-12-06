@@ -1,32 +1,33 @@
 package listeners.eventManagerListeners;
 
-import android.hardware.SensorEventListener;
-
+/**
+ * Listener for sensors. 
+ */
 public interface OrientationChangedListener {
 	/**
 	 * see
-	 * {@link SensorEventListener#onSensorChanged(android.hardware.SensorEvent)}
+	 * {@link android.hardware.SensorEventListener#onSensorChanged(android.hardware.SensorEvent)}.
 	 * 
-	 * @param values
-	 * @return
+	 * @param values - values returned from sensor.
+	 * @return - process successful
 	 */
-	public abstract boolean onOrientationChanged(float[] values);
+	boolean onOrientationChanged(float[] values);
 
 	/**
 	 * see
-	 * {@link SensorEventListener#onSensorChanged(android.hardware.SensorEvent)}
+	 * {@link android.hardware.SensorEventListener#onSensorChanged(android.hardware.SensorEvent)}.
 	 * 
-	 * @param values
-	 * @return
+	 * @param values - values returned from sensor
+	 * @return - process successful
 	 */
-	public boolean onMagnetChanged(float[] values);
+	boolean onMagnetChanged(float[] values);
 
 	/**
 	 * see
-	 * {@link SensorEventListener#onSensorChanged(android.hardware.SensorEvent)}
+	 * {@link android.hardware.SensorEventListener#onSensorChanged(android.hardware.SensorEvent)}.
 	 * 
-	 * @param values
-	 * @return
+	 * @param values - values returned from sensor
+	 * @return - process successful
 	 */
-	public abstract boolean onAccelChanged(float[] values);
+	boolean onAccelChanged(float[] values);
 }

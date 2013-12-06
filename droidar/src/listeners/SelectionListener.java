@@ -1,22 +1,38 @@
 package listeners;
 
-import gl.scenegraph.MeshComponent;
-
 import commands.Command;
-
+/**
+ * Interface for handling UI interaction.  
+ */
 public interface SelectionListener {
 
+	/**
+	 * Get the on click command. 
+	 * @return - {@link commands.Command}
+	 */
 	Command getOnClickCommand();
 
+	/**
+	 * Get the on long click command. 
+	 * @return - {@link commands.Command}
+	 */
 	Command getOnLongClickCommand();
 
+	/**
+	 * Get the on map click command. 
+	 * @return - {@link commands.Command}
+	 */
 	Command getOnMapClickCommand();
 
+	/**
+	 * Get the on double click command. 
+	 * @return - {@link commands.Command}
+	 */
 	Command getOnDoubleClickCommand();
 
 	/**
 	 * This will enable the selection mechanism (like color-picking in the
-	 * {@link MeshComponent}) if possible.
+	 * {@link gl.scenegraph.MeshComponent}) if possible.
 	 * 
 	 * @param cmd - {@link commands.Command}
 	 */
@@ -24,7 +40,7 @@ public interface SelectionListener {
 
 	/**
 	 * This will enable the selection mechanism (like color-picking in the
-	 * {@link MeshComponent}) if possible.
+	 * {@link gl.scenegraph.MeshComponent}) if possible.
 	 * 
 	 * @param cmd - {@link commands.Command}
 	 */
@@ -32,12 +48,18 @@ public interface SelectionListener {
 
 	/**
 	 * This will enable the selection mechanism (like color-picking in the
-	 * {@link MeshComponent}) if possible
+	 * {@link gl.scenegraph.MeshComponent}) if possible.
 	 * 
 	 * @param cmd - - {@link commands.Command}
 	 */
-	public void setOnLongClickCommand(Command cmd);
+	void setOnLongClickCommand(Command cmd);
 
-	public void setOnMapClickCommand(Command cmd);
+	/**
+	 * This will enable the selection mechanism (like color-picking in the
+	 * {@link gl.scenegraph.MeshComponent}) if possible.
+	 * 
+	 * @param cmd - - {@link commands.Command}
+	 */
+	void setOnMapClickCommand(Command cmd);
 
 }
