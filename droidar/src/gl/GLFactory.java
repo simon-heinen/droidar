@@ -38,7 +38,7 @@ import android.widget.TextView;
  * @author Spobo
  * 
  */
-public class GLFactory {
+public final class GLFactory {
 
 	private static final String LOG_TAG = "GLFactory";
 
@@ -285,7 +285,7 @@ public class GLFactory {
 			int lineCount) {
 		Shape s = new Shape(netColor);
 		s.setLineDrawing();
-		float coord = (lineCount - 1) * spaceBetweenNetStrings / 2;
+		float coord = ((lineCount - 1) * spaceBetweenNetStrings) / 2;
 		Vec start = new Vec(coord, coord, 0);
 		Vec end = new Vec(coord, -coord, 0);
 		for (int i = 0; i < lineCount; i++) {
@@ -308,8 +308,9 @@ public class GLFactory {
 	public Obj newSolarSystem(Vec position) {
 		Obj solarSystem = new Obj();
 		MeshComponent sunBox = new Shape();
-		if (position != null)
+		if (position != null) {
 			sunBox.setPosition(position);
+		}
 		solarSystem.setComp(sunBox);
 
 		MeshComponent earthRing = new Shape();
@@ -382,10 +383,10 @@ public class GLFactory {
 
 		Vec e1 = new Vec(-width + c, 0, 0);
 		Vec e4 = new Vec(width - c, 0, 0);
-		Vec e2 = new Vec(-width / 2 + c, width, 0);
-		Vec e6 = new Vec(-width / 2 + c, -width, 0);
-		Vec e3 = new Vec(width / 2 - c, width, 0);
-		Vec e5 = new Vec(width / 2 - c, -width, 0);
+		Vec e2 = new Vec((-width / 2) + c, width, 0);
+		Vec e6 = new Vec((-width / 2) + c, -width, 0);
+		Vec e3 = new Vec((width / 2) - c, width, 0);
+		Vec e5 = new Vec((width / 2) - c, -width, 0);
 
 		s.add(top);
 		s.add(e1);
@@ -522,7 +523,7 @@ public class GLFactory {
 		double factor = 360 / numberOfSides;
 
 		// there have to be n triangles:
-		for (int i = 0; i < numberOfSides / 2; i++) {
+		for (int i = 0; i < (numberOfSides / 2); i++) {
 			s.add(v.copy());
 			v.rotateAroundZAxis(factor);
 			s.add(v.copy());
@@ -540,11 +541,11 @@ public class GLFactory {
 		// side length:
 		float a = HEIGHT_TO_SIDE_FACTOR * Math.abs(height);
 
-		Vec p1 = new Vec(center.x - 1f / 2f * a, center.y - 1f / 3f
-				* Math.abs(height), 0f);
-		Vec p2 = new Vec(center.x + 1f / 2f * a, center.y - 1f / 3f
-				* Math.abs(height), 0f);
-		Vec p3 = new Vec(center.x, center.y + 2f / 3f * Math.abs(height), 0f);
+		Vec p1 = new Vec(center.x - ((1f / 2f) * a), center.y - ((1f / 3f)
+				* Math.abs(height)), 0f);
+		Vec p2 = new Vec(center.x + ((1f / 2f) * a), center.y - ((1f / 3f)
+				* Math.abs(height)), 0f);
+		Vec p3 = new Vec(center.x, center.y + ((2f / 3f) * Math.abs(height)), 0f);
 		Vec p4 = new Vec(center.x, center.y, height);
 
 		p.add(p1);

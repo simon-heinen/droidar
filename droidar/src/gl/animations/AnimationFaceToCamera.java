@@ -10,21 +10,27 @@ import util.Vec;
 import worlddata.Updateable;
 import worlddata.Visitor;
 
+/**
+ * Animation to face the camera.
+ */
 public class AnimationFaceToCamera extends GLAnimation {
+	private static final float DEFAULT_UPDATE_DELAY = 0.5f;
+	private static final int ADJUST_OBJECT_ROTATION = 90;
+	private GLCamera mTargetCamera;
+	private float mLastUpdateAway = 0;
+	private float mUpdateDelay;
+	private Vec mRotationVec = new Vec();
+	private Vec mNewRotationVec = new Vec();
 
-	private GLCamera myTargetCamera;
-	private float lastUpdateAway = 0;
-	private float myUpdateDelay;
-	private Vec rotationVec = new Vec();
-	private Vec newRotationVec = new Vec();
-
-	private Vec adjustmentVec;
-	private Vec myTargetCameraPosition;
-	private boolean dontChangeXRotation;
+	private Vec mAdjustmentVec;
+	private Vec mTargetCameraPosition;
+	private boolean mDontChangeXRotation;
 
 	/**
+	 * Constructor.
+	 * 
 	 * @param targetCamera
-	 * @param targetMesh
+	 *            {@link GLCamera}
 	 * @param updateDelay
 	 *            around 0.5f s
 	 * @param dontChangeXRotation
@@ -33,97 +39,100 @@ public class AnimationFaceToCamera extends GLAnimation {
 	 */
 	public AnimationFaceToCamera(GLCamera targetCamera, float updateDelay,
 			boolean dontChangeXRotation) {
-		myTargetCamera = targetCamera;
+		mTargetCamera = targetCamera;
 
-		myUpdateDelay = updateDelay;
-		myTargetCameraPosition = myTargetCamera.getPosition();
-		this.dontChangeXRotation = dontChangeXRotation;
-		// Log.d("face camera animation", "created. camera=" + myTargetCamera
-		// + " targetMesh class=" + myTargetMesh.getClass()
-		// + " update delay=" + myUpdateDelay);
+		mUpdateDelay = updateDelay;
+		mTargetCameraPosition = mTargetCamera.getPosition();
+		mDontChangeXRotation = dontChangeXRotation;
 	}
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param targetCamera
+	 *            {@link GLCamera}
+	 * @param updateDelay
+	 *            The amount of time to update. Normally should be .5fs
+	 */
 	public AnimationFaceToCamera(GLCamera targetCamera, float updateDelay) {
 		this(targetCamera, updateDelay, true);
 	}
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param targetCamera
+	 *            {@link GLCamera}
+	 */
 	public AnimationFaceToCamera(GLCamera targetCamera) {
-		this(targetCamera, 0.5f, true);
+		this(targetCamera, DEFAULT_UPDATE_DELAY, true);
 	}
 
 	/**
 	 * @param targetCamera
-	 * @param targetMesh
+	 *            {@link GLCamera}
 	 * @param updateDelay
 	 *            0.5f
 	 * @param adjustmentVec
+	 *            Adjustment vector
 	 */
 	public AnimationFaceToCamera(GLCamera targetCamera, float updateDelay,
 			Vec adjustmentVec) {
 		this(targetCamera, updateDelay);
-		this.adjustmentVec = adjustmentVec;
+		mAdjustmentVec = adjustmentVec;
 	}
 
 	@Override
 	public boolean update(float timeDelta, Updateable parent) {
-
-		/*
-		 * TODO use mesh instead of assigning a mesh while creating this
-		 * animation!
-		 */
 		timeDelta = Math.abs(timeDelta);
-		lastUpdateAway += timeDelta;
-		if (lastUpdateAway > myUpdateDelay) {
+		mLastUpdateAway += timeDelta;
+		if (mLastUpdateAway > mUpdateDelay) {
 			updateRotation(parent);
-			// Log.d("face camera animation", "new rotation vec calculated:");
-			// Log.d("face camera animation",
-			// "x="+newRotationVec.x+" , z="+newRotationVec.z);
-			lastUpdateAway = 0;
+			mLastUpdateAway = 0;
 		}
-		if (dontChangeXRotation) {
-			Vec.morphToNewAngleVec(rotationVec, 0, 0, newRotationVec.z,
+		if (mDontChangeXRotation) {
+			Vec.morphToNewAngleVec(mRotationVec, 0, 0, mNewRotationVec.z,
 					timeDelta);
 		} else {
-			Vec.morphToNewAngleVec(rotationVec, newRotationVec.x,
-					newRotationVec.y, newRotationVec.z, timeDelta);
+			Vec.morphToNewAngleVec(mRotationVec, mNewRotationVec.x, mNewRotationVec.y, mNewRotationVec.z, timeDelta);
 		}
 		return true;
 	}
 
-	Vec absolutePosition = new Vec();
+	private Vec mAbsolutePosition = new Vec();
 
 	private void updateRotation(Updateable parent) {
 		if (parent instanceof MeshComponent) {
-			absolutePosition.setToZero();
-			((MeshComponent) parent).getAbsoluteMeshPosition(absolutePosition);
+			mAbsolutePosition.setToZero();
+			((MeshComponent) parent).getAbsoluteMeshPosition(mAbsolutePosition);
 			// Log.d("face camera animation", "mesh position: "+pos);
-			newRotationVec.toAngleVec(absolutePosition, myTargetCameraPosition);
+			mNewRotationVec.toAngleVec(mAbsolutePosition, mTargetCameraPosition);
 			/*
 			 * substract 90 from the x value becaute calcanglevec returns 90 if
 			 * the rotation should be the horizon (which would mean no object
 			 * rotation)
 			 */
-			newRotationVec.x -= 90;
-			newRotationVec.z *= -1;
+			mNewRotationVec.x -= ADJUST_OBJECT_ROTATION;
+			mNewRotationVec.z *= -1;
 		}
 	}
 
 	@Override
 	public void render(GL10 gl, Renderable parent) {
 
-		gl.glRotatef(rotationVec.z, 0, 0, 1);
-		gl.glRotatef(rotationVec.x, 1, 0, 0);
-		gl.glRotatef(rotationVec.y, 0, 1, 0);
+		gl.glRotatef(mRotationVec.z, 0, 0, 1);
+		gl.glRotatef(mRotationVec.x, 1, 0, 0);
+		gl.glRotatef(mRotationVec.y, 0, 1, 0);
 
-		if (adjustmentVec != null) {
+		if (mAdjustmentVec != null) {
 			/*
 			 * if an adjustment vector is set this adjustment has to be done
 			 * AFTER the rotation to be easy to use, see constructor for infos
 			 * about adjustment
 			 */
-			gl.glRotatef(adjustmentVec.x, 1, 0, 0); // TODO find correct order
-			gl.glRotatef(adjustmentVec.z, 0, 0, 1);
-			gl.glRotatef(adjustmentVec.y, 0, 1, 0);
+			gl.glRotatef(mAdjustmentVec.x, 1, 0, 0);
+			gl.glRotatef(mAdjustmentVec.z, 0, 0, 1);
+			gl.glRotatef(mAdjustmentVec.y, 0, 1, 0);
 		}
 	}
 
@@ -131,5 +140,4 @@ public class AnimationFaceToCamera extends GLAnimation {
 	public boolean accept(Visitor visitor) {
 		return visitor.default_visit(this);
 	}
-
 }

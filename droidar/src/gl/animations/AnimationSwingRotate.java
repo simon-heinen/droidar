@@ -17,13 +17,13 @@ import worlddata.Visitor;
  */
 public class AnimationSwingRotate extends GLAnimation {
 
-	private final float speed;
-	private final Vec dEnd;
-	private final Vec uEnd;
-	private Vec currentPos;
-	private Vec targetPos;
-	private float accuracy;
-	private int mode; // 1=morph to uperEnd 0=morph to lowerEnd
+	private final float mSpeed;
+	private final Vec mDEnd;
+	private final Vec mUEnd;
+	private Vec mCurrentPos;
+	private Vec mTargetPos;
+	private float mAccuracy;
+	private int mMode; // 1=morph to uperEnd 0=morph to lowerEnd
 
 	/**
 	 * this works as an metronome, it pendels from lowerEnd vector to upperEnd
@@ -41,28 +41,28 @@ public class AnimationSwingRotate extends GLAnimation {
 	 */
 	public AnimationSwingRotate(float speed, Vec lowerEnd, Vec upperEnd,
 			float accuracy) {
-		this.speed = speed;
-		this.accuracy = accuracy;
-		this.dEnd = lowerEnd.copy();
-		this.uEnd = upperEnd.copy();
-		this.currentPos = dEnd.copy();
-		this.targetPos = uEnd.copy();
-		this.mode = 1;
+		this.mSpeed = speed;
+		this.mAccuracy = accuracy;
+		this.mDEnd = lowerEnd.copy();
+		this.mUEnd = upperEnd.copy();
+		this.mCurrentPos = mDEnd.copy();
+		this.mTargetPos = mUEnd.copy();
+		this.mMode = 1;
 	}
 
 	@Override
 	public boolean update(float timeDelta, Updateable parent) {
-		Vec.morphToNewVec(currentPos, targetPos, timeDelta * speed);
-		final Vec distance = Vec.sub(currentPos, targetPos);
-		if ((Vec.abs(distance.x) < accuracy)
-				&& (Vec.abs(distance.y) < accuracy)
-				&& (Vec.abs(distance.z) < accuracy)) {
-			if (mode == 0) {
-				mode = 1;
-				targetPos = uEnd;
+		Vec.morphToNewVec(mCurrentPos, mTargetPos, timeDelta * mSpeed);
+		final Vec distance = Vec.sub(mCurrentPos, mTargetPos);
+		if ((Vec.abs(distance.x) < mAccuracy)
+				&& (Vec.abs(distance.y) < mAccuracy)
+				&& (Vec.abs(distance.z) < mAccuracy)) {
+			if (mMode == 0) {
+				mMode = 1;
+				mTargetPos = mUEnd;
 			} else {
-				mode = 0;
-				targetPos = dEnd;
+				mMode = 0;
+				mTargetPos = mDEnd;
 			}
 		}
 		return true;
@@ -70,15 +70,13 @@ public class AnimationSwingRotate extends GLAnimation {
 
 	@Override
 	public boolean accept(Visitor visitor) {
-		// TODO Auto-generated method stub
 		return visitor.default_visit(this);
 	}
 
 	@Override
 	public void render(GL10 gl, Renderable parent) {
-		gl.glRotatef(currentPos.z, 0, 0, 1);
-		gl.glRotatef(currentPos.x, 1, 0, 0);
-		gl.glRotatef(currentPos.y, 0, 1, 0);
+		gl.glRotatef(mCurrentPos.z, 0, 0, 1);
+		gl.glRotatef(mCurrentPos.x, 1, 0, 0);
+		gl.glRotatef(mCurrentPos.y, 0, 1, 0);
 	}
-
 }

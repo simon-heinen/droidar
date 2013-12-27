@@ -1,6 +1,6 @@
 package gl.animations;
 
-import util.Log;
+import logger.ARLogger;
 import worlddata.RenderableEntity;
 import worlddata.Updateable;
 
@@ -14,11 +14,11 @@ import worlddata.Updateable;
  */
 public abstract class GLAnimation implements RenderableEntity {
 
-	private static final String LOG_TAG = "GLAnimation";
+	private static final String LOG_TAG = GLAnimation.class.getSimpleName();
 
 	@Override
 	public Updateable getMyParent() {
-		Log.e(LOG_TAG, "Get parent called which is not "
+		ARLogger.error(LOG_TAG, "Get parent called which is not "
 				+ "implemented for this component!");
 		return null;
 	}
@@ -26,7 +26,7 @@ public abstract class GLAnimation implements RenderableEntity {
 	@Override
 	public void setMyParent(Updateable parent) {
 		// can't have children so the parent does not have to be stored
-		Log.e(LOG_TAG, "Set parent called which is not "
+		ARLogger.error(LOG_TAG, "Set parent called which is not "
 				+ "implemented for this component!");
 	}
 

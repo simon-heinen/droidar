@@ -10,52 +10,57 @@ import util.Vec;
 import worlddata.Updateable;
 import worlddata.Visitor;
 
+/**
+ * Animation to bounce between colors.
+ * 
+ * @author rvieras
+ * 
+ */
 public class AnimationColorBounce extends GLAnimation {
 
-	private float mySpeed;
-	private Color myLowerColor;
-	private Color myUpperColor;
-	private float myAccur;
-	private Color myCurrentColor;
-	private Color myTargetColor;
-	/**
-	 * true = upperEnd, false = lowerEnd
-	 */
-	private boolean mode;
+	private float mSpeed;
+	private Color mLowerColor;
+	private Color mUpperColor;
+	private float mAccur;
+	private Color mCurrentColor;
+	private Color mTargetColor;
+	private boolean mMode; // true = upperEnd, false = lowerEnd
 
 	/**
 	 * @param speed
 	 *            should be 0.5 to
 	 * @param startColor
+	 *            The starting color
 	 * @param endColor
+	 *            The ending color
 	 * @param accur
 	 *            0.2f ood value to start
 	 */
 	public AnimationColorBounce(float speed, Color startColor, Color endColor,
 			float accur) {
-		mySpeed = speed;
-		myCurrentColor = startColor.copy();
-		myTargetColor = endColor.copy();
-		myLowerColor = startColor.copy();
-		myUpperColor = endColor.copy();
-		myAccur = accur;
-		mode = true;
+		mSpeed = speed;
+		mCurrentColor = startColor.copy();
+		mTargetColor = endColor.copy();
+		mLowerColor = startColor.copy();
+		mUpperColor = endColor.copy();
+		mAccur = accur;
+		mMode = true;
 	}
 
 	@Override
 	public boolean update(float timeDelta, Updateable parent) {
 
-		final Vec distance = Color.morphToNewColor(myCurrentColor,
-				myTargetColor, timeDelta * mySpeed);
+		final Vec distance = Color.morphToNewColor(mCurrentColor,
+				mTargetColor, timeDelta * mSpeed);
 
-		if ((Vec.abs(distance.x) < myAccur) && (Vec.abs(distance.y) < myAccur)
-				&& (Vec.abs(distance.z) < myAccur)) {
-			if (mode) {
-				mode = false;
-				myTargetColor = myLowerColor;
+		if ((Vec.abs(distance.x) < mAccur) && (Vec.abs(distance.y) < mAccur)
+				&& (Vec.abs(distance.z) < mAccur)) {
+			if (mMode) {
+				mMode = false;
+				mTargetColor = mLowerColor;
 			} else {
-				mode = true;
-				myTargetColor = myUpperColor;
+				mMode = true;
+				mTargetColor = mUpperColor;
 			}
 		}
 		return true;
@@ -64,9 +69,10 @@ public class AnimationColorBounce extends GLAnimation {
 	@Override
 	public void render(GL10 gl, Renderable parent) {
 
-		if (!ObjectPicker.readyToDrawWithColor)
-			gl.glColor4f(myCurrentColor.red, myCurrentColor.green,
-					myCurrentColor.blue, myCurrentColor.alpha);
+		if (!ObjectPicker.readyToDrawWithColor) {
+			gl.glColor4f(mCurrentColor.red, mCurrentColor.green,
+					mCurrentColor.blue, mCurrentColor.alpha);
+		}
 
 	}
 

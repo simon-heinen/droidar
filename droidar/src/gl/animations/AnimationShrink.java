@@ -4,32 +4,38 @@ import gl.Renderable;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import util.Log;
 import worlddata.Updateable;
 import worlddata.Visitor;
 
+/**
+ * Animation to shrink.
+ */
 public class AnimationShrink extends GLAnimation {
 
-	private static final String LOG_TAG = "Grow Animation";
-	private float myGrothSize = 1;
-	final private float myShrinkFactor;
+	private float mGrothSize = 1;
+	private float mShrinkFactor;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param timeTillFullGrothInSeconds
+	 *            The time till full size in seconds
+	 */
 	public AnimationShrink(float timeTillFullGrothInSeconds) {
-		myShrinkFactor = 1 / timeTillFullGrothInSeconds;
-		Log.d(LOG_TAG, "My shrink factor is " + myShrinkFactor);
+		mShrinkFactor = 1 / timeTillFullGrothInSeconds;
 	}
 
 	@Override
 	public void render(GL10 gl, Renderable parent) {
-		gl.glScalef(myGrothSize, myGrothSize, myGrothSize);
+		gl.glScalef(mGrothSize, mGrothSize, mGrothSize);
 	}
 
 	@Override
 	public boolean update(float timeDelta, Updateable parent) {
-		if (myGrothSize > 0) {
-			myGrothSize -= myShrinkFactor * timeDelta;
+		if (mGrothSize > 0) {
+			mGrothSize -= mShrinkFactor * timeDelta;
 		} else {
-			myGrothSize = 0;
+			mGrothSize = 0;
 		}
 		return true;
 	}
@@ -38,5 +44,4 @@ public class AnimationShrink extends GLAnimation {
 	public boolean accept(Visitor visitor) {
 		return visitor.default_visit(this);
 	}
-
 }

@@ -4,42 +4,42 @@ import gl.Renderable;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import util.Log;
 import worlddata.UpdateTimer;
 import worlddata.Updateable;
 import worlddata.Visitor;
 
+/**
+ * Animation to show a growing animation.
+ */
 public class AnimationGrow extends GLAnimation {
+	private float mGrothSize;
+	private float mGrothFactor;
+	private UpdateTimer mStopCondition;
 
-	private static final String LOG_TAG = "Grow Animation";
-	private float myGrothSize;
-	final private float myGrothFactor;
-	private UpdateTimer myStopCondition;
-
+	/**
+	 * Constructor.
+	 * 
+	 * @param timeTillFullGrothInSeconds
+	 *            The amount of time to fully grow the animation in seconds.
+	 */
 	public AnimationGrow(float timeTillFullGrothInSeconds) {
-		/*
-		 * TODO maybe better to pass the stop condition directly? more flexible?
-		 */
-		myStopCondition = new UpdateTimer(timeTillFullGrothInSeconds, null);
-		myGrothFactor = 1 / timeTillFullGrothInSeconds;
-		Log.d(LOG_TAG, "My grow factor is " + myGrothFactor);
+		mStopCondition = new UpdateTimer(timeTillFullGrothInSeconds, null);
+		mGrothFactor = 1 / timeTillFullGrothInSeconds;
 	}
 
 	@Override
 	public void render(GL10 gl, Renderable parent) {
-		gl.glScalef(myGrothSize, myGrothSize, myGrothSize);
+		gl.glScalef(mGrothSize, mGrothSize, mGrothSize);
 	}
 
 	@Override
 	public boolean update(float timeDelta, Updateable parent) {
-		if (myStopCondition.update(timeDelta, parent)) {
+		if (mStopCondition.update(timeDelta, parent)) {
 			return false;
 		}
-		myGrothSize += myGrothFactor * timeDelta;
-		if (myGrothSize > 1) {
-			myGrothSize = 1;
-			Log.e(LOG_TAG,
-					"Grouth was > 1, should not happen when grothFactor correct");
+		mGrothSize += mGrothFactor * timeDelta;
+		if (mGrothSize > 1) {
+			mGrothSize = 1;
 		}
 		return true;
 	}
@@ -48,5 +48,4 @@ public class AnimationGrow extends GLAnimation {
 	public boolean accept(Visitor visitor) {
 		return visitor.default_visit(this);
 	}
-
 }
