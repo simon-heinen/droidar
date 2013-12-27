@@ -1,5 +1,7 @@
 package de.rwth.setups;
 
+import de.rwth.R;
+import entry.ISetupEntry;
 import geo.GeoObj;
 import gl.Color;
 import gl.CustomGLSurfaceView;
@@ -32,10 +34,9 @@ import android.view.View;
 import android.view.View.MeasureSpec;
 import android.widget.Button;
 import android.widget.LinearLayout.LayoutParams;
+
 import commands.Command;
 import commands.ui.CommandShowToast;
-import de.rwth.R;
-import entry.ISetupEntry;
 
 public class StaticDemoSetup extends ArSetup {
 
@@ -104,7 +105,7 @@ public class StaticDemoSetup extends ArSetup {
 	}
 
 	private void initI9Tests(World w) {
-
+		GeoObj ref = null;
 		{
 			MeshComponent triangleMesh = GLFactory.getInstance()
 					.newTexturedSquare(
@@ -115,6 +116,7 @@ public class StaticDemoSetup extends ArSetup {
 			triangleMesh.addChild(new AnimationFaceToCamera(camera, 0.5f));
 			GeoObj treangleGeo = new GeoObj(GeoObj.newRandomGeoObjAroundCamera(
 					camera, MIN_DIST, MAX_DIST), triangleMesh);
+			ref = treangleGeo;
 			w.add(treangleGeo);
 		}
 
@@ -126,7 +128,7 @@ public class StaticDemoSetup extends ArSetup {
 							IO.loadBitmapFromId(getActivity(),
 									R.drawable.hippopotamus64));
 			triangleMesh.addChild(new AnimationFaceToCamera(camera, 0.5f));
-			triangleMesh.setScale(new Vec(10, 10, 10));
+			// triangleMesh.addChild(new AnimationFaceToObj(ref, 0.5f));
 			GeoObj treangleGeo = new GeoObj(GeoObj.newRandomGeoObjAroundCamera(
 					camera, MIN_DIST, MAX_DIST), triangleMesh);
 			w.add(treangleGeo);
@@ -168,6 +170,7 @@ public class StaticDemoSetup extends ArSetup {
 					"Thanks alot"));
 
 			button.addChild(new AnimationFaceToCamera(camera, 0.5f));
+			// button.addChild(new AnimationFaceToObj(ref, 0.5f));
 			button.setScale(new Vec(10, 10, 10));
 			button.setColor(Color.red());
 
