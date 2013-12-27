@@ -21,6 +21,7 @@ public class ActionBufferedCameraAR extends Action {
 
 	/**
 	 * @param glCamera
+	 *            {@link GLCamera}
 	 * @param sensityX
 	 *            is the vertical value (should be around 2, smaller is faster)
 	 * @param sensityY

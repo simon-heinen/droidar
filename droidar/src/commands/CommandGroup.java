@@ -9,10 +9,7 @@ import commands.undoable.UndoableCommand;
 
 /**
  * The CommandGroup can hold several {@link UndoableCommand}s and is a Command
- * itself (Composite pattern)
- * 
- * @author Spobo
- * 
+ * itself (Composite pattern).
  */
 public class CommandGroup extends UndoableCommand implements Container<Command> {
 
@@ -38,9 +35,10 @@ public class CommandGroup extends UndoableCommand implements Container<Command> 
 					+ ") NO parameter");
 			boolean result = true;
 			for (int i = 0; i < myList.myLength; i++) {
-				if (myProcessListener != null)
+				if (myProcessListener != null) {
 					myProcessListener.onProcessStep(i, myList.myLength,
 							myList.get(i));
+				}
 				Log.d("Commands",
 						"   + CG " + this + " EXECUTING " + myList.get(i)
 								+ " (NO parameter)");
@@ -96,8 +94,9 @@ public class CommandGroup extends UndoableCommand implements Container<Command> 
 
 	@Override
 	public EfficientList<Command> getAllItems() {
-		if (myList == null)
+		if (myList == null) {
 			myList = new EfficientList<Command>();
+		}
 		return myList;
 	}
 
@@ -123,8 +122,9 @@ public class CommandGroup extends UndoableCommand implements Container<Command> 
 
 	@Override
 	public String toString() {
-		if (this.hasInfoObject())
+		if (this.hasInfoObject()) {
 			return "CG " + getInfoObject().getShortDescr();
+		}
 		return super.toString();
 	}
 

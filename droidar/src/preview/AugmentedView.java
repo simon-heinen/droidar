@@ -3,7 +3,6 @@ package preview;
 import gl.CustomGLSurfaceView;
 import gl.GL1Renderer;
 import android.content.Context;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.FrameLayout;
 import de.rwth.R;

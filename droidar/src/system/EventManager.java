@@ -25,6 +25,7 @@ import android.location.LocationListener;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+
 import commands.Command;
 
 /**
@@ -109,8 +110,8 @@ public class EventManager implements LocationListener, SensorEventListener {
 			Sensor accelSensor =  sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 			Sensor sensorFusion = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
 			Sensor magnetSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-			ARLogger.debug(LOG_TAG, "Registering Sensors: \nAccel>: " + accelSensor 
-							+ "\nRotatationVector>: " + sensorFusion 
+			ARLogger.debug(LOG_TAG, "Registering Sensors: \nAccel>: " + accelSensor
+							+ "\nRotatationVector>: " + sensorFusion
 							+ "\nMagnet>: " + magnetSensor);
 			sensorManager.registerListener(this, accelSensor,SensorManager.SENSOR_DELAY_GAME);
 			sensorManager.registerListener(this, magnetSensor,SensorManager.SENSOR_DELAY_GAME);
@@ -155,7 +156,12 @@ public class EventManager implements LocationListener, SensorEventListener {
 		//	event.sensor.getType() != Sensor.TYPE_ACCELEROMETER) {
 		//	return;
 		//}
+
 		float[] values = event.values.clone();
+
+		if ((values[0] == 0) && (values[1] == 0) && (values[2] == 0)) {
+			return;
+		}
 
 		if (onOrientationChangedList != null) {
 
@@ -251,7 +257,7 @@ public class EventManager implements LocationListener, SensorEventListener {
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-		if (keyCode >= 19 && keyCode <= 22) {
+		if ((keyCode >= 19) && (keyCode <= 22)) {
 			/*
 			 * if the keycode is on of the numbers from 19 to 22 it is a pseudo
 			 * trackball event (eg the motorola milestone has pseudo trackball).

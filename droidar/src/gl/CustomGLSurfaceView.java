@@ -13,6 +13,7 @@ import util.Log;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.opengl.GLSurfaceView;
+import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -69,8 +70,8 @@ public class CustomGLSurfaceView extends GLSurfaceView implements
 		}
 
 		int screenOrientation = ArSetup.getScreenOrientation();
-		if (screenOrientation == Surface.ROTATION_90
-				|| screenOrientation == Surface.ROTATION_270) {
+		if ((screenOrientation == Surface.ROTATION_90)
+				|| (screenOrientation == Surface.ROTATION_270)) {
 			LANDSCAPE_MODE = true;
 		} else {
 			LANDSCAPE_MODE = false;
@@ -132,22 +133,17 @@ public class CustomGLSurfaceView extends GLSurfaceView implements
 
 		myGestureDetector.onTouchEvent(event);
 
-		requestFocus();
-
-		try {
-			// Sleep 20ms to not flood the thread
-			Thread.sleep(TOUCH_INPUT_SLEEP_TIME);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		// requestFocus();
+		//
+		// try {
+		// // Sleep 20ms to not flood the thread
+		// Thread.sleep(TOUCH_INPUT_SLEEP_TIME);
+		// } catch (InterruptedException e) {
+		// e.printStackTrace();
+		// }
 
 		if (event.getAction() == MotionEvent.ACTION_UP) {
-			if (onTouchListeners != null) {
-				for (int i = 0; i < onTouchListeners.size(); i++) {
-					onTouchListeners.get(i).onReleaseTouchMove();
-				}
-
-			}
+			(new NotifyListenersTask(onTouchListeners)).execute(new Object());
 		}
 		return true;
 	}
@@ -230,5 +226,26 @@ public class CustomGLSurfaceView extends GLSurfaceView implements
 			}
 		}
 	}
+	
+	/**
+	 * Background task to notify listeners.
+	 */
+	private class NotifyListenersTask extends AsyncTask<Object, Object, Object> {
 
+		private List<TouchMoveListener> mListeners;
+
+		public NotifyListenersTask(List<TouchMoveListener> listeners) {
+			mListeners = listeners;
+		}
+		
+		@Override
+		protected Object doInBackground(Object... arg0) {
+			if (onTouchListeners != null) {
+				for (int i = 0; i < onTouchListeners.size(); i++) {
+					onTouchListeners.get(i).onReleaseTouchMove();
+				}
+			}
+			return null;
+		}
+	}
 }

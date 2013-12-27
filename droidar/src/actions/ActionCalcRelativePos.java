@@ -31,7 +31,7 @@ public class ActionCalcRelativePos extends Action {
 	 * set this to true if your scenario need to take altitude values into
 	 * account
 	 */
-	public static boolean USE_ALTITUDE_VALUES = false;
+	public static final boolean USE_ALTITUDE_VALUES = false;
 
 	/**
 	 * set this to false if you want to position objects at the real 0 altitude,
@@ -70,7 +70,7 @@ public class ActionCalcRelativePos extends Action {
 
 	@Override
 	public boolean onLocationChanged(Location location) {
-		if (mNullLatitude == 0 || mNullLongitude == 0) {
+		if ((mNullLatitude == 0) || (mNullLongitude == 0)) {
 			/*
 			 * if the mNullLat or mNullLong are 0 this method was probably never
 			 * called before (TODO problem when living in greenwhich e.g.?)
@@ -135,7 +135,7 @@ public class ActionCalcRelativePos extends Action {
 	}
 
 	/**
-	 * Reset the world to (0,0,0) position. 
+	 * Reset the world to (0,0,0) position.
 	 * @param location {@link Location}
 	 */
 	public void resetWorldZeroPositions(Location location) {

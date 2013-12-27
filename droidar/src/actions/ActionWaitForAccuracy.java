@@ -4,6 +4,7 @@ import geo.GeoUtils;
 import system.EventManager;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.location.Location;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import de.rwth.R;
 
+/**
+ * Action to wait for a valid GPS with good accuracy before drawing.
+ */
 public abstract class ActionWaitForAccuracy extends Action {
 
 	private static final String TEXT_DIALOG_TITLE = "Do you want to cancel the accuracy detection?";
@@ -27,26 +31,27 @@ public abstract class ActionWaitForAccuracy extends Action {
 
 	private static final String LOG_TAG = "ActionWaitForAccuracy";
 
-	private float myCurrentAccuracy;
-	private float myMinAccuracy;
-	private boolean firstTimeReached = false;
+	private float mCurrentAccuracy;
+	private float mMinAccuracy;
+	private boolean mFirstTimeReached = false;
 
-	private int myMaxPosUpdateCount;
+	private int mMaxPosUpdateCount;
 
-	private int stepCounter = 0;
+	private int mStepCounter = 0;
 
-	private Activity myActivity;
+	private Activity mActivity;
 
-	private TextView accText;
+	private TextView mAccText;
 
-	private ProgressBar steps;
+	private ProgressBar mSteps;
 
-	private View viewContainer;
+	private View mViewContainer;
 
-	private Button warningText;
+	private Button mWarningText;
 
 	/**
 	 * @param context
+	 *            {@link Context}
 	 * @param minAccuracy
 	 *            should be >= 25m
 	 * @param maxPosUpdateCount
@@ -55,17 +60,17 @@ public abstract class ActionWaitForAccuracy extends Action {
 	 */
 	public ActionWaitForAccuracy(Activity context, float minAccuracy,
 			int maxPosUpdateCount) {
-		myActivity = context;
-		myMinAccuracy = minAccuracy;
-		myMaxPosUpdateCount = maxPosUpdateCount;
+		mActivity = context;
+		mMinAccuracy = minAccuracy;
+		mMaxPosUpdateCount = maxPosUpdateCount;
 		analyseInitLocation(GeoUtils.getCurrentLocation(context));
 	}
 
 	private void analyseInitLocation(Location l) {
 		if (l != null) {
-			myCurrentAccuracy = l.getAccuracy();
+			mCurrentAccuracy = l.getAccuracy();
 			long passedTime = System.currentTimeMillis() - l.getTime();
-			Log.i(LOG_TAG, "Last known pos accuracy=" + myCurrentAccuracy);
+			Log.i(LOG_TAG, "Last known pos accuracy=" + mCurrentAccuracy);
 			Log.i(LOG_TAG, "Last known pos age=" + (passedTime / 1000f / 10f)
 					+ " minutes");
 			if (passedTime <= MAX_TIME_SINCE_LAST_UPDATE_IN_MS) {
@@ -74,24 +79,24 @@ public abstract class ActionWaitForAccuracy extends Action {
 				Log.i(LOG_TAG, "Last known pos age was to old to use it "
 						+ "as a current position, will now wait "
 						+ "for position signal");
-				myCurrentAccuracy = 1000; // 1000m
+				mCurrentAccuracy = 1000; // 1000m
 			}
 		} else {
-			GeoUtils.enableLocationProvidersIfNeeded(myActivity);
+			GeoUtils.enableLocationProvidersIfNeeded(mActivity);
 		}
 	}
 
 	@Override
 	public boolean onLocationChanged(Location l) {
 		Log.d(LOG_TAG, "Current signal accuracy=" + l.getAccuracy());
-		Log.d(LOG_TAG, "Minimum needed accuracy=" + myMinAccuracy);
-		Log.d(LOG_TAG, "Current pos update count=" + stepCounter);
-		Log.d(LOG_TAG, "Max pos updates=" + myMaxPosUpdateCount);
-		stepCounter++;
-		myCurrentAccuracy = l.getAccuracy();
+		Log.d(LOG_TAG, "Minimum needed accuracy=" + mMinAccuracy);
+		Log.d(LOG_TAG, "Current pos update count=" + mStepCounter);
+		Log.d(LOG_TAG, "Max pos updates=" + mMaxPosUpdateCount);
+		mStepCounter++;
+		mCurrentAccuracy = l.getAccuracy();
 		updateUI();
-		if ((myCurrentAccuracy != 0 && myCurrentAccuracy <= myMinAccuracy)
-				|| (stepCounter >= myMaxPosUpdateCount)) {
+		if (((mCurrentAccuracy != 0) && (mCurrentAccuracy <= mMinAccuracy))
+				|| (mStepCounter >= mMaxPosUpdateCount)) {
 			callFirstTimeAccReachedIfNotYetCalled(l);
 			hideUI();
 			return false;
@@ -100,14 +105,15 @@ public abstract class ActionWaitForAccuracy extends Action {
 	}
 
 	private void callFirstTimeAccReachedIfNotYetCalled(Location location) {
-		if (!firstTimeReached) {
-			firstTimeReached = true;
+		if (!mFirstTimeReached) {
+			mFirstTimeReached = true;
 			Log.d(LOG_TAG, "Required accuracy was reached!");
 			minAccuracyReachedFirstTime(location, this);
-		} else
+		} else {
 			Log.w(LOG_TAG, "callFirstTimeAccReachedIfNotYetCalled was "
 					+ "called more then one time! This action should "
 					+ "be removed once the accuracy was reached!");
+		}
 	}
 
 	/**
@@ -122,23 +128,23 @@ public abstract class ActionWaitForAccuracy extends Action {
 			ActionWaitForAccuracy a);
 
 	public View getView() {
-		viewContainer = View.inflate(myActivity,
+		mViewContainer = View.inflate(mActivity,
 				R.layout.action_wait_for_accuracy_view, null);
-		accText = (TextView) viewContainer.findViewById(R.id.awfa_accText);
-		warningText = (Button) viewContainer.findViewById(R.id.awfa_warning);
-		warningText.setOnClickListener(new OnClickListener() {
+		mAccText = (TextView) mViewContainer.findViewById(R.id.awfa_accText);
+		mWarningText = (Button) mViewContainer.findViewById(R.id.awfa_warning);
+		mWarningText.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				if (GeoUtils.enableGPS(myActivity)) {
-					warningText.setVisibility(View.GONE);
+				if (GeoUtils.enableGPS(mActivity)) {
+					mWarningText.setVisibility(View.GONE);
 					waitSomeSecondsAndThenRegisterForGPSEvents();
 				}
 			}
 
 		});
 
-		ImageView i = (ImageView) viewContainer.findViewById(R.id.awfa_image);
+		ImageView i = (ImageView) mViewContainer.findViewById(R.id.awfa_image);
 		i.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -148,11 +154,11 @@ public abstract class ActionWaitForAccuracy extends Action {
 
 		});
 
-		steps = (ProgressBar) viewContainer.findViewById(R.id.awfa_steps);
+		mSteps = (ProgressBar) mViewContainer.findViewById(R.id.awfa_steps);
 
 		showDebugInfosAboutTheUiElements();
 		updateUI();
-		return viewContainer;
+		return mViewContainer;
 	}
 
 	private void waitSomeSecondsAndThenRegisterForGPSEvents() {
@@ -181,16 +187,16 @@ public abstract class ActionWaitForAccuracy extends Action {
 	}
 
 	private void showDebugInfosAboutTheUiElements() {
-		Log.d(LOG_TAG, "viewContainer=" + viewContainer);
-		Log.d(LOG_TAG, "   > accText=" + accText);
-		Log.d(LOG_TAG, "   > warningText=" + warningText);
-		Log.d(LOG_TAG, "   > steps=" + steps);
-		Log.d(LOG_TAG, "   > stepCounter=" + stepCounter);
+		Log.d(LOG_TAG, "mViewContainer=" + mViewContainer);
+		Log.d(LOG_TAG, "   > mAccText=" + mAccText);
+		Log.d(LOG_TAG, "   > mWarningText=" + mWarningText);
+		Log.d(LOG_TAG, "   > mSteps=" + mSteps);
+		Log.d(LOG_TAG, "   > mStepCounter=" + mStepCounter);
 	}
 
 	private void showSkipPositionDetectionDialog() {
-		final Dialog dialog = new Dialog(myActivity);
-		Button b = new Button(myActivity);
+		final Dialog dialog = new Dialog(mActivity);
+		Button b = new Button(mActivity);
 		b.setText(TEXT_SKIP_ACCURACY_DETECTION);
 		b.setOnClickListener(new OnClickListener() {
 
@@ -198,7 +204,7 @@ public abstract class ActionWaitForAccuracy extends Action {
 			public void onClick(View v) {
 				Log.d(LOG_TAG, "Trying to skip accuracy detection");
 				callFirstTimeAccReachedIfNotYetCalled(GeoUtils
-						.getCurrentLocation(myActivity));
+						.getCurrentLocation(mActivity));
 				hideUI();
 				dialog.dismiss();
 			}
@@ -210,41 +216,43 @@ public abstract class ActionWaitForAccuracy extends Action {
 	}
 
 	private void updateUI() {
-		if (accText != null && steps != null && warningText != null)
-			myActivity.runOnUiThread(new Runnable() {
+		if ((mAccText != null) && (mSteps != null) && (mWarningText != null)) {
+			mActivity.runOnUiThread(new Runnable() {
 
 				@Override
 				public void run() {
-					accText.setText(TEXT_POSITION_ACCURACY
-							+ (int) (myMinAccuracy / myCurrentAccuracy * 100)
+					mAccText.setText(TEXT_POSITION_ACCURACY
+							+ (int) ((mMinAccuracy / mCurrentAccuracy) * 100)
 							+ "%");
-					steps.setMax(myMaxPosUpdateCount);
-					steps.setProgress(stepCounter);
+					mSteps.setMax(mMaxPosUpdateCount);
+					mSteps.setProgress(mStepCounter);
 					showWarningIfGPSOff();
 				}
 
 			});
+		}
 	}
 
 	private void hideUI() {
-		if (viewContainer != null)
-			myActivity.runOnUiThread(new Runnable() {
+		if (mViewContainer != null) {
+			mActivity.runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
 					Log.i(LOG_TAG, "Setting view container to invisible");
-					viewContainer.setVisibility(View.GONE);
+					mViewContainer.setVisibility(View.GONE);
 				}
 			});
+		}
 	}
 
 	private void showWarningIfGPSOff() {
-		if (GeoUtils.isGPSDisabled(myActivity)) {
+		if (GeoUtils.isGPSDisabled(mActivity)) {
 			Log.d(LOG_TAG, "GPS disabled!");
-			warningText.setVisibility(View.VISIBLE);
-			warningText.setText("Enable GPS");
+			mWarningText.setVisibility(View.VISIBLE);
+			mWarningText.setText("Enable GPS");
 		} else {
 			Log.d(LOG_TAG, "GPS enabled!");
-			warningText.setVisibility(View.GONE);
+			mWarningText.setVisibility(View.GONE);
 		}
 	}
 }
