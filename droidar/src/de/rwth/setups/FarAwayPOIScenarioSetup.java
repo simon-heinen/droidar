@@ -11,10 +11,10 @@ import worlddata.SystemUpdater;
 import worlddata.World;
 import android.app.Activity;
 import android.util.Log;
+
 import commands.Command;
 import commands.ui.CommandShowToast;
 import components.SimpleTooFarAwayComp;
-import entry.ISetupEntry;
 
 public class FarAwayPOIScenarioSetup extends DefaultArSetup {
 
@@ -25,7 +25,7 @@ public class FarAwayPOIScenarioSetup extends DefaultArSetup {
 	public void initFieldsIfNecessary() {
 		super.initFieldsIfNecessary();
 		radar = new RadarView(getActivity(), (int) (getScreenWidth() / 3),
-				getCamera(), getWorld().getAllItems());
+ getCamera(), getWorld().getAllItems(), this);
 	}
 
 	@Override

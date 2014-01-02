@@ -4,6 +4,8 @@ import gl.GLCamera;
 import gl.HasColor;
 import gl.HasPosition;
 import gl.scenegraph.Shape;
+import logger.ARLogger;
+import setup.DefaultArSetup;
 import util.EfficientList;
 import util.Vec;
 import worlddata.Obj;
@@ -46,13 +48,14 @@ public class RadarView extends SimpleCustomView implements Updateable {
 	private float myUpdateSpeed = DEFAULT_UPDATE_SPEED;
 	private double myTouchScaleFactor = 5;
 	private volatile float mCameraAngleInDeg = -1;
+	private DefaultArSetup mSetup;
 
 	private String debug;
 
 	public RadarView(Context context, GLCamera camera,
 			int minimumRadarViewSize, int displRadiusInMeters,
 			float updateSpeed, boolean rotateNeedle,
-			boolean displayOutOfRadarArea, EfficientList<RenderableEntity> items) {
+ boolean displayOutOfRadarArea, EfficientList<RenderableEntity> items, DefaultArSetup setup) {
 		super(context);
 		init(minimumRadarViewSize);
 		myCamera = camera;
@@ -61,6 +64,7 @@ public class RadarView extends SimpleCustomView implements Updateable {
 		setDisplayOutOfRadarArea(displayOutOfRadarArea);
 		setItems(items);
 		setUpdateSpeed(updateSpeed);
+		mSetup = setup;
 	}
 
 	public void setUpdateSpeed(float myUpdateSpeed) {
@@ -101,10 +105,11 @@ public class RadarView extends SimpleCustomView implements Updateable {
 	 *            {@link World#getAllItems()})
 	 */
 	public RadarView(Activity myTargetActivity, int radarViewSize,
-			GLCamera camera, EfficientList<RenderableEntity> items) {
+ GLCamera camera, EfficientList<RenderableEntity> items,
+			DefaultArSetup setup) {
 		this(myTargetActivity, camera, radarViewSize,
 				DEFAULT_RADAR_MAX_DISTANCE, DEFAULT_UPDATE_SPEED, false, true,
-				items);
+ items, setup);
 	}
 
 	private void init(int minimumViewSize) {
@@ -121,14 +126,16 @@ public class RadarView extends SimpleCustomView implements Updateable {
 		this.minimumSize = minimumViewSize;
 		setSize(minimumViewSize);
 
-		if (isInEditMode())
+		if (isInEditMode()) {
 			loadDemoValues();
+		}
 
 	}
 
 	public void setSize(int viewSize) {
-		if (viewSize < minimumSize)
+		if (viewSize < minimumSize) {
 			viewSize = minimumSize;
+		}
 		mySize = viewSize;
 		myHalfSize = viewSize / 2;
 
@@ -185,7 +192,12 @@ public class RadarView extends SimpleCustomView implements Updateable {
 		 * TODO store in bitmap object and only redraw if something changes to
 		 * increase performance!
 		 */
+
 		drawBackGround(canvas);
+
+		if (mCameraAngleInDeg > 0) {
+			setRotation(mCameraAngleInDeg);
+		}
 
 		if (items != null) {
 			drawItems(canvas);
@@ -216,13 +228,14 @@ public class RadarView extends SimpleCustomView implements Updateable {
 	}
 
 	private boolean onTouch(float x, float y) {
-		double distFromCenter = Math.sqrt(x * x + y * y);
+		double distFromCenter = Math.sqrt((x * x) + (y * y));
 		// TODO use the myHalfSize to calculate percent value. important to stay
 		// size independent!
 		distFromCenter *= myTouchScaleFactor;
 		myDisplRadius = (int) distFromCenter;
-		if (myDisplRadius < MIN_DISP_RADIUS)
+		if (myDisplRadius < MIN_DISP_RADIUS) {
 			myDisplRadius = MIN_DISP_RADIUS;
+		}
 		return true;
 	}
 
@@ -233,7 +246,7 @@ public class RadarView extends SimpleCustomView implements Updateable {
 					myHalfSize + myRotVec.y, linePaint);
 		} else {
 			canvas.drawLine(myHalfSize, myHalfSize, myHalfSize, myHalfSize
-					- myHalfSize / 2.5f, linePaint);
+					- (myHalfSize / 2.5f), linePaint);
 		}
 	}
 
@@ -241,16 +254,17 @@ public class RadarView extends SimpleCustomView implements Updateable {
 		for (int i = 0; i < items.myLength; i++) {
 			if (items.get(i) instanceof HasPosition) {
 				RenderableEntity element = items.get(i);
-				Vec pos = ((HasPosition) element).getPosition().copy()
-						.sub(myCamera.getPosition());
-
+				// Vec pos = ((HasPosition)
+				// element).getPosition().copy().sub(myCamera.getPosition());
+				Vec pos = ((HasPosition) element).getPosition().copy();
 				float length = pos.getLength();
 				if (length > myDisplRadius) {
 					if (displayOutOfRadarArea) {
 						pos.setLength(myDisplRadius);
 						length = myDisplRadius;
-					} else
+					} else {
 						continue;
+					}
 				}
 
 				if (!rotateNeedle) {
@@ -260,17 +274,17 @@ public class RadarView extends SimpleCustomView implements Updateable {
 				/*
 				 * now convert the distance in meters into a distance in pixels:
 				 */
-				pos.setLength(length / myDisplRadius * (myHalfSize - MARGIN));
+				pos.setLength((length / myDisplRadius) * (myHalfSize - MARGIN));
 
 				/*
 				 * the canvas coords are not like the opengl coords! 10,10 means
 				 * down on the screen
 				 */
-				// debug = "" + pos;
+				ARLogger.debug("debug = " + pos);
 				float northPos = myHalfSize - pos.y;
 				float eastPos = myHalfSize + pos.x;
 
-				// debug="n="+northPos+", e="+eastPos;
+				ARLogger.debug("debug= n=" + northPos + ", e=" + eastPos);
 
 				drawElement(element, canvas, northPos, eastPos);
 			}
@@ -282,8 +296,9 @@ public class RadarView extends SimpleCustomView implements Updateable {
 		paint.setColor(Color.WHITE);
 		if (element instanceof HasColor) {
 			gl.Color c = ((HasColor) element).getColor();
-			if (c != null)
+			if (c != null) {
 				paint.setColor(c.toIntARGB());
+			}
 		}
 		drawCircle(canvas, eastPos, northPos, 6, paint);
 	}
@@ -293,8 +308,9 @@ public class RadarView extends SimpleCustomView implements Updateable {
 	}
 
 	private Bitmap getBackGround() {
-		if (background == null)
+		if (background == null) {
 			background = createBackground(mySize, myHalfSize);
+		}
 		return background;
 	}
 
@@ -338,7 +354,8 @@ public class RadarView extends SimpleCustomView implements Updateable {
 	public boolean update(float timeDelta, Updateable parent) {
 		if (myTimer.update(timeDelta, parent)) {
 			//setRotation(myCamera.getCameraAnglesInDegree()[0]);
-			mCameraAngleInDeg = myCamera.getCameraAnglesInDegree()[0];	
+			// mCameraAngleInDeg = myCamera.getCameraAnglesInDegree()[0];
+			mCameraAngleInDeg = mSetup.getCameraAngle().z;
 			postInvalidate();
 		}
 		/*

@@ -166,12 +166,13 @@ public class GeoObj extends Obj implements HasDebugInformation {
 	 *         virtual position of the {@link GeoObj}
 	 */
 	public MeshComponent getMySurroundGroup() {
-		if (mySurroundGroup == null)
+		if (mySurroundGroup == null) {
 			if (autoCalcVirtualPos) {
 				mySurroundGroup = new Shape(null, getVirtualPosition());
 			} else {
 				mySurroundGroup = new Shape();
 			}
+		}
 		return mySurroundGroup;
 	}
 
@@ -199,8 +200,9 @@ public class GeoObj extends Obj implements HasDebugInformation {
 			if (getMyComponents().contains(g) == -1) {
 				getMyComponents().add(g);
 			}
-		} else
+		} else {
 			super.setComp(comp);
+		}
 	}
 
 	/*
@@ -373,9 +375,10 @@ public class GeoObj extends Obj implements HasDebugInformation {
 	public void setMyLatitude(double latitude) {
 		this.myLatitude = latitude;
 
-		if (myUpdateListener != null)
+		if (myUpdateListener != null) {
 			myUpdateListener.updateToNewPosition((int) (getLatitude() * 1E6),
 					(int) (getLongitude() * 1E6));
+		}
 	}
 
 	/**
@@ -387,9 +390,10 @@ public class GeoObj extends Obj implements HasDebugInformation {
 	public void setMyLongitude(double longitude) {
 		this.myLongitude = longitude;
 
-		if (myUpdateListener != null)
+		if (myUpdateListener != null) {
 			myUpdateListener.updateToNewPosition((int) (getLatitude() * 1E6),
 					(int) (getLongitude() * 1E6));
+		}
 	}
 
 	/**
@@ -401,9 +405,10 @@ public class GeoObj extends Obj implements HasDebugInformation {
 	public void setMyAltitude(double altitude) {
 		this.myAltitude = altitude;
 
-		if (myUpdateListener != null)
+		if (myUpdateListener != null) {
 			myUpdateListener.updateToNewPosition((int) (getLatitude() * 1E6),
 					(int) (getLongitude() * 1E6));
+		}
 	}
 
 	/**
@@ -447,7 +452,7 @@ public class GeoObj extends Obj implements HasDebugInformation {
 		 * default mean the current device altitude is used:
 		 */
 		if (ActionCalcRelativePos.USE_ALTITUDE_VALUES) {
-			if (myAltitude == 0
+			if ((myAltitude == 0)
 					&& ActionCalcRelativePos.USE_DEVICE_ALTI_FOR_ZERO) {
 				position.z = 0;
 			} else {
@@ -523,9 +528,9 @@ public class GeoObj extends Obj implements HasDebugInformation {
 			 * longitude:
 			 */
 			Vec result = new Vec();
-			result.x = (float) (virtualPosition.x
-					/ (111319.889f * Math.cos(zeroLatitude * 0.0174532925f)) + zeroLongitude);
-			result.y = (float) (virtualPosition.y / 111133.3333f + zeroLatitude);
+			result.x = (float) ((virtualPosition.x
+					/ (111319.889f * Math.cos(zeroLatitude * 0.0174532925f))) + zeroLongitude);
+			result.y = (float) ((virtualPosition.y / 111133.3333f) + zeroLatitude);
 			result.z = (float) (virtualPosition.z + zeroAltitude);
 			return result;
 		}
@@ -577,10 +582,10 @@ public class GeoObj extends Obj implements HasDebugInformation {
 			double lng2) {
 		final double dLat = Math.toRadians(lat2 - lat1);
 		final double dLng = Math.toRadians(lng2 - lng1);
-		final double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
-				+ Math.cos(Math.toRadians(lat1))
+		final double a = (Math.sin(dLat / 2) * Math.sin(dLat / 2))
+				+ (Math.cos(Math.toRadians(lat1))
 				* Math.cos(Math.toRadians(lat2)) * Math.sin(dLng / 2)
-				* Math.sin(dLng / 2);
+				* Math.sin(dLng / 2));
 		return EARTH_RADIUS * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 	}
 
@@ -641,8 +646,7 @@ public class GeoObj extends Obj implements HasDebugInformation {
 	 *         axis))
 	 */
 	public Vec getVirtualPosition() {
-		return getVirtualPosition(EventManager.getInstance()
-				.getZeroPositionLocationObject());
+		return getVirtualPosition(EventManager.getInstance().getZeroPositionLocationObject().copy());
 	}
 
 	/**
@@ -721,8 +725,9 @@ public class GeoObj extends Obj implements HasDebugInformation {
 	public static GeoObj newRandomGeoObjAroundCamera(GLCamera camera,
 			float minDist, float maxDist) {
 		GeoObj o = new GeoObj();
-		if (maxDist < minDist)
+		if (maxDist < minDist) {
 			maxDist = minDist;
+		}
 		o.setVirtualPosition(Vec.getNewRandomPosInXYPlane(camera.getPosition(),
 				minDist, maxDist));
 		return o;

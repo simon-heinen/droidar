@@ -64,13 +64,13 @@ public class ObjectPicker {
 		Log.v(LOG_TAG, "   > Pixelvalues: " + key);
 		Log.v(LOG_TAG, "   > Picked object: " + wrapper);
 
-		if (wrapper == null && !key.equals("000")) {
+		if ((wrapper == null) && !key.equals("000")) {
 			Log.d(LOG_TAG,
 					"   > Possible picking problem found! Trying to fix it");
 			wrapper = tryToFindCorrectObjectFor(b);
 		}
 
-		if (wrapper != null && wrapper.getObject() instanceof SelectionListener) {
+		if ((wrapper != null) && (wrapper.getObject() instanceof SelectionListener)) {
 
 			SelectionListener s = (SelectionListener) wrapper.getObject();
 
@@ -114,8 +114,9 @@ public class ObjectPicker {
 	}
 
 	private void giveSelectFeedbackIfEnabled() {
-		if (myFeedbackCommand != null)
+		if (myFeedbackCommand != null) {
 			myFeedbackCommand.execute();
+		}
 	}
 
 	private Wrapper tryToFindCorrectObjectFor(byte[] b) {
@@ -238,9 +239,9 @@ public class ObjectPicker {
 			c = new Color(0, 0, 0.01f, 1);
 		}
 		while (isAlreadyTaken(c)) {
-			if (c.red < 1)
+			if (c.red < 1) {
 				c.red += 0.01f;
-			else if (c.green < 1) {
+			} else if (c.green < 1) {
 				c.green += 0.01f;
 				c.red = 0;
 			} else if (c.blue < 1) {
@@ -264,8 +265,9 @@ public class ObjectPicker {
 	private boolean isAlreadyTaken(Color c) {
 		byte[] b = getByteArrayFromColor(c);
 		String key = "" + b[0] + b[1] + b[2];
-		if (myObjectLookUpTable.get(key) != null)
+		if (myObjectLookUpTable.get(key) != null) {
 			return true;
+		}
 		return false;
 	}
 
@@ -305,8 +307,9 @@ public class ObjectPicker {
 			 * older devices another part of this bugfix is the
 			 * tryToFindCorrectObjectFor method
 			 */
-			if (f == 1)
+			if (f == 1) {
 				return -1;
+			}
 			return (byte) (f * 256f);
 		}
 		return (byte) (f * 255f);

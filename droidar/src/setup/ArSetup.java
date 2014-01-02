@@ -20,10 +20,12 @@ import android.view.Surface;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+
 import commands.Command;
 import commands.CommandGroup;
 import commands.system.CommandDeviceVibrate;
 import commands.undoable.CommandProcessor;
+
 import entry.ArType;
 import entry.ISetupEntry;
 import gl.GLFactory;
@@ -70,7 +72,7 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 	}
 	
 	/**
-	 * Set the entry for this setup. 
+	 * Set the entry for this setup.
 	 * @param pEntry - {@link entry.ISetupEntry}
 	 */
 	public void setEntry(ISetupEntry pEntry) {
@@ -275,7 +277,7 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 	}
 
 	/**
-	 * Add items to the options menu. 
+	 * Add items to the options menu.
 	 * @param menuItem - {@link Command}
 	 * @param menuItemText - {@link String} text displayed
 	 */
@@ -308,21 +310,21 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 	}
 
 	/**
-	 * Pause the event manager thread. 
+	 * Pause the event manager thread.
 	 */
 	public void pauseEventManager() {
 		EventManager.getInstance().pauseEventListeners();
 	}
 
 	/**
-	 * Resume the event manager thread. 
+	 * Resume the event manager thread.
 	 */
 	public void resumeEventManager() {
 		EventManager.getInstance().resumeEventListeners(getActivity(), true);
 	}
 
 	/**
-	 * Pause the updater thread. 
+	 * Pause the updater thread.
 	 */
 	public void pauseUpdater() {
 		if (mWorldUpdater != null) {
@@ -356,8 +358,8 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 	 */
 	@SuppressWarnings("deprecation")
 	public float getScreenWidth() {
-		if (getScreenOrientation() == Surface.ROTATION_90
-				|| getScreenOrientation() == Surface.ROTATION_270) {
+		if ((getScreenOrientation() == Surface.ROTATION_90)
+				|| (getScreenOrientation() == Surface.ROTATION_270)) {
 			return getActivity().getWindowManager().getDefaultDisplay()
 					.getHeight();
 		} else {
@@ -372,8 +374,8 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 	 */
 	@SuppressWarnings("deprecation")
 	public float getScreenHeigth() {
-		if (getScreenOrientation() == Surface.ROTATION_90
-				|| getScreenOrientation() == Surface.ROTATION_270) {
+		if ((getScreenOrientation() == Surface.ROTATION_90)
+				|| (getScreenOrientation() == Surface.ROTATION_270)) {
 			return getActivity().getWindowManager().getDefaultDisplay()
 					.getWidth();
 		} else {
@@ -391,6 +393,7 @@ public abstract class ArSetup implements ISetupSteps, ISetupLifeCycle {
 
 	@Override
 	public void onStart() {
+		ARLogger.debug(LOG_TAG, "onStart");
 	}
 
 	@Override

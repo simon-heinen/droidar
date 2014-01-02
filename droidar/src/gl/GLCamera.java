@@ -4,7 +4,6 @@ import geo.GeoObj;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import logger.ARLogger;
 import system.EventManager;
 import util.Calculus;
 import util.HasDebugInformation;
@@ -22,6 +21,14 @@ import android.opengl.Matrix;
  * offset. Do this via {@link GLCamera#setNewPosition(Vec)},
  * {@link GLCamera#setNewRotation(Vec)} and {@link GLCamera#setNewOffset(Vec)}
  * 
+ * 
+ * Notes: mRotationMatrix y is always the angle from floor to top (rotation
+ * around green achsis counterclockwise) and x always the clockwise rotation
+ * (like when you lean to the side on a motorcycle) angle of the camera.
+ * 
+ * to move from the green to the red axis (clockwise) you would have to add 90
+ * degree.
+ * 
  * @author Spobo
  * 
  */
@@ -30,48 +37,21 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 
 	private static final String LOG_TAG = "GLCamera";
 
-	// private float mybufferValue = 1000;
-	// private float minimumBufferValue = 20;
-	// private float bufferCount = 20;
 
-	private Vec myOffset = null;
-	private Vec myNewOffset = new Vec(0, 0, 0);
-	private Vec myPosition = new Vec(0, 0, 0);
+	private Vec mOffset = null;
+	private Vec mNewOffset = new Vec(0, 0, 0);
+	private Vec mPosition = new Vec(0, 0, 0);
+	private Vec mRotationVec = new Vec(0, 0, 0);
 
-	// TODO would be dangerous to set any of those vecs to null because there
-	// might be references in commands to those objects so check where those are
-	// set to null!
-	// @Deprecated
-	// private Vec myNewPosition = new Vec(0, 0, 0);
+	private boolean mSensorInputEnabled = true;
+	private float[] mRotationMatrix = Calculus.createIdentityMatrix();
+	private final Object mRotMatrLock = new Object();
+	private int mMatrixOffset = 0;
+	private final float[] mInvRotMatrix = Calculus.createIdentityMatrix();
+	private float[] mInitDir = new float[4];
+	private final float[] mRotDirection = new float[4];
+	private final MoveComp mMover = new MoveComp(3);
 
-	/**
-	 * y is always the angle from floor to top (rotation around green achsis
-	 * counterclockwise) and x always the clockwise rotation (like when you lean
-	 * to the side on a motorcycle) angle of the camera.
-	 * 
-	 * to move from the green to the red axis (clockwise) you would have to add
-	 * 90 degree.
-	 */
-	private Vec myRotationVec = new Vec(0, 0, 0);
-	@Deprecated
-	public Vec myNewRotationVec;
-
-	/**
-	 * set to false if you want the camera not to react on sensor events
-	 */
-	private boolean sensorInputEnabled = true;
-
-	/**
-	 * http://www.songho.ca/opengl/gl_transform.html
-	 */
-	private float[] rotationMatrix = Calculus.createIdentityMatrix();
-	/**
-	 * This lock has to be used to not override the matrix while it is displayed
-	 * by opengl
-	 */
-	private final Object rotMatrLock = new Object();
-	private int matrixOffset = 0;
-	private final float[] invRotMatrix = Calculus.createIdentityMatrix();
 
 	/**
 	 * use a {@link ActionUseCameraAngles2} instead
@@ -85,15 +65,22 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 */
 	@Deprecated
 	private final float[] cameraAnglesInDegree = new float[3];
-	float[] initDir = new float[4];
-	private final float[] rotDirection = new float[4];
-	// public boolean forceAngleCalculation = false;
+	@Deprecated
+	public Vec myNewRotationVec;
 
-	private final MoveComp myMover = new MoveComp(3);
 
+	/**
+	 * Default constructor.
+	 */
 	public GLCamera() {
 	}
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param initialCameraPosition
+	 *            The {@link Vec} stating the starting position of the camera.
+	 */
 	public GLCamera(Vec initialCameraPosition) {
 		setNewPosition(initialCameraPosition);
 	}
@@ -101,42 +88,41 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	@Override
 	public boolean update(float timeDelta, Updateable parent) {
 
-		if ((myRotationVec != null) && (myNewRotationVec != null)) {
-			Vec.morphToNewAngleVec(myRotationVec, myNewRotationVec, timeDelta);
+		if ((mRotationVec != null) && (myNewRotationVec != null)) {
+			Vec.morphToNewAngleVec(mRotationVec, myNewRotationVec, timeDelta);
 		}
 
-		if ((myOffset != null) && (myNewOffset != null)) {
-			Vec.morphToNewVec(myOffset, myNewOffset, timeDelta);
+		if ((mOffset != null) && (mNewOffset != null)) {
+			Vec.morphToNewVec(mOffset, mNewOffset, timeDelta);
 		}
 
-		if (myPosition != null) {
-			myMover.update(timeDelta, this);
+		if (mPosition != null) {
+			mMover.update(timeDelta, this);
 		}
 
 		return true;
-
 	}
 
 	@Override
 	public Vec getRotation() {
-		return myRotationVec;
+		return mRotationVec;
 	}
 
 	@Override
 	@Deprecated
 	public void setRotation(Vec rotation) {
-		if (myRotationVec == null) {
-			myRotationVec = rotation;
+		if (mRotationVec == null) {
+			mRotationVec = rotation;
 		} else {
-			myRotationVec.setToVec(rotation);
+			mRotationVec.setToVec(rotation);
 		}
 	}
 
 	public void setNewPosition(Vec cameraPosition) {
-		if (myPosition == null) {
-			myPosition = new Vec();
+		if (mPosition == null) {
+			mPosition = new Vec();
 		}
-		myMover.mTargetPos = cameraPosition;
+		mMover.mTargetPos = cameraPosition;
 	}
 
 	/**
@@ -147,18 +133,18 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 * @return the {@link Vec} (x,y,z)
 	 */
 	public Vec getMyNewPosition() {
-		return myMover.mTargetPos;
+		return mMover.mTargetPos;
 	}
 
 	public void setNewCameraOffset(Vec newCameraOffset) {
 		if (newCameraOffset != null) {
-			if (myNewOffset == null) {
-				myNewOffset = new Vec(newCameraOffset);
-				if (myOffset == null) {
-					myOffset = new Vec();
+			if (mNewOffset == null) {
+				mNewOffset = new Vec(newCameraOffset);
+				if (mOffset == null) {
+					mOffset = new Vec();
 				}
 			} else {
-				myNewOffset.setToVec(newCameraOffset);
+				mNewOffset.setToVec(newCameraOffset);
 			}
 		}
 	}
@@ -178,7 +164,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 * @param rayPosition
 	 *            the vector where the ray pos will be stored in, so pass a
 	 *            vector here that can be overwritten. Normally this value will
-	 *            be the same as {@link GLCamera#myPosition} but if a marker is
+	 *            be the same as {@link GLCamera#mPosition} but if a marker is
 	 *            used to move the {@link GLCamera} the translation will be
 	 *            contained in the matrix as well and therefore the rayPosition
 	 *            will be this translation in relation to the marker
@@ -204,23 +190,23 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 		y = (GLRenderer.height - y - GLRenderer.halfHeight)
 				/ GLRenderer.halfHeight;
 
-		Matrix.invertM(invRotMatrix, 0, rotationMatrix, matrixOffset);
+		Matrix.invertM(mInvRotMatrix, 0, mRotationMatrix, mMatrixOffset);
 
 		if (rayPosition != null) {
 			float[] rayPos = new float[4];
 			float[] initPos = { 0.0f, 0.0f, 0.0f, 1.0f };
-			Matrix.multiplyMV(rayPos, 0, invRotMatrix, 0, initPos, 0);
+			Matrix.multiplyMV(rayPos, 0, mInvRotMatrix, 0, initPos, 0);
 			rayPosition.x = rayPos[0];
 			rayPosition.y = rayPos[1];
 			rayPosition.z = rayPos[2];
-			if (myPosition != null) {
-				rayPosition.add(myPosition);
+			if (mPosition != null) {
+				rayPosition.add(mPosition);
 			}
 		}
 		float[] rayDir = new float[4];
 		float[] initDir = { x * GLRenderer.nearHeight * GLRenderer.aspectRatio,
 				y * GLRenderer.nearHeight, -GLRenderer.minViewDistance, 0.0f };
-		Matrix.multiplyMV(rayDir, 0, invRotMatrix, 0, initDir, 0);
+		Matrix.multiplyMV(rayDir, 0, mInvRotMatrix, 0, initDir, 0);
 		rayDirection.x = rayDir[0];
 		rayDirection.y = rayDir[1];
 		rayDirection.z = rayDir[2];
@@ -237,13 +223,13 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 		float[] rayPos = new float[4];
 		float[] initPos = { virtualWorldPosition.x, virtualWorldPosition.y,
 				virtualWorldPosition.z, 1.0f };
-		Matrix.multiplyMV(rayPos, 0, rotationMatrix, matrixOffset, initPos, 0);
+		Matrix.multiplyMV(rayPos, 0, mRotationMatrix, mMatrixOffset, initPos, 0);
 		// TODO
 		return rayPos;
 	}
 
 	public int getMatrixOffset() {
-		return matrixOffset;
+		return mMatrixOffset;
 	}
 
 	/**
@@ -289,7 +275,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 		 * then calc intersection with ground
 		 */
 		float f = -rayPos[2] / rayDir[2];
-		return new Vec(f * rayDir[0] + rayPos[0], f * rayDir[1] + rayPos[1], 0);
+		return new Vec((f * rayDir[0]) + rayPos[0], (f * rayDir[1]) + rayPos[1], 0);
 	}
 
 	/**
@@ -298,7 +284,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 * 
 	 * @param rayPos
 	 *            here the rayPos will be stored, pass a new float[4]. The
-	 *            result will contain {@link GLCamera#myPosition} so you dont
+	 *            result will contain {@link GLCamera#mPosition} so you dont
 	 *            need to add it manually! Can be NULL if you only need the
 	 *            ray-direction
 	 * @param rayDir
@@ -306,20 +292,20 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 * @return
 	 */
 	public void getCameraViewDirectionRay(float[] rayPos, float[] rayDir) {
-		Matrix.invertM(invRotMatrix, 0, rotationMatrix, matrixOffset);
+		Matrix.invertM(mInvRotMatrix, 0, mRotationMatrix, mMatrixOffset);
 		if (rayPos != null) {
 			float[] initPos = { 0.0f, 0.0f, 0.0f, 1.0f };
-			Matrix.multiplyMV(rayPos, 0, invRotMatrix, 0, initPos, 0);
+			Matrix.multiplyMV(rayPos, 0, mInvRotMatrix, 0, initPos, 0);
 			/*
 			 * TODO is raypos != 0 if initPos ist the 0 vector?? is this calc.
 			 * redundant?
 			 */
-			rayPos[0] += myPosition.x;
-			rayPos[1] += myPosition.y;
-			rayPos[2] += myPosition.z;
+			rayPos[0] += mPosition.x;
+			rayPos[1] += mPosition.y;
+			rayPos[2] += mPosition.z;
 		}
 		float[] initDir = { 0, 0, -GLRenderer.minViewDistance, 0.0f };
-		Matrix.multiplyMV(rayDir, 0, invRotMatrix, 0, initDir, 0);
+		Matrix.multiplyMV(rayDir, 0, mInvRotMatrix, 0, initDir, 0);
 	}
 
 	/**
@@ -335,19 +321,19 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 
 		// if the camera sould not be in the center of the rotation it has to be
 		// moved out before rotating:
-		glLoadPosition(gl, myOffset);
+		glLoadPosition(gl, mOffset);
 
-		synchronized (rotMatrLock) {
+		synchronized (mRotMatrLock) {
 			// load rotation matrix:
-			gl.glMultMatrixf(rotationMatrix, matrixOffset);
+			gl.glMultMatrixf(mRotationMatrix, mMatrixOffset);
 		}
 
 		// rotate Camera TODO use for manual rotation:
-		glLoadRotation(gl, myRotationVec);
+		glLoadRotation(gl, mRotationVec);
 
 		// set the point where to rotate around
-		//ARLogger.debug("GLCAMERA","Render Camera Position:\nx:" + myPosition.x+"\ny:"+myPosition.y+"\nz:"+myPosition.z);
-		glLoadPosition(gl, myPosition);
+		//ARLogger.debug("GLCAMERA","Render Camera Position:\nx:" + mPosition.x+"\ny:"+mPosition.y+"\nz:"+mPosition.z);
+		glLoadPosition(gl, mPosition);
 	}
 
 	/*
@@ -357,9 +343,9 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 */
 	@Override
 	public void setRotationMatrix(float[] rotMatrix, int offset) {
-		synchronized (rotMatrLock) {
-			rotationMatrix = rotMatrix;
-			matrixOffset = offset;
+		synchronized (mRotMatrLock) {
+			mRotationMatrix = rotMatrix;
+			mMatrixOffset = offset;
 		}
 	}
 
@@ -378,16 +364,15 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 
 	@Deprecated
 	private void updateCameraAngles() {
-		Calculus.invertM(invRotMatrix, 0, rotationMatrix, matrixOffset);
-		initDir[0] = 0;
-		initDir[1] = 0;
-		initDir[2] = -GLRenderer.minViewDistance;
-		initDir[3] = 0;
+		Calculus.invertM(mInvRotMatrix, 0, mRotationMatrix, mMatrixOffset);
+		mInitDir[0] = 0;
+		mInitDir[1] = 0;
+		mInitDir[2] = -GLRenderer.minViewDistance;
+		mInitDir[3] = 0;
 		// TODO not a good idea to use myAnglesInRadians2 here, maybe additional
 		// helper var?:
-		Matrix.multiplyMV(rotDirection, 0, invRotMatrix, 0, initDir, 0);
-		cameraAnglesInDegree[0] = Vec.getRotationAroundZAxis(rotDirection[1],
-				rotDirection[0]);
+		Matrix.multiplyMV(mRotDirection, 0, mInvRotMatrix, 0, mInitDir, 0);
+		cameraAnglesInDegree[0] = Vec.getRotationAroundZAxis(mRotDirection[1], mRotDirection[0]);
 	}
 
 	private void glLoadPosition(GL10 gl, Vec vec) {
@@ -404,7 +389,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 		 * when you change the rotation order to x y z ! the order y x z is
 		 * needed to use extract the angles from the rotation matrix with:
 		 * 
-		 * SensorManager.getOrientation(rotationMatrix, anglesInRadians);
+		 * SensorManager.getOrientation(mRotationMatrix, anglesInRadians);
 		 * 
 		 * so remember this oder when doing own rotations.
 		 * 
@@ -438,9 +423,9 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 *            like a compass (0=north, 90 east and so on
 	 */
 	public void setRotation(float xAngle, float yAngle, float zAngle) {
-		myRotationVec.x = xAngle;
-		myRotationVec.y = yAngle;
-		myRotationVec.z = zAngle;
+		mRotationVec.x = xAngle;
+		mRotationVec.y = yAngle;
+		mRotationVec.z = zAngle;
 	}
 
 	@Deprecated
@@ -463,7 +448,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 * @param deltaY
 	 */
 	public synchronized void changeXYPositionBuffered(float deltaX, float deltaY) {
-		myMover.mTargetPos.add(deltaX, deltaY, 0);
+		mMover.mTargetPos.add(deltaX, deltaY, 0);
 	}
 
 	/**
@@ -480,8 +465,8 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 *            see deltaX description
 	 */
 	public synchronized void changePositionUnbuffered(float deltaX, float deltaY) {
-		myPosition.x += deltaX;
-		myPosition.y += deltaY;
+		mPosition.x += deltaX;
+		mPosition.y += deltaY;
 	}
 
 	/*
@@ -493,7 +478,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	@Deprecated
 	public void resetBufferedAngle() {
 		Log.d(LOG_TAG, "Reseting camera rotation in resetBufferedAngle()!");
-		if ((myNewRotationVec != null) && (sensorInputEnabled)) {
+		if ((myNewRotationVec != null) && (mSensorInputEnabled)) {
 			myNewRotationVec.setToZero();
 		}
 	}
@@ -507,7 +492,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 * @param deltaZ
 	 */
 	public void changeZAngleUnbuffered(float deltaZ) {
-		myRotationVec.z += deltaZ;
+		mRotationVec.z += deltaZ;
 	}
 
 	/*
@@ -533,7 +518,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 *            eg. -10 to move the camera 10 meters down
 	 */
 	public void changeZPositionBuffered(float deltaZ) {
-		myMover.mTargetPos.add(0, 0, deltaZ);
+		mMover.mTargetPos.add(0, 0, deltaZ);
 	}
 
 	/**
@@ -541,13 +526,13 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 *            if you just want to reset x and y set this to false
 	 */
 	public void resetPosition(boolean resetZValueToo) {
-		float pz = myPosition.z;
-		float npz = myMover.mTargetPos.z;
-		myPosition.setToZero();
-		myMover.mTargetPos.setToZero();
+		float pz = mPosition.z;
+		float npz = mMover.mTargetPos.z;
+		mPosition.setToZero();
+		mMover.mTargetPos.setToZero();
 		if (!resetZValueToo) {
-			myPosition.z = pz;
-			myMover.mTargetPos.z = npz;
+			mPosition.z = pz;
+			mMover.mTargetPos.z = npz;
 		}
 	}
 
@@ -559,7 +544,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	}
 
 	public void changeNewPosition(float deltaX, float deltaY, float deltaZ) {
-		myMover.mTargetPos.add(deltaX, deltaY, deltaZ);
+		mMover.mTargetPos.add(deltaX, deltaY, deltaZ);
 	}
 
 	/**
@@ -571,7 +556,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 *            the height of the camera
 	 */
 	public void setNewPosition(float x, float y, float z) {
-		myMover.mTargetPos.setTo(x, y, z);
+		mMover.mTargetPos.setTo(x, y, z);
 
 	}
 
@@ -582,15 +567,15 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 *            positive means north of zero pos (latitude direction)
 	 */
 	public void setNewPosition(float x, float y) {
-		myMover.mTargetPos.setTo(x, y);
+		mMover.mTargetPos.setTo(x, y);
 	}
 
 	public Vec getNewCameraOffset() {
-		return myNewOffset;
+		return mNewOffset;
 	}
 
 	public void setNewOffset(Vec myNewOffset) {
-		this.myNewOffset = myNewOffset;
+		this.mNewOffset = myNewOffset;
 	}
 
 	/**
@@ -603,15 +588,15 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 */
 	@Override
 	public Vec getPosition() {
-		return myPosition;
+		return mPosition;
 	}
 
 	@Override
 	public void setPosition(Vec position) {
-		if (myPosition == null) {
-			myPosition = position;
+		if (mPosition == null) {
+			mPosition = position;
 		} else {
-			myPosition.setToVec(position);
+			mPosition.setToVec(position);
 		}
 	}
 
@@ -674,27 +659,27 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	}
 
 	public float[] getRotationMatrix() {
-		return rotationMatrix;
+		return mRotationMatrix;
 	}
 
 	@Override
 	public void showDebugInformation() {
 		Log.w(LOG_TAG, "Infos about GLCamera:");
-		Log.w(LOG_TAG, "   > myPosition=" + myPosition);
-		Log.w(LOG_TAG, "   > myMover.myTargetPos=" + myMover.mTargetPos);
-		Log.w(LOG_TAG, "   > myOffset=" + myOffset);
-		Log.w(LOG_TAG, "   > myNewOffset=" + myNewOffset);
-		Log.w(LOG_TAG, "   > myRotationVec=" + myRotationVec);
+		Log.w(LOG_TAG, "   > mPosition=" + mPosition);
+		Log.w(LOG_TAG, "   > myMover.myTargetPos=" + mMover.mTargetPos);
+		Log.w(LOG_TAG, "   > mOffset=" + mOffset);
+		Log.w(LOG_TAG, "   > mNewOffset=" + mNewOffset);
+		Log.w(LOG_TAG, "   > mRotationVec=" + mRotationVec);
 		Log.w(LOG_TAG, "   > myNewRotationVec=" + myNewRotationVec);
-		Log.w(LOG_TAG, "   > rotationMatrix=" + rotationMatrix);
+		Log.w(LOG_TAG, "   > mRotationMatrix=" + mRotationMatrix);
 	}
 
 	public boolean isSensorInputEnabled() {
-		return sensorInputEnabled;
+		return mSensorInputEnabled;
 	}
 
 	/**
-	 * @param sensorInputEnabled
+	 * @param mSensorInputEnabled
 	 *            set false tell the camera to ignore sensor input. You can
 	 *            still use the methods like
 	 *            {@link GLCamera#setNewPosition(Vec)}
@@ -703,10 +688,10 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 *            movement through a virtual world.
 	 */
 	public void setSensorInputEnabled(boolean sensorInputEnabled) {
-		this.sensorInputEnabled = sensorInputEnabled;
+		this.mSensorInputEnabled = sensorInputEnabled;
 		if (!sensorInputEnabled) {
 			// reset rotation matrix
-			rotationMatrix = Calculus.createIdentityMatrix();
+			mRotationMatrix = Calculus.createIdentityMatrix();
 		}
 	}
 

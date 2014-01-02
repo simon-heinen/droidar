@@ -15,14 +15,15 @@ import worlddata.World;
 import actions.ActionCalcRelativePos;
 import actions.ActionMoveCameraBuffered;
 import actions.ActionRotateCameraBuffered;
+import actions.ActionUseCameraAngles2;
 import actions.ActionWASDMovement;
 import actions.ActionWaitForAccuracy;
 import android.app.Activity;
 import android.location.Location;
 
 /**
- * Default AR setup that initializes all of the lighting and 
- * event management so that concrete classes only need to add the objects to the world. 
+ * Default AR setup that initializes all of the lighting and
+ * event management so that concrete classes only need to add the objects to the world.
  *
  */
 public abstract class DefaultArSetup extends ArSetup {
@@ -33,6 +34,8 @@ public abstract class DefaultArSetup extends ArSetup {
 	private World mWorld;
 	private GL1Renderer mRenderer;
 	
+	private Vec mCameraAngleData = new Vec(0, 0, 0);
+
 	private boolean mWaitForValidGps = false;
 	private boolean mAddObjectsCalled = false;
 	
@@ -43,7 +46,7 @@ public abstract class DefaultArSetup extends ArSetup {
 	//magic numbers
 	private static final int XREDUCTION = 25;
 	private static final int YREDUCTION = 50;
-	private static final int MAXWASDSPEED = 20;	
+	private static final int MAXWASDSPEED = 20;
 	private static final int TRACKBALLFACTOR = 5;
 	private static final int TOUCHSCREENFACTOR = 25;
 	private static final float MINGPSACCURACY = 24.0f;
@@ -69,7 +72,7 @@ public abstract class DefaultArSetup extends ArSetup {
 	}
 	
 	/**
-	 * Constructor. 
+	 * Constructor.
 	 * @param pWaitForValidGps - {@link boolean} true if you want to wait for gps before drawing
 	 */
 	public DefaultArSetup(boolean pWaitForValidGps) {
@@ -113,29 +116,38 @@ public abstract class DefaultArSetup extends ArSetup {
 	@Override
 	public void addActionsToEvents(final EventManager eventManager,
 			CustomGLSurfaceView arView, SystemUpdater updater) {
-		mWasdAction = new ActionWASDMovement(mCamera, 
-											XREDUCTION, 
-											YREDUCTION, 
+		mWasdAction = new ActionWASDMovement(mCamera,
+											XREDUCTION,
+											YREDUCTION,
 											MAXWASDSPEED);
 		mRotateGLCameraAction = new ActionRotateCameraBuffered(mCamera);
 		eventManager.addOnOrientationChangedAction(mRotateGLCameraAction);
 
 		arView.addOnTouchMoveListener(mWasdAction);
 		eventManager.addOnTrackballAction(new ActionMoveCameraBuffered(mCamera,
-																		TRACKBALLFACTOR, 
+																		TRACKBALLFACTOR,
 																		TOUCHSCREENFACTOR));
 		eventManager.addOnLocationChangedAction(new ActionCalcRelativePos(mWorld, mCamera));
 		
+		eventManager.addOnOrientationChangedAction(new ActionUseCameraAngles2() {
+			@Override
+			public void onAnglesUpdated(float pitch, float roll, float compassAzimuth) {
+				mCameraAngleData.x = pitch;
+				mCameraAngleData.y = roll;
+				mCameraAngleData.z = compassAzimuth;
+			}
+		});
+
 		if (mWaitForValidGps) {
-			mMinAccuracyAction = new ActionWaitForAccuracy(getActivity(), 
-															MINGPSACCURACY, 
+			mMinAccuracyAction = new ActionWaitForAccuracy(getActivity(),
+															MINGPSACCURACY,
 															MAXGPSPOSUPDATECOUNT) {
 				@Override
 				public void minAccuracyReachedFirstTime(Location l,
 						ActionWaitForAccuracy a) {
 					callAddObjectsToWorldIfNotCalledAlready();
 					if (!eventManager.getOnLocationChangedAction().remove(a)) {
-						ARLogger.debug(LOG_TAG, 
+						ARLogger.debug(LOG_TAG,
 								"Could not remove minAccuracyAction from the onLocationChangedAction list");
 					}
 				}
@@ -164,11 +176,22 @@ public abstract class DefaultArSetup extends ArSetup {
 	}
 	
 	/**
+	 * @return {@link Vec} containing the camera angle data. compassAngle=z,
+	 *         pitch=x, roll=y
+	 */
+	public Vec getCameraAngle() {
+		return mCameraAngleData;
+	}
+
+	/**
 	 * This will be called when the GPS accuracy is high enough.
 	 * 
-	 * @param renderer - {@link GL1Renderer}
-	 * @param world - {@link World}
-	 * @param objectFactory - {@link GLFactory}
+	 * @param renderer
+	 *            - {@link GL1Renderer}
+	 * @param world
+	 *            - {@link World}
+	 * @param objectFactory
+	 *            - {@link GLFactory}
 	 */
 	public abstract void addObjectsTo(GL1Renderer renderer, World world,
 			GLFactory objectFactory);
