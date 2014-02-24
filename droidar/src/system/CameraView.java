@@ -17,7 +17,7 @@ import android.view.WindowManager;
 public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 	private static final String LOG_TAG = "CameraView";
 	SurfaceHolder mHolder;
-	Camera myCamera;
+	public Camera myCamera;
 
 	public CameraView(Context context) {
 		super(context);
