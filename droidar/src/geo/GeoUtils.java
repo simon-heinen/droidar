@@ -464,18 +464,47 @@ public class GeoUtils {
 	 */
 	public static boolean switchGPS(Activity activity, boolean enableGPS,
 			boolean showSettingsIfAutoSwitchImpossible) {
+		
+		String provider = Settings.Secure.getString(
+				activity.getContentResolver(),
+				Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+		boolean currentlyEnabled = provider.contains("gps");
+		
 		if (canTurnOnGPSAutomatically(activity)) {
-			String provider = Settings.Secure.getString(
-					activity.getContentResolver(),
-					Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
-			boolean currentlyEnabled = provider.contains("gps");
+//			String provider = Settings.Secure.getString(
+//					activity.getContentResolver(),
+//					Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+//			boolean currentlyEnabled = provider.contains("gps");
 			if (!currentlyEnabled && enableGPS) {
+				
+				if (android.os.Build.VERSION.SDK_INT > 14){
+					// to make it work in android 4.0 and higher - enable access to my location setting
+					Intent intent = new Intent("android.location.GPS_ENABLED_CHANGE");
+				    intent.putExtra("enabled", true);
+				    activity.sendBroadcast(intent);
+				}
+				
 				pokeGPSButton(activity);
-			} else if (currentlyEnabled && !enableGPS) {
-				pokeGPSButton(activity);
+				
+			} else if (/*currentlyEnabled &&*/ !enableGPS) {// always send disable intent for higher OS versions and only poke if enabled, regardless of the version
+				
+				if (android.os.Build.VERSION.SDK_INT > 14){
+					// to make it work in android 4.0 and higher - disable access to my location setting
+					Intent intent = new Intent("android.location.GPS_ENABLED_CHANGE");
+				    intent.putExtra("enabled", false);
+				    activity.sendBroadcast(intent);
+				}
+				
+				if(currentlyEnabled)
+					pokeGPSButton(activity);
+				
 			}
 			return true;
 		} else if (showSettingsIfAutoSwitchImpossible) {
+			
+			if(currentlyEnabled)
+				return true;
+			
 			Log.d(LOG_TAG, "Can't enable GPS automatically, will start "
 					+ "settings for manual enabling!");
 			openLocationSettingsPage(activity);
