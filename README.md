@@ -86,3 +86,14 @@ alt="Temple Treasure" width="240" height="150" border="10" /></a>
 <a href="https://play.google.com/store/apps/details?id=de.interactivepioneers.chioapp&hl=en
 " target="_blank"><img src="https://lh6.ggpht.com/cQL1gDDzcvwoiS1tqBA8MVWD2i98RfcZnbq1ZKWgf_ei-qb0_MSFAoKgk7RA6BMKjjs=w300-rw" 
 alt="CHIO Aachen" width="150" height="150" border="10" /></a>
+
+
+DroidAR 2 (currently closed source)
+=======
+- DroidAR 2 has a plugin for the free to use and fully open source rendering engine jMonkey which allows rapid testing on the desktop and full customization for any application scenario
+- The SDK combines sensor-based, location-based and SLAM tracking, everything offline on the phone
+- Combinable detection techniques: Markers, 2d images, 3d objects, geolocations and gesture detection
+- Strucutre from motion, 3D geometry reconstruction and texture projection
+- Multiplayer components for adhoc network sessions between users and mixed AR+VR scenarios
+
+Contact us for more details
