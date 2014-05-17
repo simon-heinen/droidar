@@ -200,7 +200,7 @@ public abstract class MarkerDetectionSetup extends Setup {
 		String fileName = settings.getString("calibration", null);
 		if (fileName != null) {
 			try {
-				calib = (CameraCalibration) IO.loadSerializable(getActivity().getString(R.string._sdcard_)
+				calib = (CameraCalibration) IO.loadSerializable("/sdcard/"
 						+ CALIB_PATH + "/" + fileName + ".txt");
 				Log.d("AR", "using old calibration");
 			} catch (Exception e) {
