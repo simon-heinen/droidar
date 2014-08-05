@@ -9,6 +9,8 @@ For the latest news about DroidAR also visit our [blog](http://droidar.blogspot.
 
 DroidAR is available under commercial license (contact us http://http://bitstars.com/about/team/ for more details) and can be downloaded and used for non commercial use under the GNU GPL v3 ( http://www.gnu.org/licenses/gpl.html ) license.
 
+[Register here to get notified for important news](https://docs.google.com/a/bitstars.com/forms/d/1l2AW1Qq16s2-MXpP_IRZ3GsVM6ZpDksCBUqGZNCNOy0)
+
 Contributing to the code
 =======
 I would be great if you want to help working on the code, fixing bugs, refactorings and adding you own ideas. Contributing to DroidAR is easy on GitHub (that's the main reason why we switched from Google Code). 
