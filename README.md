@@ -11,7 +11,7 @@ DroidAR is available under commercial license (contact us http://http://bitstars
 
 [Register here to get notified for important news](https://docs.google.com/a/bitstars.com/forms/d/1l2AW1Qq16s2-MXpP_IRZ3GsVM6ZpDksCBUqGZNCNOy0)
 
-<script data-gittip-username="bitstars" src="//gttp.co/v1.js"></script>
+[https://www.gittip.com/bitstars](https://www.gittip.com/bitstars)
 
 Contributing to the code
 =======
