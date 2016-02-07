@@ -7,11 +7,11 @@ Also read the [wiki articles](https://github.com/bitstars/droidar/wiki/_pages) (
 This framework can be used for many different scenarios, there are already some demo applications available (check the videos below).
 For the latest news about DroidAR also visit our [blog](http://droidar.blogspot.com/).
 
-DroidAR is available under commercial license (contact us http://http://bitstars.com/about/team/ for more details) and can be downloaded and used for non commercial use under the GNU GPL v3 ( http://www.gnu.org/licenses/gpl.html ) license.
+DroidAR is available under commercial license (contact us at "info (at) bitstars.com" for more details) and can be downloaded and used for non commercial use under the GNU GPL v3 ( http://www.gnu.org/licenses/gpl.html ) license.
 
 [Register here to get notified for important news](https://docs.google.com/a/bitstars.com/forms/d/1l2AW1Qq16s2-MXpP_IRZ3GsVM6ZpDksCBUqGZNCNOy0)
 
-[https://www.gittip.com/bitstars](https://www.gittip.com/bitstars)
+If you want to you can support the opensource development of this project at [https://www.gittip.com/bitstars](https://www.gittip.com/bitstars)
 
 Contributing to the code
 =======
