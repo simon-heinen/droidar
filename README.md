@@ -13,6 +13,11 @@ DroidAR is available under commercial license (contact us at "info (at) bitstars
 
 If you want to you can support the opensource development of this project at [https://www.gittip.com/bitstars](https://www.gittip.com/bitstars)
 
+Tutorials
+======
+
+- http://parithi.com/?p=2183 (Thanks to ElamParithi Arul for writing it)
+
 Contributing to the code
 =======
 I would be great if you want to help working on the code, fixing bugs, refactorings and adding you own ideas. Contributing to DroidAR is easy on GitHub (that's the main reason why we switched from Google Code). 
