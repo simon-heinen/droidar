@@ -17,6 +17,8 @@ Tutorials
 ======
 
 - http://parithi.com/?p=2183 (Thanks to ElamParithi Arul for writing it)
+- https://www.youtube.com/watch?v=nK12gWQgItw (This video explains what needs to happen for Android studio to work, thanks Poseidonn77 for providing it)
+
 
 Contributing to the code
 =======
