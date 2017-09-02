@@ -1,36 +1,38 @@
 package markerDetection;
 
-import gl.GLFactory;
-import gl.GLRenderer;
-import gl.MarkerObject;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.List;
-import java.util.zip.GZIPInputStream;
+//import gl.GLFactory;
+//import gl.GLRenderer;
+//import gl.MarkerObject;
+//
+//import java.io.FileInputStream;
+//import java.io.IOException;
+//import java.io.ObjectInputStream;
+//import java.lang.reflect.Method;
+//import java.util.HashMap;
+//import java.util.List;
+//import java.util.zip.GZIPInputStream;
 
 import nativeLib.NativeLib;
-
 import preview.Preview;
 import preview.PreviewPost2_0;
 import preview.PreviewPre2_0;
-
-import system.EventManager;
+//import system.EventManager;
 import system.Setup;
 import util.CameraCalibration;
 import util.IO;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+//import android.content.Context;
 import android.content.SharedPreferences;
 import android.hardware.Camera;
-import android.hardware.Camera.Size;
-import android.opengl.GLSurfaceView;
+//import android.hardware.Camera.Size;
+//import android.opengl.GLSurfaceView;
 import android.util.DisplayMetrics;
 import android.util.Log;
+//import android.view.Display;
 import android.view.ViewGroup.LayoutParams;
-import android.view.WindowManager;
+//import android.view.WindowManager;
+import de.rwth.R;
 
 public abstract class MarkerDetectionSetup extends Setup {
 
@@ -54,32 +56,58 @@ public abstract class MarkerDetectionSetup extends Setup {
 	private CameraCalibration calib = null;
 	private Camera.Size cameraSize;
 	private LayoutParams optimalLayoutParams;
+	
+	private Activity activity;
 
+	
 	@Override
 	public void initializeCamera() {
 
 		MarkerObjectMap markerObjectMap = new MarkerObjectMap();
-		DisplayMetrics displayMetrics = myTargetActivity.getResources()
+//		this.activity = myTargetActivity;
+		this.activity = this.getActivity();
+		DisplayMetrics displayMetrics = activity.getResources()
 				.getDisplayMetrics();
 		int weight = displayMetrics.widthPixels;
 		int height = displayMetrics.heightPixels;
 		int apiLevel = Integer.parseInt(android.os.Build.VERSION.SDK);
-
 		Camera mCamera = Camera.open();
 		Camera.Parameters parameters = mCamera.getParameters();
 		cameraSize = parameters.getPreviewSize();
+		
+		//===================================================
+		//Last commented functionallity
 
-		// Check the OS version to determine what kind of preview to use.
-		if (apiLevel < 5) {
-			weight = preSdkV5(height);
-		} else {
-			weight = postSdkV5(parameters, weight, height);
-		}
+//		// Check the OS version to determine what kind of preview to use.
+//		if (apiLevel < 5) {
+//			weight = preSdkV5(height);
+//
+//		} else {
+//			weight = postSdkV5(parameters, weight, height);
+//		}
+		
+		//====================================================
+		//Last Added
+		
+		//Establish Camera Size
+		//To show the camera display to user
+		weight = displayMetrics.widthPixels;
+		height = displayMetrics.heightPixels;
+		
+		//Own Camera Calibration
+		//To put the object in the correct size
+		cameraSize.width = weight;
+		cameraSize.height = height;
+		calib = CameraCalibration.defaultCalib(cameraSize.width,
+		cameraSize.height);
+		
+		//====================================================
+		
 		optimalLayoutParams = new LayoutParams(weight, height);
 
 		mCamera.release();
 		tryToLoadCameraSettings();
-
+		
 		// initialize native code.
 		int[] constants = new int[2];
 		nativeLib.initThread(constants, calib.cameraMatrix,
@@ -88,11 +116,11 @@ public abstract class MarkerDetectionSetup extends Setup {
 		myThread = new DetectionThread(nativeLib, myGLSurfaceView,
 				markerObjectMap, _a2_getUnrecognizedMarkerListener());
 		if (apiLevel <= 5) {
-			cameraPreview = new PreviewPre2_0(myTargetActivity, myThread,
+			cameraPreview = new PreviewPre2_0(activity, myThread,
 					cameraSize);
 			Log.d("AR", "API Level: " + apiLevel + " Created Preview Pre2.1");
 		} else {
-			cameraPreview = new PreviewPost2_0(myTargetActivity, myThread,
+			cameraPreview = new PreviewPost2_0(activity, myThread,
 					cameraSize);
 			Log.d("AR", "API Level: " + apiLevel + " Created Preview Post2.1");
 		}
@@ -103,66 +131,71 @@ public abstract class MarkerDetectionSetup extends Setup {
 
 	@Override
 	public void addCameraOverlay() {
-		myTargetActivity.addContentView(cameraPreview, optimalLayoutParams);
+		activity.addContentView(cameraPreview, optimalLayoutParams);
 	}
 
 	@Override
 	public void addGLSurfaceOverlay() {
-		myTargetActivity.addContentView(myGLSurfaceView, optimalLayoutParams);
+		activity.addContentView(myGLSurfaceView, optimalLayoutParams);
 	}
 
-	private int preSdkV5(int h) {
-		int w;
-		// These needs to be checked. Find a "standard" value for the camera
-		// resolution and set the display aspect ration accordingly.
-		// Height stays the same, but width needs to be changed according to
-		// the aspect ratio of the camera resolution.
-		w = h * 240 / 160;
-		cameraSize.width = 240;
-		cameraSize.height = 160;
-		return w;
-	}
-
-	private int postSdkV5(Camera.Parameters parameters, int w, int h) {
-		double aspectRatio = (double) w / (double) h;
-		Camera.Size currentSizeChoice;
-		List<Camera.Size> supportedSizes = null;
-		Method method = null;
-		try {
-			method = parameters.getClass().getDeclaredMethod(
-					"getSupportedPreviewSizes", (Class[]) null);
-			Object o = method.invoke(parameters, (Object[]) null);
-			supportedSizes = (List<Size>) o;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		cameraSize = supportedSizes.get(0);
-		// Find the smallest camera resolution;
-		for (int i = 0; i < supportedSizes.size(); i++) {
-			if (supportedSizes.get(i).width < cameraSize.width) {
-				cameraSize = supportedSizes.get(i);
-			}
-		}
-
-		for (int i = 1; i < supportedSizes.size(); i++) {
-			currentSizeChoice = supportedSizes.get(i);
-			if (((Math.abs(aspectRatio
-					- ((double) cameraSize.width / (double) cameraSize.height))) > Math
-					.abs((aspectRatio - ((double) currentSizeChoice.width / (double) currentSizeChoice.height))))
-					&& (currentSizeChoice.height <= 240)) {
-				cameraSize = currentSizeChoice;
-			}
-		}
-		// Height stays the same, but width needs to be changed according to
-		// the aspect ratio of the camera resolution.
-		w = h * cameraSize.width / cameraSize.height;
-		return w;
-	}
+	//====================================================
+	//Last commented methods
+	
+//	private int preSdkV5(int h) {
+//		int w;
+//		// These needs to be checked. Find a "standard" value for the camera
+//		// resolution and set the display aspect ration accordingly.
+//		// Height stays the same, but width needs to be changed according to
+//		// the aspect ratio of the camera resolution.
+//		w = h * 240 / 160;
+//		cameraSize.width = 240;
+//		cameraSize.height = 160;
+//		return w;
+//	}
+//
+//	private int postSdkV5(Camera.Parameters parameters, int w, int h) {
+//		double aspectRatio = (double) w / (double) h;
+//		Camera.Size currentSizeChoice;
+//		List<Camera.Size> supportedSizes = null;
+//		Method method = null;
+//		try {
+//			method = parameters.getClass().getDeclaredMethod(
+//					"getSupportedPreviewSizes", (Class[]) null);
+//			Object o = method.invoke(parameters, (Object[]) null);
+//			supportedSizes = (List<Size>) o;
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		cameraSize = supportedSizes.get(0);
+//		// Find the smallest camera resolution;
+//		for (int i = 0; i < supportedSizes.size(); i++) {
+//			if (supportedSizes.get(i).width < cameraSize.width) {
+//				cameraSize = supportedSizes.get(i);
+//			}
+//		}
+//
+//		for (int i = 1; i < supportedSizes.size(); i++) {
+//			currentSizeChoice = supportedSizes.get(i);
+//			if (((Math.abs(aspectRatio
+//					- ((double) cameraSize.width / (double) cameraSize.height))) > Math
+//					.abs((aspectRatio - ((double) currentSizeChoice.width / (double) currentSizeChoice.height))))
+//					&& (currentSizeChoice.height <= 240)) {
+//				cameraSize = currentSizeChoice;
+//			}
+//		}
+//		// Height stays the same, but width needs to be changed according to
+//		// the aspect ratio of the camera resolution.
+//		w = h * cameraSize.width / cameraSize.height;
+//		return w;
+//	}
+	
+	//====================================================
 
 	private void tryToLoadCameraSettings() {
 		// Load previously stored calibrations
-		SharedPreferences settings = myTargetActivity.getSharedPreferences(
+		SharedPreferences settings = activity.getSharedPreferences(
 				CALIB_PATH, 0);
 		String fileName = settings.getString("calibration", null);
 		if (fileName != null) {
