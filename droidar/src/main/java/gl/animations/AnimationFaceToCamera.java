@@ -23,7 +23,6 @@ public class AnimationFaceToCamera extends GLAnimation {
 
     /**
      * @param targetCamera
-     * @param targetMesh
      * @param updateDelay         around 0.5f s
      * @param dontChangeXRotation if this is false, the mesh will also change the rotation x
      *                            value, otherwise only the z value to face to the camera
@@ -50,7 +49,6 @@ public class AnimationFaceToCamera extends GLAnimation {
 
     /**
      * @param targetCamera
-     * @param targetMesh
      * @param updateDelay   0.5f
      * @param adjustmentVec
      */
@@ -134,7 +132,7 @@ public class AnimationFaceToCamera extends GLAnimation {
      * @param mesh   MeshComponent to face to camera
      * @param camera GLCamera in which mesh will be faced
      */
-    public void faceMeshToCamera(MeshComponent mesh, GLCamera camera) {
+    public static void faceMeshToCamera(MeshComponent mesh, GLCamera camera) {
         Vec absolutePosition = new Vec();
         absolutePosition.setToZero();
         mesh.getAbsoluteMeshPosition(absolutePosition);
