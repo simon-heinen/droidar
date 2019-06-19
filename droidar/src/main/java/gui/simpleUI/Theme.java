@@ -190,8 +190,8 @@ public class Theme implements EditItem {
          * for more info:
          * https://developer.android.com/reference/android/graphics/Color.html#parseColor(java.lang.String)
          *
-         * @param color hexadecimal/names String color value
-         * @return the calculated argb/rgb value
+         * @param color hexadecimal/names String color value - #RRGGBB/#AARRGGBB or lower case name
+         * @return the calculated rgb/argb value
          */
         public static int toARGB(String color) {
             return android.graphics.Color.parseColor(color);
@@ -215,6 +215,15 @@ public class Theme implements EditItem {
             return c;
         }
 
+        public static Theme.ThemeColors initToColor(String boxColor1, String boxColor2,
+                                                    String shadowColor, String textColor) {
+            int boxColor1Value = toARGB(boxColor1);
+            int boxColor2Value = toARGB(boxColor2);
+            int shadowColorValue = toARGB(shadowColor);
+            int textColorValue = toARGB(textColor);
+            return initToColor(boxColor1Value, boxColor2Value, shadowColorValue, textColorValue);
+        }
+
         public static Theme.ThemeColors initToColor(int boxColor1, int boxColor2,
                                                     int shadowColor, int textColor) {
             Theme.ThemeColors c = new ThemeColors();
@@ -224,22 +233,6 @@ public class Theme implements EditItem {
             c.applyToAllTextColors(textColor);
             c.applyToImportantBackgrounds(colorArray);
             c.applyToAllShadows(shadowColor);
-            return c;
-        }
-
-        public static Theme.ThemeColors initToColor(String boxColor1, String boxColor2,
-                                                    String shadowColor, String textColor) {
-            int boxColor1Value = toARGB(boxColor1);
-            int boxColor2Value = toARGB(boxColor2);
-            int shadowColorValue = toARGB(shadowColor);
-            int textColorValue = toARGB(textColor);
-            Theme.ThemeColors c = new ThemeColors();
-            int[] colorArray = new int[2];
-            colorArray[0] = boxColor1Value;
-            colorArray[1] = boxColor2Value;
-            c.applyToAllTextColors(textColorValue);
-            c.applyToImportantBackgrounds(colorArray);
-            c.applyToAllShadows(shadowColorValue);
             return c;
         }
 
