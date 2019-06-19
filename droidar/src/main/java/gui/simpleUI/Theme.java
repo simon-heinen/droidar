@@ -190,28 +190,16 @@ public class Theme implements EditItem {
          * for more info:
          * https://developer.android.com/reference/android/graphics/Color.html#parseColor(java.lang.String)
          *
-         * @param color hexadecimal String color value - #RRGGBB/#AARRGGBB
-         * @return the calculated rgb/argb value
+         * @param color hexadecimal String color value - 0xAARRGGBB
+         * @return the calculated argb value
          */
-        public static int toARGB(String color) {
-            int result;
-            if (color.length() == 7) {
-                result = toARGB(
-                        DEFAULT_ALPHA,
-                        Integer.valueOf(color.substring(1, 3), 16),
-                        Integer.valueOf(color.substring(3, 5), 16),
-                        Integer.valueOf(color.substring(5, 7), 16)
-                );
-            } else {
-                result = toARGB(
-                        Integer.valueOf(color.substring(1, 3), 16),
-                        Integer.valueOf(color.substring(3, 5), 16),
-                        Integer.valueOf(color.substring(5, 7), 16),
-                        Integer.valueOf(color.substring(7, 9), 16)
-                        );
-
-            }
-            return result;
+        public static int toARGB(int color) {
+            return android.graphics.Color.argb(
+                    (color >> 24) & 0xff,
+                    (color >> 16) & 0xff,
+                    (color >> 8) & 0xff,
+                    (color) & 0xff
+            );
         }
 
         private static int[] initGradientGray() {
@@ -232,17 +220,17 @@ public class Theme implements EditItem {
             return c;
         }
 
-        public static Theme.ThemeColors initToColor(String boxColor1, String boxColor2,
-                                                    String shadowColor, String textColor) {
+        public static Theme.ThemeColors initToHexColor(int boxColor1, int boxColor2,
+                                                       int shadowColor, int textColor) {
             int boxColor1Value = toARGB(boxColor1);
             int boxColor2Value = toARGB(boxColor2);
             int shadowColorValue = toARGB(shadowColor);
             int textColorValue = toARGB(textColor);
-            return initToColor(boxColor1Value, boxColor2Value, shadowColorValue, textColorValue);
+            return initARGBToColor(boxColor1Value, boxColor2Value, shadowColorValue, textColorValue);
         }
 
-        public static Theme.ThemeColors initToColor(int boxColor1, int boxColor2,
-                                                    int shadowColor, int textColor) {
+        public static Theme.ThemeColors initARGBToColor(int boxColor1, int boxColor2,
+                                                        int shadowColor, int textColor) {
             Theme.ThemeColors c = new ThemeColors();
             int[] colorArray = new int[2];
             colorArray[0] = boxColor1;
