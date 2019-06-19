@@ -190,11 +190,28 @@ public class Theme implements EditItem {
          * for more info:
          * https://developer.android.com/reference/android/graphics/Color.html#parseColor(java.lang.String)
          *
-         * @param color hexadecimal/names String color value - #RRGGBB/#AARRGGBB or lower case name
+         * @param color hexadecimal String color value - #RRGGBB/#AARRGGBB
          * @return the calculated rgb/argb value
          */
         public static int toARGB(String color) {
-            return android.graphics.Color.parseColor(color);
+            int result;
+            if (color.length() == 7) {
+                result = toARGB(
+                        DEFAULT_ALPHA,
+                        Integer.valueOf(color.substring(1, 3), 16),
+                        Integer.valueOf(color.substring(3, 5), 16),
+                        Integer.valueOf(color.substring(5, 7), 16)
+                );
+            } else {
+                result = toARGB(
+                        Integer.valueOf(color.substring(1, 3), 16),
+                        Integer.valueOf(color.substring(3, 5), 16),
+                        Integer.valueOf(color.substring(5, 7), 16),
+                        Integer.valueOf(color.substring(7, 9), 16)
+                        );
+
+            }
+            return result;
         }
 
         private static int[] initGradientGray() {
