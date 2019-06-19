@@ -226,10 +226,10 @@ public class Theme implements EditItem {
             int boxColor2Value = toARGB(boxColor2);
             int shadowColorValue = toARGB(shadowColor);
             int textColorValue = toARGB(textColor);
-            return initARGBToColor(boxColor1Value, boxColor2Value, shadowColorValue, textColorValue);
+            return initToARGBColor(boxColor1Value, boxColor2Value, shadowColorValue, textColorValue);
         }
 
-        public static Theme.ThemeColors initARGBToColor(int boxColor1, int boxColor2,
+        public static Theme.ThemeColors initToARGBColor(int boxColor1, int boxColor2,
                                                         int shadowColor, int textColor) {
             Theme.ThemeColors c = new ThemeColors();
             int[] colorArray = new int[2];
