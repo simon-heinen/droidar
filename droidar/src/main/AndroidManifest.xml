@@ -36,11 +36,7 @@
                    <category android:name="android.intent.category.LAUNCHER" />
                </intent-filter>&ndash;&gt;
            </activity>-->
-        <activity
-            android:name="system.ArActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:label="@string/app_name"
-            android:screenOrientation="landscape" />
+        <activity android:name="system.ArActivity" />
         <!-- the error handler will be automatically displayed when an error appears -->
         <activity
             android:name="v2.simpleUi.util.ErrorHandler"
