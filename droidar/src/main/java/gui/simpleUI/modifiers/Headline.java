@@ -36,10 +36,24 @@ public class Headline extends AbstractModifier {
 		myColor = backgroundColor;
 	}
 
+	public Headline(Bitmap icon, String text, float manualTextSize, int backgroundColor, int textColor) {
+		myIcon = icon;
+		myText = text;
+		myTextSize = manualTextSize;
+		myColor = backgroundColor;
+		myTextColor = textColor;
+	}
+
+	public Headline(Bitmap icon, String text, float manualTextSize, int textColor) {
+		myIcon = icon;
+		myText = text;
+		myTextSize = manualTextSize;
+		myTextColor = textColor;
+	}
+
 	public Headline(int iconId, String text) {
 		myIconId = iconId;
 		myText = text;
-		myColor = -1;
 	}
 
 	public Headline(int iconId, String text, float manualTextSize) {
