@@ -1,0 +1,38 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_root"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/DialogText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout01"
+        android:layout_width="fill_parent"
+        android:layout_height="40dip">
+
+        <EditText
+            android:id="@+id/DialogInput"
+            android:layout_width="200dip"
+            android:layout_height="40dip"
+            android:lines="1"
+            android:text=""/>
+
+        <Button
+            android:id="@+id/DialogButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dip"
+            android:layout_toRightOf="@+id/DialogInput"
+            android:text=""/>
+    </RelativeLayout>
+
+
+    <CheckBox
+        android:id="@+id/IsDefaultCheckBox"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

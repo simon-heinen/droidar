@@ -123,7 +123,7 @@ public class SensorTestSetup extends Setup {
 
 	@Override
 	public void _c_addActionsToEvents(EventManager eventManager,
-			CustomGLSurfaceView arView, SystemUpdater updater) {
+			CustomGLSurfaceView arView, SystemUpdater worldUpdater) {
 		arView.addOnTouchMoveAction(new ActionBufferedCameraAR(camera));
 		eventManager.addOnOrientationChangedAction(rotActionB1);
 		eventManager.addOnTrackballAction(new ActionMoveCameraBuffered(camera,

@@ -125,8 +125,8 @@ public class LightningSetup extends DefaultARSetup {
 
 	@Override
 	public void _c_addActionsToEvents(EventManager eventManager,
-			CustomGLSurfaceView arView, SystemUpdater updater) {
-		super._c_addActionsToEvents(eventManager, arView, updater);
+			CustomGLSurfaceView arView, SystemUpdater worldUpdater) {
+		super._c_addActionsToEvents(eventManager, arView, worldUpdater);
 
 		// clear some inputs set in default methods
 		eventManager.getOnLocationChangedAction().clear();

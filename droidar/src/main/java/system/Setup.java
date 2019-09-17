@@ -472,8 +472,8 @@ public abstract class Setup {
 				Display display = ((WindowManager) activity
 						.getSystemService(Activity.WINDOW_SERVICE))
 						.getDefaultDisplay();
-				screenOrientation = (Integer) display.getClass()
-						.getMethod("getRotation", (Class<?>) null).invoke(display, (Object) null);
+				screenOrientation = display.getRotation();
+//						(Integer) display.getClass().getMethod("getRotation", (Class<?>) null).invoke(display, (Object) null);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -592,7 +592,7 @@ public abstract class Setup {
 	 * @param worldUpdater
 	 */
 	public abstract void _c_addActionsToEvents(EventManager eventManager,
-			CustomGLSurfaceView arView, SystemUpdater updater);
+			CustomGLSurfaceView arView, SystemUpdater worldUpdater);
 
 	/**
 	 * All elements (normally that should only be {@link World}s) which should

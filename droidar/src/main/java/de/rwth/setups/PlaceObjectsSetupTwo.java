@@ -67,10 +67,10 @@ public class PlaceObjectsSetupTwo extends Setup {
 
 	@Override
 	public void _c_addActionsToEvents(EventManager eventManager,
-			CustomGLSurfaceView arView, SystemUpdater updater) {
+			CustomGLSurfaceView arView, SystemUpdater worldUpdater) {
 		arView.addOnTouchMoveAction(new ActionBufferedCameraAR(camera));
 		Action rot = new ActionRotateCameraBuffered(camera);
-		updater.addObjectToUpdateCycle(rot);
+		worldUpdater.addObjectToUpdateCycle(rot);
 		eventManager.addOnOrientationChangedAction(rot);
 
 		eventManager.addOnTrackballAction(new ActionMoveCameraBuffered(camera,

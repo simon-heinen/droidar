@@ -84,13 +84,13 @@ public class CollectItemsSetup extends Setup {
 
 	@Override
 	public void _c_addActionsToEvents(EventManager eventManager,
-			CustomGLSurfaceView arView, SystemUpdater updater) {
+			CustomGLSurfaceView arView, SystemUpdater worldUpdater) {
 		ActionMoveCameraBuffered move = new ActionMoveCameraBuffered(camera, 5,
 				25);
 		arView.addOnTouchMoveAction(move);
 		eventManager.addOnTrackballAction(move);
 		Action rot = new ActionRotateCameraBuffered(camera);
-		updater.addObjectToUpdateCycle(rot);
+		worldUpdater.addObjectToUpdateCycle(rot);
 		eventManager.addOnOrientationChangedAction(rot);
 		eventManager.addOnLocationChangedAction(new ActionCalcRelativePos(
 				world, camera));

@@ -225,15 +225,15 @@ public class StaticDemoSetup extends Setup {
 
 	@Override
 	public void _c_addActionsToEvents(EventManager eventManager,
-			CustomGLSurfaceView arView, SystemUpdater updater) {
+			CustomGLSurfaceView arView, SystemUpdater worldUpdater) {
 
 		ActionWASDMovement wasdAction = new ActionWASDMovement(camera, 25f,
 				50f, 20f);
 		ActionRotateCameraBuffered rotateAction = new ActionRotateCameraBuffered(
 				camera);
 
-		updater.addObjectToUpdateCycle(wasdAction);
-		updater.addObjectToUpdateCycle(rotateAction);
+		worldUpdater.addObjectToUpdateCycle(wasdAction);
+		worldUpdater.addObjectToUpdateCycle(rotateAction);
 
 		arView.addOnTouchMoveAction(wasdAction);
 		eventManager.addOnOrientationChangedAction(rotateAction);
