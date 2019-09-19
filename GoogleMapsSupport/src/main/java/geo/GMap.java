@@ -10,11 +10,12 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapView;
-import com.google.android.maps.MyLocationOverlay;
-import com.google.android.maps.Overlay;
+//import com.google.android.maps.GeoPoint;
+//import com.google.android.maps.MapActivity;
+//import com.google.android.maps.MapView;
+//import com.google.android.maps.MyLocationOverlay;
+//import com.google.android.maps.Overlay;
+
 import commands.Command;
 import de.rwth.setups.GoogleMapsKey;
 
@@ -244,7 +245,7 @@ public class GMap extends MapView implements TouchEventInterface {
 	}
 
 	public static GeoPoint toGeoPoint(GeoObj x) {
-		return new GeoPoint((int) (x.getLatitude() * 1E6),
+		return new Barcode.GeoPoint((int) (x.getLatitude() * 1E6),
 				(int) (x.getLongitude() * 1E6));
 	}
 
@@ -253,8 +254,7 @@ public class GMap extends MapView implements TouchEventInterface {
 				point.getLongitudeE6() / 1E6);
 	}
 
-	public static GMap newDefaultGMap(MapActivity mapActivity,
-			String pc1debugkey) {
+	public static GMap newDefaultGMap(MapActivity mapActivity, String pc1debugkey) {
 		final GMap map = new GMap(mapActivity, GoogleMapsKey.pc1DebugKey);
 		final MyLocationOverlay o = new MyLocationOverlay(mapActivity, map);
 		o.enableCompass();

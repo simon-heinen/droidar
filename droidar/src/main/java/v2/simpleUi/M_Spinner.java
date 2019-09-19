@@ -65,10 +65,10 @@ public abstract class M_Spinner implements ModifierInterface {
 
 		container.setGravity(Gravity.CENTER_VERTICAL);
 		LayoutParams p = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT,
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,
 				weightOfDescription);
 		LinearLayout.LayoutParams p2 = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT,
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,
 				weightOfSpinner);
 
 		TextView nameText = new TextView(context);

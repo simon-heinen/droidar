@@ -26,10 +26,9 @@
             android:id="@+id/DialogButton"
             android:layout_width="wrap_content"
             android:layout_height="40dip"
-            android:layout_toRightOf="@+id/DialogInput"
+            android:layout_toEndOf="@+id/DialogInput"
             android:text=""/>
     </RelativeLayout>
-
 
     <CheckBox
         android:id="@+id/IsDefaultCheckBox"

@@ -43,10 +43,10 @@ public abstract class M_Double implements ModifierInterface, UiDecoratable {
 		l.setGravity(Gravity.CENTER_VERTICAL);
 
 		LayoutParams p = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT,
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,
 				weightOfDescription);
 		LayoutParams p2 = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT,
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,
 				weightOfInputText);
 
 		TextView t = new TextView(context);

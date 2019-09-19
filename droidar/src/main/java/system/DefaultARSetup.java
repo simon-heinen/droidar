@@ -16,7 +16,7 @@ import actions.ActionMoveCameraBuffered;
 import actions.ActionRotateCameraBuffered;
 import actions.ActionWASDMovement;
 import actions.ActionWaitForAccuracy;
-import android.R;
+//import android.R;
 import android.app.Activity;
 import android.location.Location;
 
@@ -135,7 +135,7 @@ public abstract class DefaultARSetup extends Setup {
 
 		guiSetup.addViewToTop(minAccuracyAction.getView());
 
-		guiSetup.addImangeButtonToRightView(R.drawable.arrow_up_float,
+		guiSetup.addImangeButtonToRightView(android.R.drawable.arrow_up_float,
 				new Command() {
 					@Override
 					public boolean execute() {
@@ -143,7 +143,7 @@ public abstract class DefaultARSetup extends Setup {
 						return false;
 					}
 				});
-		guiSetup.addImangeButtonToRightView(R.drawable.arrow_down_float,
+		guiSetup.addImangeButtonToRightView(android.R.drawable.arrow_down_float,
 				new Command() {
 					@Override
 					public boolean execute() {

@@ -14,7 +14,7 @@ import v2.simpleUi.M_Checkbox;
 import v2.simpleUi.M_Container;
 import v2.simpleUi.M_InfoText;
 import v2.simpleUi.M_TextInput;
-import android.R;
+//import android.R;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -316,7 +316,7 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 		} else {
 			c.add(new M_Caption("The application crashed"));
 		}
-		c.add(new M_InfoText(R.drawable.ic_dialog_alert,
+		c.add(new M_InfoText(android.R.drawable.ic_dialog_alert,
 				"We are sorry the application had a problem "
 						+ "with your device. \n\n You can send "
 						+ "the error to us so that we can fix this bug."));
@@ -450,8 +450,8 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 			// has to be an ArrayList
 			ArrayList<Uri> uris = new ArrayList<Uri>();
 			// convert from paths to Android friendly Parcelable Uri's
-			for (int i = 0; i < savedErrorFilePaths.length; i++) {
-				File fileIn = new File(savedErrorFilePaths[i]);
+			for (String savedErrorFilePath : savedErrorFilePaths) {
+				File fileIn = new File(savedErrorFilePath);
 				Uri u = Uri.fromFile(fileIn);
 				if (fileIn.exists()) {
 					uris.add(u);
@@ -473,12 +473,12 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 			s += "\n APP Version Name: " + pInfo.versionName;
 			s += "\n APP Version Code: " + pInfo.versionCode;
 			s += "\n";
-		} catch (NameNotFoundException e) {
+		} catch (NameNotFoundException ignored) {
 		}
 
 		s += "\n OS Version: " + System.getProperty("os.version") + " ("
 				+ android.os.Build.VERSION.INCREMENTAL + ")";
-		s += "\n OS API Level: " + android.os.Build.VERSION.SDK;
+		s += "\n OS API Level: " + android.os.Build.VERSION.SDK_INT;
 		s += "\n Device: " + android.os.Build.DEVICE;
 		s += "\n Model (and Product): " + android.os.Build.MODEL + " ("
 				+ android.os.Build.PRODUCT + ")";
@@ -505,10 +505,12 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 		Properties p = System.getProperties();
 		Enumeration keys = p.keys();
 		String key = "";
+		StringBuilder sBuilder = new StringBuilder(s);
 		while (keys.hasMoreElements()) {
 			key = (String) keys.nextElement();
-			s += "\n > " + key + " = " + (String) p.get(key);
+			sBuilder.append("\n > ").append(key).append(" = ").append((String) p.get(key));
 		}
+		s = sBuilder.toString();
 
 		return s;
 	}

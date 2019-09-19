@@ -7,9 +7,9 @@ import gl.scenegraph.MeshComponent;
 
 public class SimpleMeshPlacer extends BasicMarker {
 
-	protected MeshComponent myTargetMesh;
+	private MeshComponent myTargetMesh;
 
-	public SimpleMeshPlacer(int id, MeshComponent mesh, GLCamera camera) {
+	SimpleMeshPlacer(int id, MeshComponent mesh, GLCamera camera) {
 		super(id, camera);
 		myTargetMesh = mesh;
 	}

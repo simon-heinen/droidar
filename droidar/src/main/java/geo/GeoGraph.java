@@ -250,29 +250,30 @@ public class GeoGraph extends AbstractObj implements Container<GeoObj> {
 
 	private void debugShowIntArray(String string, int[] dist) {
 		Log.d("GeoGraph", string);
-		String line = "   = ";
-		for (int i = 0; i < dist.length; i++) {
-			if (dist[i] == Integer.MAX_VALUE) {
-				line += "inf, ";
-			} else {
-				line += dist[i] + ", ";
-			}
-		}
-		Log.d("GeoGraph", line);
+		StringBuilder line = new StringBuilder("   = ");
+        for (int value : dist) {
+            if (value == Integer.MAX_VALUE) {
+                line.append("inf, ");
+            } else {
+                line.append(value).append(", ");
+            }
+        }
+		Log.d("GeoGraph", line.toString());
 	}
 
 	private void debugShowDist(int[][] dist) {
 		Log.d("GeoGraph", "Distance Matrix:");
 		String line = "";
 		for (int i = 0; i < dist.length; i++) {
-			line = "   " + i + ": ";
+			StringBuilder lineBuilder = new StringBuilder("   " + i + ": ");
 			for (int j = 0; j < dist[i].length; j++) {
 				if (dist[i][j] != Integer.MAX_VALUE) {
-					line += dist[i][j] + ",";
+					lineBuilder.append(dist[i][j]).append(",");
 				} else {
-					line += "inf ,";
+					lineBuilder.append("inf ,");
 				}
 			}
+			line = lineBuilder.toString();
 			Log.d("GeoGraph", line);
 		}
 	}

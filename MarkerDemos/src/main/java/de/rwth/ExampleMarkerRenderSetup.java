@@ -20,6 +20,7 @@ import worldData.Obj;
 import worldData.SystemUpdater;
 import worldData.World;
 import actions.ActionBufferedCameraAR;
+
 import android.app.Activity;
 
 import commands.system.CommandPlaySound;
@@ -47,7 +48,7 @@ public class ExampleMarkerRenderSetup extends MarkerDetectionSetup {
 
 	@Override
 	public void _b_addWorldsToRenderer(GL1Renderer renderer,
-			GLFactory objectFactory, GeoObj currentPosition) {
+									   GLFactory objectFactory, GeoObj currentPosition) {
 		renderer.addRenderElement(world);
 		Obj o = new Obj();
 		o.setComp(AndroidMeshData.getAndroidMesh());
@@ -104,7 +105,7 @@ public class ExampleMarkerRenderSetup extends MarkerDetectionSetup {
 
 	@Override
 	public void _c_addActionsToEvents(EventManager eventManager,
-			CustomGLSurfaceView arView, SystemUpdater worldUpdater) {
+									  CustomGLSurfaceView arView, SystemUpdater worldUpdater) {
 		arView.addOnTouchMoveListener(new ActionBufferedCameraAR(camera));
 
 	}

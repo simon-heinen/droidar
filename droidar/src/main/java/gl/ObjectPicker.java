@@ -53,7 +53,7 @@ public class ObjectPicker {
 		pixelBuffer.order(ByteOrder.nativeOrder());
 		gl.glReadPixels(x, y, 1, 1, GL10.GL_RGBA, GL10.GL_UNSIGNED_BYTE,
 				pixelBuffer);
-		byte b[] = new byte[4];
+		byte[] b = new byte[4];
 		pixelBuffer.get(b);
 		findObjectForValue(b);
 	}

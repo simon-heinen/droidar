@@ -6,9 +6,8 @@ import gl.MarkerObject;
 /**
  * The camera marker will set the world coordinates to the center of a marker
  * and move the camera around it
- * 
+ *
  * @author Spobo
- * 
  */
 public class CameraMarker implements MarkerObject {
 
@@ -18,8 +17,8 @@ public class CameraMarker implements MarkerObject {
 	/**
 	 * The camera marker will set the world coordinates to the center of a
 	 * marker and move the camera around it
-	 * 
-	 * @param id int
+	 *
+	 * @param id     int
 	 * @param camera GLCamera
 	 */
 	public CameraMarker(int id, GLCamera camera) {

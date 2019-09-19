@@ -124,9 +124,9 @@ public class LightSource extends MeshComponent {
 
 	// default material values which should be overwritten by each mesh later:
 	private float x = 0.3f;
-	private float materialAmbient[] = new float[] { x, x, x, 1 };
-	private float materialDiffuse[] = new float[] { x, x, x, 1 };
-	private float materialSpecular[] = new float[] { x, x, x, 1 };
+	private float[] materialAmbient = new float[] { x, x, x, 1 };
+	private float[] materialDiffuse = new float[] { x, x, x, 1 };
+	private float[] materialSpecular = new float[] { x, x, x, 1 };
 
 	/**
 	 * TODO move this somewhere else, if material is used it should be set to

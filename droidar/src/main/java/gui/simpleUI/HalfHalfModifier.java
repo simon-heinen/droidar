@@ -37,7 +37,7 @@ public class HalfHalfModifier extends AbstractModifier {
 		View left = myLeft.getView(context);
 		View right = myRight.getView(context);
 		LayoutParams params = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1);
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1);
 		left.setLayoutParams(params);
 		right.setLayoutParams(params);
 		l.addView(left);

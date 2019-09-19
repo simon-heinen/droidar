@@ -42,7 +42,7 @@ public class StepManager implements SensorEventListener {
 
 	public interface OnStepListener {
 
-		public void onStep(double compassAngle, double steplength);
+		void onStep(double compassAngle, double steplength);
 	}
 
 	private void registerSensors(Context context) {

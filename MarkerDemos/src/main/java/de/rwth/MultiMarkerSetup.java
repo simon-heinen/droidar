@@ -21,6 +21,7 @@ import worldData.World;
 import actions.Action;
 import actions.ActionMoveCameraBuffered;
 import actions.ActionRotateCameraBuffered;
+
 import android.app.Activity;
 
 import commands.Command;
@@ -57,7 +58,7 @@ public class MultiMarkerSetup extends MarkerDetectionSetup {
 
 			@Override
 			public void onUnrecognizedMarkerDetected(int markerCode,
-					float[] mat, int startIdx, int endIdx, int rotationValue) {
+													 float[] mat, int startIdx, int endIdx, int rotationValue) {
 				System.out.println("unrecognized markerCode=" + markerCode);
 			}
 		};
@@ -103,8 +104,7 @@ public class MultiMarkerSetup extends MarkerDetectionSetup {
 	}
 
 	@Override
-	public void _b_addWorldsToRenderer(GL1Renderer renderer,
-			GLFactory objectFactory, GeoObj currentPosition) {
+	public void _b_addWorldsToRenderer(GL1Renderer renderer, GLFactory objectFactory, GeoObj currentPosition) {
 		renderer.addRenderElement(world);
 		Obj o = new Obj();
 		o.setComp(mesh1);
@@ -119,8 +119,7 @@ public class MultiMarkerSetup extends MarkerDetectionSetup {
 	}
 
 	@Override
-	public void _c_addActionsToEvents(EventManager eventManager,
-			CustomGLSurfaceView arView, SystemUpdater worldUpdater) {
+	public void _c_addActionsToEvents(EventManager eventManager, CustomGLSurfaceView arView, SystemUpdater worldUpdater) {
 		arView.addOnTouchMoveListener(new ActionMoveCameraBuffered(camera, 5,
 				25));
 		Action rot = new ActionRotateCameraBuffered(camera);
@@ -134,7 +133,6 @@ public class MultiMarkerSetup extends MarkerDetectionSetup {
 	@Override
 	public void _d_addElementsToUpdateThread(SystemUpdater updater) {
 		updater.addObjectToUpdateCycle(world);
-
 	}
 
 	@Override

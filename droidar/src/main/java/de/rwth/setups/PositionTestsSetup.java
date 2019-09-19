@@ -16,7 +16,7 @@ import worldData.World;
 import actions.ActionCalcRelativePos;
 import actions.ActionMoveCameraBuffered;
 import actions.ActionRotateCameraBuffered;
-import android.R;
+//import android.R;
 import android.app.Activity;
 
 import commands.Command;
@@ -90,7 +90,7 @@ public class PositionTestsSetup extends Setup {
 	public void _e2_addElementsToGuiSetup(GuiSetup guiSetup, Activity activity) {
 		guiSetup.setRightViewAllignBottom();
 
-		guiSetup.addImangeButtonToRightView(R.drawable.arrow_up_float,
+		guiSetup.addImangeButtonToRightView(android.R.drawable.arrow_up_float,
 				new Command() {
 					@Override
 					public boolean execute() {
@@ -98,7 +98,7 @@ public class PositionTestsSetup extends Setup {
 						return false;
 					}
 				});
-		guiSetup.addImangeButtonToRightView(R.drawable.arrow_down_float,
+		guiSetup.addImangeButtonToRightView(android.R.drawable.arrow_down_float,
 				new Command() {
 					@Override
 					public boolean execute() {

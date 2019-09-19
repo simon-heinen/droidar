@@ -98,9 +98,9 @@ public abstract class GameElementList<T extends GameElement> implements
 	@Override
 	public boolean insert(int pos, T item) {
 		return myList.insert(pos, item);
-	};
+	}
 
-	public void generateEditGUI(ModifierGroup s) {
+    public void generateEditGUI(ModifierGroup s) {
 		for (int i = 0; i < myList.myLength; i++) {
 			myList.get(i).generateEditGUI(s);
 		}

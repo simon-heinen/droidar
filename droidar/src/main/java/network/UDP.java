@@ -13,8 +13,8 @@ import util.Log;
 
 public class UDP {
 
-	public static interface ReceiveListener {
-		public void onReceive(String message);
+	public interface ReceiveListener {
+		void onReceive(String message);
 	}
 
 	public static class Server implements Runnable {
@@ -112,8 +112,6 @@ public class UDP {
 				mySocket.send(new DatagramPacket(message.getBytes(), message
 						.length(), local, myServerPort));
 				return true;
-			} catch (UnknownHostException e) {
-				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -140,7 +138,7 @@ public class UDP {
 						.getInetAddresses(); ipAddresses.hasMoreElements();) {
 					InetAddress inetAddress = ipAddresses.nextElement();
 					if (!inetAddress.isLoopbackAddress()) {
-						return inetAddress.getHostAddress().toString();
+						return inetAddress.getHostAddress();
 					}
 				}
 			}

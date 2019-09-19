@@ -14,6 +14,7 @@ import java.util.zip.GZIPInputStream;
 
 import nativeLib.NativeLib;
 
+import nativeLib.notNativeLib;
 import preview.Preview;
 import preview.PreviewPost2_0;
 import preview.PreviewPre2_0;
@@ -37,8 +38,7 @@ import android.view.WindowManager;
 public abstract class MarkerDetectionSetup extends Setup {
 
 	// /**
-	// * This is the ID for the MarkerObject that defines which object to
-	// display
+	// * This is the ID for the MarkerObject that defines which object to display
 	// * for all markers if no specific object for a marker was defined.
 	// */
 	// public final static int UNDIFINED_MARKER_OBJECT = -1;
@@ -52,7 +52,7 @@ public abstract class MarkerDetectionSetup extends Setup {
 
 	// private ProgressDialog pd;
 	// public int MAX_CALIB_FRAMES;
-	private NativeLib nativeLib = new NativeLib();
+	private notNativeLib nativeLib = new notNativeLib();
 	private CameraCalibration calib = null;
 	private Camera.Size cameraSize;
 	private LayoutParams optimalLayoutParams;
@@ -61,11 +61,10 @@ public abstract class MarkerDetectionSetup extends Setup {
 	public void initializeCamera() {
 
 		MarkerObjectMap markerObjectMap = new MarkerObjectMap();
-		DisplayMetrics displayMetrics = myTargetActivity.getResources()
-				.getDisplayMetrics();
+		DisplayMetrics displayMetrics = myTargetActivity.getResources().getDisplayMetrics();
 		int weight = displayMetrics.widthPixels;
 		int height = displayMetrics.heightPixels;
-		int apiLevel = Integer.parseInt(android.os.Build.VERSION.SDK);
+		int apiLevel = /*Integer.parseInt*/(android.os.Build.VERSION.SDK_INT);
 
 		Camera mCamera = Camera.open();
 		Camera.Parameters parameters = mCamera.getParameters();
@@ -85,16 +84,14 @@ public abstract class MarkerDetectionSetup extends Setup {
 		// initialize native code.
 		int[] constants = new int[2];
 //TODO		nativeLib.initThread(constants, calib.cameraMatrix,	calib.distortionMatrix);
-
+		notNativeLib.initThread(constants, calib.cameraMatrix, calib.distortionMatrix);
 		myThread = new DetectionThread(nativeLib, myGLSurfaceView,
 				markerObjectMap, _a2_getUnrecognizedMarkerListener());
 		if (apiLevel <= 5) {
-			cameraPreview = new PreviewPre2_0(myTargetActivity, myThread,
-					cameraSize);
+			cameraPreview = new PreviewPre2_0(myTargetActivity, myThread, cameraSize);
 			Log.d("AR", "API Level: " + apiLevel + " Created Preview Pre2.1");
 		} else {
-			cameraPreview = new PreviewPost2_0(myTargetActivity, myThread,
-					cameraSize);
+			cameraPreview = new PreviewPost2_0(myTargetActivity, myThread, cameraSize);
 			Log.d("AR", "API Level: " + apiLevel + " Created Preview Post2.1");
 		}
 
@@ -148,10 +145,7 @@ public abstract class MarkerDetectionSetup extends Setup {
 
 		for (int i = 1; i < supportedSizes.size(); i++) {
 			currentSizeChoice = supportedSizes.get(i);
-			if (((Math.abs(aspectRatio
-					- ((double) cameraSize.width / (double) cameraSize.height))) > Math
-					.abs((aspectRatio - ((double) currentSizeChoice.width / (double) currentSizeChoice.height))))
-					&& (currentSizeChoice.height <= 240)) {
+			if (((Math.abs(aspectRatio - ((double) cameraSize.width / (double) cameraSize.height))) > Math.abs((aspectRatio - ((double) currentSizeChoice.width / (double) currentSizeChoice.height)))) && (currentSizeChoice.height <= 240)) {
 				cameraSize = currentSizeChoice;
 			}
 		}
@@ -163,8 +157,7 @@ public abstract class MarkerDetectionSetup extends Setup {
 
 	private void tryToLoadCameraSettings() {
 		// Load previously stored calibrations
-		SharedPreferences settings = myTargetActivity.getSharedPreferences(
-				CALIB_PATH, 0);
+		SharedPreferences settings = myTargetActivity.getSharedPreferences(CALIB_PATH, 0);
 		String fileName = settings.getString("calibration", null);
 		if (fileName != null) {
 			try {
@@ -173,13 +166,11 @@ public abstract class MarkerDetectionSetup extends Setup {
 				Log.d("AR", "using old calibration");
 			} catch (Exception e) {
 				Log.d("AR", "default value, file is empty");
-				calib = CameraCalibration.defaultCalib(cameraSize.width,
-						cameraSize.height);
+				calib = CameraCalibration.defaultCalib(cameraSize.width, cameraSize.height);
 			}
 		} else {
 			Log.d("AR", "default value, file not found");
-			calib = CameraCalibration.defaultCalib(cameraSize.width,
-					cameraSize.height);
+			calib = CameraCalibration.defaultCalib(cameraSize.width, cameraSize.height);
 		}
 	}
 
@@ -198,8 +189,7 @@ public abstract class MarkerDetectionSetup extends Setup {
 
 	public abstract UnrecognizedMarkerListener _a2_getUnrecognizedMarkerListener();
 
-	public abstract void _a3_registerMarkerObjects(
-			MarkerObjectMap markerObjectMap);
+	public abstract void _a3_registerMarkerObjects(MarkerObjectMap markerObjectMap);
 
 	@Override
 	public void onDestroy(Activity a) {

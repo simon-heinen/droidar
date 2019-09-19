@@ -27,7 +27,7 @@ public abstract class M_ImageGallery implements ModifierInterface,
 	@Override
 	public View getView(final Context context) {
 		LayoutParams p = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1);
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1);
 
 		LinearLayout l = new LinearLayout(context);
 		l.setPadding(DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING,

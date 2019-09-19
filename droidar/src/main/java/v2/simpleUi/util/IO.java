@@ -69,7 +69,7 @@ public class IO {
 			String line = null;
 
 			while ((line = reader.readLine()) != null) {
-				sb.append(line + "\n");
+				sb.append(line).append("\n");
 			}
 			stream.close();
 			return sb.toString();
@@ -280,7 +280,7 @@ public class IO {
 				e = context.getSharedPreferences(mySettingsName, mode).edit();
 			}
 			e.putString(key, value);
-			e.commit();
+			e.apply();
 		}
 
 		public void storeBool(String key, boolean value) {
@@ -288,7 +288,7 @@ public class IO {
 				e = context.getSharedPreferences(mySettingsName, mode).edit();
 			}
 			e.putBoolean(key, value);
-			e.commit();
+			e.apply();
 		}
 
 		public void storeInt(String key, int value) {
@@ -296,7 +296,7 @@ public class IO {
 				e = context.getSharedPreferences(mySettingsName, mode).edit();
 			}
 			e.putInt(key, value);
-			e.commit();
+			e.apply();
 		}
 	}
 
@@ -363,9 +363,9 @@ public class IO {
 			}
 
 			String[] children = sourceLocation.list();
-			for (int i = 0; i < children.length; i++) {
-				copy(new File(sourceLocation, children[i]), new File(
-						targetLocation, children[i]));
+			for (String child : children) {
+				copy(new File(sourceLocation, child), new File(
+						targetLocation, child));
 			}
 		} else {
 			// make sure the directory we plan to store the recording in exists

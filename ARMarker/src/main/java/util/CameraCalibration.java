@@ -8,10 +8,7 @@ public class CameraCalibration implements Serializable {
 	public double[] cameraMatrix;
 	public double[] distortionMatrix;
 	
-	
-	public CameraCalibration() {
-		
-	}
+	private CameraCalibration() {}
 	
 	public static CameraCalibration defaultCalib(int w, int h){
 		CameraCalibration defaultCalib = new CameraCalibration();

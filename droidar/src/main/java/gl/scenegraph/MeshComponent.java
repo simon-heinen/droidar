@@ -396,6 +396,7 @@ public abstract class MeshComponent implements RenderableEntity,
 
 	@Override
 	public MeshComponent clone() throws CloneNotSupportedException {
+		MeshComponent meshComponent = (MeshComponent) super.clone();
 		Log.e("", "MeshComponent.clone() subclass missed, add it there");
 		return null;
 	}

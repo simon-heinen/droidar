@@ -97,7 +97,7 @@ public class GraphCreationSetup extends Setup {
 			public boolean execute() {
 				GeoObj newWaypoint = newWaypoint();
 				String waypointName = editText.getText().toString();
-				if (waypointName != "") {
+				if (!waypointName.equals("")) {
 					newWaypoint.getInfoObject().setShortDescr(waypointName);
 					editText.setText("");
 				}
@@ -112,7 +112,7 @@ public class GraphCreationSetup extends Setup {
 			public boolean execute() {
 				GeoObj newWaypoint = newWaypoint();
 				String waypointName = editText.getText().toString();
-				if (waypointName != "") {
+				if (!waypointName.equals("")) {
 					newWaypoint.getInfoObject().setShortDescr(waypointName);
 					editText.setText("");
 				}

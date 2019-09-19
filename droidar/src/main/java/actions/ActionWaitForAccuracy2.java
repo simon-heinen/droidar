@@ -116,7 +116,7 @@ public abstract class ActionWaitForAccuracy2 extends Action {
 			public void run() {
 				try {
 					Thread.sleep(5000);
-				} catch (InterruptedException e) {
+				} catch (InterruptedException ignored) {
 				}
 				EventManager.getInstance().registerLocationUpdates();
 				onGPSActivatedEvent();

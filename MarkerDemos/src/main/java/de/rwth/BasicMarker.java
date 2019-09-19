@@ -1,7 +1,9 @@
 package de.rwth;
 
 import util.Vec;
+
 import android.opengl.Matrix;
+
 import gl.GLCamera;
 import gl.MarkerObject;
 import gl.scenegraph.MeshComponent;
@@ -9,11 +11,11 @@ import gl.scenegraph.MeshComponent;
 public abstract class BasicMarker implements MarkerObject {
 
 	private float[] invertedCameraMatrix = new float[16];
-	private float[] resultPosVec = { 0, 0, 0, 1 };
+	private float[] resultPosVec = {0, 0, 0, 1};
 	private float[] antiCameraMarkerRotMatrix = new float[16];
 
-	protected GLCamera myCamera;
-	protected int myId;
+	private GLCamera myCamera;
+	private int myId;
 
 	public BasicMarker(int id, GLCamera camera) {
 		myCamera = camera;
@@ -26,14 +28,13 @@ public abstract class BasicMarker implements MarkerObject {
 	}
 
 	@Override
-	public void OnMarkerPositionRecognized(float[] markerRotMatrix,
-			int startOffset, int end) {
+	public void OnMarkerPositionRecognized(float[] markerRotMatrix, int startOffset, int end) {
 
 		Matrix.invertM(invertedCameraMatrix, 0, myCamera.getRotationMatrix(), 0);
 
-		float[] markerCenterPosVec = { markerRotMatrix[startOffset + 12],
+		float[] markerCenterPosVec = {markerRotMatrix[startOffset + 12],
 				markerRotMatrix[startOffset + 13],
-				markerRotMatrix[startOffset + 14], 1 };
+				markerRotMatrix[startOffset + 14], 1};
 		Matrix.multiplyMV(resultPosVec, 0, invertedCameraMatrix, 0,
 				markerCenterPosVec, 0);
 
@@ -56,7 +57,7 @@ public abstract class BasicMarker implements MarkerObject {
 
 		/*
 		 * alternative method which does not work for now:
-		 * 
+		 *
 		 * its not so clear to me if it would be better to extract the rotation
 		 * angles and store them directly in the myRotation field. now its still
 		 * possible to rotate the mesh in addition to the rotation by the marker

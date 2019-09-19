@@ -73,7 +73,7 @@ public class EventManager implements LocationListener, SensorEventListener {
 	 * @param newInstance
 	 *            pass a subclass of {@link EventManager} here
 	 */
-	public static final void initInstance(Context c, EventManager newInstance) {
+	public static void initInstance(Context c, EventManager newInstance) {
 		isTabletDevice = deviceHasLargeScreenAndOrientationFlipped(c);
 		initInstance(newInstance);
 	}

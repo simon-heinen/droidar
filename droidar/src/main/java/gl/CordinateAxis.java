@@ -29,9 +29,9 @@ public class CordinateAxis {
 	private static void initIt() {
 		init = true;
 		// load the 3 axis and their colors:
-		float vertices[] = { 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2 };
-		float colors[] = { 0, 0, 0, 0.5f, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1 };
-		byte indices[] = { 0, 1, 0, 2, 0, 3 };
+		float[] vertices = { 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2 };
+		float[] colors = { 0, 0, 0, 0.5f, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1 };
+		byte[] indices = { 0, 1, 0, 2, 0, 3 };
 
 		ByteBuffer vbb;
 		vbb = ByteBuffer.allocateDirect(vertices.length * 4);

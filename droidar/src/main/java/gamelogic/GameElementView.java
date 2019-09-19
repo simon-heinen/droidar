@@ -201,7 +201,7 @@ public class GameElementView extends SimpleCustomView implements Entity {
 			GameAction a = (GameAction) parent;
 			float prog = a.getCooldownProgress();
 			float max = a.getCooldownTime();
-			if (prog != Float.NaN && max != Float.NaN) {
+			if (!Float.isNaN(prog) && !Float.isNaN(max)) {
 				if (prog + timeDelta < max) {
 					a.setCooldownProgress(prog + timeDelta);
 					this.setLoadingAngle((prog + timeDelta) / max * 360);

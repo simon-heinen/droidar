@@ -79,10 +79,10 @@ public abstract class M_TextInput implements ModifierInterface, UiDecoratable {
 
 		container.setGravity(Gravity.CENTER_VERTICAL);
 		LayoutParams p = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT,
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,
 				weightOfDescription);
 		LinearLayout.LayoutParams p2 = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT,
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,
 				weightOfInputText);
 		if (isLongText()) {
 			int m = 8;

@@ -13,6 +13,6 @@ public interface Updateable {
 	 * @return false if the element does not have to be updated anymore and can
 	 *         be removed from the parent
 	 */
-	public boolean update(float timeDelta, Updateable parent);
+    boolean update(float timeDelta, Updateable parent);
 
 }

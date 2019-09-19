@@ -67,7 +67,7 @@ public abstract class Action implements EventListener, Updateable {
 		if (!magnetNotCatchedOutputFlag) {
 			magnetNotCatchedOutputFlag = true;
 			Log.e("action event",
-					"MegnetometerValuesChanged not catched by defined action: "
+					"MagnetometerValuesChanged not catched by defined action: "
 							+ this.getClass());
 		}
 		return false;

@@ -170,7 +170,7 @@ public class SensorTestSetup extends Setup {
 				"Camera Unbuffered 2");
 	}
 
-	private class myRotateAction extends Command {
+	private static class myRotateAction extends Command {
 
 		private Action myAction;
 

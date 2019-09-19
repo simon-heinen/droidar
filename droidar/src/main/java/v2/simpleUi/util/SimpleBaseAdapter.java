@@ -46,13 +46,13 @@ public class SimpleBaseAdapter extends BaseAdapter {
 		 *            the position in the list
 		 * @return
 		 */
-		public View getView(Context context, View convertView,
-				ViewGroup parent, SimpleBaseAdapter simpleBaseAdapter,
-				List<? extends HasItsOwnView> containerList, int positionInList);
+		View getView(Context context, View convertView,
+					 ViewGroup parent, SimpleBaseAdapter simpleBaseAdapter,
+					 List<? extends HasItsOwnView> containerList, int positionInList);
 
-		public void onItemClick(View itemView, int posInList);
+		void onItemClick(View itemView, int posInList);
 
-		public boolean onItemLongClick(View itemView, int posInList);
+		boolean onItemLongClick(View itemView, int posInList);
 	}
 
 	private static final int UPDATE_SPEED = 1000;

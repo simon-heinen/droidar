@@ -65,12 +65,12 @@ public abstract class M_LongModifier extends M_TextModifier {
 						long v = Long.parseLong(s.toString());
 						if (v < min) {
 							s.clear();
-							s.append("" + min);
+							s.append("").append(String.valueOf(min));
 						} else if (v > max) {
 							s.clear();
-							s.append("" + max);
+							s.append("").append(String.valueOf(max));
 						}
-					} catch (NumberFormatException e) {
+					} catch (NumberFormatException ignored) {
 					}
 				}
 			}

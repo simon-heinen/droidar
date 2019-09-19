@@ -3,7 +3,7 @@ package v2.simpleUi;
 import java.util.Date;
 import java.util.HashMap;
 
-import android.R;
+//import android.R;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -267,7 +267,7 @@ public class SimpleUI extends Activity {
 			if (ViewToShow != null) {
 				try {
 					((ViewGroup) ViewToShow.getParent()).removeView(ViewToShow);
-				} catch (Exception e) {
+				} catch (Exception ignored) {
 				}
 				setContentView(ViewToShow);
 			} else {
@@ -311,7 +311,7 @@ public class SimpleUI extends Activity {
 	 */
 	public M_Container createErrorInfo() {
 		M_Container c = new M_Container();
-		c.add(new M_InfoText(R.drawable.ic_dialog_alert,
+		c.add(new M_InfoText(android.R.drawable.ic_dialog_alert,
 				"The application was closed by Android, it has to be reopened! "
 						+ "Please reopen the application by "
 						+ "clicking the icon in the application list."));
@@ -327,7 +327,7 @@ public class SimpleUI extends Activity {
 				int FLAG_ACTIVITY_CLEAR_TASK = 32768;
 				i.setFlags(Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY
 						| Intent.FLAG_ACTIVITY_NEW_TASK
-						| FLAG_ACTIVITY_CLEAR_TASK);
+						| Intent.FLAG_ACTIVITY_CLEAR_TASK);
 				startActivity(i);
 				// if (DEBUG)
 				// Log.w(LOG_TAG, "Killing complete process");

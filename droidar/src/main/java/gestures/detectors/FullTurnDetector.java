@@ -34,8 +34,8 @@ public class FullTurnDetector implements PhoneGestureDetector {
 	/**
 	 * Preallocated members for the matrices used by the SensorManager.
 	 */
-	private float rotationMatrix[] = new float[9];
-	private float orientationMatrix[] = new float[3];
+	private float[] rotationMatrix = new float[9];
+	private float[] orientationMatrix = new float[3];
 
 	/**
 	 * The field of seen "binned" readings and of seen different readings.

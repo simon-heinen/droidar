@@ -110,8 +110,7 @@ public class PreviewOneShot extends Preview {
 	private byte[] b49;
 	private int index;
 
-	public PreviewOneShot(Context context, DetectionThread thread,
-			Camera.Size size) {
+	public PreviewOneShot(Context context, DetectionThread thread, Camera.Size size) {
 		super(context, thread, size);
 	}
 
@@ -122,8 +121,7 @@ public class PreviewOneShot extends Preview {
 		parameters.setPreviewSize(w, h);
 		mCamera.setParameters(parameters);
 
-		Log.d("AR", "Preview size: " + optimalSize.width + "x"
-				+ optimalSize.height);
+		Log.d("AR", "Preview size: " + optimalSize.width + "x" + optimalSize.height);
 		if (first) {
 			myThread.setImageSizeAndRun(h,w);
 			first = false;
@@ -294,11 +292,9 @@ public class PreviewOneShot extends Preview {
 			index = 0;
 		}
 
-		if (myThread.busy == false) {
+		if (!myThread.busy) {
 			myThread.nextFrame(data);
-
 		}
-
 	}
 
 	@Override

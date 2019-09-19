@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	package="de.rwth"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="de.rwth"
     android:versionCode="1"
     android:versionName="1.0">
 
@@ -22,15 +22,15 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
-	<!-- This should be added to to allow the fullscreen mode to big screen
+    <!-- This should be added to to allow the fullscreen mode to big screen
         devices like the samsung galaxy tab -->
-	<supports-screens
-		android:anyDensity="true"
-		android:largeScreens="true"
-		android:normalScreens="true"
-		android:smallScreens="true" />
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />
 
-	<application
+    <application
         android:icon="@drawable/icon"
         android:label="@string/app_name">
         <activity
@@ -42,21 +42,21 @@
             </intent-filter>
         </activity>
 
-        <!-- The maps library has to be added to use some location calculation
-            methods -->
+        <!-- The maps library has to be added to use some location calculation methods -->
         <uses-library android:name="com.google.android.maps" />
 
-		<activity
-			android:name="system.ArActivity"
-			android:configChanges="keyboardHidden|orientation"
-			android:label="@string/app_name"
-			android:screenOrientation="landscape" />
+        <activity
+            android:name="system.ArActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape"
+            tools:ignore="LockedOrientationActivity" />
 
         <!-- Custom List is used to easily display lists of any type of object -->
         <activity android:name="gui.CustomListActivity" />
 
         <!-- the error handler will be automatically displayed when an error appears -->
-        <activity
+        <!--activity
             android:name="system.ErrorHandler"
             android:process=":myexeptionprocess"
             android:taskAffinity="system.ErrorHandler">
@@ -65,16 +65,30 @@
                 <action android:name="android.intent.action.VIEW" />
                 <data android:mimeType="errors/myUnhandleCatcher" />
             </intent-filter>
+        </activity-->
+        <!-- the error handler will be automatically displayed when an error appears -->
+        <activity
+            android:name="v2.simpleUi.util.ErrorHandler"
+            android:process=":myexeptionprocess"
+            android:taskAffinity="v2.simpleUi.util.ErrorHandler">
+            <intent-filter tools:ignore="AppLinkUrlError">
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.VIEW" />
+                <data android:mimeType="errors/myUnhandleCatcher" />
+            </intent-filter>
         </activity>
-
         <!-- is needed to display information on application startup -->
         <activity
             android:name="gui.InfoScreen"
             android:theme="@android:style/Theme.Dialog" />
 
         <!-- an activity to easily display any kind of ui -->
-        <activity
+        <!--activity
             android:name="gui.simpleUI.SimpleUIv1"
+            android:theme="@android:style/Theme.Translucent" /-->
+        <!-- an activity to easily display any kind of ui -->
+        <activity
+            android:name="v2.simpleUi.SimpleUI"
             android:theme="@android:style/Theme.Translucent" />
     </application>
 

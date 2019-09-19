@@ -64,12 +64,12 @@ public abstract class M_DoubleModifier extends M_TextModifier {
 						double v = Double.parseDouble(s.toString());
 						if (v < min) {
 							s.clear();
-							s.append("" + min);
+							s.append("").append(String.valueOf(min));
 						} else if (v > max) {
 							s.clear();
-							s.append("" + max);
+							s.append("").append(String.valueOf(max));
 						}
-					} catch (NumberFormatException e) {
+					} catch (NumberFormatException ignored) {
 					}
 				}
 			}

@@ -18,20 +18,16 @@ public class PreviewPost2_0 extends Preview{
 		super(context, thread, size);
 	}
 
-
 	public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
-		
-		w= optimalSize.width; 
+		w= optimalSize.width;
 		h= optimalSize.height;
 		Camera.Parameters parameters = mCamera.getParameters(); 
 		parameters.setPreviewSize(w, h); 
         mCamera.setParameters(parameters);
         PixelFormat p = new PixelFormat();
         PixelFormat.getPixelFormatInfo(parameters.getPreviewFormat(),p);
-        
-        
-        //Must call this before calling addCallbackBuffer to get all the
-        // reflection variables setup
+
+        //Must call this before calling addCallbackBuffer to get all the reflection variables setup
         initAddCallbackBufferMethod();
         int bufSize = ((h*w)*p.bitsPerPixel)/8;
         Log.d("AR","Camera parameters: Size: "+bufSize+", Height: "+h+", Width: "+w+", pixelformat: "+p.toString());
@@ -114,7 +110,7 @@ public class PreviewPost2_0 extends Preview{
 	 *with reflections.
 	 */
 	public void onPreviewFrame(byte[] data, Camera camera) {
-		if (myThread.busy == false) {
+		if (!myThread.busy) {
 			myThread.nextFrame(data);
 		} else if(!paused){
 			//Add the buffer back into the queue.
@@ -123,16 +119,10 @@ public class PreviewPost2_0 extends Preview{
 
 	}
 
-
-	
 	@Override
 	public void reAddCallbackBuffer(byte[] data) {
 		if(!paused){
 			addCallbackBuffer(data);
 		}		
 	}
-
-
-
-
 }

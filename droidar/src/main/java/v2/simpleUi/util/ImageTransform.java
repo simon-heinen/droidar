@@ -217,7 +217,7 @@ public class ImageTransform {
 		if (width == height)
 			return bitmap;
 
-		int size = width > height ? width : height;
+		int size = Math.max(width, height);
 
 		Bitmap newB = Bitmap.createBitmap(size, size, bitmap.getConfig());
 		Canvas c = new Canvas(newB);

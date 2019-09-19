@@ -86,7 +86,7 @@ public class SimpleUIv1 extends Activity {
 		group.addModifier(config.loadCloseButtonsFor(target, group));
 
 		LayoutParams layParams = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1);
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1);
 
 		LinearLayout containerForAllItems = new LinearLayout(target);
 		containerForAllItems.setLayoutParams(layParams);

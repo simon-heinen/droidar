@@ -21,7 +21,7 @@ public abstract class ButtonModifier extends AbstractModifier {
 
 		LinearLayout l = new LinearLayout(context);
 
-		LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT,
+		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.WRAP_CONTENT);
 
 		l.setLayoutParams(params);

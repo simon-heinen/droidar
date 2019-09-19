@@ -120,7 +120,7 @@ public class Calculus {
 	}
 
 	public interface TermResultListener {
-		public void returnResult(String result);
+		void returnResult(String result);
 	}
 
 	/**

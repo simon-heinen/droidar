@@ -117,9 +117,7 @@ public class PreviewPre2_0 extends Preview {
 
 
 	public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
-
-
-		w= optimalSize.width; 
+		w= optimalSize.width;
 		h= optimalSize.height;
 		Log.d("AR", "Preview size: "+ w + "x"+  h +". (Hardcoded)");
 		Camera.Parameters parameters = mCamera.getParameters();
@@ -247,17 +245,13 @@ public class PreviewPre2_0 extends Preview {
 			b49 = null;
 			index=0; 
 		}
-		if (myThread.busy == false) {
+		if (!myThread.busy) {
 			myThread.nextFrame(data);
 		}
-
 	}
-
 
 	@Override
 	public void reAddCallbackBuffer(byte[] data) {
 		//Do nothing
-		
 	}
-
 }

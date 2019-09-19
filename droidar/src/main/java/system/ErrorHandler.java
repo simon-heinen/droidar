@@ -331,10 +331,12 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 		Properties p = System.getProperties();
 		Enumeration keys = p.keys();
 		String key = "";
+		StringBuilder sBuilder = new StringBuilder(s);
 		while (keys.hasMoreElements()) {
 			key = (String) keys.nextElement();
-			s += "\n > " + key + " = " + (String) p.get(key);
+			sBuilder.append("\n > ").append(key).append(" = ").append((String) p.get(key));
 		}
+		s = sBuilder.toString();
 
 		s += " \n \n [You can add a description of what you were doing here]:";
 		s += " \n ...";

@@ -44,7 +44,7 @@ public abstract class M_WebView implements ModifierInterface {
 								| Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 						context.startActivity(marketIntent);
 						return true;
-					} catch (Exception e) {
+					} catch (Exception ignored) {
 					}
 				}
 				view.loadUrl(url);

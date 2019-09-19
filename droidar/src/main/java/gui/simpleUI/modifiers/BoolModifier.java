@@ -22,9 +22,9 @@ public abstract class BoolModifier extends AbstractModifier {
 				SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING);
 
 		LayoutParams p = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 2);
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 2);
 		LayoutParams p2 = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1);
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1);
 
 		TextView t = new TextView(context);
 		t.setLayoutParams(p);

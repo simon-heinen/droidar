@@ -696,8 +696,8 @@ public class Vec {
      * Given 2 vectors this calculates the vector which is orthogonal to the
      * plane the two vectors create
      *
-     * @param v1
-     * @param v2
+     * @param uVec Vec
+     * @param vVec Vec
      * @return the orthogonal vector
      */
     public static Vec calcNormalVec(Vec uVec, Vec vVec) {

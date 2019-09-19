@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import nativeLib.NativeLib;
 
+import nativeLib.notNativeLib;
 import preview.Preview;
 
 import android.opengl.GLSurfaceView;
@@ -19,7 +20,8 @@ public class DetectionThread extends Thread {
 	private boolean stopRequest = false;
 	private GLSurfaceView openglView;
 	private Preview preview;
-	private NativeLib nativelib;
+	//private NativeLib nativelib;
+	private notNativeLib notNativelib;
 	private float[] mat;
 	private long start = 0;
 	private long now = 0;
@@ -29,12 +31,12 @@ public class DetectionThread extends Thread {
 	private HashMap<Integer, MarkerObject> markerObjectMap;
 	private UnrecognizedMarkerListener unrecognizedMarkerListener;
 
-	public DetectionThread(NativeLib nativeLib, GLSurfaceView openglView,
+	public DetectionThread(notNativeLib notNativeLib, GLSurfaceView openglView,
 			HashMap<Integer, MarkerObject> markerObjectMap,
 			UnrecognizedMarkerListener unrecognizedMarkerListener) {
 		this.openglView = openglView;
 		this.markerObjectMap = markerObjectMap;
-		this.nativelib = nativeLib;
+		this.notNativelib = notNativeLib;
 		this.unrecognizedMarkerListener = unrecognizedMarkerListener;
 
 		// TODO make size dynamically after the init function.
@@ -48,16 +50,14 @@ public class DetectionThread extends Thread {
 	@Override
 	public synchronized void run() {
 		while (true) {
-			while (busy == false || stopRequest == true) {
+			while (!busy || stopRequest) {
 				try {
 					wait();// wait for a new frame
 				} catch (InterruptedException ignored) {
 				}
 			}
 
-			if (stopRequest == true) {
-				// do nothing
-			} else {
+			if (!stopRequest) {
 				if (calcFps) {
 					// calculate the fps
 					if (start == 0) {
@@ -72,10 +72,10 @@ public class DetectionThread extends Thread {
 						fcount = 0;
 					}
 				}
-				// Pass the frame to the native code and find the
-				// marker information.
+				// Pass the frame to the native code and find the marker information.
 				// The false at the end is a remainder of the calibration.
 //TODO				nativelib.detectMarkers(frame, mat, frameHeight, frameWidth,false);
+				notNativelib.detectMarkers(frame, mat, frameHeight, frameWidth,false);
 
 				// Needs to be reworked to. Either just deleted, or changed into
 				// some timer delay
@@ -92,16 +92,13 @@ public class DetectionThread extends Thread {
 
 					// Log.d(LOG_TAG, "StartIdx");
 
-					MarkerObject markerObj = markerObjectMap
-							.get((int) mat[idIdx]);
+					MarkerObject markerObj = markerObjectMap.get((int) mat[idIdx]);
 
 					if (markerObj != null) {
-						markerObj.OnMarkerPositionRecognized(mat, startIdx,
-								endIdx);
+						markerObj.OnMarkerPositionRecognized(mat, startIdx,	endIdx);
 					} else {
 						if (unrecognizedMarkerListener != null) {
-							unrecognizedMarkerListener
-									.onUnrecognizedMarkerDetected(
+							unrecognizedMarkerListener.onUnrecognizedMarkerDetected(
 											(int) mat[idIdx], mat, startIdx,
 											endIdx, (int) mat[rotIdx]);
 						}
@@ -110,7 +107,7 @@ public class DetectionThread extends Thread {
 
 				busy = false;
 				preview.reAddCallbackBuffer(frame);
-			}
+			}  // else do nothing
 
 			yield();
 		}
@@ -118,7 +115,7 @@ public class DetectionThread extends Thread {
 	}
 
 	public synchronized void nextFrame(byte[] data) {
-		if (busy == false /* this.getState() == Thread.State.WAITING */) {
+		if (!busy /* this.getState() == Thread.State.WAITING */) {
 			// ok, we are ready for a new frame:
 			busy = true;
 			this.frame = data;
@@ -135,7 +132,7 @@ public class DetectionThread extends Thread {
 		frameHeight = height;
 		frameWidth = width;
 
-		if (stopRequest == true) {
+		if (stopRequest) {
 			// this means the thread is active, no starting is needed,
 			// just reset the flag.
 			stopRequest = false;
@@ -162,8 +159,7 @@ public class DetectionThread extends Thread {
 		calcFps = true;
 	}
 
-	public void setMarkerObjectMap(
-			HashMap<Integer, MarkerObject> markerObjectMap) {
+	public void setMarkerObjectMap(HashMap<Integer, MarkerObject> markerObjectMap) {
 		this.markerObjectMap = markerObjectMap;
 	}
 }

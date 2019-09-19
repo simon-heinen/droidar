@@ -225,7 +225,7 @@ public abstract class SimpleLocationManager {
 							break;
 						}
 					}
-				} catch (Exception e) {
+				} catch (Exception ignored) {
 				}
 			}
 		}

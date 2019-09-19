@@ -15,6 +15,8 @@ import actions.ActionUseCameraAngles2;
 import android.location.Location;
 import android.opengl.Matrix;
 
+import java.util.Arrays;
+
 /**
  * This is the virtual camera needed to display a virtual world. The 3 important
  * properties you might want to change manually are its position, rotation and
@@ -684,7 +686,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 		Log.w(LOG_TAG, "   > myNewOffset=" + myNewOffset);
 		Log.w(LOG_TAG, "   > myRotationVec=" + myRotationVec);
 		Log.w(LOG_TAG, "   > myNewRotationVec=" + myNewRotationVec);
-		Log.w(LOG_TAG, "   > rotationMatrix=" + rotationMatrix);
+		Log.w(LOG_TAG, "   > rotationMatrix=" + Arrays.toString(rotationMatrix));
 	}
 
 	public boolean isSensorInputEnabled() {

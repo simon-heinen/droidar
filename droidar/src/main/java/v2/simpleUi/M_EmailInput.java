@@ -52,9 +52,9 @@ public abstract class M_EmailInput implements ModifierInterface, UiDecoratable {
 		LinearLayout container = new LinearLayout(context);
 		container.setGravity(Gravity.CENTER_VERTICAL);
 		LayoutParams p = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 2);
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 2);
 		LayoutParams p2 = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1);
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1);
 
 		TextView nameText = new TextView(context);
 		nameText.setText(getVarName());

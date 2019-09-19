@@ -12,7 +12,7 @@ import gl.GLCamera;
 public class ActionMoveCameraBuffered extends ActionDoAlongAxis {
 
 	/**
-	 * @param camera
+	 * @param camera GLCamera
 	 * @param trackballFactor
 	 *            something like 5
 	 * @param touchscreenFactor

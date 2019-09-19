@@ -49,7 +49,7 @@ public class ObjParser {
 	public ObjParser(Resources resources, String resourceID) {
 		this.resources = resources;
 		this.resourceID = resourceID;
-		if (resourceID.indexOf(":") > -1)
+		if (resourceID.contains(":"))
 			this.packageID = resourceID.split(":")[0];
 	}
 
@@ -82,38 +82,45 @@ public class ObjParser {
 
 			String type = lineElements.nextToken();
 
-			if (type.equals(VERTEX)) {
-				Vec vertex = new Vec();
-				vertex.x = Float.parseFloat(lineElements.nextToken());
-				vertex.y = Float.parseFloat(lineElements.nextToken());
-				vertex.z = Float.parseFloat(lineElements.nextToken());
-				vertexList.add(vertex);
-			} else if (type.equals(FACE)) {
-				/*
-				 * something like "f 102 24 91 7" so its a face with 4 vertices
-				 */
-				int verticesCount = lineElements.countTokens() - 1;
-				int[] indiceArray = new int[verticesCount];
-				for (int i = 0; i < verticesCount; i++) {
-					indiceArray[i] = Integer.parseInt(lineElements.nextToken());
-				}
-				shapeList.add(indiceArray);
+			switch (type) {
+				case VERTEX:
+					Vec vertex = new Vec();
+					vertex.x = Float.parseFloat(lineElements.nextToken());
+					vertex.y = Float.parseFloat(lineElements.nextToken());
+					vertex.z = Float.parseFloat(lineElements.nextToken());
+					vertexList.add(vertex);
+					break;
+				case FACE:
+					/*
+					 * something like "f 102 24 91 7" so its a face with 4 vertices
+					 */
+					int verticesCount = lineElements.countTokens() - 1;
+					int[] indiceArray = new int[verticesCount];
+					for (int i = 0; i < verticesCount; i++) {
+						indiceArray[i] = Integer.parseInt(lineElements.nextToken());
+					}
+					shapeList.add(indiceArray);
 
-			} else if (type.equals(TEXCOORD)) {
-				TexturCoord texCoord = new TexturCoord(
-						Float.parseFloat(lineElements.nextToken()),
-						Float.parseFloat(lineElements.nextToken()));
-				textureList.add(texCoord);
-			} else if (type.equals(NORMAL)) {
-				Vec normal = new Vec();
-				normal.x = Float.parseFloat(lineElements.nextToken());
-				normal.y = Float.parseFloat(lineElements.nextToken());
-				normal.z = Float.parseFloat(lineElements.nextToken());
-				normalsList.add(normal);
-			} else if (type.equals(MATERIAL_LIB)) {
-				loadMaterialLib(lineElements.nextToken());
-			} else if (type.equals(USE_MATERIAL)) {
-				currentMaterialKey = lineElements.nextToken();
+					break;
+				case TEXCOORD:
+					TexturCoord texCoord = new TexturCoord(
+							Float.parseFloat(lineElements.nextToken()),
+							Float.parseFloat(lineElements.nextToken()));
+					textureList.add(texCoord);
+					break;
+				case NORMAL:
+					Vec normal = new Vec();
+					normal.x = Float.parseFloat(lineElements.nextToken());
+					normal.y = Float.parseFloat(lineElements.nextToken());
+					normal.z = Float.parseFloat(lineElements.nextToken());
+					normalsList.add(normal);
+					break;
+				case MATERIAL_LIB:
+					loadMaterialLib(lineElements.nextToken());
+					break;
+				case USE_MATERIAL:
+					currentMaterialKey = lineElements.nextToken();
+					break;
 			}
 		}
 
@@ -121,7 +128,7 @@ public class ObjParser {
 		Log.d(LOG_TAG, "End time " + (endTime - startTime));
 	}
 
-	public class TexturCoord {
+	public static class TexturCoord {
 		float x;
 		float y;
 
@@ -132,7 +139,7 @@ public class ObjParser {
 	}
 
 	private void loadMaterialLib(String libID) {
-		StringBuffer resourceID = new StringBuffer(packageID);
+		StringBuilder resourceID = new StringBuilder(packageID);
 		StringBuffer libIDSbuf = new StringBuffer(libID);
 		int dotIndex = libIDSbuf.lastIndexOf(".");
 		if (dotIndex > -1)
@@ -164,10 +171,10 @@ public class ObjParser {
 				} else if (type.equals(DIFFUSE_TEX_MAP)) {
 					if (parts.length > 1) {
 						materialMap.get(currentMaterial).diffuseTextureMap = parts[1];
-						StringBuffer texture = new StringBuffer(packageID);
+						StringBuilder texture = new StringBuilder(packageID);
 						texture.append(":drawable/");
 
-						StringBuffer textureName = new StringBuffer(parts[1]);
+						StringBuilder textureName = new StringBuilder(parts[1]);
 						dotIndex = textureName.lastIndexOf(".");
 						if (dotIndex > -1)
 							texture.append(textureName.substring(0, dotIndex));
@@ -224,7 +231,7 @@ public class ObjParser {
 	// }
 	// }
 
-	private class ObjMaterial {
+	private static class ObjMaterial {
 		public String name;
 		public String diffuseTextureMap;
 		public float offsetU;

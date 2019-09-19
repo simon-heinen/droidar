@@ -62,7 +62,7 @@ public class IO {
 			String line = null;
 
 			while ((line = reader.readLine()) != null) {
-				sb.append(line + "\n");
+				sb.append(line).append("\n");
 			}
 			stream.close();
 			return sb.toString();
@@ -268,7 +268,7 @@ public class IO {
 				e = myActivity.getSharedPreferences(mySettingsName, mode)
 						.edit();
 			e.putString(key, value);
-			e.commit();
+			e.apply();
 		}
 
 		public void storeBool(String key, boolean value) {
@@ -276,7 +276,7 @@ public class IO {
 				e = myActivity.getSharedPreferences(mySettingsName, mode)
 						.edit();
 			e.putBoolean(key, value);
-			e.commit();
+			e.apply();
 		}
 
 		public void storeInt(String key, int value) {
@@ -284,7 +284,7 @@ public class IO {
 				e = myActivity.getSharedPreferences(mySettingsName, mode)
 						.edit();
 			e.putInt(key, value);
-			e.commit();
+			e.apply();
 		}
 	}
 

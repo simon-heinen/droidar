@@ -11,9 +11,9 @@ import android.widget.ScrollView;
 public class ModifierGroup extends AbstractModifier {
 
 	public interface SaveListener {
-		public void onSaveSuccessfull();
+		void onSaveSuccessfull();
 
-		public void onSaveFailed(ModifierInterface modifierThatRejectedSave);
+		void onSaveFailed(ModifierInterface modifierThatRejectedSave);
 	}
 
 	private ArrayList<ModifierInterface> myList = new ArrayList<ModifierInterface>();
@@ -51,7 +51,7 @@ public class ModifierGroup extends AbstractModifier {
 
 		ScrollView sv = new ScrollView(context);
 		sv.addView(linLayout);
-		sv.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
+		sv.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.WRAP_CONTENT));
 		if (getTheme() != null) {
 			getTheme().applyOuter1(sv);

@@ -160,9 +160,7 @@ public class TextureManager implements HasDebugInformation {
 	private int[] doubleTheArraySize(int[] a) {
 		int[] b = new int[a.length * 2];
 		// copy old values:
-		for (int i = 0; i < a.length; i++) {
-			b[i] = a[i];
-		}
+		System.arraycopy(a, 0, b, 0, a.length);
 		return b;
 	}
 
@@ -234,9 +232,9 @@ public class TextureManager implements HasDebugInformation {
 			Collection<Texture> a = getInstance().myTextureMap.values();
 			resetInstance();
 			Log.d(LOG_TAG, "Restoring " + a.size() + " textures");
-			for (Iterator<Texture> iterator = a.iterator(); iterator.hasNext();) {
-				getInstance().addTexture(iterator.next());
-			}
+            for (Texture texture : a) {
+                getInstance().addTexture(texture);
+            }
 
 		} catch (Exception e) {
 			Log.e(LOG_TAG, "Error while restoring textures");

@@ -47,7 +47,7 @@ public class MemoryAllocationTests extends SimpleTesting {
 		start = SystemClock.uptimeMillis();
 		int l = list.myLength;
 		for (int i = 0; i < l; i++) {
-			if (list.get(i) == "") {
+			if (list.get(i).equals("")) {
 				System.out.println("Will not happen");
 			}
 		}
@@ -74,7 +74,7 @@ public class MemoryAllocationTests extends SimpleTesting {
 		start = SystemClock.uptimeMillis();
 		int l = list.myLength;
 		for (int i = 0; i < l; i++) {
-			if (list.get(i) == "") {
+			if (list.get(i).equals("")) {
 				System.out.println("Will not happen");
 			}
 		}
@@ -101,7 +101,7 @@ public class MemoryAllocationTests extends SimpleTesting {
 						+ objectOfNumber + " objects.");
 		start = SystemClock.uptimeMillis();
 		for (int i = 0; i < list.myLength; i++) {
-			if (list.get(i) == "") {
+			if (list.get(i).equals("")) {
 				System.out.println("Will not happen");
 			}
 		}
@@ -128,7 +128,7 @@ public class MemoryAllocationTests extends SimpleTesting {
 		int l = list.size();
 		// Object[] a = list.;
 		for (int i = 0; i < l; i++) {
-			if (list.get(i) == "") {
+			if (list.get(i).equals("")) {
 				System.out.println("Will not happen");
 			}
 		}
@@ -179,12 +179,11 @@ public class MemoryAllocationTests extends SimpleTesting {
 		long start = SystemClock.uptimeMillis();
 		while (SystemClock.uptimeMillis() - start < durationInMS) {
 
-			for (Iterator iterator = x.iterator(); iterator.hasNext();) {
-				String s = (String) iterator.next();
-				if (s == null) {
-					System.out.println("tutut");
-				}
-			}
+            for (String s : x) {
+                if (s == null) {
+                    System.out.println("tutut");
+                }
+            }
 
 		}
 		System.out.println("Allocation Test ends");

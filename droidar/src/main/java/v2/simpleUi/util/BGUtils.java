@@ -99,7 +99,7 @@ public class BGUtils {
 			GradientDrawable s = new GradientDrawable(gradientOrientation,
 					colorsInGradient);
 			s.setCornerRadii(cornerRadii);
-			v.setBackgroundDrawable(s);
+			v.setBackground/*Drawable*/(s);
 		}
 	}
 

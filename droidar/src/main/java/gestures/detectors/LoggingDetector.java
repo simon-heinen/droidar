@@ -1,6 +1,9 @@
 package gestures.detectors;
 
 import android.util.Log;
+
+import java.util.Locale;
+
 import gestures.PhoneGesture;
 import gestures.PhoneGestureDetector;
 import gestures.SensorData;
@@ -69,7 +72,7 @@ public class LoggingDetector implements PhoneGestureDetector {
 	private String formatArray(float[] array) {
 		StringBuilder builder = new StringBuilder("[ ");
 		for (double value : array) {
-			builder.append(String.format("% 8.4f ", value));
+			builder.append(String.format(Locale.US, "% 8.4f ", value));
 		}
 		return builder.append("]").toString();
 	}

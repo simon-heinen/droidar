@@ -4,7 +4,7 @@ import util.Vec;
 
 public interface HasRotation {
 
-	public Vec getRotation();
+	Vec getRotation();
 
 	/**
 	 * Will rotate the object COUNTERCLOCKWISE
@@ -13,5 +13,5 @@ public interface HasRotation {
 	 *            An example to rotate an object 45 degree CLOCKWISE around the
 	 *            Z axis would be "new Vec(0,0,-45)"
 	 */
-	public void setRotation(Vec rotation);
+    void setRotation(Vec rotation);
 }

@@ -217,12 +217,12 @@ public class MetaInfos implements EditItem {
 	}
 
 	public void addTextToLongDescr(String info) {
-		if (info != "")
+		if (!info.equals(""))
 			longDescr.add(new InfoElement(info));
 	}
 
 	public void addDataToLongDescr(String key, String value) {
-		if (key != "" && value != "")
+		if (!key.equals("") && !value.equals(""))
 			longDescr.add(new InfoElement(key, value));
 	}
 
@@ -238,21 +238,23 @@ public class MetaInfos implements EditItem {
 	}
 
 	public void setShortDescr(String name) {
-		if (name != "")
+		if (!name.equals(""))
 			shortDescr = name;
 	}
 
 	public void extractInfos(Address a) {
-		String s = "";
+		String s;
 		if (a.getFeatureName() != null)
 			setShortDescr(a.getFeatureName());
 		else {
 			setShortDescr(a.getAddressLine(0));
 		}
 		int i = 0;
+		StringBuilder sBuilder = new StringBuilder();
 		for (i = 0; i < a.getMaxAddressLineIndex(); i++) {
-			s += a.getAddressLine(i) + "\n";
+			sBuilder.append(a.getAddressLine(i)).append("\n");
 		}
+		s = sBuilder.toString();
 		s += a.getAddressLine(i);
 		if (a.getPostalCode() != null)
 			s += a.getPostalCode() + " ";
@@ -367,7 +369,7 @@ public class MetaInfos implements EditItem {
 	}
 
 	public void setMyIconURL(String url) {
-		if (url != "")
+		if (!url.equals(""))
 			myIconURL = url;
 	}
 

@@ -13,8 +13,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-public abstract class Preview extends SurfaceView implements
-		SurfaceHolder.Callback, Camera.PreviewCallback {
+public abstract class Preview extends SurfaceView implements SurfaceHolder.Callback, Camera.PreviewCallback {
 	protected boolean paused = false;
 	protected boolean first = true;
 	protected Message message;
@@ -31,7 +30,7 @@ public abstract class Preview extends SurfaceView implements
 		// underlying surface is created and destroyed.
 		mHolder = getHolder();
 		mHolder.addCallback(this);
-		mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+//Obsolete		mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		myThread = (DetectionThread) thread;
 		myThread.setPreview(this);
 	}
@@ -41,14 +40,12 @@ public abstract class Preview extends SurfaceView implements
 	}
 
 	@Override
-	public abstract void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2,
-			int arg3);
+	public abstract void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2,	int arg3);
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-		// The Surface has been created, acquire the camera and tell it where
-		// to draw.
-		Log.d("AR", "opening camera.");
+		// The Surface has been created, acquire the camera and tell it where to draw.
+		Log.d("AR", "Opening camera.");
 		mCamera = Camera.open();
 		try {
 			mCamera.setPreviewDisplay(holder);
@@ -64,8 +61,7 @@ public abstract class Preview extends SurfaceView implements
 		if (mCamera != null) {
 			// Surface will be destroyed when we return, so stop the preview.
 			// Because the CameraDevice object is not a shared resource, it's
-			// very
-			// important to release it when the activity is paused.
+			// very important to release it when the activity is paused.
 			mCamera.stopPreview();
 			mCamera.release();
 			mCamera = null;
@@ -79,12 +75,10 @@ public abstract class Preview extends SurfaceView implements
 
 	public void pause() {
 		paused = true;
-
 	}
 
 	public void resume() {
 		paused = false;
-
 	}
 
 	public void releaseCamera() {
@@ -94,5 +88,4 @@ public abstract class Preview extends SurfaceView implements
 			mCamera = null;
 		}
 	}
-
 }

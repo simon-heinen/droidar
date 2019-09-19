@@ -215,7 +215,7 @@ public class GuiSetup {
 	public void addViewToBottomRight(View v, float weight, int heightInPixels) {
 		bottomRightView.addView(v);
 		LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, heightInPixels);
+				LayoutParams.MATCH_PARENT, heightInPixels);
 		p.weight = weight;
 		bottomRightView.setLayoutParams(p);
 	}
