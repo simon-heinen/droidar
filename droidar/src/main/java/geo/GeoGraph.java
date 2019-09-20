@@ -5,7 +5,7 @@ import gl.scenegraph.MeshComponent;
 
 import java.util.Arrays;
 
-import javax.microedition.khronos.opengles.GL10;
+//import javax.microedition.khronos.opengles.GL10;
 
 import system.Container;
 import system.EventManager;
@@ -131,7 +131,7 @@ public class GeoGraph extends AbstractObj implements Container<GeoObj> {
 		// initialize:
 		int[] specialPathLength = new int[nodesArrayLength];
 		GeoObj[] previousNodeInPath = new GeoObj[nodesArrayLength];
-		EfficientList<GeoObj> canidateSet = new EfficientList<GeoObj>();
+		EfficientList<GeoObj> canidateSet = new EfficientList<>();
 
 		// init arrays:
 		for (int i = 0; i < nodesArrayLength; i++) {
@@ -290,7 +290,7 @@ public class GeoGraph extends AbstractObj implements Container<GeoObj> {
 	@Override
 	public boolean insert(int pos, GeoObj geoObj) {
 		if (myNodes == null)
-			myNodes = new EfficientListQualified<GeoObj>();
+			myNodes = new EfficientListQualified<>();
 		return myNodes.insert(pos, geoObj);
 	}
 
@@ -302,7 +302,7 @@ public class GeoGraph extends AbstractObj implements Container<GeoObj> {
 	@Override
 	public boolean add(GeoObj geoObj) {
 		if (myNodes == null)
-			myNodes = new EfficientListQualified<GeoObj>();
+			myNodes = new EfficientListQualified<>();
 		if (myNodes.contains(geoObj) == -1) {
 			myNodes.add(geoObj);
 			return true;
@@ -436,7 +436,7 @@ public class GeoGraph extends AbstractObj implements Container<GeoObj> {
 
 	private void insertWithDefinedQuality(float matchQuality, GeoObj o) {
 		if (myNodes == null)
-			myNodes = new EfficientListQualified<GeoObj>();
+			myNodes = new EfficientListQualified<>();
 		myNodes.add(o, matchQuality);
 	}
 
@@ -450,7 +450,7 @@ public class GeoGraph extends AbstractObj implements Container<GeoObj> {
 	 */
 	public Edge addEdge(GeoObj from, GeoObj to, MeshComponent edgeMeshComp) {
 		if (myEdges == null)
-			myEdges = new EfficientList<Edge>();
+			myEdges = new EfficientList<>();
 		if (hasEdge(from, to) == -1) {
 			if (edgeMeshComp == null)
 				edgeMeshComp = Edge.getDefaultMesh(this, from, to, this
@@ -512,18 +512,18 @@ public class GeoGraph extends AbstractObj implements Container<GeoObj> {
 	}
 
 	@Override
-	public void render(GL10 gl, Renderable parent) {
+	public void render(/*GL10 gl,*/ Renderable parent) {
 		if (myNodes == null)
 			return;
 		{
 			for (int i = 0; i < myNodes.myLength; i++) {
-				myNodes.get(i).render(gl, this);
+				myNodes.get(i).render(/*gl,*/ this);
 			}
 		}
 		{
 			if ((isPath || useEdges) && myEdges != null) {
 				for (int i = 0; i < myEdges.myLength; i++) {
-					myEdges.get(i).render(gl, this);
+					myEdges.get(i).render(/*gl,*/ this);
 				}
 			}
 		}
@@ -576,7 +576,7 @@ public class GeoGraph extends AbstractObj implements Container<GeoObj> {
 
 	public EfficientList<Edge> getEdges() {
 		if (myEdges == null)
-			myEdges = new EfficientList<Edge>();
+			myEdges = new EfficientList<>();
 		return myEdges;
 	}
 
@@ -619,7 +619,7 @@ public class GeoGraph extends AbstractObj implements Container<GeoObj> {
 	@Override
 	public EfficientListQualified<GeoObj> getAllItems() {
 		if (myNodes == null)
-			myNodes = new EfficientListQualified<GeoObj>();
+			myNodes = new EfficientListQualified<>();
 		return myNodes;
 	}
 
@@ -648,7 +648,7 @@ public class GeoGraph extends AbstractObj implements Container<GeoObj> {
 	}
 
 	public EfficientList<GeoObj> getConnectedNodesOf(GeoObj obj) {
-		EfficientList<GeoObj> result = new EfficientList<GeoObj>();
+		EfficientList<GeoObj> result = new EfficientList<>();
 		for (int i = 0; i < myEdges.myLength; i++) {
 			if (myEdges.get(i).from.equals(obj)) {
 				result.add(myEdges.get(i).to);
@@ -665,7 +665,7 @@ public class GeoGraph extends AbstractObj implements Container<GeoObj> {
 			return getConnectedNodesOf(obj);
 		}
 
-		EfficientList<GeoObj> result = new EfficientList<GeoObj>();
+		EfficientList<GeoObj> result = new EfficientList<>();
 		if (myEdges != null) {
 			for (int i = 0; i < myEdges.myLength; i++) {
 				if (myEdges.get(i).from.equals(obj)) {

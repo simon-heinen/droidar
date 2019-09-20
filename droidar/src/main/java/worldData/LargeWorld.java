@@ -3,7 +3,7 @@ package worldData;
 import gl.GLCamera;
 import gl.HasPosition;
 
-import javax.microedition.khronos.opengles.GL10;
+//import javax.microedition.khronos.opengles.GL10;
 
 import util.EfficientList;
 import util.QuadTree;
@@ -36,7 +36,7 @@ public class LargeWorld extends World {
 		myRenderDistance = renderDistance;
 		myRecalcDistanceMin = -recalcDistance;
 		myRecalcDistanceMax = recalcDistance;
-		tree = new QuadTree<RenderableEntity>();
+		tree = new QuadTree<>();
 
 		itemsListener = tree.new ResultListener() {
 
@@ -50,7 +50,7 @@ public class LargeWorld extends World {
 	public EfficientList<RenderableEntity> getItems(Vec position,
 			float maxDistance) {
 
-		final EfficientList<RenderableEntity> result = new EfficientList<RenderableEntity>();
+		final EfficientList<RenderableEntity> result = new EfficientList<>();
 		tree.findInArea(tree.new ResultListener() {
 
 			@Override
@@ -93,7 +93,7 @@ public class LargeWorld extends World {
 	 * expensive so do not call this too often!
 	 */
 	public void rebuildTree() {
-		final EfficientList<RenderableEntity> list = new EfficientList<RenderableEntity>();
+		final EfficientList<RenderableEntity> list = new EfficientList<>();
 		tree.getAllItems(tree.new ResultListener() {
 			@Override
 			public void onResult(RenderableEntity myValue) {
@@ -107,14 +107,14 @@ public class LargeWorld extends World {
 	}
 
 	@Override
-	public void drawElements(GLCamera camera, GL10 gl) {
+	public void drawElements(GLCamera camera/*, GL10 gl*/) {
 
 		EfficientList<RenderableEntity> list = getList(camera.getPosition().x,
 				camera.getPosition().y);
 		for (int i = 0; i < list.myLength; i++) {
 			RenderableEntity obj = list.get(i);
 			if (obj != null)
-				obj.render(gl, this);
+				obj.render(/*gl,*/ this);
 		}
 		// super.drawElements(camera, gl, stack);
 	}
@@ -142,7 +142,7 @@ public class LargeWorld extends World {
 			return itemsInRange;
 		} else {
 			if (itemsInRange == null)
-				itemsInRange = new EfficientList<RenderableEntity>();
+				itemsInRange = new EfficientList<>();
 			else
 				itemsInRange.clear();
 			oldX = x;

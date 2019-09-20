@@ -1,13 +1,21 @@
 package gl.scenegraph;
 
+import android.opengl.GLES10;
+
 import gl.GLUtilityClass;
 
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
-import javax.microedition.khronos.opengles.GL10;
+//import javax.microedition.khronos.opengles.GL10;
 
 import util.Vec;
+
+import static android.opengl.GLES10.glDisableClientState;
+import static android.opengl.GLES10.glEnableClientState;
+import static android.opengl.GLES10.glNormalPointer;
+import static android.opengl.GLES10.glVertexPointer;
+import static android.opengl.GLES20.glDrawArrays;
 
 public class RenderData {
 
@@ -16,7 +24,7 @@ public class RenderData {
 	protected int verticesCount;
 	protected FloatBuffer normalsBuffer;
 
-	public int drawMode = GL10.GL_TRIANGLES;
+	public int drawMode = GLES10.GL_TRIANGLES;
 
 	/**
 	 * call whenever a {@link Shape} changes
@@ -62,20 +70,14 @@ public class RenderData {
 			/*
 			 * each vertex neads an own normal vector!
 			 */
-			currentNormalsIndex = addNormalVectorForVertex(normalsArray,
-					currentNormalsIndex, normalVec);
-			currentNormalsIndex = addNormalVectorForVertex(normalsArray,
-					currentNormalsIndex, normalVec);
-			currentNormalsIndex = addNormalVectorForVertex(normalsArray,
-					currentNormalsIndex, normalVec);
-
+			currentNormalsIndex = addNormalVectorForVertex(normalsArray, currentNormalsIndex, normalVec);
+			currentNormalsIndex = addNormalVectorForVertex(normalsArray, currentNormalsIndex, normalVec);
+			currentNormalsIndex = addNormalVectorForVertex(normalsArray, currentNormalsIndex, normalVec);
 		}
-
 		return GLUtilityClass.createAndInitFloatBuffer(normalsArray);
 	}
 
-	private int addNormalVectorForVertex(float[] normalsArray, int j,
-			Vec normalVec) {
+	private int addNormalVectorForVertex(float[] normalsArray, int j, Vec normalVec) {
 		normalsArray[j] = normalVec.x;
 		j++;
 		normalsArray[j] = normalVec.y;
@@ -94,11 +96,11 @@ public class RenderData {
 	}
 
 	public void setDrawModeToTriangles() {
-		drawMode = GL10.GL_TRIANGLES;
+		drawMode = GLES10.GL_TRIANGLES;
 	}
 
 	public void setDrawModeToLines() {
-		drawMode = GL10.GL_LINES;
+		drawMode = GLES10.GL_LINES;
 	}
 
 	protected RenderData() {
@@ -120,26 +122,26 @@ public class RenderData {
 	 * @see gl.Renderable#draw(javax.microedition.khronos.opengles.GL10)
 	 */
 
-	public void draw(GL10 gl) {
+	public void draw(/*GL10 gl*/) {
 		// Enabled the vertices buffer for writing and to be used during
 		// rendering.
-		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+		/*gl.*/glEnableClientState(GLES10.GL_VERTEX_ARRAY);
 		// Specifies the location and data format of an array of vertex
 		// coordinates to use when rendering.
-		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
+		/*gl.*/glVertexPointer(3, GLES10.GL_FLOAT, 0, vertexBuffer);
 
 		if (normalsBuffer != null) {
 			// Enable normals array (for lightning):
-			gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
-			gl.glNormalPointer(GL10.GL_FLOAT, 0, normalsBuffer);
+			/*gl.*/glEnableClientState(GLES10.GL_NORMAL_ARRAY);
+			/*gl.*/glNormalPointer(GLES10.GL_FLOAT, 0, normalsBuffer);
 		}
-		gl.glDrawArrays(drawMode, 0, verticesCount);
+		/*gl.*/glDrawArrays(drawMode, 0, verticesCount);
 
 		// Disable the vertices buffer.
-		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
+		/*gl.*/glDisableClientState(GLES10.GL_VERTEX_ARRAY);
 
 		// Disable normals array (for lightning):
-		gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
+		/*gl.*/glDisableClientState(GLES10.GL_NORMAL_ARRAY);
 	}
 
 }

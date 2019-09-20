@@ -1,6 +1,6 @@
 package gui;
 
-import util.IO;
+//import util.IO;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -10,6 +10,8 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
+
+import v2.simpleUi.util.IO;
 
 /**
  * Add the following constructor to your class which extends
@@ -132,11 +134,10 @@ public abstract class SimpleCustomView extends View {
 	 * <br>
 	 * this.setMeasuredDimension(newHeight, newWidth);<br>
 	 * 
-	 * @param recommendedHeigth
+	 * @param recommendedHeight
 	 * @param recommendedWidth
 	 */
-	public abstract void onResizeEvent(int recommendedHeight,
-			int recommendedWidth);
+	public abstract void onResizeEvent(int recommendedHeight, int recommendedWidth);
 
 	/**
 	 * Use this method instead of

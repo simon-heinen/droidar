@@ -11,7 +11,7 @@ import gl.ObjectPicker;
 import gl.Renderable;
 import gl.animations.GLAnimation;
 
-import javax.microedition.khronos.opengles.GL10;
+//import javax.microedition.khronos.opengles.GL10;
 
 import listeners.SelectionListener;
 import system.Container;
@@ -22,10 +22,22 @@ import util.Wrapper;
 import worldData.Obj;
 import worldData.RenderableEntity;
 import worldData.Updateable;
+
+import android.opengl.GLES10;
+import android.opengl.GLES20;
+import android.opengl.GLES30;
 import android.opengl.Matrix;
 
 import commands.Command;
 import commands.undoable.UndoableCommand;
+
+import static android.opengl.GLES10.glColor4f;
+import static android.opengl.GLES10.glMultMatrixf;
+import static android.opengl.GLES10.glPopMatrix;
+import static android.opengl.GLES10.glPushMatrix;
+import static android.opengl.GLES10.glRotatef;
+import static android.opengl.GLES10.glScalef;
+import static android.opengl.GLES10.glTranslatef;
 
 /**
  * This is a subclass of {@link RenderableEntity} and it can be used for any
@@ -73,8 +85,8 @@ public abstract class MeshComponent implements RenderableEntity,
 
 	/**
 	 * how to extract euler angles from a rotation matrix
-	 * http://paulbourke.net/geometry/eulerangle/ TODO provide a method for this
-	 * extraction
+	 * http://paulbourke.net/geometry/eulerangle/
+	 * TODO provide a method for this extraction
 	 */
 	private float[] markerRotationMatrix;
 
@@ -136,12 +148,9 @@ public abstract class MeshComponent implements RenderableEntity,
 	 */
 	public Vec getWorldCoordsFromModelSpacePosition(Vec modelSpaceCoords) {
 		float[] resultVec = new float[3];
-		float[] modelSpaceCoordsVec = { modelSpaceCoords.x, modelSpaceCoords.y,
-				modelSpaceCoords.z };
-		Matrix.multiplyMV(resultVec, 0, markerRotationMatrix, 0,
-				modelSpaceCoordsVec, 0);
-		return new Vec(resultVec[0] + myPosition.x,
-				resultVec[1] + myPosition.y, resultVec[2] + myPosition.z);
+		float[] modelSpaceCoordsVec = { modelSpaceCoords.x, modelSpaceCoords.y, modelSpaceCoords.z };
+		Matrix.multiplyMV(resultVec, 0, markerRotationMatrix, 0, modelSpaceCoordsVec, 0);
+		return new Vec(resultVec[0] + myPosition.x, resultVec[1] + myPosition.y, resultVec[2] + myPosition.z);
 	}
 
 	@Override
@@ -172,15 +181,15 @@ public abstract class MeshComponent implements RenderableEntity,
 		this.myScale = new Vec(scaleRate, scaleRate, scaleRate);
 	}
 
-	private void loadPosition(GL10 gl) {
+	private void loadPosition(/*GL10 gl*/) {
 		if (myPosition != null)
-			gl.glTranslatef(myPosition.x, myPosition.y, myPosition.z);
+			/*gl.*/glTranslatef(myPosition.x, myPosition.y, myPosition.z);
 	}
 
-	private void loadRotation(GL10 gl) {
+	private void loadRotation(/*GL10 gl*/) {
 
 		if (markerRotationMatrix != null) {
-			gl.glMultMatrixf(markerRotationMatrix, 0);
+			/*gl.*/glMultMatrixf(markerRotationMatrix, 0);
 		}
 
 		if (myRotation != null) {
@@ -194,47 +203,47 @@ public abstract class MeshComponent implements RenderableEntity,
 			 * x-axis rotation wrong. so z x y is the best rotation order but
 			 * normaly z y x would work too:
 			 */
-			gl.glRotatef(myRotation.z, 0, 0, 1);
-			gl.glRotatef(myRotation.x, 1, 0, 0);
-			gl.glRotatef(myRotation.y, 0, 1, 0);
+			/*gl.*/glRotatef(myRotation.z, 0, 0, 1);
+			/*gl.*/glRotatef(myRotation.x, 1, 0, 0);
+			/*gl.*/glRotatef(myRotation.y, 0, 1, 0);
 		}
 
 	}
 
-	private void setScale(GL10 gl) {
+	private void setScale(/*GL10 gl*/) {
 		if (myScale != null)
-			gl.glScalef(myScale.x, myScale.y, myScale.z);
+			/*gl.*/glScalef(myScale.x, myScale.y, myScale.z);
 	}
 
 	@Override
-	public synchronized void render(GL10 gl, Renderable parent) {
+	public synchronized void render(/*GL10 gl,*/ Renderable parent) {
 
 		// store current matrix and then modify it:
-		gl.glPushMatrix();
-		loadPosition(gl);
-		setScale(gl);
-		loadRotation(gl);
+		/*gl.*/glPushMatrix();
+		loadPosition(/*gl*/);
+		setScale(/*gl*/);
+		loadRotation(/*gl*/);
 
 		if (ObjectPicker.readyToDrawWithColor) {
 			if (myPickColor != null) {
-				gl.glColor4f(myPickColor.red, myPickColor.green,
+				/*gl.*/glColor4f(myPickColor.red, myPickColor.green,
 						myPickColor.blue, myPickColor.alpha);
 			} else {
 				Log.d("Object Picker", "Object " + this
 						+ " had no picking color");
 			}
 		} else if (myColor != null) {
-			gl.glColor4f(myColor.red, myColor.green, myColor.blue,
+			/*gl.*/glColor4f(myColor.red, myColor.green, myColor.blue,
 					myColor.alpha);
 		}
 
 		if (myChildren != null) {
-			myChildren.render(gl, this);
+			myChildren.render(/*gl,*/ this);
 		}
 
-		draw(gl, parent);
+		draw(/*gl,*/ parent);
 		// restore old matrix:
-		gl.glPopMatrix();
+		/*gl.*/glPopMatrix();
 	}
 
 	/**
@@ -243,11 +252,11 @@ public abstract class MeshComponent implements RenderableEntity,
 	 * this method and all the translation and rotation abilities of the
 	 * {@link MeshComponent} will be applied automatically
 	 * 
-	 * @param gl
+	 * //@param gl
 	 * @param parent
-	 * @param stack
+	 * //@param stack
 	 */
-	public abstract void draw(GL10 gl, Renderable parent);
+	public abstract void draw(/*GL10 gl,*/ Renderable parent);
 
 	@Override
 	public boolean update(float timeDelta, Updateable parent) {
@@ -411,8 +420,7 @@ public abstract class MeshComponent implements RenderableEntity,
 	public static void addChildToTargetsChildGroup(MeshComponent target,
 			RenderableEntity a, boolean insertAtBeginnung) {
 		if (a == null) {
-			Log.e(LOG_TAG, "Request to add NULL object as a child to " + target
-					+ " was denied!");
+			Log.e(LOG_TAG, "Request to add NULL object as a child to " + target + " was denied!");
 			return;
 		}
 
@@ -486,8 +494,8 @@ public abstract class MeshComponent implements RenderableEntity,
 	// @Override TODO
 	private boolean find(RenderableEntity entity, boolean andRemove) {
 		if (myChildren == entity) {
-			if (andRemove)
-				clearChildren();
+			if (andRemove) this.removeAllChildren();
+//				clearChildren();
 			return true;
 		}
 		if (myChildren instanceof Container) {
@@ -500,8 +508,8 @@ public abstract class MeshComponent implements RenderableEntity,
 	}
 
 	public void removeAllAnimations() {
-		if (myChildren instanceof GLAnimation)
-			this.clearChildren();
+		if (myChildren instanceof GLAnimation) this.removeAllChildren();
+//			this.clearChildren();
 		if (myChildren instanceof Container)
 			removeAllElementsOfType(((Container) myChildren), GLAnimation.class);
 	}
@@ -516,8 +524,7 @@ public abstract class MeshComponent implements RenderableEntity,
 	 *            object of the specified class-type is found in the passed
 	 *            {@link Container} it will be removes
 	 */
-	public static void removeAllElementsOfType(Container c,
-			Class classTypeToRemove) {
+	public static void removeAllElementsOfType(Container c, Class classTypeToRemove) {
 		EfficientList list = c.getAllItems();
 		for (int i = 0; i < list.myLength; i++) {
 			if (classTypeToRemove.isAssignableFrom(list.get(i).getClass())) {

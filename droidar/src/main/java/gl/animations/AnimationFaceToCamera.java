@@ -1,6 +1,6 @@
 package gl.animations;
 
-import javax.microedition.khronos.opengles.GL10;
+//import javax.microedition.khronos.opengles.GL10;
 
 import gl.GLCamera;
 import gl.Renderable;
@@ -8,6 +8,8 @@ import gl.scenegraph.MeshComponent;
 import util.Vec;
 import worldData.Updateable;
 import worldData.Visitor;
+
+import static android.opengl.GLES10.glRotatef;
 
 public class AnimationFaceToCamera extends GLAnimation {
 
@@ -103,11 +105,11 @@ public class AnimationFaceToCamera extends GLAnimation {
     }
 
     @Override
-    public void render(GL10 gl, Renderable parent) {
+    public void render(/*GL10 gl,*/ Renderable parent) {
 
-        gl.glRotatef(rotationVec.z, 0, 0, 1);
-        gl.glRotatef(rotationVec.x, 1, 0, 0);
-        gl.glRotatef(rotationVec.y, 0, 1, 0);
+        /*gl.*/glRotatef(rotationVec.z, 0, 0, 1);
+        /*gl.*/glRotatef(rotationVec.x, 1, 0, 0);
+        /*gl.*/glRotatef(rotationVec.y, 0, 1, 0);
 
         if (adjustmentVec != null) {
             /*
@@ -115,9 +117,9 @@ public class AnimationFaceToCamera extends GLAnimation {
              * AFTER the rotation to be easy to use, see constructor for infos
              * about adjustment
              */
-            gl.glRotatef(adjustmentVec.x, 1, 0, 0); // TODO find correct order
-            gl.glRotatef(adjustmentVec.z, 0, 0, 1);
-            gl.glRotatef(adjustmentVec.y, 0, 1, 0);
+            /*gl.*/glRotatef(adjustmentVec.x, 1, 0, 0); // TODO find correct order
+            /*gl.*/glRotatef(adjustmentVec.z, 0, 0, 1);
+            /*gl.*/glRotatef(adjustmentVec.y, 0, 1, 0);
         }
     }
 

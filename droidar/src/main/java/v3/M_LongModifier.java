@@ -4,8 +4,10 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
-import android.util.Log;
+//import android.util.Log;
 import android.widget.EditText;
+
+import util.Log;
 
 public abstract class M_LongModifier extends M_TextModifier {
 	private Long minimumValue;

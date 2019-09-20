@@ -13,7 +13,7 @@ public class Texture {
 
 	public Texture(TexturedRenderData target, Bitmap textureImage,
 			String textureName) {
-		myList = new EfficientList<TexturedRenderData>();
+		myList = new EfficientList<>();
 		myList.add(target);
 		myImage = textureImage;
 		myName = textureName;

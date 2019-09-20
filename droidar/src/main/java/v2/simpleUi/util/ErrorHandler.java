@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Properties;
 
+import util.Log;
 import v2.simpleUi.M_Button;
 import v2.simpleUi.M_Caption;
 import v2.simpleUi.M_Checkbox;
@@ -25,7 +26,7 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
+//import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -448,7 +449,7 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 		emailIntent.putExtra(Intent.EXTRA_TEXT, emailText);
 		if (includeFiles && savedErrorFilePaths != null) {
 			// has to be an ArrayList
-			ArrayList<Uri> uris = new ArrayList<Uri>();
+			ArrayList<Uri> uris = new ArrayList<>();
 			// convert from paths to Android friendly Parcelable Uri's
 			for (String savedErrorFilePath : savedErrorFilePaths) {
 				File fileIn = new File(savedErrorFilePath);

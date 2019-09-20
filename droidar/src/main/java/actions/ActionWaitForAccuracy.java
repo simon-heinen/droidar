@@ -5,7 +5,7 @@ import system.EventManager;
 import android.app.Activity;
 import android.app.Dialog;
 import android.location.Location;
-import android.util.Log;
+//import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import de.rwth.R;
+import util.Log;
 
 public abstract class ActionWaitForAccuracy extends Action {
 

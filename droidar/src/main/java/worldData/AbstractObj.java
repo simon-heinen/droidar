@@ -12,8 +12,7 @@ import android.view.ViewGroup;
 
 import commands.Command;
 
-public abstract class AbstractObj implements HasInfosInterface, ListItem,
-		SelectionListener, EditItem, RenderableEntity {
+public abstract class AbstractObj implements HasInfosInterface, ListItem, SelectionListener, EditItem, RenderableEntity {
 
 	private MetaInfos myInfoObj;
 	private Command myListClickCommand;

@@ -208,10 +208,9 @@ public class PhoneGestureSensor implements SensorEventListener {
 	 *            The application context in which to run.
 	 */
 	private PhoneGestureSensor(Context context) {
-		phoneGestureListeners = new ArrayList<PhoneGestureListener>();
-		phoneGestureDetectors = new ArrayList<PhoneGestureDetector>();
-		sensorManager = (SensorManager) context
-				.getSystemService(Context.SENSOR_SERVICE);
+		phoneGestureListeners = new ArrayList<>();
+		phoneGestureDetectors = new ArrayList<>();
+		sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
 	}
 
 	/**
@@ -330,8 +329,7 @@ public class PhoneGestureSensor implements SensorEventListener {
 		// We copy the current list of listeners into an array to achieve
 		// thread safety since new listeners could be registered while
 		// propagating the current event.
-		PhoneGestureListener[] listenersToCall = new PhoneGestureListener[phoneGestureListeners
-				.size()];
+		PhoneGestureListener[] listenersToCall = new PhoneGestureListener[phoneGestureListeners.size()];
 		listenersToCall = phoneGestureListeners.toArray(listenersToCall);
 		for (PhoneGestureListener listener : listenersToCall) {
 			listener.onPhoneGesture(phoneGesture);
@@ -354,19 +352,16 @@ public class PhoneGestureSensor implements SensorEventListener {
 		for (PhoneGestureDetector detector : phoneGestureDetectors) {
 			detector.feedSensorEvent(data);
 			if (mostProbableDetector == null
-					|| detector.getProbability() > mostProbableDetector
-							.getProbability()) {
+					|| detector.getProbability() > mostProbableDetector.getProbability()) {
 				mostProbableDetector = detector;
 			}
 		}
 
-		propagateEvent(mostProbableDetector != null ? mostProbableDetector
-				.getType() : StandardPhoneGesture.NONE);
+		propagateEvent(mostProbableDetector != null ? mostProbableDetector.getType() : StandardPhoneGesture.NONE);
 	}
 
 	/**
-	 * Pauses detection of gestures for all registered listeners. Use with
-	 * caution.
+	 * Pauses detection of gestures for all registered listeners. Use with caution.
 	 */
 	public void pause() {
 		sensorManager.unregisterListener(this);
@@ -382,7 +377,6 @@ public class PhoneGestureSensor implements SensorEventListener {
 		sensorManager.registerListener(this,
 				sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
 				SensorManager.SENSOR_DELAY_GAME);
-
 	}
 
 	/**

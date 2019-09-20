@@ -29,7 +29,7 @@ public class SystemTests extends SimpleTesting {
 	}
 
 	private void LimitedQueueTests() throws Exception {
-		LimitedQueue<Integer> l = new LimitedQueue<Integer>(20);
+		LimitedQueue<Integer> l = new LimitedQueue<>(20);
 		for (int i = 0; i < 30; i++) {
 			l.add(i);
 		}

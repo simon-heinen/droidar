@@ -1,6 +1,6 @@
 package gestures.detectors;
 
-import android.util.Log;
+//import android.util.Log;
 
 import java.util.Locale;
 
@@ -8,6 +8,7 @@ import gestures.PhoneGesture;
 import gestures.PhoneGestureDetector;
 import gestures.SensorData;
 import gestures.StandardPhoneGesture;
+import util.Log;
 
 /**
  * A dummy detector that's simply printing out the measured sensor data to the

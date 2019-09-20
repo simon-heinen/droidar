@@ -2,11 +2,13 @@ package gl.animations;
 
 import gl.Renderable;
 
-import javax.microedition.khronos.opengles.GL10;
+//import javax.microedition.khronos.opengles.GL10;
 
 import util.Vec;
 import worldData.Updateable;
 import worldData.Visitor;
+
+import static android.opengl.GLES10.glRotatef;
 
 /**
  * This animation simulated the movement of a metronome. For more details see
@@ -75,10 +77,10 @@ public class AnimationSwingRotate extends GLAnimation {
 	}
 
 	@Override
-	public void render(GL10 gl, Renderable parent) {
-		gl.glRotatef(currentPos.z, 0, 0, 1);
-		gl.glRotatef(currentPos.x, 1, 0, 0);
-		gl.glRotatef(currentPos.y, 0, 1, 0);
+	public void render(/*GL10 gl,*/ Renderable parent) {
+		/*gl.*/glRotatef(currentPos.z, 0, 0, 1);
+		/*gl.*/glRotatef(currentPos.x, 1, 0, 0);
+		/*gl.*/glRotatef(currentPos.y, 0, 1, 0);
 	}
 
 }

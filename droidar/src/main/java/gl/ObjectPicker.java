@@ -1,12 +1,14 @@
 package gl;
 
+import android.opengl.GLES10;
+
 import gl.scenegraph.MeshComponent;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.HashMap;
 
-import javax.microedition.khronos.opengles.GL10;
+//import javax.microedition.khronos.opengles.GL10;
 
 import listeners.SelectionListener;
 import system.Setup;
@@ -15,6 +17,8 @@ import util.Wrapper;
 
 import commands.Command;
 import commands.system.CommandDeviceVibrate;
+
+import static android.opengl.GLES20.glReadPixels;
 
 public class ObjectPicker {
 
@@ -35,7 +39,7 @@ public class ObjectPicker {
 	 * might also be a problem with this to string-key-concept because 0 15 10
 	 * will be the same key as 0 151 0!
 	 */
-	private HashMap<String, Wrapper> myObjectLookUpTable = new HashMap<String, Wrapper>();
+	private HashMap<String, Wrapper> myObjectLookUpTable = new HashMap<>();
 	public int x = 0;
 	public int y = 0;
 
@@ -46,12 +50,12 @@ public class ObjectPicker {
 		this.myFeedbackCommand = myFeedbackCommand;
 	}
 
-	public void pickObject(GL10 gl) {
+	public void pickObject(/*GL10 gl*/) {
 		readyToDrawWithColor = false;
 
 		ByteBuffer pixelBuffer = ByteBuffer.allocateDirect(4);
 		pixelBuffer.order(ByteOrder.nativeOrder());
-		gl.glReadPixels(x, y, 1, 1, GL10.GL_RGBA, GL10.GL_UNSIGNED_BYTE,
+		/*gl.*/glReadPixels(x, y, 1, 1, GLES10.GL_RGBA, GLES10.GL_UNSIGNED_BYTE,
 				pixelBuffer);
 		byte[] b = new byte[4];
 		pixelBuffer.get(b);
@@ -135,15 +139,13 @@ public class ObjectPicker {
 						// Log.d("Color Picking", "possible key=" + k);
 						Wrapper w = myObjectLookUpTable.get(k);
 						if (w != null) {
-							Log.d(LOG_TAG, "Solution found. Modifing key to "
-									+ k);
+							Log.d(LOG_TAG, "Solution found. Modifing key to " + k);
 							/*
 							 * Actually the key isn't modified, the wrapper is
 							 * just registered with the other value too, so that
 							 * the Wrapper will be found the next time
 							 */
-							myObjectLookUpTable
-									.put(getKey(b[0], b[1], b[2]), w);
+							myObjectLookUpTable.put(getKey(b[0], b[1], b[2]), w);
 							return w;
 						}
 					}
@@ -152,8 +154,7 @@ public class ObjectPicker {
 						// Log.d("Color Picking", "possible key=" + k);
 						Wrapper w = myObjectLookUpTable.get(k);
 						if (w != null) {
-							Log.d(LOG_TAG, "Solution found. Modifing key to "
-									+ k);
+							Log.d(LOG_TAG, "Solution found. Modifing key to " + k);
 							/*
 							 * Actually the key isn't modified, the wrapper is
 							 * just registered with the other value too, so that

@@ -14,8 +14,9 @@ import markerDetection.MarkerDetectionSetup;
 import markerDetection.MarkerObjectMap;
 import markerDetection.UnrecognizedMarkerListener;
 import system.EventManager;
-import util.IO;
+//import util.IO;
 import util.Vec;
+import v2.simpleUi.util.IO;
 import worldData.Obj;
 import worldData.SystemUpdater;
 import worldData.World;
@@ -47,8 +48,7 @@ public class ExampleMarkerRenderSetup extends MarkerDetectionSetup {
 	}
 
 	@Override
-	public void _b_addWorldsToRenderer(GL1Renderer renderer,
-									   GLFactory objectFactory, GeoObj currentPosition) {
+	public void _b_addWorldsToRenderer(GL1Renderer renderer, GLFactory objectFactory, GeoObj currentPosition) {
 		renderer.addRenderElement(world);
 		Obj o = new Obj();
 		o.setComp(AndroidMeshData.getAndroidMesh());
@@ -64,7 +64,7 @@ public class ExampleMarkerRenderSetup extends MarkerDetectionSetup {
 		MeshComponent c = GLFactory.getInstance().newCube(null);
 		c.setPosition(new Vec(-3, 3, 0));
 		c.setScale(new Vec(0.5f, 0.5f, 0.5f));
-		c.setOnClickCommand(new CommandPlaySound("/sdcard/train.mp3"));
+//		c.setOnClickCommand(new CommandPlaySound("/sdcard/train.mp3"));
 		Obj geoC = new Obj();
 		geoC.setComp(c);
 		world.add(geoC);
@@ -94,30 +94,25 @@ public class ExampleMarkerRenderSetup extends MarkerDetectionSetup {
 		Obj treangle = new Obj();
 		MeshComponent treangleMesh = GLFactory.getInstance().newTexturedSquare(
 				"worldIconId",
-				IO.loadBitmapFromId(myTargetActivity, R.drawable.icon));
+				IO.loadBitmapFromId(getActivity()/*myTargetActivity*/, R.drawable.icon));
 		treangleMesh.setPosition(new Vec(0, -2, 1));
 		treangleMesh.setPosition(new Vec(0, 0, 0));
 		treangleMesh.addChild(new AnimationFaceToCamera(camera, 0.5f));
 		treangle.setComp(treangleMesh);
 		world.add(treangle);
-
 	}
 
 	@Override
-	public void _c_addActionsToEvents(EventManager eventManager,
-									  CustomGLSurfaceView arView, SystemUpdater worldUpdater) {
+	public void _c_addActionsToEvents(EventManager eventManager, CustomGLSurfaceView arView, SystemUpdater worldUpdater) {
 		arView.addOnTouchMoveListener(new ActionBufferedCameraAR(camera));
-
 	}
 
 	@Override
 	public void _d_addElementsToUpdateThread(SystemUpdater updater) {
 		updater.addObjectToUpdateCycle(world);
-
 	}
 
 	@Override
 	public void _e2_addElementsToGuiSetup(GuiSetup guiSetup, Activity activity) {
 	}
-
 }

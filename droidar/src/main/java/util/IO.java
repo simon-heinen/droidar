@@ -50,13 +50,12 @@ public class IO {
 		}
 	}
 
-	public static String convertInputStreamToString(InputStream stream) {
+	public static String convertInputStreamToString(InputStream stream) throws IOException {
 		if (stream == null)
 			return null;
 
+		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					stream));
 			StringBuilder sb = new StringBuilder();
 
 			String line = null;
@@ -69,6 +68,8 @@ public class IO {
 
 		} catch (Exception e) {
 			Log.e(LOG_TAG, "Could not convert input stream to string");
+		} finally {
+			reader.close();
 		}
 		return null;
 	}

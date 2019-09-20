@@ -30,9 +30,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
-import android.util.Log;
+//import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+
+import util.Log;
 
 public class IO {
 
@@ -51,19 +53,18 @@ public class IO {
 			Log.i(LOG_TAG, "image loaded: " + b);
 			return b;
 		} catch (Exception ex) {
-			Log.e("bitmap loading exeption", "" + ex);
+			Log.e("bitmap loading exception", "" + ex);
 			return null;
 		}
 	}
 
-	public static String convertInputStreamToString(InputStream stream) {
+	public static String convertInputStreamToString(InputStream stream) throws IOException {
 		if (stream == null) {
 			return null;
 		}
+		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					stream));
 			StringBuilder sb = new StringBuilder();
 
 			String line = null;
@@ -76,6 +77,9 @@ public class IO {
 
 		} catch (Exception e) {
 			Log.e(LOG_TAG, "Could not convert input stream to string");
+		}
+		finally {
+			reader.close();
 		}
 		return null;
 	}

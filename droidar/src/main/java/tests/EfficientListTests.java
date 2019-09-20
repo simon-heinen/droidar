@@ -12,7 +12,7 @@ public class EfficientListTests extends SimpleTesting {
 	}
 
 	private void t1() throws Exception {
-		EfficientList<String> e = new EfficientList<String>();
+		EfficientList<String> e = new EfficientList<>();
 		assertTrue(e.myLength == 0);
 		String s = "";
 		String s2 = "";
@@ -42,7 +42,7 @@ public class EfficientListTests extends SimpleTesting {
 	}
 
 	private void t2() throws Exception {
-		EfficientListQualified<String> e = new EfficientListQualified<String>();
+		EfficientListQualified<String> e = new EfficientListQualified<>();
 		assertTrue(e.myLength == 0);
 		String s = "";
 		String s2 = "";

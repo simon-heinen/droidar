@@ -4,7 +4,7 @@ import gl.Color;
 import gl.HasColor;
 import gl.Renderable;
 
-import javax.microedition.khronos.opengles.GL10;
+//import javax.microedition.khronos.opengles.GL10;
 
 import util.Log;
 import util.Vec;
@@ -23,7 +23,7 @@ public class AnimationColorMorph extends GLAnimation {
 	}
 
 	@Override
-	public void render(GL10 gl, Renderable parent) {
+	public void render(/*GL10 gl,*/ Renderable parent) {
 		// TODO Auto-generated method stub
 
 	}

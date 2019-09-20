@@ -8,7 +8,7 @@ import worldData.Obj;
 
 import components.ViewPosCalcerComp;
 
-import de.rwth.setups.PlaceObjectsSetupTwo;
+//import de.rwth.setups.PlaceObjectsSetupTwo;
 
 /**
  * Don't use this {@link Action} anymore, instead use a

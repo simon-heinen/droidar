@@ -9,9 +9,9 @@ import commands.logic.CommandIfThenElse;
 
 public class TaskList {
 
-	private EfficientList<Command> myHighPrioTasks = new EfficientList<Command>();
-	private EfficientList<Command> myNormalPrioTasks = new EfficientList<Command>();
-	private EfficientList<Command> myLowPrioTasks = new EfficientList<Command>();
+	private EfficientList<Command> myHighPrioTasks = new EfficientList<>();
+	private EfficientList<Command> myNormalPrioTasks = new EfficientList<>();
+	private EfficientList<Command> myLowPrioTasks = new EfficientList<>();
 
 	public synchronized void addHighPrioTask(Command commandToAdd) {
 		addCommandInTaskList(myHighPrioTasks, commandToAdd);
@@ -25,8 +25,7 @@ public class TaskList {
 		addCommandInTaskList(myLowPrioTasks, commandToAdd);
 	}
 
-	private void addCommandInTaskList(EfficientList<Command> list,
-			Command commandToAdd) {
+	private void addCommandInTaskList(EfficientList<Command> list, Command commandToAdd) {
 		Log.d("TaskManager", "Adding command (" + commandToAdd
 				+ ") to taskList!");
 		if (commandToAdd instanceof CommandGroup) {

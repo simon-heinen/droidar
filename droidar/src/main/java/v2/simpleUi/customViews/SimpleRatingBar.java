@@ -3,6 +3,7 @@ package v2.simpleUi.customViews;
 import java.util.ArrayList;
 import java.util.List;
 
+import util.Log;
 import v2.simpleUi.util.ColorCollections;
 import v2.simpleUi.util.IO;
 import v2.simpleUi.util.ImageTransform;
@@ -21,7 +22,7 @@ import android.text.Layout.Alignment;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.Log;
+//import android.util.Log;
 import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -305,7 +306,7 @@ public class SimpleRatingBar extends TextView {
 	private ArrayList<RatingItem> loadExampleNames() {
 
 		NameGenerator g = new NameGenerator();
-		ArrayList<RatingItem> n = new ArrayList<RatingItem>();
+		ArrayList<RatingItem> n = new ArrayList<>();
 		for (int i = 0; i < 10; i++) {
 			StringBuilder name = new StringBuilder(g.getName());
 			for (int j = 0; j < Math.random() * 5; j++) {
@@ -366,7 +367,7 @@ public class SimpleRatingBar extends TextView {
 
 	private void updateBars() {
 		if (itemRatingBars == null)
-			itemRatingBars = new ArrayList<Bitmap>();
+			itemRatingBars = new ArrayList<>();
 		else
 			itemRatingBars.clear();
 

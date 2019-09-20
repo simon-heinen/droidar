@@ -2,7 +2,7 @@ package gl;
 
 import geo.GeoObj;
 
-import javax.microedition.khronos.opengles.GL10;
+//import javax.microedition.khronos.opengles.GL10;
 
 import system.EventManager;
 import util.Calculus;
@@ -13,9 +13,14 @@ import worldData.MoveComp;
 import worldData.Updateable;
 import actions.ActionUseCameraAngles2;
 import android.location.Location;
+import android.opengl.GLES10;
 import android.opengl.Matrix;
 
 import java.util.Arrays;
+
+import static android.opengl.GLES10.glMultMatrixf;
+import static android.opengl.GLES10.glRotatef;
+import static android.opengl.GLES10.glTranslatef;
 
 /**
  * This is the virtual camera needed to display a virtual world. The 3 important
@@ -332,22 +337,22 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 	 * @param
 	 */
 	@Override
-	public synchronized void render(GL10 gl, Renderable parent) {
+	public synchronized void render(/*GL10 gl,*/ Renderable parent) {
 
 		// if the camera sould not be in the center of the rotation it has to be
 		// moved out before rotating:
-		glLoadPosition(gl, myOffset);
+		glLoadPosition(/*gl,*/ myOffset);
 
 		synchronized (rotMatrLock) {
 			// load rotation matrix:
-			gl.glMultMatrixf(rotationMatrix, matrixOffset);
+			/*gl.*/glMultMatrixf(rotationMatrix, matrixOffset);
 		}
 
 		// rotate Camera TODO use for manual rotation:
-		glLoadRotation(gl, myRotationVec);
+		glLoadRotation(/*gl,*/ myRotationVec);
 
 		// set the point where to rotate around
-		glLoadPosition(gl, myPosition);
+		glLoadPosition(/*gl,*/ myPosition);
 	}
 
 	/*
@@ -390,15 +395,15 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 				rotDirection[0]);
 	}
 
-	private void glLoadPosition(GL10 gl, Vec vec) {
+	private void glLoadPosition(/*GL10 gl,*/ Vec vec) {
 		if (vec != null) {
 			// if you want to set the center to 0 0 5 you have to move the
 			// camera -5 units OUT of the screen
-			gl.glTranslatef(-vec.x, -vec.y, -vec.z);
+			/*gl.*/glTranslatef(-vec.x, -vec.y, -vec.z);
 		}
 	}
 
-	private void glLoadRotation(GL10 gl, Vec vec) {
+	private void glLoadRotation(/*GL10 gl,*/ Vec vec) {
 		/*
 		 * a very important point is that its something completely different
 		 * when you change the rotation order to x y z ! the order y x z is
@@ -413,9 +418,9 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable,
 		 * the camera.
 		 */
 		if (vec != null) {
-			gl.glRotatef(vec.y, 0, 1, 0);
-			gl.glRotatef(vec.x, 1, 0, 0);
-			gl.glRotatef(vec.z, 0, 0, 1);
+			/*gl.*/glRotatef(vec.y, 0, 1, 0);
+			/*gl.*/glRotatef(vec.x, 1, 0, 0);
+			/*gl.*/glRotatef(vec.z, 0, 0, 1);
 		}
 	}
 

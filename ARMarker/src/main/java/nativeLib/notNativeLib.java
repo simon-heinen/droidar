@@ -169,7 +169,7 @@ if (LOG_OUTPUT_ON) {
 //	(*env)->GetDoubleArrayRegion(env, distCoeff, 0, 5, lNew);
 		lNew = GetDoubleArrayRegion(distCoeff, 0, 5);
 	newParams = true;
-	int constants[] = { MAX_MARKER_INDEX, MAX_CALIB_FRAMES };
+	int[] constants = { MAX_MARKER_INDEX, MAX_CALIB_FRAMES };
 //	(*env)->SetIntArrayRegion(env, parameterArray, 0, 2, constants);
 		parameterArray = SetIntArrayRegion(0, 2, constants);
 
@@ -272,7 +272,7 @@ if (LOG_OUTPUT_ON) {
 
 			//Sequences to store the detected contours.
 //			CvSeq* contours;
-	List<MatOfPoint> contours= new ArrayList<MatOfPoint>();
+	List<MatOfPoint> contours= new ArrayList<>();
 //			CvSeq* result;
 	MatOfPoint2f result = new MatOfPoint2f();
 			// create empty sequence that will contain points -
@@ -368,10 +368,10 @@ Mat R = new Mat(3, 3, CV_32F); R.put(0, 0, rotMat); //	CvMat R = cvMat(3, 3, CV_
 
 						//Create some matrices and appropriate options to access the values.
 Mat OP = new Mat(5, 1, CV_32FC3); //						CvMat *OP = cvCreateMat(5, 1, CV_32FC3);
-List<Point3> op = new ArrayList<Point3>(); //						CvPoint3D32f *op = (CvPoint3D32f *) OP->data.fl;
+List<Point3> op = new ArrayList<>(); //						CvPoint3D32f *op = (CvPoint3D32f *) OP->data.fl;
 
 Mat IP = new Mat(5, 1, CV_32FC2); //						CvMat *IP = cvCreateMat(5, 1, CV_32FC2);
-List<Point> ip = new ArrayList<Point>(); //						CvPoint2D32f *ip = (CvPoint2D32f *) IP->data.fl;
+List<Point> ip = new ArrayList<>(); //						CvPoint2D32f *ip = (CvPoint2D32f *) IP->data.fl;
 
 						if (LOG_OUTPUT_ON) {//#ifdef LOG_OUTPUT_ON
 //						LOGD("k Matrix");
@@ -469,7 +469,7 @@ List<Point> ip = new ArrayList<Point>(); //						CvPoint2D32f *ip = (CvPoint2D32
 						op.get(4).y = 0.00;
 						op.get(4).z = 0.00;
 						if (LOG_OUTPUT_ON) {//#ifdef LOG_OUTPUT_ON
-							System.out.printf("OP Matrix");
+							System.out.print("OP Matrix");
 							System.out.printf("OP1(x,y,z) : (%3.2f, %3.2f, %3.2f)", op.get(0).x, op.get(0).y, op.get(0).z);
 //						LOGD(tmp);
 							System.out.printf("OP2(x,y,z) : (%3.2f, %3.2f, %3.2f)", op.get(1).x, op.get(1).y, op.get(1).z);
@@ -480,7 +480,7 @@ List<Point> ip = new ArrayList<Point>(); //						CvPoint2D32f *ip = (CvPoint2D32
 //						LOGD(tmp);
 							System.out.printf("OP5(x,y,z) : (%3.2f, %3.2f, %3.2f)", op.get(4).x, op.get(4).y, op.get(4).z);
 //						LOGD(tmp);
-							System.out.printf("IP Matrix");
+							System.out.print("IP Matrix");
 							System.out.printf("IP1(x,y) : (%3.2f, %3.2f)", ip.get(0).x, ip.get(0).y);
 //						LOGD(tmp);
 							System.out.printf("IP2(x,y) : (%3.2f, %3.2f)", ip.get(1).x, ip.get(1).y);
@@ -511,7 +511,7 @@ List<Point> ip = new ArrayList<Point>(); //						CvPoint2D32f *ip = (CvPoint2D32
 //						LOGD(tmp);
 							System.out.printf("TV(x,y,z) : (%3.2f, %3.2f, %3.2f)", tv[0], tv[1], tv[2]);
 //						LOGD(tmp);
-							System.out.printf("Rotation Matrix:");
+							System.out.print("Rotation Matrix:");
 							System.out.printf("%3.2f, %3.2f, %3.2f", rotMat[0], rotMat[1], rotMat[2]);
 //						LOGD(tmp);
 							System.out.printf("%3.2f, %3.2f, %3.2f", rotMat[3], rotMat[4], rotMat[5]);
@@ -697,7 +697,7 @@ List<Point> ip = new ArrayList<Point>(); //						CvPoint2D32f *ip = (CvPoint2D32
 								//If calibration needs to be done, use these points by storing them in the appropriate arrays.
 								if (calibrateNext && frameCounter >= 0) {
 									if (LOG_OUTPUT_ON) {//#ifdef LOG_OUTPUT_ON
-										System.out.printf("Adding points to list");
+										System.out.print("Adding points to list");
 									}//#endif
 //
 //									CvPoint3D32f *opCalib =

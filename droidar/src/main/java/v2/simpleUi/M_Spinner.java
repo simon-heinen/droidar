@@ -78,7 +78,7 @@ public abstract class M_Spinner implements ModifierInterface {
 
 		s = new Spinner(context);
 		s.setLayoutParams(p2);
-		ArrayAdapter<SpinnerItem> a = new ArrayAdapter<SpinnerItem>(context,
+		ArrayAdapter<SpinnerItem> a = new ArrayAdapter<>(context,
 				android.R.layout.simple_spinner_item, loadListToDisplay());
 		a.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		s.setAdapter(a);

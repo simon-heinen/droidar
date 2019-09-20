@@ -115,7 +115,7 @@ public class CustomGLSurfaceView extends GLSurfaceView implements
 
 	public void addOnTouchMoveListener(TouchMoveListener onTouchListener) {
 		if (onTouchListeners == null) {
-			this.onTouchListeners = new ArrayList<TouchMoveListener>();
+			this.onTouchListeners = new ArrayList<>();
 		}
 		this.onTouchListeners.add(onTouchListener);
 	}

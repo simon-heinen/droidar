@@ -148,7 +148,7 @@ public class RadarView extends SimpleCustomView implements Updateable {
 
 		myCamera = new GLCamera();
 		myCamera.setPosition(new Vec(40, 40, 0));
-		items = new EfficientList<RenderableEntity>();
+		items = new EfficientList<>();
 		items.add(newObj(40, 500));
 		items.add(newObj(10, 10));
 		items.add(newObj(200, 200));

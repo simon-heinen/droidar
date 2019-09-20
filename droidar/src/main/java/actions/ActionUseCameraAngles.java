@@ -22,7 +22,7 @@ public abstract class ActionUseCameraAngles extends Action {
 	@Deprecated
 	private int accelThreshold = 10;
 	/**
-	 * sould represent {@link SensorManager#getOrientation(float[], float[])}
+	 * should represent {@link SensorManager#getOrientation(float[], float[])}
 	 */
 	@Deprecated
 	private float[] myAngles = new float[3];

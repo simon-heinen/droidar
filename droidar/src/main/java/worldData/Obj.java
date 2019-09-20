@@ -7,16 +7,18 @@ import gl.ObjectPicker;
 import gl.Renderable;
 import gl.scenegraph.MeshComponent;
 
-import javax.microedition.khronos.opengles.GL10;
+//import javax.microedition.khronos.opengles.GL10;
 
 import util.EfficientList;
 import util.Vec;
 
 import commands.Command;
 
+import static android.opengl.GLES10.glColor4f;
+
 public class Obj extends AbstractObj implements HasPosition, HasColor {
 
-	EfficientList<Entity> myComponents = new EfficientList<Entity>();
+	EfficientList<Entity> myComponents = new EfficientList<>();
 
 	public void setMyComponents(EfficientList<Entity> myComponents) {
 		this.myComponents = myComponents;
@@ -99,7 +101,7 @@ public class Obj extends AbstractObj implements HasPosition, HasColor {
 	}
 
 	@Override
-	public void render(GL10 gl, Renderable parent) {
+	public void render(/*GL10 gl,*/ Renderable parent) {
 
 		if (myGraphicsComponent == null)
 			return;
@@ -115,15 +117,15 @@ public class Obj extends AbstractObj implements HasPosition, HasColor {
 		 * meshGroup wont have the correct selection color!
 		 */
 		if (ObjectPicker.readyToDrawWithColor) {
-			gl.glColor4f(0, 0, 0, 1);
+			/*gl.*/glColor4f(0, 0, 0, 1);
 		} else {
 			/*
 			 * before drawing a new object, reset the color to white TODO
 			 */
-			gl.glColor4f(1, 1, 1, 1);
+			/*gl.*/glColor4f(1, 1, 1, 1);
 		}
 
-		myGraphicsComponent.render(gl, this);
+		myGraphicsComponent.render(/*gl,*/ this);
 	}
 
 	@Override

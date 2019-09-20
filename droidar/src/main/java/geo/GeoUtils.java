@@ -93,7 +93,7 @@ public class GeoUtils {
 		try {
 			List<Address> locations = myGeoCoder.getFromLocation(
 					location.getLatitude(), location.getLongitude(), 1);
-			if (locations.size() > 0) {
+			if (!locations.isEmpty()) {
 				return locations.get(0);
 			}
 
@@ -113,7 +113,7 @@ public class GeoUtils {
 		try {
 			List<Address> addresses = myGeoCoder
 					.getFromLocationName(address, 5);
-			if (addresses.size() > 0) {
+			if (!addresses.isEmpty()) {
 				GeoObj g = new GeoObj(addresses.get(0));
 				g.getInfoObject().setShortDescr(
 						address + " (" + g.getInfoObject().getShortDescr()
@@ -140,7 +140,7 @@ public class GeoUtils {
 		try {
 			List<Address> addresses = myGeoCoder.getFromLocationName(address,
 					maxResults);
-			if (addresses.size() > 0) {
+			if (!addresses.isEmpty()) {
 				GeoGraph result = new GeoGraph();
 				for (int i = 0; i < addresses.size(); i++) {
 					result.add(new GeoObj(addresses.get(i)));

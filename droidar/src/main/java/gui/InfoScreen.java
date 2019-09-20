@@ -3,7 +3,7 @@ package gui;
 import system.ActivityConnector;
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
+//import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import de.rwth.R;
+import util.Log;
 
 /**
  * This screen can be used to display an introduction to the user when the AR

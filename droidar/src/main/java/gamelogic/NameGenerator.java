@@ -6,10 +6,10 @@ import java.util.List;
 
 public class NameGenerator {
 
-	private List<String> vocals = new ArrayList<String>();
-	private List<String> startConsonants = new ArrayList<String>();
-	private List<String> endConsonants = new ArrayList<String>();
-	private List<String> nameInstructions = new ArrayList<String>();
+	private List<String> vocals = new ArrayList<>();
+	private List<String> startConsonants = new ArrayList<>();
+	private List<String> endConsonants = new ArrayList<>();
+	private List<String> nameInstructions = new ArrayList<>();
 
 	public NameGenerator() {
 		String[] demoVocals = { "a", "e", "i", "o", "u", "ei", "ai", "ou", "j",

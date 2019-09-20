@@ -35,7 +35,7 @@ public class MemoryAllocationTests extends SimpleTesting {
 		Log.d("Test", "EfficientList creation with " + objectOfNumber
 				+ " objects.");
 		start = SystemClock.uptimeMillis();
-		EfficientList<String> list = new EfficientList<String>();
+		EfficientList<String> list = new EfficientList<>();
 		for (int i = 0; i < objectOfNumber; i++) {
 			list.add("Text " + i);
 		}
@@ -62,7 +62,7 @@ public class MemoryAllocationTests extends SimpleTesting {
 		Log.d("Test", "EfficientList creation with " + objectOfNumber
 				+ " objects.");
 		start = SystemClock.uptimeMillis();
-		EfficientList<String> list = new EfficientList<String>();
+		EfficientList<String> list = new EfficientList<>();
 		for (int i = 0; i < objectOfNumber; i++) {
 			list.add("Text " + i);
 		}
@@ -89,7 +89,7 @@ public class MemoryAllocationTests extends SimpleTesting {
 		Log.d("Test", "EfficientList creation with " + objectOfNumber
 				+ " objects.");
 		start = SystemClock.uptimeMillis();
-		EfficientList<String> list = new EfficientList<String>();
+		EfficientList<String> list = new EfficientList<>();
 		for (int i = 0; i < objectOfNumber; i++) {
 			list.add("Text " + i);
 		}
@@ -115,7 +115,7 @@ public class MemoryAllocationTests extends SimpleTesting {
 
 		Log.d("Test", "ArrayList creation with " + objectOfNumber + " objects.");
 		start = SystemClock.uptimeMillis();
-		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<String> list = new ArrayList<>();
 		for (int i = 0; i < objectOfNumber; i++) {
 			list.add("Text " + i);
 		}
@@ -144,7 +144,7 @@ public class MemoryAllocationTests extends SimpleTesting {
 	 */
 	private void CollectionTestA(int durationInMS) throws Exception {
 
-		ArrayList<String> x = new ArrayList<String>();
+		ArrayList<String> x = new ArrayList<>();
 		for (int j = 0; j < 200; j++) {
 			String s = "String " + j;
 			x.add(s);
@@ -170,7 +170,7 @@ public class MemoryAllocationTests extends SimpleTesting {
 	 */
 	private void CollectionTestB(int durationInMS) throws Exception {
 
-		ArrayList<String> x = new ArrayList<String>();
+		ArrayList<String> x = new ArrayList<>();
 		for (int j = 0; j < 200; j++) {
 			String s = "String " + j;
 			x.add(s);
@@ -197,7 +197,7 @@ public class MemoryAllocationTests extends SimpleTesting {
 	 */
 	private void CollectionTestC(int durationInMS) throws Exception {
 
-		ArrayList<String> x = new ArrayList<String>();
+		ArrayList<String> x = new ArrayList<>();
 		for (int j = 0; j < 200; j++) {
 			String s = "String " + j;
 			x.add(s);

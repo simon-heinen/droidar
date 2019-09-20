@@ -33,8 +33,7 @@ public class StepSettingsControllerView extends M_Container {
 
 			@Override
 			public boolean save(double newValue) {
-				SimpleLocationManager
-						.setMinimumAverageAccuracy((float) newValue);
+				SimpleLocationManager.setMinimumAverageAccuracy((float) newValue);
 				return true;
 			}
 
@@ -52,15 +51,13 @@ public class StepSettingsControllerView extends M_Container {
 
 			@Override
 			public boolean save(int newValue) {
-				SimpleLocationManager
-						.setNumberOfSimulatedStepsInSameDirection(newValue);
+				SimpleLocationManager.setNumberOfSimulatedStepsInSameDirection(newValue);
 				return true;
 			}
 
 			@Override
 			public int load() {
-				return SimpleLocationManager
-						.getNumberOfSimulatedStepsInSameDirection();
+				return SimpleLocationManager.getNumberOfSimulatedStepsInSameDirection();
 			}
 
 			@Override
@@ -68,8 +65,7 @@ public class StepSettingsControllerView extends M_Container {
 				return "NumberOfSimulatedStepsInSameDirection";
 			}
 		});
-		final StepManager sm = SimpleLocationManager.getInstance(context)
-				.getStepManager();
+		final StepManager sm = SimpleLocationManager.getInstance(context).getStepManager();
 		if (sm != null) {
 
 			this.add(new M_Double() {

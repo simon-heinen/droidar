@@ -40,8 +40,7 @@ public class MultiMarkerSetup extends MarkerDetectionSetup {
 		mesh1 = new Shape();
 
 		mesh1.addChild(GLFactory.getInstance().newCoordinateSystem());
-		// mesh.add(GLFactory.getInstance().newCircle(new Color(0, 0, 1,
-		// 0.6f)));
+		// mesh.add(GLFactory.getInstance().newCircle(new Color(0, 0, 1,0.6f)));
 		mesh1.addChild(GLFactory.getInstance().newCube());
 
 		mesh2 = new Shape();
@@ -49,20 +48,17 @@ public class MultiMarkerSetup extends MarkerDetectionSetup {
 		mesh2.addChild(GLFactory.getInstance().newCircle(
 				new Color(0, 0, 1, 0.6f)));
 		// mesh1.add(GLFactory.getInstance().newCube());
-
 	}
 
 	@Override
 	public UnrecognizedMarkerListener _a2_getUnrecognizedMarkerListener() {
 		return new UnrecognizedMarkerListener() {
-
 			@Override
 			public void onUnrecognizedMarkerDetected(int markerCode,
 													 float[] mat, int startIdx, int endIdx, int rotationValue) {
 				System.out.println("unrecognized markerCode=" + markerCode);
 			}
 		};
-
 	}
 
 	@Override
@@ -115,19 +111,15 @@ public class MultiMarkerSetup extends MarkerDetectionSetup {
 		world.add(o2);
 
 		world.add(objectFactory.newHexGroupTest(new Vec()));
-
 	}
 
 	@Override
 	public void _c_addActionsToEvents(EventManager eventManager, CustomGLSurfaceView arView, SystemUpdater worldUpdater) {
-		arView.addOnTouchMoveListener(new ActionMoveCameraBuffered(camera, 5,
-				25));
+		arView.addOnTouchMoveListener(new ActionMoveCameraBuffered(camera, 5, 25));
 		Action rot = new ActionRotateCameraBuffered(camera);
 		worldUpdater.addObjectToUpdateCycle(rot);
 		eventManager.addOnOrientationChangedAction(rot);
-		eventManager.addOnTrackballAction(new ActionMoveCameraBuffered(camera,
-				1, 25));
-
+		eventManager.addOnTrackballAction(new ActionMoveCameraBuffered(camera, 1, 25));
 	}
 
 	@Override
@@ -144,8 +136,7 @@ public class MultiMarkerSetup extends MarkerDetectionSetup {
 
 				Vec rayPosition = new Vec();
 				Vec rayDirection = new Vec();
-				camera.getPickingRay(rayPosition, rayDirection,
-						GLRenderer.halfWidth, GLRenderer.halfHeight);
+				camera.getPickingRay(rayPosition, rayDirection, GLRenderer.halfWidth, GLRenderer.halfHeight);
 
 				System.out.println("rayPosition=" + rayPosition);
 				System.out.println("rayDirection=" + rayDirection);
@@ -157,6 +148,5 @@ public class MultiMarkerSetup extends MarkerDetectionSetup {
 				return false;
 			}
 		}, "Place 2 meters infront");
-
 	}
 }

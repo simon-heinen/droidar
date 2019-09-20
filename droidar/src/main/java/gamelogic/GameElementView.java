@@ -2,6 +2,7 @@ package gamelogic;
 
 import gui.SimpleCustomView;
 import util.ImageTransform;
+import util.Log;
 import worldData.Entity;
 import worldData.Updateable;
 import worldData.Visitor;
@@ -15,7 +16,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.graphics.Xfermode;
 import android.util.AttributeSet;
-import android.util.Log;
+//import android.util.Log;
 import de.rwth.R;
 
 public class GameElementView extends SimpleCustomView implements Entity {

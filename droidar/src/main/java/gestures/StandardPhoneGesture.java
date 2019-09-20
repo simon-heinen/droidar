@@ -10,8 +10,7 @@ public enum StandardPhoneGesture implements PhoneGesture {
     /* A "punching" gesture that goes vertically upwards */
     UPPERCUT,
     /*
-     * A "360 degree turn" of the player (i.e., the player's nose faces all
-     * georgraphic directions once)
+     * A "360 degree turn" of the player (i.e., the player's nose faces all georgraphic directions once)
      */
     FULL_TURN
 }

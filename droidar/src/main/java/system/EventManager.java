@@ -90,18 +90,15 @@ public class EventManager implements LocationListener, SensorEventListener {
 		myInstance = instance;
 	}
 
-	public void registerListeners(Activity targetActivity,
-			boolean useAccelAndMagnetoSensors) {
+	public void registerListeners(Activity targetActivity, boolean useAccelAndMagnetoSensors) {
 		myTargetActivity = targetActivity;
 		registerSensorUpdates(targetActivity, useAccelAndMagnetoSensors);
 		registerLocationUpdates();
 
 	}
 
-	protected void registerSensorUpdates(Activity myTargetActivity,
-			boolean useAccelAndMagnetoSensors) {
-		SensorManager sensorManager = (SensorManager) myTargetActivity
-				.getSystemService(Context.SENSOR_SERVICE);
+	protected void registerSensorUpdates(Activity myTargetActivity, boolean useAccelAndMagnetoSensors) {
+		SensorManager sensorManager = (SensorManager) myTargetActivity.getSystemService(Context.SENSOR_SERVICE);
 
 		if (useAccelAndMagnetoSensors) {
 			/*
@@ -111,10 +108,8 @@ public class EventManager implements LocationListener, SensorEventListener {
 			 * events. The update rate is set by SENSOR_DELAY_GAME to a high
 			 * frequency required to react on fast device movement
 			 */
-			Sensor magnetSensor = sensorManager
-					.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-			sensorManager.registerListener(this, magnetSensor,
-					SensorManager.SENSOR_DELAY_GAME);
+			Sensor magnetSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+			sensorManager.registerListener(this, magnetSensor, SensorManager.SENSOR_DELAY_GAME);
 			Sensor accelSensor = sensorManager
 					.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 			sensorManager.registerListener(this, accelSensor,
@@ -231,7 +226,7 @@ public class EventManager implements LocationListener, SensorEventListener {
 	public void addOnOrientationChangedAction(OrientationChangedListener action) {
 		Log.d(LOG_TAG, "Adding onOrientationChangedAction");
 		if (onOrientationChangedList == null) {
-			onOrientationChangedList = new ArrayList<OrientationChangedListener>();
+			onOrientationChangedList = new ArrayList<>();
 		}
 		onOrientationChangedList.add(action);
 	}
@@ -239,7 +234,7 @@ public class EventManager implements LocationListener, SensorEventListener {
 	public void addOnTrackballAction(TrackBallEventListener action) {
 		Log.d(LOG_TAG, "Adding onTouchMoveAction");
 		if (onTrackballEventList == null) {
-			onTrackballEventList = new ArrayList<TrackBallEventListener>();
+			onTrackballEventList = new ArrayList<>();
 		}
 		onTrackballEventList.add(action);
 
@@ -248,14 +243,14 @@ public class EventManager implements LocationListener, SensorEventListener {
 	public void addOnLocationChangedAction(LocationEventListener action) {
 		Log.d(LOG_TAG, "Adding onLocationChangedAction");
 		if (onLocationChangedList == null) {
-			onLocationChangedList = new ArrayList<LocationEventListener>();
+			onLocationChangedList = new ArrayList<>();
 		}
 		onLocationChangedList.add(action);
 	}
 
 	public void addOnKeyPressedCommand(int keycode, Command c) {
 		if (myOnKeyPressedCommandList == null) {
-			myOnKeyPressedCommandList = new HashMap<Integer, Command>();
+			myOnKeyPressedCommandList = new HashMap<>();
 		}
 		myOnKeyPressedCommandList.put(keycode, c);
 	}

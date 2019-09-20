@@ -8,6 +8,9 @@ android {
         minSdkVersion 19
         targetSdkVersion 29
         applicationId = 'de.rwth.GoogleMapsSupport'
+        versionCode = 1
+        versionName = '1.0'
+        multiDexEnabled = true
     }
 
     buildTypes {
@@ -24,7 +27,8 @@ android {
 
 dependencies {
     implementation project(path: ':droidar')
-    implementation 'com.google.android.gms:play-services:12.0.1'
+//    implementation 'com.google.android.gms:play-services:12.0.1'
     implementation 'com.google.android.gms:play-services-base:17.1.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
 }
+apply plugin: 'com.google.gms.google-services'

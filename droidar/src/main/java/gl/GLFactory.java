@@ -11,17 +11,19 @@ import gl.textures.Textured2dShape;
 import gl.textures.TexturedRenderData;
 import gl.textures.TexturedShape;
 
-import javax.microedition.khronos.opengles.GL10;
+//import javax.microedition.khronos.opengles.GL10;
 
-import util.IO;
+//import util.IO;
 import util.Log;
 import util.Vec;
+import v2.simpleUi.util.IO;
 import worldData.Obj;
 import worldData.Visitor;
 import worldData.World;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.opengl.GLES10;
 import android.widget.TextView;
 
 /**
@@ -576,8 +578,8 @@ public class GLFactory {
 			}
 
 			@Override
-			public void draw(GL10 gl, Renderable parent) {
-				CordinateAxis.draw(gl);
+			public void draw(/*GL10 gl,*/ Renderable parent) {
+				CoordinateAxis.draw(/*gl.*/);
 			}
 
 		};
@@ -589,7 +591,7 @@ public class GLFactory {
 	 * 
 	 * @param textToDisplay
 	 * @param textPosition
-	 * @param textSize
+	 * //@param textSize
 	 * @param context
 	 * @param glCamera
 	 * @return

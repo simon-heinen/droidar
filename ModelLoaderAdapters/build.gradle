@@ -8,6 +8,9 @@ android {
         minSdkVersion 19
         targetSdkVersion 29
         applicationId = 'de.rwth.ModelLoaderAdapters'
+        versionCode = 1
+        versionName = '1.0'
+        multiDexEnabled = true
     }
 
     buildTypes {

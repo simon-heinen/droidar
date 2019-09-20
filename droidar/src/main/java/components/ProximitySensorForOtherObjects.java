@@ -6,8 +6,10 @@ import util.Log;
 import util.QuadTree;
 import util.Vec;
 import worldData.Entity;
+//import worldData.LargeWorld;
 import worldData.LargeWorld;
 import worldData.Obj;
+import worldData.RenderQuadList;
 import worldData.RenderableEntity;
 import worldData.UpdateTimer;
 import worldData.Updateable;
@@ -75,17 +77,14 @@ public class ProximitySensorForOtherObjects implements Entity {
 	 * @param myMesh
 	 * @param largeWorld
 	 */
-	private void findObjectsCloseTo(Obj obj, MeshComponent myMesh,
-			LargeWorld largeWorld) {
-		EfficientList<RenderableEntity> list = largeWorld.getItems(
-				obj.getPosition(), myMaxDistance);
+	private void findObjectsCloseTo(Obj obj, MeshComponent myMesh, LargeWorld largeWorld) {
+		EfficientList<RenderableEntity> list = largeWorld.getItems(obj.getPosition(), myMaxDistance);
 		for (int i = 0; i < list.myLength; i++) {
 			myCommand.execute(list.get(i));
 		}
 	}
 
-	private void findObjectsCloseTo(Obj obj, MeshComponent myMesh,
-			EfficientList<RenderableEntity> list) {
+	private void findObjectsCloseTo(Obj obj, MeshComponent myMesh, EfficientList<RenderableEntity> list) {
 		if (list != null) {
 			for (int i = 0; i < list.myLength; i++) {
 				if (list.get(i) != obj && list.get(i) instanceof Obj) {

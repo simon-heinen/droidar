@@ -7,11 +7,29 @@ import java.util.ArrayList;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+//import javax.microedition.khronos.opengles.GL10;
 
 import util.Log;
 import util.Vec;
+
+import android.opengl.GLES10;
 import android.opengl.GLU;
 import android.os.SystemClock;
+
+import static android.opengl.GLES10.glBlendFunc;
+import static android.opengl.GLES10.glClear;
+import static android.opengl.GLES10.glClearColor;
+import static android.opengl.GLES10.glClearDepthf;
+import static android.opengl.GLES10.glDepthFunc;
+import static android.opengl.GLES10.glDisable;
+import static android.opengl.GLES10.glEnable;
+import static android.opengl.GLES10.glFogf;
+import static android.opengl.GLES10.glFogfv;
+import static android.opengl.GLES10.glHint;
+import static android.opengl.GLES10.glLoadIdentity;
+import static android.opengl.GLES10.glMatrixMode;
+import static android.opengl.GLES10.glShadeModel;
+import static android.opengl.GLES10.glViewport;
 
 /**
  * This is the OpenGL renderer used for the {@link CustomGLSurfaceView}
@@ -40,7 +58,7 @@ public class GL1Renderer extends GLRenderer {
 
 	public ArrayList<LightSource> getMyLights() {
 		if (myLights == null) {
-			myLights = new ArrayList<LightSource>();
+			myLights = new ArrayList<>();
 		}
 		return myLights;
 	}
@@ -59,7 +77,7 @@ public class GL1Renderer extends GLRenderer {
 			.toFloatBuffer();
 	private static final boolean FLASH_SCREEN = false;
 
-	private final ArrayList<Renderable> elementsToRender = new ArrayList<Renderable>();
+	private final ArrayList<Renderable> elementsToRender = new ArrayList<>();
 
 	private boolean readyToPickPixel;
 
@@ -76,9 +94,9 @@ public class GL1Renderer extends GLRenderer {
 		if (switchLightning) {
 			switchLightning = false;
 			if (useLightning) {
-				gl.glEnable(GL10.GL_LIGHTING);
+				/*gl.*/glEnable(GLES10.GL_LIGHTING);
 			} else {
-				gl.glDisable(GL10.GL_LIGHTING);
+				/*gl.*/glDisable(GLES10.GL_LIGHTING);
 			}
 		}
 
@@ -91,27 +109,26 @@ public class GL1Renderer extends GLRenderer {
 				 * objects and picking would not be possible with lightning
 				 * enabled
 				 */
-				gl.glDisable(GL10.GL_LIGHTING);
+				/*gl.*/glDisable(GLES10.GL_LIGHTING);
 			}
 		}
 
 		// first check if there are new textures to load into openGL:
-		TextureManager.getInstance().updateTextures(gl); // TODO optimize? check
-															// boolean
+		TextureManager.getInstance().updateTextures(/*gl*/); // TODO optimize? check boolean
 		boolean repeat;
 		do {
 
 			// Clears the screen and depth buffer.
-			gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+			/*gl.*/glClear(GLES10.GL_COLOR_BUFFER_BIT | GLES10.GL_DEPTH_BUFFER_BIT);
 			for (int i = 0; i < elementsToRender.size(); i++) {
 				// Reset the modelview matrix
-				gl.glLoadIdentity();
-				elementsToRender.get(i).render(gl, null);
+				/*gl.*/glLoadIdentity();
+				elementsToRender.get(i).render(/*gl,*/ null);
 			}
 
 			repeat = false;
 			if (readyToPickPixel) {
-				ObjectPicker.getInstance().pickObject(gl);
+				ObjectPicker.getInstance().pickObject(/*gl*/);
 				readyToPickPixel = false;
 				// first time in life i would like to have a goto in Java;)
 				if (!FLASH_SCREEN) {
@@ -119,7 +136,7 @@ public class GL1Renderer extends GLRenderer {
 				}
 				// switch lights back on if lightning is used:
 				if (useLightning) {
-					gl.glEnable(GL10.GL_LIGHTING);
+					glEnable(GLES10.GL_LIGHTING);
 				}
 			}
 		} while (repeat);
@@ -161,21 +178,21 @@ public class GL1Renderer extends GLRenderer {
 	/**
 	 * This method will switch on all the defined light sources
 	 * 
-	 * @param gl
+	 * //@param gl
 	 */
-	public void enableLights(GL10 gl) {
-		if (myLights.size() > 0) {
-			gl.glEnable(GL10.GL_LIGHTING);
+	public void enableLights(/*GL10 gl*/) {
+		if (!myLights.isEmpty()) {
+			/*gl.*/glEnable(GLES10.GL_LIGHTING);
 			for (int i = 0; i < myLights.size(); i++) {
-				myLights.get(i).switchOn(gl);
+				myLights.get(i).switchOn(/*gl*/);
 			}
 		}
 	}
 
-	public void disableLights(GL10 gl) {
-		gl.glDisable(GL10.GL_LIGHTING);
+	public void disableLights(/*GL10 gl*/) {
+		/*gl.*/glDisable(GLES10.GL_LIGHTING);
 		for (int i = 0; i < myLights.size(); i++) {
-			myLights.get(i).switchOff(gl);
+			myLights.get(i).switchOff(/*gl*/);
 		}
 	}
 
@@ -185,7 +202,7 @@ public class GL1Renderer extends GLRenderer {
 		Log.d("Activity", "GLSurfaceView.onSurfaceChanged");
 
 		// Sets the current view port to the new size.
-		gl.glViewport(0, 0, width, height);
+		/*gl.*/glViewport(0, 0, width, height);
 
 		/*
 		 * Select the projection matrix which transforms the point from view
@@ -193,9 +210,9 @@ public class GL1Renderer extends GLRenderer {
 		 * coordinate system (+Z into the screen) contained within a canonical
 		 * clipping volume extending from (-1,-1,-1) to (+1,+1,+1):
 		 */
-		gl.glMatrixMode(GL10.GL_PROJECTION);
+		/*gl.*/glMatrixMode(GLES10.GL_PROJECTION);
 		// Reset the projection matrix
-		gl.glLoadIdentity();
+		/*gl.*/glLoadIdentity();
 
 		/*
 		 * GLU.gluPerspective parameters (see
@@ -215,11 +232,9 @@ public class GL1Renderer extends GLRenderer {
 		GL1Renderer.halfWidth = width / 2;
 		GL1Renderer.halfHeight = height / 2;
 		GL1Renderer.height = height;
-		GL1Renderer.nearHeight = minViewDistance
-				* (float) Math.tan((GL1Renderer.LENSE_ANGLE * Vec.deg2rad) / 2);
+		GL1Renderer.nearHeight = minViewDistance * (float) Math.tan((GL1Renderer.LENSE_ANGLE * Vec.deg2rad) / 2);
 		GL1Renderer.aspectRatio = (float) width / (float) height;
-		GLU.gluPerspective(gl, LENSE_ANGLE, aspectRatio, minViewDistance,
-				maxViewDistance);
+		GLU.gluPerspective(gl, LENSE_ANGLE, aspectRatio, minViewDistance, maxViewDistance);
 		// TODO what is a good value??
 
 		/*
@@ -227,14 +242,14 @@ public class GL1Renderer extends GLRenderer {
 		 * to view space, using a right-handed coordinate system with +Y up, +X
 		 * to the right, and -Z into the screen:
 		 */
-		gl.glMatrixMode(GL10.GL_MODELVIEW);
+		/*gl.*/glMatrixMode(GLES10.GL_MODELVIEW);
 
 		if (useLightning) {
-			enableLights(gl);
+			enableLights(/*gl*/);
 		}
 
 		if (USE_FOG) {
-			addFog(gl);
+			addFog(/*gl*/);
 		}
 
 		/*
@@ -249,7 +264,7 @@ public class GL1Renderer extends GLRenderer {
 		Log.d("Activity", "GLSurfaceView.onSurfaceCreated");
 
 		// Set the background color to black (and alpha to 0) ( rgba ).
-		gl.glClearColor(0, 0, 0, 0);
+		/*gl.*/glClearColor(0, 0, 0, 0);
 		/*
 		 * To enable flat shading use gl.glShadeModel(GL10.GL_FLAT); default is
 		 * GL_SMOOTH and GL_FLAT renders faces always with the same color,
@@ -257,16 +272,16 @@ public class GL1Renderer extends GLRenderer {
 		 * wont look realistic!
 		 */
 		// Depth buffer setup.
-		gl.glClearDepthf(1.0f);
+		/*gl.*/glClearDepthf(1.0f);
 		// Enables depth testing.
-		gl.glEnable(GL10.GL_DEPTH_TEST);
-		gl.glDisable(GL10.GL_DITHER);
+		/*gl.*/glEnable(GLES10.GL_DEPTH_TEST);
+		/*gl.*/glDisable(GLES10.GL_DITHER);
 
 		// The type of depth testing to do.
-		gl.glDepthFunc(GL10.GL_LEQUAL);
+		/*gl.*/glDepthFunc(GLES10.GL_LEQUAL);
 		// Really nice perspective calculations.
 		// gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_FASTEST);
-		gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
+		/*gl.*/glHint(GLES10.GL_PERSPECTIVE_CORRECTION_HINT, GLES10.GL_NICEST);
 
 		/*
 		 * Transparancy
@@ -276,22 +291,22 @@ public class GL1Renderer extends GLRenderer {
 		 * 
 		 * http://www.opengl.org/sdk/docs/man/xhtml/glBlendFunc.xml
 		 */
-		gl.glEnable(GL10.GL_BLEND);
+		/*gl.*/glEnable(GLES10.GL_BLEND);
 		// gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_DST_ALPHA);
-		gl.glBlendFunc(GL10.GL_ONE, GL10.GL_ONE_MINUS_SRC_ALPHA);
+		/*gl.*/glBlendFunc(GLES10.GL_ONE, GLES10.GL_ONE_MINUS_SRC_ALPHA);
 		// Enable smooth shading for nice light effects
 
-		gl.glShadeModel(GL10.GL_SMOOTH);
+		/*gl.*/glShadeModel(GLES10.GL_SMOOTH);
 	}
 
-	private void addFog(GL10 gl) {
+	private void addFog(/*GL10 gl*/) {
 		// TODO extract constants
-		gl.glFogf(GL10.GL_FOG_MODE, GL10.GL_LINEAR);
-		gl.glFogf(GL10.GL_FOG_START, FOG_START_DISTANCE);
-		gl.glFogf(GL10.GL_FOG_END, FOG_END_DISTANCE);
-		gl.glHint(GL10.GL_FOG_HINT, GL10.GL_NICEST);
-		gl.glFogfv(GL10.GL_FOG_COLOR, FOG_COLOR);
-		gl.glEnable(GL10.GL_FOG);
+		/*gl.*/glFogf(GLES10.GL_FOG_MODE, GLES10.GL_LINEAR);
+		/*gl.*/glFogf(GLES10.GL_FOG_START, FOG_START_DISTANCE);
+		/*gl.*/glFogf(GLES10.GL_FOG_END, FOG_END_DISTANCE);
+		/*gl.*/glHint(GLES10.GL_FOG_HINT, GLES10.GL_NICEST);
+		/*gl.*/glFogfv(GLES10.GL_FOG_COLOR, FOG_COLOR);
+		/*gl.*/glEnable(GLES10.GL_FOG);
 
 	}
 

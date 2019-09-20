@@ -9,6 +9,8 @@ android {
         targetSdkVersion 29
         applicationId = 'de.rwth.SimpleUITests'
         multiDexEnabled = true
+        versionCode = 1
+        versionName = '1.0'
     }
 
     buildTypes {

@@ -7,7 +7,7 @@ import util.Log;
 public class EntityList implements Entity, Container<Entity> {
 
 	private static final String LOG_TAG = "RenderList";
-	EfficientList<Entity> myItems = new EfficientList<Entity>();
+	EfficientList<Entity> myItems = new EfficientList<>();
 	private boolean isClearedAtLeastOnce;
 	private Updateable myParent;
 

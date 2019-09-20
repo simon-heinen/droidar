@@ -4,24 +4,23 @@ import gl.GLCamera;
 import gl.HasPosition;
 import gl.Renderable;
 
-import javax.microedition.khronos.opengles.GL10;
+//import javax.microedition.khronos.opengles.GL10;
 
 import system.Container;
 import util.EfficientList;
+import util.Log;
 import util.QuadTree;
 import util.QuadTree.ResultListener;
 import util.Vec;
-import android.util.Log;
+//import android.util.Log;
 
 /**
  * This Container structure uses a Quadtree (
  * http://en.wikipedia.org/wiki/Quadtree )
- * 
+ *
  * @author Spobo
- * 
  */
-public class RenderQuadList implements RenderableEntity,
-		Container<RenderableEntity> {
+public class RenderQuadList implements RenderableEntity, Container<RenderableEntity> {
 
 	private static final String LOG_TAG = "RenderQuadList";
 	private float myRenderDistance;
@@ -44,12 +43,11 @@ public class RenderQuadList implements RenderableEntity,
 	/**
 	 * @param glCamera
 	 * @param renderDistance
-	 * @param recalcDistance
-	 *            If you pass 10 here then the list of objects currently updated
-	 *            will be refreshed every 10 meters when the user moves around
+	 * @param recalcDistance If you pass 10 here then the list of objects currently updated
+	 *                       will be refreshed every 10 meters when the user moves around
 	 */
 	public RenderQuadList(GLCamera glCamera, float renderDistance,
-			float recalcDistance) {
+						  float recalcDistance) {
 		myGlCamera = glCamera;
 		myRecalcDistanceMax = recalcDistance;
 		myRecalcDistanceMin = -recalcDistance;
@@ -64,8 +62,8 @@ public class RenderQuadList implements RenderableEntity,
 	}
 
 	public EfficientList<RenderableEntity> getItems(Vec position,
-			float maxDistance) {
-		final EfficientList<RenderableEntity> result = new EfficientList<RenderableEntity>();
+													float maxDistance) {
+		final EfficientList<RenderableEntity> result = new EfficientList<>();
 		if (tree != null) {
 			tree.findInArea(tree.new ResultListener() {
 
@@ -111,28 +109,27 @@ public class RenderQuadList implements RenderableEntity,
 	}
 
 	@Override
-	public void render(GL10 gl, Renderable parent) {
+	public void render(/*GL10 gl,*/ Renderable parent) {
 		Vec p = myGlCamera.getPosition();
 		EfficientList<RenderableEntity> list = getList(p.x, p.y);
 		for (int i = 0; i < list.myLength; i++) {
 			RenderableEntity obj = list.get(i);
 			if (obj != null)
-				obj.render(gl, this);
+				obj.render(/*gl,*/ this);
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	private synchronized EfficientList<RenderableEntity> getList(float x,
-			float y) {
+	private synchronized EfficientList<RenderableEntity> getList(float x, float y) {
 		if (itemsInRange != null
 				&& needsNoRecalculation(x - oldX, myRecalcDistanceMin,
-						myRecalcDistanceMax)
+				myRecalcDistanceMax)
 				&& needsNoRecalculation(y - oldY, myRecalcDistanceMin,
-						myRecalcDistanceMax)) {
+				myRecalcDistanceMax)) {
 			return itemsInRange;
 		} else {
 			if (itemsInRange == null)
-				itemsInRange = new EfficientList<RenderableEntity>();
+				itemsInRange = new EfficientList<>();
 			else
 				itemsInRange.clear();
 			oldX = x;
@@ -148,7 +145,7 @@ public class RenderQuadList implements RenderableEntity,
 	 */
 	public void refreshList() {
 		if (itemsInRange == null)
-			itemsInRange = new EfficientList<RenderableEntity>();
+			itemsInRange = new EfficientList<>();
 		else
 			itemsInRange.clear();
 		refreshItemsInRangeList();
@@ -229,19 +226,19 @@ public class RenderQuadList implements RenderableEntity,
 
 	private void addToAllItemsList(HasPosition x) {
 		if (allItems == null)
-			allItems = new EfficientList<RenderableEntity>();
+			allItems = new EfficientList<>();
 		allItems.add((RenderableEntity) x);
 	}
 
 	private boolean insertInAllItemsList(int pos, RenderableEntity item) {
 		if (allItems == null)
-			allItems = new EfficientList<RenderableEntity>();
+			allItems = new EfficientList<>();
 		return allItems.insert(pos, item);
 	}
 
 	private void addToTree(HasPosition x, Vec pos) {
 		if (tree == null)
-			tree = new QuadTree<RenderableEntity>();
+			tree = new QuadTree<>();
 		tree.add(pos.x, pos.y, (RenderableEntity) x);
 		refreshItemsInRangeList();
 	}
@@ -287,5 +284,4 @@ public class RenderQuadList implements RenderableEntity,
 				+ "because it had no HasPosition interface!");
 		return false;
 	}
-
 }

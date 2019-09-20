@@ -6,18 +6,19 @@ import java.util.HashMap;
 
 import system.Container;
 import util.EfficientList;
+import util.Log;
 import worldData.Updateable;
-import android.util.Log;
+//import android.util.Log;
 
 public abstract class GameElementList<T extends GameElement> implements
 		Updateable, Container<T> {
 
 	private static final String LOG_TAG = "GameElementList";
-	private EfficientList<T> myList = new EfficientList<T>();
+	private EfficientList<T> myList = new EfficientList<>();
 	/**
 	 * an additional structure for fast searching for special GameElements
 	 */
-	private HashMap<String, T> mySearchIndex = new HashMap<String, T>();
+	private HashMap<String, T> mySearchIndex = new HashMap<>();
 
 	@Override
 	public void clear() {

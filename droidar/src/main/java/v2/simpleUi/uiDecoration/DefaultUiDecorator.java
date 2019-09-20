@@ -1,9 +1,10 @@
 package v2.simpleUi.uiDecoration;
 
+import util.Log;
 import v2.simpleUi.util.BGUtils;
 import v2.simpleUi.util.TextUtils;
 import android.content.Context;
-import android.util.Log;
+//import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;

@@ -223,7 +223,7 @@ public class EfficientList<T> {
 	}
 
 	public EfficientList<T> copy() {
-		EfficientList<T> result = new EfficientList<T>(myLength);
+		EfficientList<T> result = new EfficientList<>(myLength);
 		for (int i = 0; i < this.myLength; i++) {
 			result.add(this.get(i));
 		}

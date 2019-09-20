@@ -28,14 +28,11 @@ public class GeoObj extends Obj implements HasDebugInformation {
 
 	@Deprecated
 	public interface GeoObjUpdateListener {
-
 		void updateToNewPosition(int i, int j);
-
 	}
 
 	/*
-	 * TODO move somewhere else and dont use these to not create new
-	 * dependencies:
+	 * TODO move somewhere else and dont use these to not create new dependencies:
 	 */
 
 	@Deprecated
@@ -708,11 +705,9 @@ public class GeoObj extends Obj implements HasDebugInformation {
 	public void showDebugInformation() {
 		Log.e(LOG_TAG, "Information about " + this);
 		Log.d(LOG_TAG, "mySurroundGroup=" + mySurroundGroup);
-		Log.d(LOG_TAG,
-				"mySurroundGroup.myPosition=" + mySurroundGroup.getPosition());
+		Log.d(LOG_TAG, "mySurroundGroup.myPosition=" + mySurroundGroup.getPosition());
 		Log.d(LOG_TAG, "mySurroundGroup.myScale=" + mySurroundGroup.getScale());
-		Log.d(LOG_TAG,
-				"mySurroundGroup.myRotation=" + mySurroundGroup.getRotation());
+		Log.d(LOG_TAG, "mySurroundGroup.myRotation=" + mySurroundGroup.getRotation());
 		Log.d(LOG_TAG, "mesh inside=" + mySurroundGroup.getChildren());
 
 	}

@@ -2,12 +2,14 @@ package gl.animations;
 
 import gl.Renderable;
 
-import javax.microedition.khronos.opengles.GL10;
+//import javax.microedition.khronos.opengles.GL10;
 
 import util.Log;
 import worldData.UpdateTimer;
 import worldData.Updateable;
 import worldData.Visitor;
+
+import static android.opengl.GLES10.glScalef;
 
 public class AnimationGrow extends GLAnimation {
 
@@ -26,8 +28,8 @@ public class AnimationGrow extends GLAnimation {
 	}
 
 	@Override
-	public void render(GL10 gl, Renderable parent) {
-		gl.glScalef(myGrothSize, myGrothSize, myGrothSize);
+	public void render(/*GL10 gl,*/ Renderable parent) {
+		/*gl.*/glScalef(myGrothSize, myGrothSize, myGrothSize);
 	}
 
 	@Override

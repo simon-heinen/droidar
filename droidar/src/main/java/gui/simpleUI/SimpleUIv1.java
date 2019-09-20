@@ -158,7 +158,7 @@ public class SimpleUIv1 extends Activity {
 	private static String addTransfairObject(Context context,
 			EditItem itemToDisplay, Object message, UIConfig config) {
 		if (transfairList == null)
-			transfairList = new HashMap<String, Object>();
+			transfairList = new HashMap<>();
 		String newKey = context.toString();
 		transfairList.put(newKey, itemToDisplay);
 		transfairList.put(newKey + MESSAGE, message);

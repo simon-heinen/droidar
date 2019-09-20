@@ -2,10 +2,12 @@ package actions;
 
 import geo.GeoUtils;
 import system.EventManager;
+import util.Log;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.location.Location;
-import android.util.Log;
+//import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;

@@ -1,13 +1,21 @@
 package gl.scenegraph;
 
+import android.opengl.GLES10;
+
 import gl.GLUtilityClass;
 
 import java.nio.ShortBuffer;
 import java.util.ArrayList;
 
-import javax.microedition.khronos.opengles.GL10;
+//import javax.microedition.khronos.opengles.GL10;
 
 import util.Vec;
+
+import static android.opengl.GLES10.glDisableClientState;
+import static android.opengl.GLES10.glEnableClientState;
+import static android.opengl.GLES10.glNormalPointer;
+import static android.opengl.GLES10.glVertexPointer;
+import static android.opengl.GLES20.glDrawElements;
 
 public class TriangulatedRenderData extends RenderData {
 
@@ -62,25 +70,24 @@ public class TriangulatedRenderData extends RenderData {
 	}
 
 	@Override
-	public void draw(GL10 gl) {
+	public void draw(/*GL10 gl*/) {
 		// Enabled the vertices buffer for writing and to be used during
 		// rendering.
-		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+		/*gl.*/glEnableClientState(GLES10.GL_VERTEX_ARRAY);
 		// Specifies the location and data format of an array of vertex
 		// coordinates to use when rendering.
-		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
+		/*gl.*/glVertexPointer(3, GLES10.GL_FLOAT, 0, vertexBuffer);
 
 		if (normalsBuffer != null) {
 			// Enable normals array (for lightning):
-			gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
-			gl.glNormalPointer(GL10.GL_FLOAT, 0, normalsBuffer);
+			/*gl.*/glEnableClientState(GLES10.GL_NORMAL_ARRAY);
+			/*gl.*/glNormalPointer(GLES10.GL_FLOAT, 0, normalsBuffer);
 		}
 
-		gl.glDrawElements(drawMode, indexBuffer.limit(),
-				GL10.GL_UNSIGNED_SHORT, indexBuffer);
+		/*gl.*/glDrawElements(drawMode, indexBuffer.limit(), GLES10.GL_UNSIGNED_SHORT, indexBuffer);
 
 		// Disable the vertices buffer.
-		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
+		/*gl.*/glDisableClientState(GLES10.GL_VERTEX_ARRAY);
 	}
 
 }

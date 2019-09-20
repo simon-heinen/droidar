@@ -16,7 +16,7 @@ public class ModifierGroup extends AbstractModifier {
 		void onSaveFailed(ModifierInterface modifierThatRejectedSave);
 	}
 
-	private ArrayList<ModifierInterface> myList = new ArrayList<ModifierInterface>();
+	private ArrayList<ModifierInterface> myList = new ArrayList<>();
 	private SaveListener mySaveListener;
 
 	public ModifierGroup() {

@@ -35,7 +35,7 @@ public abstract class ListModifier extends AbstractModifier {
 		ModifierInterface newItem = newItemRequest(itemType);
 		if (newItem != null) {
 			if (myList == null)
-				myList = new ArrayList<ModifierInterface>();
+				myList = new ArrayList<>();
 			myList.add(newItem);
 			addListItemView(myListView, newItem, myList.size() - 1, context);
 

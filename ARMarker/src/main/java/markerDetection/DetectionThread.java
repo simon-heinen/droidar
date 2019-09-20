@@ -32,8 +32,8 @@ public class DetectionThread extends Thread {
 	private UnrecognizedMarkerListener unrecognizedMarkerListener;
 
 	public DetectionThread(notNativeLib notNativeLib, GLSurfaceView openglView,
-			HashMap<Integer, MarkerObject> markerObjectMap,
-			UnrecognizedMarkerListener unrecognizedMarkerListener) {
+						   HashMap<Integer, MarkerObject> markerObjectMap,
+						   UnrecognizedMarkerListener unrecognizedMarkerListener) {
 		this.openglView = openglView;
 		this.markerObjectMap = markerObjectMap;
 		this.notNativelib = notNativeLib;
@@ -44,7 +44,6 @@ public class DetectionThread extends Thread {
 
 		// application will exit even if this thread remains active.
 		setDaemon(true);
-
 	}
 
 	@Override
@@ -75,7 +74,7 @@ public class DetectionThread extends Thread {
 				// Pass the frame to the native code and find the marker information.
 				// The false at the end is a remainder of the calibration.
 //TODO				nativelib.detectMarkers(frame, mat, frameHeight, frameWidth,false);
-				notNativelib.detectMarkers(frame, mat, frameHeight, frameWidth,false);
+				notNativelib.detectMarkers(frame, mat, frameHeight, frameWidth, false);
 
 				// Needs to be reworked to. Either just deleted, or changed into
 				// some timer delay
@@ -95,12 +94,12 @@ public class DetectionThread extends Thread {
 					MarkerObject markerObj = markerObjectMap.get((int) mat[idIdx]);
 
 					if (markerObj != null) {
-						markerObj.OnMarkerPositionRecognized(mat, startIdx,	endIdx);
+						markerObj.OnMarkerPositionRecognized(mat, startIdx, endIdx);
 					} else {
 						if (unrecognizedMarkerListener != null) {
 							unrecognizedMarkerListener.onUnrecognizedMarkerDetected(
-											(int) mat[idIdx], mat, startIdx,
-											endIdx, (int) mat[rotIdx]);
+									(int) mat[idIdx], mat, startIdx,
+									endIdx, (int) mat[rotIdx]);
 						}
 					}
 				}
@@ -111,7 +110,6 @@ public class DetectionThread extends Thread {
 
 			yield();
 		}
-
 	}
 
 	public synchronized void nextFrame(byte[] data) {
@@ -140,7 +138,6 @@ public class DetectionThread extends Thread {
 			// this is a new thread.
 			super.start();
 		}
-
 	}
 
 	public void stopThread() {

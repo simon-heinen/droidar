@@ -21,6 +21,4 @@ import gl.scenegraph.Shape;
  * @author Spobo
  * 
  */
-public interface RenderableEntity extends Entity, Renderable {
-
-}
+public interface RenderableEntity extends Entity, Renderable { }

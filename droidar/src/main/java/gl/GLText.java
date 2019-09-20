@@ -6,14 +6,16 @@ import gl.scenegraph.Shape;
 
 import java.util.HashMap;
 
-import javax.microedition.khronos.opengles.GL10;
+//import javax.microedition.khronos.opengles.GL10;
 
 import util.Log;
 import util.Vec;
+import v2.simpleUi.util.IO;
 import worldData.Visitor;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.opengl.GLES10;
 import android.widget.TextView;
 
 /**
@@ -66,7 +68,7 @@ public class GLText extends MeshComponent {
 	}
 
 	@Override
-	public void draw(GL10 gl, Renderable parent) {
+	public void draw(/*GL10 gl,*/ Renderable parent) {
 		if (!textLoaded) {
 			loadText(myText);
 			textLoaded = true;
@@ -122,7 +124,7 @@ public class GLText extends MeshComponent {
 		TextView v = new TextView(myContext);
 		v.setTypeface(null, Typeface.BOLD);
 		v.setText(s);
-		return util.IO.loadBitmapFromView(v);
+		return IO.loadBitmapFromView(v);
 	}
 
 	public void changeTextTo(String s) {

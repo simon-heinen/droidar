@@ -5,15 +5,20 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import javax.microedition.khronos.opengles.GL10;
-import javax.microedition.khronos.opengles.GL11;
-import javax.microedition.khronos.opengles.GL11Ext;
-
 import util.HasDebugInformation;
 import util.ImageTransform;
 import util.Log;
 import android.graphics.Bitmap;
+import android.opengl.GLES10;
+import android.opengl.GLES11Ext;
 import android.opengl.GLUtils;
+
+import static android.opengl.GLES10.glTexEnvf;
+import static android.opengl.GLES20.glBindTexture;
+import static android.opengl.GLES20.glGenTextures;
+import static android.opengl.GLES20.glGetError;
+import static android.opengl.GLES20.glTexParameterf;
+import static android.opengl.GLES20.glTexParameteriv;
 
 public class TextureManager implements HasDebugInformation {
 
@@ -69,7 +74,7 @@ public class TextureManager implements HasDebugInformation {
 		if (newTexturesToLoad == null) {
 			Log.i(LOG_TAG,
 					"   > Texture Manage never used before, now its initialized");
-			newTexturesToLoad = new ArrayList<Texture>();
+			newTexturesToLoad = new ArrayList<>();
 		}
 		newTexturesToLoad.add(t);
 	}
@@ -90,8 +95,8 @@ public class TextureManager implements HasDebugInformation {
 		return myTextureMap.get(textureName);
 	}
 
-	public void updateTextures(GL10 gl) {
-		if (newTexturesToLoad != null && newTexturesToLoad.size() > 0) {
+	public void updateTextures(/*GLES10 gl*/) {
+		if (newTexturesToLoad != null && !newTexturesToLoad.isEmpty()) {
 			try {
 				while (textureArray.length - textureArrayOffset < newTexturesToLoad
 						.size()) {
@@ -100,7 +105,7 @@ public class TextureManager implements HasDebugInformation {
 				}
 
 				// generate and store id numbers in textureArray:
-				gl.glGenTextures(newTexturesToLoad.size(), textureArray,
+				/*gl.*/glGenTextures(newTexturesToLoad.size(), textureArray,
 						textureArrayOffset);
 				int newtextureArrayOffset = newTexturesToLoad.size();
 
@@ -111,21 +116,21 @@ public class TextureManager implements HasDebugInformation {
 
 					t.idArrived(newTextureId);
 
-					gl.glBindTexture(GL10.GL_TEXTURE_2D, newTextureId);
+					/*gl.*/glBindTexture(GLES10.GL_TEXTURE_2D, newTextureId);
 
-					gl.glTexParameterf(GL10.GL_TEXTURE_2D,
-							GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
-					gl.glTexParameterf(GL10.GL_TEXTURE_2D,
-							GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
-					gl.glTexParameterf(GL10.GL_TEXTURE_2D,
-							GL10.GL_TEXTURE_WRAP_S, GL10.GL_CLAMP_TO_EDGE);
-					gl.glTexParameterf(GL10.GL_TEXTURE_2D,
-							GL10.GL_TEXTURE_WRAP_T, GL10.GL_CLAMP_TO_EDGE);
+					/*gl.*/glTexParameterf(GLES10.GL_TEXTURE_2D,
+							GLES10.GL_TEXTURE_MIN_FILTER, GLES10.GL_NEAREST);
+					/*gl.*/glTexParameterf(GLES10.GL_TEXTURE_2D,
+							GLES10.GL_TEXTURE_MAG_FILTER, GLES10.GL_LINEAR);
+					/*gl.*/glTexParameterf(GLES10.GL_TEXTURE_2D,
+							GLES10.GL_TEXTURE_WRAP_S, GLES10.GL_CLAMP_TO_EDGE);
+					/*gl.*/glTexParameterf(GLES10.GL_TEXTURE_2D,
+							GLES10.GL_TEXTURE_WRAP_T, GLES10.GL_CLAMP_TO_EDGE);
 
-					gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL10.GL_TEXTURE_ENV_MODE,
-							GL10.GL_REPLACE);
+					/*gl.*/glTexEnvf(GLES10.GL_TEXTURE_ENV, GLES10.GL_TEXTURE_ENV_MODE,
+							GLES10.GL_REPLACE);
 
-					GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, t.getImage(), 0);
+					GLUtils.texImage2D(GLES10.GL_TEXTURE_2D, 0, t.getImage(), 0);
 
 					int[] mCropWorkspace = new int[4];
 					mCropWorkspace[0] = 0;
@@ -134,15 +139,14 @@ public class TextureManager implements HasDebugInformation {
 					mCropWorkspace[3] = -t.getImage().getHeight();
 
 					// TODO maybe not working on any phone because using GL11?
-					((GL11) gl)
-							.glTexParameteriv(GL10.GL_TEXTURE_2D,
-									GL11Ext.GL_TEXTURE_CROP_RECT_OES,
+					/*((GL11) gl).*/glTexParameteriv(GLES10.GL_TEXTURE_2D,
+									GLES11Ext.GL_TEXTURE_CROP_RECT_OES,
 									mCropWorkspace, 0);
 
 					t.recycleImage();
 
-					int error = gl.glGetError();
-					if (error != GL10.GL_NO_ERROR) {
+					int error = /*gl.*/glGetError();
+					if (error != GLES10.GL_NO_ERROR) {
 						Log.e("SpriteMethodTest", "Texture Load GLError: "
 								+ error);
 					}
@@ -166,7 +170,7 @@ public class TextureManager implements HasDebugInformation {
 
 	private void addTextureToMap(Texture t) {
 		if (myTextureMap == null)
-			myTextureMap = new HashMap<String, Texture>();
+			myTextureMap = new HashMap<>();
 		myTextureMap.put(t.getName(), t);
 	}
 

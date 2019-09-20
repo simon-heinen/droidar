@@ -233,7 +233,7 @@ public class GuiSetup {
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				if (keyCode == KeyEvent.KEYCODE_ENTER) {
 					String text = t.getText().toString();
-					if (text.length() > 0) {
+					if (!text.isEmpty()) {
 						t.setText("");
 						Log.d(LOG_TAG, "Gui-searchbar fiering text: '" + text
 								+ "'(length=" + text.length() + ")!");

@@ -13,7 +13,7 @@ public class TexturedShape extends Shape {
 	/**
 	 * this values are corresponding to the shape edges
 	 */
-	ArrayList<Vec> myTexturePositions = new ArrayList<Vec>();
+	ArrayList<Vec> myTexturePositions = new ArrayList<>();
 
 	/**
 	 * Please read

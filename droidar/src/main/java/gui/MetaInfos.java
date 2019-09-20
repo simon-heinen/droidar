@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 import listeners.ItemSelectedListener;
 import util.EfficientList;
-import util.IO;
+//import util.IO;
 import util.Log;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -20,6 +20,7 @@ import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.view.ViewGroup;
 import de.rwth.R;
+import v2.simpleUi.util.IO;
 
 /**
  * The {@link MetaInfos} object should be used to separate the information an
@@ -112,7 +113,7 @@ public class MetaInfos implements EditItem {
 	 */
 	private Bitmap myIcon;
 
-	private EfficientList<InfoElement> longDescr = new EfficientList<InfoElement>();
+	private EfficientList<InfoElement> longDescr = new EfficientList<>();
 	private String shortDescr = "";
 	private Color myColor;
 	/**
@@ -369,7 +370,7 @@ public class MetaInfos implements EditItem {
 	}
 
 	public void setMyIconURL(String url) {
-		if (!url.equals(""))
+		if (url != null)
 			myIconURL = url;
 	}
 
@@ -379,8 +380,7 @@ public class MetaInfos implements EditItem {
 		if (message instanceof String) {
 			String m = (String) message;
 
-			String[] keywords = { "Edit", "edit", "editscreen", "edit mode",
-					"editmode", "Editmode" }; // TODO
+			String[] keywords = { "Edit", "edit", "editscreen", "edit mode", "editmode", "Editmode" }; // TODO
 
 			if (Arrays.asList(keywords).contains(m)) {
 				getEditUI(group);

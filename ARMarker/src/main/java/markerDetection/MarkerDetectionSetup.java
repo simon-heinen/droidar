@@ -22,6 +22,7 @@ import preview.PreviewPre2_0;
 import system.EventManager;
 import system.Setup;
 import util.CameraCalibration;
+//import util.IO;
 import util.IO;
 import util.Log;
 
@@ -61,7 +62,7 @@ public abstract class MarkerDetectionSetup extends Setup {
 	public void initializeCamera() {
 
 		MarkerObjectMap markerObjectMap = new MarkerObjectMap();
-		DisplayMetrics displayMetrics = myTargetActivity.getResources().getDisplayMetrics();
+		DisplayMetrics displayMetrics = getActivity()/*myTargetActivity*/.getResources().getDisplayMetrics();
 		int weight = displayMetrics.widthPixels;
 		int height = displayMetrics.heightPixels;
 		int apiLevel = /*Integer.parseInt*/(android.os.Build.VERSION.SDK_INT);
@@ -88,10 +89,10 @@ public abstract class MarkerDetectionSetup extends Setup {
 		myThread = new DetectionThread(nativeLib, myGLSurfaceView,
 				markerObjectMap, _a2_getUnrecognizedMarkerListener());
 		if (apiLevel <= 5) {
-			cameraPreview = new PreviewPre2_0(myTargetActivity, myThread, cameraSize);
+			cameraPreview = new PreviewPre2_0(getActivity()/*myTargetActivity*/, myThread, cameraSize);
 			Log.d("AR", "API Level: " + apiLevel + " Created Preview Pre2.1");
 		} else {
-			cameraPreview = new PreviewPost2_0(myTargetActivity, myThread, cameraSize);
+			cameraPreview = new PreviewPost2_0(getActivity()/*myTargetActivity*/, myThread, cameraSize);
 			Log.d("AR", "API Level: " + apiLevel + " Created Preview Post2.1");
 		}
 
@@ -101,12 +102,12 @@ public abstract class MarkerDetectionSetup extends Setup {
 
 	@Override
 	public void addCameraOverlay() {
-		myTargetActivity.addContentView(cameraPreview, optimalLayoutParams);
+		getActivity()/*myTargetActivity*/.addContentView(cameraPreview, optimalLayoutParams);
 	}
 
 	@Override
 	public void addGLSurfaceOverlay() {
-		myTargetActivity.addContentView(myGLSurfaceView, optimalLayoutParams);
+		getActivity()/*myTargetActivity*/.addContentView(myGLSurfaceView, optimalLayoutParams);
 	}
 
 	private int preSdkV5(int h) {
@@ -127,10 +128,11 @@ public abstract class MarkerDetectionSetup extends Setup {
 		List<Camera.Size> supportedSizes = null;
 		Method method = null;
 		try {
-			method = parameters.getClass().getDeclaredMethod(
-					"getSupportedPreviewSizes", (Class[]) null);
-			Object o = method.invoke(parameters, (Object[]) null);
-			supportedSizes = (List<Size>) o;
+//			method = parameters.getClass().getDeclaredMethod(
+//					"getSupportedPreviewSizes", (Class[]) null);
+//			Object o = method.invoke(parameters, (Object[]) null);
+//			supportedSizes = (List<Size>) o;
+			supportedSizes = parameters.getSupportedPreviewSizes();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -157,7 +159,7 @@ public abstract class MarkerDetectionSetup extends Setup {
 
 	private void tryToLoadCameraSettings() {
 		// Load previously stored calibrations
-		SharedPreferences settings = myTargetActivity.getSharedPreferences(CALIB_PATH, 0);
+		SharedPreferences settings = getActivity()/*myTargetActivity*/.getSharedPreferences(CALIB_PATH, 0);
 		String fileName = settings.getString("calibration", null);
 		if (fileName != null) {
 			try {
