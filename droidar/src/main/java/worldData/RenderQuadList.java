@@ -111,13 +111,13 @@ public class RenderQuadList implements RenderableEntity, Container<RenderableEnt
 	}
 
 	@Override
-	public void render(/*GL10 gl,*/ GLES20 unused, Renderable parent) {
+	public void render(GLES20 unused, Renderable parent) {
 		Vec p = myGlCamera.getPosition();
 		EfficientList<RenderableEntity> list = getList(p.x, p.y);
 		for (int i = 0; i < list.myLength; i++) {
 			RenderableEntity obj = list.get(i);
 			if (obj != null)
-				obj.render(,/*gl,*/  this);
+				obj.render(unused,  this);
 		}
 	}
 
@@ -254,8 +254,7 @@ public class RenderQuadList implements RenderableEntity, Container<RenderableEnt
 			if ((rt && !rl) || (rl && !rt))
 				Log.e(LOG_TAG,
 						"Inconsistency in tree und allItems-list while removing!");
-			if (rt && rl)
-				return true;
+			return rt && rl;
 		}
 		return false;
 	}

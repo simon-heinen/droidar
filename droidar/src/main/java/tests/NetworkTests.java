@@ -11,7 +11,7 @@ import util.Log;
 public class NetworkTests extends SimpleTesting {
 
 	@Override
-	public void run() throws Exception {
+	public void run() {
 		udpTest();
 		// tcpTest();
 		// tcpThreadTest();

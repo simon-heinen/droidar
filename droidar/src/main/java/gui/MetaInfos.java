@@ -307,9 +307,7 @@ public class MetaInfos implements EditItem {
 	}
 
 	public boolean isSelected() {
-		if (mySelectedInfos != null)
-			return true;
-		return false;
+		return mySelectedInfos != null;
 	}
 
 	public boolean setDeselected() {

@@ -514,18 +514,18 @@ public class GeoGraph extends AbstractObj implements Container<GeoObj> {
 	}
 
 	@Override
-	public void render(/*GL10 gl,*/ GLES20 unused, Renderable parent) {
+	public void render(GLES20 unused, Renderable parent) {
 		if (myNodes == null)
 			return;
 		{
 			for (int i = 0; i < myNodes.myLength; i++) {
-				myNodes.get(i).render(,/*gl,*/  this);
+				myNodes.get(i).render(unused, this);
 			}
 		}
 		{
 			if ((isPath || useEdges) && myEdges != null) {
 				for (int i = 0; i < myEdges.myLength; i++) {
-					myEdges.get(i).render(,/*gl,*/  this);
+					myEdges.get(i).render(unused, this);
 				}
 			}
 		}
@@ -612,10 +612,7 @@ public class GeoGraph extends AbstractObj implements Container<GeoObj> {
 
 	@Override
 	public boolean isCleared() {
-		if (getAllItems().myLength == 0 && isClearedAtLeastOneTime) {
-			return true;
-		}
-		return false;
+		return getAllItems().myLength == 0 && isClearedAtLeastOneTime;
 	}
 
 	@Override
@@ -644,9 +641,7 @@ public class GeoGraph extends AbstractObj implements Container<GeoObj> {
 	}
 
 	public boolean hasEdges() {
-		if (myEdges != null && myEdges.myLength > 0)
-			return true;
-		return false;
+		return myEdges != null && myEdges.myLength > 0;
 	}
 
 	public EfficientList<GeoObj> getConnectedNodesOf(GeoObj obj) {

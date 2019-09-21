@@ -73,16 +73,16 @@ public class Obj extends AbstractObj implements HasPosition, HasColor {
 	 * @param uniqueCompName
 	 *            look into {@link Consts} and there the COMP_.. strings for
 	 *            component types
-	 * @param comp
+	 * @param uniqueCompName
 	 */
-	public void setComp(Entity comp) {
+	public void setComp(Entity uniqueCompName) {
 		// TODO rename to add.. and return boolean if could be added
 		// TODO put the String info in the comp itself or remove it, its crap
-		if (comp instanceof MeshComponent) {
-			setMyGraphicsComponent((MeshComponent) comp);
+		if (uniqueCompName instanceof MeshComponent) {
+			setMyGraphicsComponent((MeshComponent) uniqueCompName);
 		}
-		if (comp != null && myComponents.contains(comp) == -1)
-			myComponents.add(comp);
+		if (uniqueCompName != null && myComponents.contains(uniqueCompName) == -1)
+			myComponents.add(uniqueCompName);
 	}
 
 	/**
@@ -103,10 +103,9 @@ public class Obj extends AbstractObj implements HasPosition, HasColor {
 	}
 
 	@Override
-	public void render(/*GL10 gl,*/ GLES20 unused, Renderable parent) {
+	public void render(GLES20 unused, Renderable parent) {
 
-		if (myGraphicsComponent == null)
-			return;
+		if (myGraphicsComponent == null) return;
 
 		/*
 		 * nessecary for objects with picking disabled (wich cant be clicked).
@@ -119,15 +118,15 @@ public class Obj extends AbstractObj implements HasPosition, HasColor {
 		 * meshGroup wont have the correct selection color!
 		 */
 		if (ObjectPicker.readyToDrawWithColor) {
-			/*gl.*/glColor4f(0, 0, 0, 1);
+			glColor4f(0, 0, 0, 1);
 		} else {
 			/*
 			 * before drawing a new object, reset the color to white TODO
 			 */
-			/*gl.*/glColor4f(1, 1, 1, 1);
+			glColor4f(1, 1, 1, 1);
 		}
 
-		myGraphicsComponent.render(,/*gl,*/  this);
+		myGraphicsComponent.render(unused, this);
 	}
 
 	@Override
@@ -156,9 +155,7 @@ public class Obj extends AbstractObj implements HasPosition, HasColor {
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public boolean hasComponent(Class componentSubclass) {
-		if (getComp(componentSubclass) != null)
-			return true;
-		return false;
+		return getComp(componentSubclass) != null;
 	}
 
 	@SuppressWarnings("unchecked")

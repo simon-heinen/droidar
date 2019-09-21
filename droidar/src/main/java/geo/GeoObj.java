@@ -182,11 +182,11 @@ public class GeoObj extends Obj implements HasDebugInformation {
 	}
 
 	@Override
-	public void setComp(Entity comp) {
-		if (comp instanceof MeshComponent) {
+	public void setComp(Entity uniqueCompName) {
+		if (uniqueCompName instanceof MeshComponent) {
 			MeshComponent g = getMySurroundGroup();
 			g.removeAllChildren();
-			g.addChild((MeshComponent) comp);
+			g.addChild((MeshComponent) uniqueCompName);
 			setMyGraphicsComponent(g);
 			/*
 			 * if the surround-group was not jet added to the GeoObj it will be
@@ -196,7 +196,7 @@ public class GeoObj extends Obj implements HasDebugInformation {
 				getMyComponents().add(g);
 			}
 		} else
-			super.setComp(comp);
+			super.setComp(uniqueCompName);
 	}
 
 	/*
@@ -582,9 +582,7 @@ public class GeoObj extends Obj implements HasDebugInformation {
 
 	public boolean hasSameCoordsAs(GeoObj o) {
 		if (o.getLatitude() == getLatitude()) {
-			if (o.getLongitude() == getLongitude()) {
-				return true;
-			}
+			return o.getLongitude() == getLongitude();
 		}
 		return false;
 	}

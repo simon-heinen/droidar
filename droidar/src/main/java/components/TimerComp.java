@@ -19,15 +19,12 @@ public class TimerComp implements Entity {
 	@Override
 	public boolean update(float timeDelta, Updateable parent) {
 		setMyParent(parent);
-		if (timer.update(timeDelta, this)) {
-			/*
-			 * if the timer returns true that means its time was up and it was
-			 * executed correctly so the TImerComp can be removed from its
-			 * parent -> return false
-			 */
-			return false;
-		}
-		return true;
+		/*
+		 * if the timer returns true that means its time was up and it was
+		 * executed correctly so the TImerComp can be removed from its
+		 * parent -> return false
+		 */
+		return !timer.update(timeDelta, this);
 	}
 
 	@Override

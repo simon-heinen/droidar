@@ -61,7 +61,7 @@ public class World implements RenderableEntity, Container<RenderableEntity> {
 		return container.add(x);
 	}
 
-	private void glLoadScreenPosition(/*GL10 gl*/) {
+	private void glLoadScreenPosition(/*GL10 gl*/GLES20 unused) {
 		if (myScreenPosition != null)
 			/*gl.*/glTranslatef(myScreenPosition.x, myScreenPosition.y, myScreenPosition.z);
 	}
@@ -81,31 +81,30 @@ public class World implements RenderableEntity, Container<RenderableEntity> {
 		return v.default_visit((Container) this);
 	}
 
-	private void glLoadScale(/*GL10 gl*/) {
-		if (myScale != null)
-			/*gl.*/glScalef(myScale.x, myScale.y, myScale.z);
+	private void glLoadScale(GLES20 unused) {
+		if (myScale != null) glScalef(myScale.x, myScale.y, myScale.z);
 	}
 
 	@Override
-	public void render(/*GL10 gl,*/ GLES20 unused, Renderable parent) {
+	public void render(GLES20 unused, Renderable parent) {
 		// TODO reconstruct why this order is important! or wrong..
-		glLoadScreenPosition(/*gl*/);
-		myCamera.render(,/*gl,*/  this);
+		glLoadScreenPosition(unused);
+		myCamera.render(unused, this);
 		// glLoadRotation(gl);
-		glLoadScale(/*gl*/);
+		glLoadScale(unused);
 
 		// TODO remove the coordinate axes here:
 
-		CoordinateAxis.draw(/*gl*/);
+		CoordinateAxis.draw(unused);
 
-		drawElements(myCamera/*, gl*/);
+		drawElements(unused, myCamera);
 	}
 
-	public void drawElements(GLCamera camera/*, GL10 gl*/) {
+	public void drawElements(GLES20 unused, GLCamera camera) {
 		if (container != null) {
 			for (int i = 0; i < container.myLength; i++) {
 				if (container.get(i) != null)
-					container.get(i).render(,/*gl,*/  this);
+					container.get(i).render(unused, this);
 			}
 		}
 	}

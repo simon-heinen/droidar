@@ -123,10 +123,7 @@ public class TaskManager implements Runnable, ProcessListener {
 	}
 
 	private synchronized boolean checkIfIsNotEmpty(EfficientList<Command> l) {
-		if (l.myLength > 0) {
-			return true;
-		}
-		return false;
+		return l.myLength > 0;
 	}
 
 	private boolean runTasksInList(EfficientList<Command> l) {

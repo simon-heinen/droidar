@@ -32,9 +32,7 @@ public class EntityList implements Entity, Container<Entity> {
 				myItems.remove(myItems.get(i));
 			}
 		}
-		if (myItems.myLength == 0)
-			return false;
-		return true;
+		return myItems.myLength != 0;
 	}
 
 	@Override

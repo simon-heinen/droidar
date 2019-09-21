@@ -100,8 +100,7 @@ public class SimpleUI extends Activity {
 	 *            e.g. a {@link M_Container} which is filled with all the items
 	 * @return
 	 */
-	public static boolean showUi(Context context,
-			ModifierInterface modifierToDisplay) {
+	public static boolean showUi(Context context, ModifierInterface modifierToDisplay) {
 		if (modifierToDisplay != null) {
 			Intent intent = new Intent(context, SimpleUI.class);
 			try {
@@ -176,13 +175,11 @@ public class SimpleUI extends Activity {
 	 * @param itemToDisplay
 	 * @return the key for the location where it is stored
 	 */
-	private static String storeObjectInTransfairList(Context c,
-			Object itemToDisplay) {
+	private static String storeObjectInTransfairList(Context c, Object itemToDisplay) {
 
 		String newKey = new Date().toString() + itemToDisplay.toString();
 		getApplication(c).getTransferList().put(newKey, itemToDisplay);
-		if (DEBUG)
-			getApplication(c).getTransferList();
+		if (DEBUG) getApplication(c).getTransferList();
 		return newKey;
 	}
 
@@ -367,8 +364,7 @@ public class SimpleUI extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (myModifier instanceof SimpleUiActivityResultListener) {
-			((SimpleUiActivityResultListener) myModifier).onActivityResult(
-					this, requestCode, resultCode, data);
+			((SimpleUiActivityResultListener) myModifier).onActivityResult( this, requestCode, resultCode, data);
 		} else
 			super.onActivityResult(requestCode, resultCode, data);
 	}

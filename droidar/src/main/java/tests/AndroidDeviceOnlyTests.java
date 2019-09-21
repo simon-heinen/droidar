@@ -13,7 +13,7 @@ public class AndroidDeviceOnlyTests extends SimpleTesting {
 	}
 
 	@Override
-	public void run() throws Exception {
+	public void run() {
 		calcerTests();
 	}
 

@@ -117,9 +117,7 @@ public class ActionCalcRelativePos extends Action {
 	private boolean worldShouldBeRecalced(double latDistMet, double longDistMet) {
 		if (Math.abs(latDistMet) > MAX_METER_DISTANCE)
 			return true;
-		if (Math.abs(longDistMet) > MAX_METER_DISTANCE)
-			return true;
-		return false;
+		return Math.abs(longDistMet) > MAX_METER_DISTANCE;
 	}
 
 	public void resetWorldZeroPositions(Location location) {

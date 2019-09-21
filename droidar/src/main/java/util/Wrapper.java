@@ -48,27 +48,19 @@ public class Wrapper {
 	}
 
 	public boolean equals(boolean b) {
-		if (b == myB)
-			return true;
-		return false;
+		return b == myB;
 	}
 
 	public boolean equals(float f) {
-		if (f == myI)
-			return true;
-		return false;
+		return f == myI;
 	}
 
 	public boolean equals(int i) {
-		if (i == myI)
-			return true;
-		return false;
+		return i == myI;
 	}
 
 	public boolean equals(String s) {
-		if (s.equals(myS))
-			return true;
-		return false;
+		return s.equals(myS);
 	}
 
 	public boolean getBooleanValue() {

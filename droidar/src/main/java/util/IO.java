@@ -50,7 +50,7 @@ public class IO {
 		}
 	}
 
-	public static String convertInputStreamToString(InputStream stream) throws IOException {
+	public static String convertInputStreamToString(InputStream stream) {
 		if (stream == null)
 			return null;
 

@@ -48,9 +48,7 @@ public class RenderList implements RenderableEntity, Container<RenderableEntity>
 				myItems.remove(myItems.get(i));
 			}
 		}
-		if (myItems.myLength == 0)
-			return false;
-		return true;
+		return myItems.myLength != 0;
 	}
 
 	@Override
