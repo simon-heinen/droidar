@@ -395,22 +395,17 @@ public class DebugSetup extends Setup {
 		addCameraButtons(guiSetup);
 	}
 
-	private Command newCommandAddAnimation(final Wrapper meshWrapper,
-										   final GLAnimation animation) {
+	private Command newCommandAddAnimation(final Wrapper meshWrapper, final GLAnimation animation) {
 		return new Command() {
 
 			@Override
 			public boolean execute() {
 				if (meshWrapper.getObject() instanceof MeshComponent) {
-					((MeshComponent) meshWrapper.getObject())
-							.addAnimation(animation);
-					Log.e(LOG_TAG,
-							"Added " + animation + " to "
-									+ meshWrapper.getObject());
+					((MeshComponent) meshWrapper.getObject()).addAnimation(animation);
+					Log.e(LOG_TAG, "Added " + animation + " to " + meshWrapper.getObject());
 					return true;
 				}
-				Log.e(LOG_TAG,
-						"Cant add animation to " + meshWrapper.getObject());
+				Log.e(LOG_TAG, "Cant add animation to " + meshWrapper.getObject());
 				return false;
 			}
 		};

@@ -72,7 +72,6 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 		Display display = ((WindowManager) this.getContext().getSystemService(Activity.WINDOW_SERVICE)).getDefaultDisplay();
 		/*
 		 * int rotation = display.getRotation();
-		 * 
 		 * this does not work on older devices so use reflection
 		 */
 		int rotation = 0;
@@ -106,7 +105,6 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 	private void setDisplayOrientation(int inDegree) {
 		/*
 		 * myCamera.setDisplayOrientation(inDegree);
-		 * 
 		 * does not work on older devices so use reflection
 		 */
 		try {

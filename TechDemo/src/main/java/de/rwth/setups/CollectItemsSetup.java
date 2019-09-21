@@ -66,13 +66,11 @@ public class CollectItemsSetup extends Setup {
 		Obj itemToCollect = new Obj();
 		itemToCollect.setComp(new ProximitySensor(camera, 3f) {
 			@Override
-			public void onObjectIsCloseToCamera(GLCamera myCamera2, Obj obj,
-												MeshComponent m, float currentDistance) {
+			public void onObjectIsCloseToCamera(GLCamera myCamera2, Obj obj, MeshComponent m, float currentDistance) {
 				catchedNumber++;
 				new CommandShowToast(getActivity()/*myTargetActivity*/, "You got me "
 						+ catchedNumber + " times").execute();
-				itemMesh.setPosition(Vec.getNewRandomPosInXYPlane(
-						camera.getPosition(), 5, 20));
+				itemMesh.setPosition(Vec.getNewRandomPosInXYPlane(camera.getPosition(), 5, 20));
 			}
 		});
 
@@ -82,22 +80,18 @@ public class CollectItemsSetup extends Setup {
 	}
 
 	@Override
-	public void _c_addActionsToEvents(EventManager eventManager,
-									  CustomGLSurfaceView arView, SystemUpdater worldUpdater) {
-		ActionMoveCameraBuffered move = new ActionMoveCameraBuffered(camera, 5,
-				25);
+	public void _c_addActionsToEvents(EventManager eventManager, CustomGLSurfaceView arView, SystemUpdater worldUpdater) {
+		ActionMoveCameraBuffered move = new ActionMoveCameraBuffered(camera, 5, 25);
 		arView.addOnTouchMoveAction(move);
 		eventManager.addOnTrackballAction(move);
 		Action rot = new ActionRotateCameraBuffered(camera);
 		worldUpdater.addObjectToUpdateCycle(rot);
 		eventManager.addOnOrientationChangedAction(rot);
-		eventManager.addOnLocationChangedAction(new ActionCalcRelativePos(
-				world, camera));
+		eventManager.addOnLocationChangedAction(new ActionCalcRelativePos(world, camera));
 	}
 
 	@Override
 	public void _d_addElementsToUpdateThread(SystemUpdater worldUpdater) {
-
 		worldUpdater.addObjectToUpdateCycle(world);
 	}
 
@@ -107,10 +101,8 @@ public class CollectItemsSetup extends Setup {
 
 	@Override
 	public void _f_addInfoScreen(InfoScreenSettings infoScreenData) {
-		infoScreenData
-				.addText("There will an object spawned close to you which you have to collect!");
-		infoScreenData
-				.addTextWithIcon(
+		infoScreenData.addText("There will an object spawned close to you which you have to collect!");
+		infoScreenData.addTextWithIcon(
 						R.drawable.infoboxblue,
 						"Step into the red area to collect the object. A counter will signalize how often you collected the object. Instead of actually walking to the object you can simulate movement by using the trackball or the touchscreen.");
 	}

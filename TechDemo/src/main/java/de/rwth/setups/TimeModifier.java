@@ -48,8 +48,7 @@ public class TimeModifier implements RenderableEntity {
 	public boolean update(float timeDelta, Updateable parent) {
 		setMyParent(parent);
 		if (different(myCurrentFactor, myNewFactor))
-			myCurrentFactor = Calculus.morphToNewValue(timeDelta
-					* myAdjustmentSpeed, myNewFactor, myCurrentFactor);
+			myCurrentFactor = Calculus.morphToNewValue(timeDelta * myAdjustmentSpeed, myNewFactor, myCurrentFactor);
 		else
 			myCurrentFactor = myNewFactor;
 		if (myCurrentFactor == 0)
@@ -67,17 +66,14 @@ public class TimeModifier implements RenderableEntity {
 
 	@Override
 	public boolean accept(Visitor visitor) {
-		if (myChild != null)
-			return myChild.accept(visitor);
-
+		if (myChild != null) return myChild.accept(visitor);
 		Log.e(LOG_TAG, "Child was not set");
 		return false;
 	}
 
 	@Override
-	public void render(/*GL10 gl,*/ GLES20 unused, Renderable parent) {
-		if (myChild != null)
-			myChild.render(,/*gl,*/  parent);
+	public void render(GLES20 unused, Renderable parent) {
+		if (myChild != null) myChild.render(unused, parent);
 		else
 			Log.e(LOG_TAG, "Child was not set");
 	}

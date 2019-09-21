@@ -185,7 +185,7 @@ public class GL1Renderer extends GLRenderer {
 		if (!myLights.isEmpty()) {
 			glEnable(GLES10.GL_LIGHTING);
 			for (int i = 0; i < myLights.size(); i++) {
-				myLights.get(i).switchOn(/*gl*/);
+				myLights.get(i).switchOn(unused);
 			}
 		}
 	}
@@ -193,7 +193,7 @@ public class GL1Renderer extends GLRenderer {
 	public void disableLights(GLES20 unused) {
 		glDisable(GLES10.GL_LIGHTING);
 		for (int i = 0; i < myLights.size(); i++) {
-			myLights.get(i).switchOff(/*gl*/unused);
+			myLights.get(i).switchOff(unused);
 		}
 	}
 

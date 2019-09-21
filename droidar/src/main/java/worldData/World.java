@@ -48,8 +48,7 @@ public class World implements RenderableEntity, Container<RenderableEntity> {
 		if (x == null) {
 			return false;
 		}
-		if (container == null)
-			container = new EfficientList<>();
+		if (container == null) container = new EfficientList<>();
 		/*
 		 * check if obj already added before adding it to the world!
 		 */
@@ -61,9 +60,9 @@ public class World implements RenderableEntity, Container<RenderableEntity> {
 		return container.add(x);
 	}
 
-	private void glLoadScreenPosition(/*GL10 gl*/GLES20 unused) {
+	private void glLoadScreenPosition(GLES20 unused) {
 		if (myScreenPosition != null)
-			/*gl.*/glTranslatef(myScreenPosition.x, myScreenPosition.y, myScreenPosition.z);
+			glTranslatef(myScreenPosition.x, myScreenPosition.y, myScreenPosition.z);
 	}
 
 	// private void glLoadRotation(GL10 gl) {
@@ -94,9 +93,7 @@ public class World implements RenderableEntity, Container<RenderableEntity> {
 		glLoadScale(unused);
 
 		// TODO remove the coordinate axes here:
-
 		CoordinateAxis.draw(unused);
-
 		drawElements(unused, myCamera);
 	}
 
