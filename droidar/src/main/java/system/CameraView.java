@@ -64,8 +64,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	/**
-	 * http://stackoverflow.com/questions/3841122/android-camera-preview-is-
-	 * sideways
+	 * http://stackoverflow.com/questions/3841122/android-camera-preview-is-sideways
 	 */
 	public void setPreviewAccordingToScreenOrientation(int width, int height) {
 		Parameters parameters = myCamera.getParameters();

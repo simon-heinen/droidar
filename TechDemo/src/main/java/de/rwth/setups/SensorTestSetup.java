@@ -48,8 +48,7 @@ public class SensorTestSetup extends Setup {
 	@Override
 	public void _a_initFieldsIfNecessary() {
 		// allow the user to send error reports to the developer:
-		ErrorHandler.enableEmailReports("droidar.rwth@gmail.com",
-				"Error in DroidAR App");
+		ErrorHandler.enableEmailReports("droidar.rwth@gmail.com", "Error in DroidAR App");
 
 		/*
 		 * the following are just example rotate actions, take a look at the
@@ -121,15 +120,27 @@ public class SensorTestSetup extends Setup {
 	}
 
 	@Override
-	public void _c_addActionsToEvents(EventManager eventManager,
-									  CustomGLSurfaceView arView, SystemUpdater worldUpdater) {
+	public String toString() {
+		return "SensorTestSetup{" +
+				"camera=" + camera +
+				", world=" + world +
+				", rotActionB1=" + rotActionB1 +
+				", rotActionB3=" + rotActionB3 +
+				", rotActionB4=" + rotActionB4 +
+				", rotActionDebug=" + rotActionDebug +
+				", rotActionUnB=" + rotActionUnB +
+				", rotActionUnB2=" + rotActionUnB2 +
+				", rotActionB2=" + rotActionB2 +
+				'}';
+	}
+
+	@Override
+	public void _c_addActionsToEvents(EventManager eventManager,  CustomGLSurfaceView arView, SystemUpdater worldUpdater) {
 		arView.addOnTouchMoveAction(new ActionBufferedCameraAR(camera));
 		eventManager.addOnOrientationChangedAction(rotActionB1);
-		eventManager.addOnTrackballAction(new ActionMoveCameraBuffered(camera,
-				5, 25));
+		eventManager.addOnTrackballAction(new ActionMoveCameraBuffered(camera, 5, 25));
 
-		eventManager
-				.addOnOrientationChangedAction(new ActionUseCameraAngles2() {
+		eventManager.addOnOrientationChangedAction(new ActionUseCameraAngles2() {
 
 					@Override
 					public void onAnglesUpdated(float pitch, float roll,
@@ -173,8 +184,7 @@ public class SensorTestSetup extends Setup {
 		@Override
 		public boolean execute() {
 			EventManager.getInstance().getOnOrientationChangedAction().clear();
-			EventManager.getInstance().getOnOrientationChangedAction()
-						.add(myAction);
+			EventManager.getInstance().getOnOrientationChangedAction().add(myAction);
 			return true;
 		}
 	}

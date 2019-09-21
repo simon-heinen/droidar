@@ -6,10 +6,10 @@ import java.util.List;
 
 public class NameGenerator {
 
-	private List vocals = new ArrayList();
-	private List startConsonants = new ArrayList();
-	private List endConsonants = new ArrayList();
-	private List nameInstructions = new ArrayList();
+	private List<String> vocals = new ArrayList<>();
+	private List<String> startConsonants = new ArrayList<>();
+	private List<String> endConsonants = new ArrayList<>();
+	private List<String> nameInstructions = new ArrayList<>();
 
 	public NameGenerator() {
 		String[] demoVocals = { "a", "e", "i", "o", "u", "ei", "ai", "ou", "j",
@@ -44,8 +44,7 @@ public class NameGenerator {
 	 * @param endConsonants
 	 *            pass something like {"th","sh","f",..}
 	 */
-	public NameGenerator(String[] vocals, String[] startConsonants,
-			String[] endConsonants) {
+	public NameGenerator(String[] vocals, String[] startConsonants, String[] endConsonants) {
 		this.vocals.addAll(Arrays.asList(vocals));
 		this.startConsonants.addAll(Arrays.asList(startConsonants));
 		this.endConsonants.addAll(Arrays.asList(endConsonants));
@@ -62,8 +61,7 @@ public class NameGenerator {
 	 *            (v=vocal,c=startConsonsonant,d=endConsonants)! Pass something
 	 *            like {"vd", "cvdvd", "cvd", "vdvd"}
 	 */
-	public NameGenerator(String[] vocals, String[] startConsonants,
-			String[] endConsonants, String[] nameInstructions) {
+	public NameGenerator(String[] vocals, String[] startConsonants, String[] endConsonants, String[] nameInstructions) {
 		this(vocals, startConsonants, endConsonants);
 		this.nameInstructions.addAll(Arrays.asList(nameInstructions));
 	}

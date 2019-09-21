@@ -26,6 +26,8 @@ import worldData.Updateable;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 
+import java.util.Arrays;
+
 import commands.Command;
 import commands.undoable.UndoableCommand;
 
@@ -526,4 +528,22 @@ public abstract class MeshComponent implements RenderableEntity, SelectionListen
 		return myChildren;
 	}
 
+	@Override
+	public String toString() {
+		return "MeshComponent{" +
+				"myPosition=" + myPosition +
+				", myRotation=" + myRotation +
+				", myScale=" + myScale +
+				", myColor=" + myColor +
+				", myPickColor=" + myPickColor +
+				", graficAnimationActive=" + graficAnimationActive +
+				", myChildren=" + myChildren +
+				", myParent=" + myParent +
+				", myOnClickCommand=" + myOnClickCommand +
+				", myOnLongClickCommand=" + myOnLongClickCommand +
+				", myOnMapClickCommand=" + myOnMapClickCommand +
+				", myOnDoubleClickCommand=" + myOnDoubleClickCommand +
+				", markerRotationMatrix=" + Arrays.toString(markerRotationMatrix) +
+				'}';
+	}
 }

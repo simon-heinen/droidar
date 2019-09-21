@@ -206,4 +206,16 @@ public class World implements RenderableEntity, Container<RenderableEntity> {
 			container = new EfficientList<>();
 		return container;
 	}
+
+	@Override
+	public String toString() {
+		return "World{" +
+				"myScreenPosition=" + myScreenPosition +
+				", myScale=" + myScale +
+				", container=" + container +
+				", myCamera=" + myCamera +
+				", wasBeenClearedAtLeastOnce=" + wasBeenClearedAtLeastOnce +
+				", myParent=" + myParent +
+				'}';
+	}
 }

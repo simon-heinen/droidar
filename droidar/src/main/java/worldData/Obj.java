@@ -230,4 +230,11 @@ public class Obj extends AbstractObj implements HasPosition, HasColor {
 	// myInfoObj.setShortDescr(name);
 	// }
 
+	@Override
+	public String toString() {
+		return "Obj{" +
+				"myComponents=" + myComponents +
+				", myGraphicsComponent=" + myGraphicsComponent +
+				'}';
+	}
 }

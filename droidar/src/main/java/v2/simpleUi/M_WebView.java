@@ -14,8 +14,7 @@ public abstract class M_WebView implements ModifierInterface {
 	private boolean useDefaultZoomControls;
 	private boolean useTransparentBackground;
 
-	public M_WebView(boolean useDefaultZoomControls,
-			boolean useTransparentBackground) {
+	public M_WebView(boolean useDefaultZoomControls, boolean useTransparentBackground) {
 		this.useDefaultZoomControls = useDefaultZoomControls;
 		this.useTransparentBackground = useTransparentBackground;
 	}
@@ -38,18 +37,15 @@ public abstract class M_WebView implements ModifierInterface {
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 				if (url != null && url.startsWith("market://")) {
 					try {
-						Intent marketIntent = new Intent(Intent.ACTION_VIEW,
-								Uri.parse(url));
-						marketIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY
-								| Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+						Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+						marketIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 						context.startActivity(marketIntent);
 						return true;
 					} catch (Exception ignored) {
 					}
 				}
 				view.loadUrl(url);
-				return dontLoadUrlInWebview(url); // then it is not handled by
-													// default action
+				return dontLoadUrlInWebview(url); // then it is not handled by default action
 			}
 
 			@Override
@@ -67,7 +63,7 @@ public abstract class M_WebView implements ModifierInterface {
 				onPageLoaded(html);
 			}
 		}, "HTMLOUT");
-		w.clearView();
+		w.loadUrl("about:blank"); //obsolete w.clearView();
 		w.loadUrl(getUrlToDisplay());
 		return w;
 	}

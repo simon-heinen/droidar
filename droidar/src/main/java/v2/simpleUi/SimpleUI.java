@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 //import android.util.Log;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -100,12 +101,11 @@ public class SimpleUI extends Activity {
 	 *            e.g. a {@link M_Container} which is filled with all the items
 	 * @return
 	 */
-	public static boolean showUi(Context context, ModifierInterface modifierToDisplay) {
-		if (modifierToDisplay != null) {
-			Intent intent = new Intent(context, SimpleUI.class);
+	public static boolean showUi(Context currentActivity, ModifierInterface contentToShow) {
+		if (contentToShow != null) {
+			Intent intent = new Intent(currentActivity, SimpleUI.class);
 			try {
-				String key = storeObjectInTransfairList(context,
-						modifierToDisplay);
+				String key = storeObjectInTransfairList(currentActivity, contentToShow);
 				/*
 				 * The key to the object will be stored in the extras of the
 				 * intent:
@@ -114,7 +114,7 @@ public class SimpleUI extends Activity {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			startActivity(context, intent);
+			startActivity(currentActivity, intent);
 			return true;
 		}
 		return false;
@@ -132,51 +132,44 @@ public class SimpleUI extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if (DEBUG)
-			Log.i(LOG_TAG, "onPause" + " by " + this);
+		if (DEBUG) Log.i(LOG_TAG, "onPause" + " by " + this);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if (DEBUG)
-			Log.v(LOG_TAG, "onResume" + " by " + this);
+		if (DEBUG) Log.v(LOG_TAG, "onResume" + " by " + this);
 	}
 
 	@Override
 	protected void onRestart() {
 		super.onRestart();
-		if (DEBUG)
-			Log.v(LOG_TAG, "onRestart" + " by " + this);
+		if (DEBUG) Log.v(LOG_TAG, "onRestart" + " by " + this);
 	}
 
 	@Override
 	protected void onDestroy() {
-		if (DEBUG)
-			Log.v(LOG_TAG, "onDestroy" + " by " + this);
+		if (DEBUG) Log.v(LOG_TAG, "onDestroy" + " by " + this);
 		super.onDestroy();
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
-		if (DEBUG)
-			Log.v(LOG_TAG, "onStart" + " by " + this);
+		if (DEBUG) Log.v(LOG_TAG, "onStart" + " by " + this);
 	}
 
 	@Override
 	protected void onStop() {
-		if (DEBUG)
-			Log.v(LOG_TAG, "onStop" + " by " + this);
+		if (DEBUG) Log.v(LOG_TAG, "onStop" + " by " + this);
 		super.onStop();
 	}
 
 	/**
-	 * @param itemToDisplay
+	 * @param itemToDisplay Object
 	 * @return the key for the location where it is stored
 	 */
 	private static String storeObjectInTransfairList(Context c, Object itemToDisplay) {
-
 		String newKey = new Date().toString() + itemToDisplay.toString();
 		getApplication(c).getTransferList().put(newKey, itemToDisplay);
 		if (DEBUG) getApplication(c).getTransferList();
@@ -196,16 +189,14 @@ public class SimpleUI extends Activity {
 			if (app != null) {
 				HashMap<String, Object> tr = null;
 				if (application != null && app != application) {
-					if (DEBUG)
-						Log.w(LOG_TAG, "new application and already "
+					if (DEBUG) Log.w(LOG_TAG, "new application and already "
 								+ "loaded application were not "
 								+ "equal! Replacing old reference");
 					tr = application.getTransferList();
 				}
 				application = app;
 				// try to resque all the objects from the old list:
-				if (tr != null)
-					application.getTransferList().putAll(tr);
+				if (tr != null) application.getTransferList().putAll(tr);
 			}
 		}
 		if (application == null) {
@@ -216,24 +207,20 @@ public class SimpleUI extends Activity {
 	}
 
 	private Object loadObjectFromTransfairList(String key) {
-		HashMap<String, Object> transfairList = getApplication(this)
-				.getTransferList();
+		HashMap<String, Object> transfairList = getApplication(this).getTransferList();
 		if (key == null) {
-			if (DEBUG)
-				Log.i(LOG_TAG, "passed key was null, will"
+			if (DEBUG) Log.i(LOG_TAG, "passed key was null, will"
 						+ " try to load content from static method");
 			return null;
 		}
 		if (transfairList == null) {
-			if (DEBUG)
-				Log.i(LOG_TAG, "transfairList object was null, so "
+			if (DEBUG) Log.i(LOG_TAG, "transfairList object was null, so "
 						+ "storeObjectInTransfairList was "
 						+ "never called before!");
 			return null;
 		}
 		Object o = transfairList.get(key);
-		if (DEBUG)
-			Log.v(LOG_TAG, "Returning " + o + " for the passed key=" + key);
+		if (DEBUG) Log.v(LOG_TAG, "Returning " + o + " for the passed key=" + key);
 		// transfairList.remove(key);
 		return o;
 	}
@@ -245,24 +232,19 @@ public class SimpleUI extends Activity {
 		super.onCreate(savedInstanceState);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		if (DEBUG)
-			Log.i(LOG_TAG, "onCreate" + " by " + this);
+		if (DEBUG) Log.i(LOG_TAG, "onCreate" + " by " + this);
 		try {
 
 			String key = null;
-			if (savedInstanceState != null)
-				key = savedInstanceState.getString(TRANSFAIR_KEY_ID);
+			if (savedInstanceState != null) key = savedInstanceState.getString(TRANSFAIR_KEY_ID);
 			else if (getIntent() != null && getIntent().getExtras() != null)
 				key = getIntent().getExtras().getString(TRANSFAIR_KEY_ID);
-			else
-				Log.i(LOG_TAG, "On create got no information what to display");
+			else Log.i(LOG_TAG, "On create got no information what to display");
 
-			if (DEBUG)
-				Log.i(LOG_TAG, "onCreate got key=" + key);
+			if (DEBUG) Log.i(LOG_TAG, "onCreate got key=" + key);
 
 			ViewToShow = loadContentToViewField(key);
-			if (DEBUG)
-				Log.d(LOG_TAG, "Loaded " + ViewToShow);
+			if (DEBUG) Log.d(LOG_TAG, "Loaded " + ViewToShow);
 			if (ViewToShow != null) {
 				try {
 					((ViewGroup) ViewToShow.getParent()).removeView(ViewToShow);
@@ -286,8 +268,7 @@ public class SimpleUI extends Activity {
 			myModifier = ((ModifierInterface) o);
 			return ((ModifierInterface) o).getView(this);
 		}
-		if (o instanceof View)
-			return (View) o;
+		if (o instanceof View) return (View) o;
 		return null;
 	}
 
@@ -306,7 +287,7 @@ public class SimpleUI extends Activity {
 	 * content is loaded dynamically so this is necessary to switch the
 	 * application back to a valid state.
 	 * 
-	 * @return
+	 * @return M_Container
 	 */
 	public M_Container createErrorInfo() {
 		M_Container c = new M_Container();
@@ -370,7 +351,7 @@ public class SimpleUI extends Activity {
 	}
 
 	@Override
-	protected void onSaveInstanceState(Bundle outState) {
+	protected void onSaveInstanceState(@NonNull Bundle outState) {
 		if (DEBUG)
 			Log.v(LOG_TAG, "onSaveInstanceState" + " by " + this);
 		if (ViewToShow != null) {
@@ -385,8 +366,7 @@ public class SimpleUI extends Activity {
 			outState.putString(TRANSFAIR_KEY_ID, key);
 		} else {
 			if (DEBUG)
-				Log.e(LOG_TAG, "Could not save the modifierToShow "
-						+ "field because it was null!");
+				Log.e(LOG_TAG, "Could not save the modifierToShow " + "field because it was null!");
 		}
 		super.onSaveInstanceState(outState);
 	}

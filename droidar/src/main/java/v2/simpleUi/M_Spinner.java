@@ -60,16 +60,13 @@ public abstract class M_Spinner implements ModifierInterface {
 	public View getView(Context context) {
 
 		LinearLayout container = new LinearLayout(context);
-		container.setPadding(DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING,
-				DEFAULT_PADDING);
+		container.setPadding(DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING);
 
 		container.setGravity(Gravity.CENTER_VERTICAL);
 		LayoutParams p = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,
-				weightOfDescription);
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, weightOfDescription);
 		LinearLayout.LayoutParams p2 = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,
-				weightOfSpinner);
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, weightOfSpinner);
 
 		TextView nameText = new TextView(context);
 		nameText.setText(getVarName());
@@ -78,8 +75,7 @@ public abstract class M_Spinner implements ModifierInterface {
 
 		s = new Spinner(context);
 		s.setLayoutParams(p2);
-		ArrayAdapter<SpinnerItem> a = new ArrayAdapter<>(context,
-				android.R.layout.simple_spinner_item, loadListToDisplay());
+		ArrayAdapter<SpinnerItem> a = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, loadListToDisplay());
 		a.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		s.setAdapter(a);
 		s.setPrompt(getVarName());
@@ -128,8 +124,7 @@ public abstract class M_Spinner implements ModifierInterface {
 
 		List<SpinnerItem> list = loadListToDisplay();
 
-		if (selectedItemId < list.size()
-				&& list.get(selectedItemId).getId() == selectedItemId) {
+		if (selectedItemId < list.size() && list.get(selectedItemId).getId() == selectedItemId) {
 			selectInSpinner(selectedItemId);
 			return true;
 		}

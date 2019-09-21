@@ -44,7 +44,7 @@ public class SimpleBaseAdapter extends BaseAdapter {
 		 *            the list where the item is contained in
 		 * @param positionInList
 		 *            the position in the list
-		 * @return
+		 * @return View
 		 */
 		View getView(Context context, View convertView,
 					 ViewGroup parent, SimpleBaseAdapter simpleBaseAdapter,
@@ -71,8 +71,7 @@ public class SimpleBaseAdapter extends BaseAdapter {
 	 * @param listToDisplay
 	 *            the {@link List} that should be displayed
 	 */
-	public SimpleBaseAdapter(final Activity activity,
-			List<? extends HasItsOwnView> listToDisplay) {
+	public SimpleBaseAdapter(final Activity activity, List<? extends HasItsOwnView> listToDisplay) {
 		myList = listToDisplay;
 		if (activity != null)
 			createAutoUpdaterForTheListAdapter(activity);
@@ -130,8 +129,7 @@ public class SimpleBaseAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		refreshCount(myList.size());
-		return myList.get(position).getView(parent.getContext(), convertView,
-				parent, this, myList, position);
+		return myList.get(position).getView(parent.getContext(), convertView, parent, this, myList, position);
 	}
 
 	/**

@@ -57,22 +57,19 @@ public abstract class DragAndDropListener implements OnTouchListener {
 
 	public abstract void onElementDropped(float rawX, float rawY);
 
-	public void updatePos(MotionEvent event, View v, LayoutParams params,
-			ImageView imageView) {
+	public void updatePos(MotionEvent event, View v, LayoutParams params, ImageView imageView) {
 		params.topMargin = (int) event.getRawY() - (v.getHeight());
 		params.leftMargin = (int) event.getRawX() - (v.getWidth() / 2);
 		imageView.setLayoutParams(params);
 	}
 
-	private ImageView getImageView(View source, Activity activity,
-			RelativeLayout c, LayoutParams params) {
+	private ImageView getImageView(View source, Activity activity, RelativeLayout c, LayoutParams params) {
 		if (imageView == null) {
 			final Bitmap bitmap = IO.loadBitmapFromView(source);
 			final Paint shadowPaint = new Paint();
 			shadowPaint.setAlpha(180);
 			// http://stackoverflow.com/questions/7048941/how-to-use-the-lightingcolorfilter-to-make-the-image-form-dark-to-light
-			shadowPaint.setColorFilter(new LightingColorFilter(0x11333333,
-					0x00000000));
+			shadowPaint.setColorFilter(new LightingColorFilter(0x11333333, 0x00000000));
 
 			imageView = new ImageView(activity) {
 
@@ -94,8 +91,7 @@ public abstract class DragAndDropListener implements OnTouchListener {
 	private android.widget.RelativeLayout.LayoutParams getDragDropContainerParams(
 			Context context) {
 		if (params == null) {
-			params = new LayoutParams(LayoutParams.WRAP_CONTENT,
-					LayoutParams.WRAP_CONTENT);
+			params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		}
 		return params;
 	}
