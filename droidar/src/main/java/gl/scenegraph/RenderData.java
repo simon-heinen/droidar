@@ -1,6 +1,7 @@
 package gl.scenegraph;
 
 import android.opengl.GLES10;
+import android.opengl.GLES20;
 
 import gl.GLUtilityClass;
 
@@ -122,26 +123,26 @@ public class RenderData {
 	 * @see gl.Renderable#draw(javax.microedition.khronos.opengles.GL10)
 	 */
 
-	public void draw(/*GL10 gl*/) {
+	public void draw(GLES20 unused) {
 		// Enabled the vertices buffer for writing and to be used during
 		// rendering.
-		/*gl.*/glEnableClientState(GLES10.GL_VERTEX_ARRAY);
+		glEnableClientState(GLES10.GL_VERTEX_ARRAY);
 		// Specifies the location and data format of an array of vertex
 		// coordinates to use when rendering.
-		/*gl.*/glVertexPointer(3, GLES10.GL_FLOAT, 0, vertexBuffer);
+		glVertexPointer(3, GLES10.GL_FLOAT, 0, vertexBuffer);
 
 		if (normalsBuffer != null) {
 			// Enable normals array (for lightning):
-			/*gl.*/glEnableClientState(GLES10.GL_NORMAL_ARRAY);
-			/*gl.*/glNormalPointer(GLES10.GL_FLOAT, 0, normalsBuffer);
+			glEnableClientState(GLES10.GL_NORMAL_ARRAY);
+			glNormalPointer(GLES10.GL_FLOAT, 0, normalsBuffer);
 		}
-		/*gl.*/glDrawArrays(drawMode, 0, verticesCount);
+		glDrawArrays(drawMode, 0, verticesCount);
 
 		// Disable the vertices buffer.
-		/*gl.*/glDisableClientState(GLES10.GL_VERTEX_ARRAY);
+		glDisableClientState(GLES10.GL_VERTEX_ARRAY);
 
 		// Disable normals array (for lightning):
-		/*gl.*/glDisableClientState(GLES10.GL_NORMAL_ARRAY);
+		glDisableClientState(GLES10.GL_NORMAL_ARRAY);
 	}
 
 }

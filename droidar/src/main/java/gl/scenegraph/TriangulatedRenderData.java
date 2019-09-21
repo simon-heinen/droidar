@@ -1,6 +1,7 @@
 package gl.scenegraph;
 
 import android.opengl.GLES10;
+import android.opengl.GLES20;
 
 import gl.GLUtilityClass;
 
@@ -22,8 +23,7 @@ public class TriangulatedRenderData extends RenderData {
 	protected ShortBuffer indexBuffer;
 	protected int indiceCount;
 
-	public TriangulatedRenderData() {
-	}
+	public TriangulatedRenderData() { }
 
 	@Override
 	public void updateShape(ArrayList<Vec> shapeArray) {
@@ -53,8 +53,7 @@ public class TriangulatedRenderData extends RenderData {
 	protected short[] triangulationOfShape(ArrayList<Vec> shape) {
 		System.out.println("shape.size() " + shape.size());
 		indiceCount = (shape.size() - 2) * 3;
-		if (indiceCount < 1)
-			return null;
+		if (indiceCount < 1) return null;
 		short[] indices = new short[indiceCount];
 		short a = 1;
 		short b = 2;
@@ -70,24 +69,24 @@ public class TriangulatedRenderData extends RenderData {
 	}
 
 	@Override
-	public void draw(/*GL10 gl*/) {
+	public void draw(GLES20 unused) {
 		// Enabled the vertices buffer for writing and to be used during
 		// rendering.
-		/*gl.*/glEnableClientState(GLES10.GL_VERTEX_ARRAY);
+		glEnableClientState(GLES10.GL_VERTEX_ARRAY);
 		// Specifies the location and data format of an array of vertex
 		// coordinates to use when rendering.
-		/*gl.*/glVertexPointer(3, GLES10.GL_FLOAT, 0, vertexBuffer);
+		glVertexPointer(3, GLES10.GL_FLOAT, 0, vertexBuffer);
 
 		if (normalsBuffer != null) {
 			// Enable normals array (for lightning):
-			/*gl.*/glEnableClientState(GLES10.GL_NORMAL_ARRAY);
-			/*gl.*/glNormalPointer(GLES10.GL_FLOAT, 0, normalsBuffer);
+			glEnableClientState(GLES10.GL_NORMAL_ARRAY);
+			glNormalPointer(GLES10.GL_FLOAT, 0, normalsBuffer);
 		}
 
-		/*gl.*/glDrawElements(drawMode, indexBuffer.limit(), GLES10.GL_UNSIGNED_SHORT, indexBuffer);
+		glDrawElements(drawMode, indexBuffer.limit(), GLES10.GL_UNSIGNED_SHORT, indexBuffer);
 
 		// Disable the vertices buffer.
-		/*gl.*/glDisableClientState(GLES10.GL_VERTEX_ARRAY);
+		glDisableClientState(GLES10.GL_VERTEX_ARRAY);
 	}
 
 }

@@ -1,5 +1,7 @@
 package gl.animations;
 
+import android.opengl.GLES20;
+
 import gl.Renderable;
 
 //import javax.microedition.khronos.opengles.GL10;
@@ -57,8 +59,8 @@ public class AnimationPulse extends GLAnimation {
 	}
 
 	@Override
-	public void render(/*GL10 gl,*/ Renderable parent) {
-		/*gl.*/glScalef(currentScale.x, currentScale.y, currentScale.z);
+	public void render(GLES20 unused, Renderable parent) {
+		glScalef(currentScale.x, currentScale.y, currentScale.z);
 	}
 
 	@Override

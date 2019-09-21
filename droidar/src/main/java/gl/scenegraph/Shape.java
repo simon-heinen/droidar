@@ -1,6 +1,7 @@
 package gl.scenegraph;
 
 import android.opengl.GLES10;
+import android.opengl.GLES20;
 
 import gl.Color;
 import gl.Renderable;
@@ -38,18 +39,15 @@ public class Shape extends MeshComponent {
 	}
 
 	public ArrayList<Vec> getMyShapeArray() {
-		if (myShapeArray == null)
-			myShapeArray = new ArrayList<>();
+		if (myShapeArray == null) myShapeArray = new ArrayList<>();
 		return myShapeArray;
 	}
 
 	public void add(Vec v) {
-		if (myShapeArray == null)
-			myShapeArray = new ArrayList<>();
+		if (myShapeArray == null) myShapeArray = new ArrayList<>();
 		myShapeArray.add(v.copy());
 
-		if (myRenderData == null)
-			myRenderData = new RenderData();
+		if (myRenderData == null) myRenderData = new RenderData();
 		myRenderData.updateShape(myShapeArray);
 	}
 
@@ -60,8 +58,7 @@ public class Shape extends MeshComponent {
 	 * @param v
 	 */
 	public void addFast(Vec v) {
-		if (myShapeArray == null)
-			myShapeArray = new ArrayList<>();
+		if (myShapeArray == null) myShapeArray = new ArrayList<>();
 		myShapeArray.add(v.copy());
 	}
 
@@ -70,34 +67,33 @@ public class Shape extends MeshComponent {
 	 */
 	public void updateRenderDataManually() {
 		if (myShapeArray != null) {
-			if (myRenderData == null)
-				myRenderData = new RenderData();
+			if (myRenderData == null) myRenderData = new RenderData();
 			myRenderData.updateShape(myShapeArray);
 		}
 	}
 
 	@Override
-	public void draw(/*GL10 gl,*/ Renderable parent) {
+	public void draw(GLES20 unused, Renderable parent) {
 		if (myRenderData != null) {
 			if (singeSide) {
 				// which is the front? the one which is drawn counter clockwise
-				/*gl.*/glFrontFace(GLES10.GL_CCW);
+				glFrontFace(GLES10.GL_CCW);
 				// enable the differentiation of which side may be visible
-				/*gl.*/glEnable(GLES10.GL_CULL_FACE);
+				glEnable(GLES10.GL_CULL_FACE);
 				// which one should NOT be drawn
-				/*gl.*/glCullFace(GLES10.GL_BACK);
-				/*gl.*/glLightModelf(GLES10.GL_LIGHT_MODEL_TWO_SIDE, 0);
-				myRenderData.draw(/*gl*/);
+				glCullFace(GLES10.GL_BACK);
+				glLightModelf(GLES10.GL_LIGHT_MODEL_TWO_SIDE, 0);
+				myRenderData.draw(unused);
 
 				// Disable face culling.
-				/*gl.*/glDisable(GLES10.GL_CULL_FACE);
+				glDisable(GLES10.GL_CULL_FACE);
 			} else {
 				/*
 				 * The GL_LIGHT_MODEL_TWO_SIDE can be used to use the same
 				 * normal vector and light for both sides of the mesh
 				 */
-				/*gl.*/glLightModelf(GLES10.GL_LIGHT_MODEL_TWO_SIDE, 1);
-				myRenderData.draw(/*gl.*/);
+				glLightModelf(GLES10.GL_LIGHT_MODEL_TWO_SIDE, 1);
+				myRenderData.draw(unused);
 			}
 		}
 	}
@@ -107,14 +103,12 @@ public class Shape extends MeshComponent {
 	}
 
 	public void setTriangleDrawing() {
-		if (myRenderData == null)
-			myRenderData = new RenderData();
+		if (myRenderData == null) myRenderData = new RenderData();
 		myRenderData.drawMode = GLES10.GL_TRIANGLES;
 	}
 
 	public void setLineDrawing() {
-		if (myRenderData == null)
-			myRenderData = new RenderData();
+		if (myRenderData == null) myRenderData = new RenderData();
 		myRenderData.drawMode = GLES10.GL_LINES;
 	}
 

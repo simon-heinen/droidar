@@ -56,8 +56,7 @@ public class ObjParser {
 	public void parse() throws Exception {
 		long startTime = Calendar.getInstance().getTimeInMillis();
 
-		InputStream fileIn = resources.openRawResource(resources.getIdentifier(
-				resourceID, null, null));
+		InputStream fileIn = resources.openRawResource(resources.getIdentifier( resourceID, null, null));
 
 		try (BufferedReader buffer = new BufferedReader(new InputStreamReader(fileIn))) {
 

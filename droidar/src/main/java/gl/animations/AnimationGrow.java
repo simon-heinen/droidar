@@ -1,5 +1,7 @@
 package gl.animations;
 
+import android.opengl.GLES20;
+
 import gl.Renderable;
 
 //import javax.microedition.khronos.opengles.GL10;
@@ -28,8 +30,8 @@ public class AnimationGrow extends GLAnimation {
 	}
 
 	@Override
-	public void render(/*GL10 gl,*/ Renderable parent) {
-		/*gl.*/glScalef(myGrothSize, myGrothSize, myGrothSize);
+	public void render(GLES20 unused, Renderable parent) {
+		glScalef(myGrothSize, myGrothSize, myGrothSize);
 	}
 
 	@Override
@@ -40,8 +42,7 @@ public class AnimationGrow extends GLAnimation {
 		myGrothSize += myGrothFactor * timeDelta;
 		if (myGrothSize > 1) {
 			myGrothSize = 1;
-			Log.e(LOG_TAG,
-					"Grouth was > 1, should not happen when grothFactor correct");
+			Log.e(LOG_TAG, "Grouth was > 1, should not happen when grothFactor correct");
 		}
 		return true;
 	}

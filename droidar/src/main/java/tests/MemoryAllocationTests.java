@@ -20,7 +20,7 @@ import android.os.SystemClock;
 public class MemoryAllocationTests extends SimpleTesting {
 
 	@Override
-	public void run() throws Exception {
+	public void run() {
 		int number = 60000;
 		speedTestEffiListA(number);// G1: 57 ms; Nexus: 29ms
 		speedTestEffiListB(number);// G1: 110 ms; Nexus: 32ms
@@ -140,9 +140,8 @@ public class MemoryAllocationTests extends SimpleTesting {
 	 * The "good" way to do it. This way no iterator objects are created
 	 * 
 	 * @param durationInMS
-	 * @throws Exception
 	 */
-	private void CollectionTestA(int durationInMS) throws Exception {
+	private void CollectionTestA(int durationInMS) {
 
 		ArrayList<String> x = new ArrayList<>();
 		for (int j = 0; j < 200; j++) {
@@ -166,9 +165,8 @@ public class MemoryAllocationTests extends SimpleTesting {
 	 * One of the bad ways. THis way many iterator objects will be created!
 	 * 
 	 * @param durationInMS
-	 * @throws Exception
 	 */
-	private void CollectionTestB(int durationInMS) throws Exception {
+	private void CollectionTestB(int durationInMS) {
 
 		ArrayList<String> x = new ArrayList<>();
 		for (int j = 0; j < 200; j++) {
@@ -193,9 +191,8 @@ public class MemoryAllocationTests extends SimpleTesting {
 	 * One of the bad ways. THis way many iterator objects will be created!
 	 * 
 	 * @param durationInMS
-	 * @throws Exception
 	 */
-	private void CollectionTestC(int durationInMS) throws Exception {
+	private void CollectionTestC(int durationInMS) {
 
 		ArrayList<String> x = new ArrayList<>();
 		for (int j = 0; j < 200; j++) {

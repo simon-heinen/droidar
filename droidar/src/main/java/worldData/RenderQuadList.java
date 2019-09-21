@@ -1,5 +1,7 @@
 package worldData;
 
+import android.opengl.GLES20;
+
 import gl.GLCamera;
 import gl.HasPosition;
 import gl.Renderable;
@@ -109,13 +111,13 @@ public class RenderQuadList implements RenderableEntity, Container<RenderableEnt
 	}
 
 	@Override
-	public void render(/*GL10 gl,*/ Renderable parent) {
+	public void render(/*GL10 gl,*/ GLES20 unused, Renderable parent) {
 		Vec p = myGlCamera.getPosition();
 		EfficientList<RenderableEntity> list = getList(p.x, p.y);
 		for (int i = 0; i < list.myLength; i++) {
 			RenderableEntity obj = list.get(i);
 			if (obj != null)
-				obj.render(/*gl,*/ this);
+				obj.render(,/*gl,*/  this);
 		}
 	}
 

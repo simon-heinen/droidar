@@ -340,9 +340,9 @@ if (LOG_OUTPUT_ON) {
 						t = Math.abs((dx1 * dx2 + dy1 * dy2) / sqrt((dx1 * dx1 + dy1 * dy1)	* (dx2 * dx2 + dy2 * dy2) + 1e-10));
 
 						r = Math.sqrt(dx1 * dx1 + dy1 * dy1);
-						s = s > t ? s : t;
-						min = min < r ? min : r;
-						max = max > r ? max : r;
+						s = Math.max(s, t);
+						min = Math.min(min, r);
+						max = Math.max(max, r);
 					}
 					r = max / min;
 

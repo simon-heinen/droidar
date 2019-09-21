@@ -357,7 +357,6 @@ public class GeoUtils {
 
 	@Deprecated
 	private Document getDocumentFromUrl(String url) throws IOException,
-			MalformedURLException, ProtocolException,
 			FactoryConfigurationError, ParserConfigurationException,
 			SAXException {
 		HttpURLConnection urlConnection = (HttpURLConnection) new URL(url)

@@ -39,8 +39,7 @@ public class ActionWASDMovement extends Action {
 	 * @param maxSpeed
 	 *            maximum movementSpeed. Try 20f
 	 */
-	public ActionWASDMovement(GLCamera camera, float xReduction,
-			float yReduction, float maxSpeed) {
+	public ActionWASDMovement(GLCamera camera, float xReduction, float yReduction, float maxSpeed) {
 		myTargetCamera = camera;
 		this.xReduction = xReduction;
 		this.yReduction = yReduction;
@@ -48,8 +47,7 @@ public class ActionWASDMovement extends Action {
 	}
 
 	@Override
-	public boolean onTouchMove(MotionEvent e1, MotionEvent e2,
-			float screenDeltaX, float screenDeltaY) {
+	public boolean onTouchMove(MotionEvent e1, MotionEvent e2, float screenDeltaX, float screenDeltaY) {
 
 		yFactor = (-e2.getX() + e1.getX()) / yReduction;
 		xFactor = (e1.getY() - e2.getY()) / xReduction;
@@ -85,8 +83,7 @@ public class ActionWASDMovement extends Action {
 			// Vec.getOrthogonalHorizontal(accelerationVec);
 
 			Vec yDir = new Vec(yFactor, 0, 0);
-			yDir.rotateAroundZAxis(180 - myTargetCamera
-					.getCameraAnglesInDegree()[0]);
+			yDir.rotateAroundZAxis(180 - myTargetCamera.getCameraAnglesInDegree()[0]);
 
 			// System.out.println("yDir="+yDir);
 

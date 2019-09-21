@@ -23,9 +23,7 @@ import worldData.Obj;
 import worldData.RenderableEntity;
 import worldData.Updateable;
 
-import android.opengl.GLES10;
 import android.opengl.GLES20;
-import android.opengl.GLES30;
 import android.opengl.Matrix;
 
 import commands.Command;
@@ -52,8 +50,7 @@ import static android.opengl.GLES10.glTranslatef;
  * @author Spobo
  * 
  */
-public abstract class MeshComponent implements RenderableEntity,
-		SelectionListener, HasPosition, HasColor, HasRotation, HasScale {
+public abstract class MeshComponent implements RenderableEntity, SelectionListener, HasPosition, HasColor, HasRotation, HasScale {
 
 	private static final String LOG_TAG = "MeshComp";
 	/**
@@ -181,15 +178,14 @@ public abstract class MeshComponent implements RenderableEntity,
 		this.myScale = new Vec(scaleRate, scaleRate, scaleRate);
 	}
 
-	private void loadPosition(/*GL10 gl*/) {
+	private void loadPosition(GLES20 unused) {
 		if (myPosition != null)
-			/*gl.*/glTranslatef(myPosition.x, myPosition.y, myPosition.z);
+			glTranslatef(myPosition.x, myPosition.y, myPosition.z);
 	}
 
-	private void loadRotation(/*GL10 gl*/) {
-
+	private void loadRotation(GLES20 unused) {
 		if (markerRotationMatrix != null) {
-			/*gl.*/glMultMatrixf(markerRotationMatrix, 0);
+			glMultMatrixf(markerRotationMatrix, 0);
 		}
 
 		if (myRotation != null) {
@@ -210,53 +206,50 @@ public abstract class MeshComponent implements RenderableEntity,
 
 	}
 
-	private void setScale(/*GL10 gl*/) {
+	private void setScale(GLES20 unused) {
 		if (myScale != null)
-			/*gl.*/glScalef(myScale.x, myScale.y, myScale.z);
+			glScalef(myScale.x, myScale.y, myScale.z);
 	}
 
 	@Override
-	public synchronized void render(/*GL10 gl,*/ Renderable parent) {
+	public synchronized void render(GLES20 unused, Renderable parent) {
 
 		// store current matrix and then modify it:
-		/*gl.*/glPushMatrix();
-		loadPosition(/*gl*/);
-		setScale(/*gl*/);
-		loadRotation(/*gl*/);
+		glPushMatrix();
+		loadPosition(unused);
+		setScale(unused);
+		loadRotation(unused);
 
 		if (ObjectPicker.readyToDrawWithColor) {
 			if (myPickColor != null) {
-				/*gl.*/glColor4f(myPickColor.red, myPickColor.green,
-						myPickColor.blue, myPickColor.alpha);
+				glColor4f(myPickColor.red, myPickColor.green, myPickColor.blue, myPickColor.alpha);
 			} else {
-				Log.d("Object Picker", "Object " + this
-						+ " had no picking color");
+				Log.d("Object Picker", "Object " + this + " had no picking color");
 			}
 		} else if (myColor != null) {
-			/*gl.*/glColor4f(myColor.red, myColor.green, myColor.blue,
-					myColor.alpha);
+			glColor4f(myColor.red, myColor.green, myColor.blue, myColor.alpha);
 		}
 
 		if (myChildren != null) {
-			myChildren.render(/*gl,*/ this);
+			myChildren.render(unused, this);
 		}
 
-		draw(/*gl,*/ parent);
+		draw(unused, parent);
 		// restore old matrix:
-		/*gl.*/glPopMatrix();
+		glPopMatrix();
 	}
 
 	/**
-	 * Don't override the {@link Renderable#render(GL10, Renderable)} method if
+	 * Don't override the {@link Renderable#render(GLES20, Renderable)} method if
 	 * you are creating a subclass of {@link MeshComponent}. Instead implement
 	 * this method and all the translation and rotation abilities of the
 	 * {@link MeshComponent} will be applied automatically
 	 * 
 	 * //@param gl
+	 * @param unused
 	 * @param parent
-	 * //@param stack
 	 */
-	public abstract void draw(/*GL10 gl,*/ Renderable parent);
+	public abstract void draw(GLES20 unused, Renderable parent);
 
 	@Override
 	public boolean update(float timeDelta, Updateable parent) {
@@ -303,8 +296,7 @@ public abstract class MeshComponent implements RenderableEntity,
 
 		Wrapper selectionsWrapper = new Wrapper(selectionInterface);
 
-		myPickColor = ObjectPicker.getInstance().registerMesh(
-				selectionsWrapper, c);
+		myPickColor = ObjectPicker.getInstance().registerMesh(selectionsWrapper, c);
 		Log.v(LOG_TAG, "   > myPickColor=" + myPickColor);
 	}
 
@@ -332,7 +324,6 @@ public abstract class MeshComponent implements RenderableEntity,
 
 	@Override
 	public Command getOnClickCommand() {
-
 		// if (myOnClickCommand == null)
 		// return getMyParentObj().getOnClickCommand();
 		return myOnClickCommand;
@@ -494,8 +485,7 @@ public abstract class MeshComponent implements RenderableEntity,
 	// @Override TODO
 	private boolean find(RenderableEntity entity, boolean andRemove) {
 		if (myChildren == entity) {
-			if (andRemove) this.removeAllChildren();
-//				clearChildren();
+			if (andRemove) this.removeAllChildren(); //obsolete				this.clearChildren();
 			return true;
 		}
 		if (myChildren instanceof Container) {
@@ -508,8 +498,7 @@ public abstract class MeshComponent implements RenderableEntity,
 	}
 
 	public void removeAllAnimations() {
-		if (myChildren instanceof GLAnimation) this.removeAllChildren();
-//			this.clearChildren();
+		if (myChildren instanceof GLAnimation) this.removeAllChildren(); //obsolete			this.clearChildren();
 		if (myChildren instanceof Container)
 			removeAllElementsOfType(((Container) myChildren), GLAnimation.class);
 	}

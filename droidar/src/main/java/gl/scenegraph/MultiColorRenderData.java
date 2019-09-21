@@ -2,7 +2,6 @@ package gl.scenegraph;
 
 import android.opengl.GLES10;
 import android.opengl.GLES20;
-import android.opengl.GLES30;
 
 import gl.Color;
 import gl.GLUtilityClass;
@@ -13,7 +12,6 @@ import java.util.ArrayList;
 
 //import javax.microedition.khronos.opengles.GL10;
 
-import static android.opengl.GLES10.GL_NORMAL_ARRAY;
 import static android.opengl.GLES10.glColorPointer;
 import static android.opengl.GLES10.glDisableClientState;
 import static android.opengl.GLES10.glEnableClientState;
@@ -53,14 +51,14 @@ public class MultiColorRenderData extends RenderData {
 	}
 
 	@Override
-	public void draw(/*GL10 gl*/) {
+	public void draw(/*GL10 gl*/GLES20 unused) {
 
 		if (ObjectPicker.readyToDrawWithColor)
 			/*
 			 * when the object picker needs to draw a frame, the normal draw
 			 * method for all meshes is used to use the picking color
 			 */
-			super.draw(/*gl*/);
+			super.draw(/*gl*/unused);
 		else {
 
 			// Enabled the vertices buffer for writing and to be used during

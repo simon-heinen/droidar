@@ -21,5 +21,4 @@ public class ActionRotateCameraBuffered3 extends ActionWithSensorProcessing {
 		accelBufferAlgo = new BufferAlgo3(0.2f, 0.1f, 4);
 		magnetBufferAlgo = new BufferAlgo3(0.2f, 0.1f, 4);
 	}
-
 }

@@ -3,7 +3,6 @@ package gl;
 import util.Vec;
 
 public interface HasRotation {
-
 	Vec getRotation();
 
 	/**

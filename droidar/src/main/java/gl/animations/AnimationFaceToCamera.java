@@ -2,6 +2,8 @@ package gl.animations;
 
 //import javax.microedition.khronos.opengles.GL10;
 
+import android.opengl.GLES20;
+
 import gl.GLCamera;
 import gl.Renderable;
 import gl.scenegraph.MeshComponent;
@@ -29,8 +31,7 @@ public class AnimationFaceToCamera extends GLAnimation {
      * @param dontChangeXRotation if this is false, the mesh will also change the rotation x
      *                            value, otherwise only the z value to face to the camera
      */
-    public AnimationFaceToCamera(GLCamera targetCamera, float updateDelay,
-                                 boolean dontChangeXRotation) {
+    public AnimationFaceToCamera(GLCamera targetCamera, float updateDelay, boolean dontChangeXRotation) {
         myTargetCamera = targetCamera;
 
         myUpdateDelay = updateDelay;
@@ -54,8 +55,7 @@ public class AnimationFaceToCamera extends GLAnimation {
      * @param updateDelay   0.5f
      * @param adjustmentVec
      */
-    public AnimationFaceToCamera(GLCamera targetCamera, float updateDelay,
-                                 Vec adjustmentVec) {
+    public AnimationFaceToCamera(GLCamera targetCamera, float updateDelay, Vec adjustmentVec) {
         this(targetCamera, updateDelay);
         this.adjustmentVec = adjustmentVec;
     }
@@ -77,11 +77,9 @@ public class AnimationFaceToCamera extends GLAnimation {
             lastUpdateAway = 0;
         }
         if (dontChangeXRotation) {
-            Vec.morphToNewAngleVec(rotationVec, 0, 0, newRotationVec.z,
-                    timeDelta);
+            Vec.morphToNewAngleVec(rotationVec, 0, 0, newRotationVec.z, timeDelta);
         } else {
-            Vec.morphToNewAngleVec(rotationVec, newRotationVec.x,
-                    newRotationVec.y, newRotationVec.z, timeDelta);
+            Vec.morphToNewAngleVec(rotationVec, newRotationVec.x, newRotationVec.y, newRotationVec.z, timeDelta);
         }
         return true;
     }
@@ -105,11 +103,11 @@ public class AnimationFaceToCamera extends GLAnimation {
     }
 
     @Override
-    public void render(/*GL10 gl,*/ Renderable parent) {
+    public void render(GLES20 unused, Renderable parent) {
 
-        /*gl.*/glRotatef(rotationVec.z, 0, 0, 1);
-        /*gl.*/glRotatef(rotationVec.x, 1, 0, 0);
-        /*gl.*/glRotatef(rotationVec.y, 0, 1, 0);
+        glRotatef(rotationVec.z, 0, 0, 1);
+        glRotatef(rotationVec.x, 1, 0, 0);
+        glRotatef(rotationVec.y, 0, 1, 0);
 
         if (adjustmentVec != null) {
             /*
@@ -117,9 +115,9 @@ public class AnimationFaceToCamera extends GLAnimation {
              * AFTER the rotation to be easy to use, see constructor for infos
              * about adjustment
              */
-            /*gl.*/glRotatef(adjustmentVec.x, 1, 0, 0); // TODO find correct order
-            /*gl.*/glRotatef(adjustmentVec.z, 0, 0, 1);
-            /*gl.*/glRotatef(adjustmentVec.y, 0, 1, 0);
+            glRotatef(adjustmentVec.x, 1, 0, 0); // TODO find correct order
+            glRotatef(adjustmentVec.z, 0, 0, 1);
+            glRotatef(adjustmentVec.y, 0, 1, 0);
         }
     }
 

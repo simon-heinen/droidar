@@ -114,7 +114,7 @@ public class LargeWorld extends World {
 		for (int i = 0; i < list.myLength; i++) {
 			RenderableEntity obj = list.get(i);
 			if (obj != null)
-				obj.render(/*gl,*/ this);
+				obj.render(,/*gl,*/  this);
 		}
 		// super.drawElements(camera, gl, stack);
 	}

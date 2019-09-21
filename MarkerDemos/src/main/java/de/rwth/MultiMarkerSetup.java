@@ -45,8 +45,7 @@ public class MultiMarkerSetup extends MarkerDetectionSetup {
 
 		mesh2 = new Shape();
 		mesh2.addChild(GLFactory.getInstance().newCoordinateSystem());
-		mesh2.addChild(GLFactory.getInstance().newCircle(
-				new Color(0, 0, 1, 0.6f)));
+		mesh2.addChild(GLFactory.getInstance().newCircle(new Color(0, 0, 1, 0.6f)));
 		// mesh1.add(GLFactory.getInstance().newCube());
 	}
 
@@ -54,8 +53,7 @@ public class MultiMarkerSetup extends MarkerDetectionSetup {
 	public UnrecognizedMarkerListener _a2_getUnrecognizedMarkerListener() {
 		return new UnrecognizedMarkerListener() {
 			@Override
-			public void onUnrecognizedMarkerDetected(int markerCode,
-													 float[] mat, int startIdx, int endIdx, int rotationValue) {
+			public void onUnrecognizedMarkerDetected(int markerCode, float[] mat, int startIdx, int endIdx, int rotationValue) {
 				System.out.println("unrecognized markerCode=" + markerCode);
 			}
 		};

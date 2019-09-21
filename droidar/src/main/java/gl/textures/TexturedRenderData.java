@@ -1,6 +1,7 @@
 package gl.textures;
 
 import android.opengl.GLES10;
+import android.opengl.GLES20;
 
 import gl.GLUtilityClass;
 import gl.ObjectPicker;
@@ -35,13 +36,11 @@ public class TexturedRenderData extends RenderData {
 	}
 
 	public void updateTextureBuffer(ArrayList<Vec> myTexturePositions) {
-		textureBuffer = GLUtilityClass
-				.createAndInitFloatBuffer(tryToDesignTextureArray(myTexturePositions));
+		textureBuffer = GLUtilityClass.createAndInitFloatBuffer(tryToDesignTextureArray(myTexturePositions));
 	}
 
 	private float[] tryToDesignTextureArray(ArrayList<Vec> myTexturePositions) {
-		if ((myTexturePositions == null) || (myTexturePositions.size() < 2))
-			return null;
+		if ((myTexturePositions == null) || (myTexturePositions.size() < 2)) return null;
 		int j = 0;
 		float[] res = new float[myTexturePositions.size() * 2];
 		for (int i = 0; i < myTexturePositions.size() * 2; i += 2) {
@@ -57,7 +56,7 @@ public class TexturedRenderData extends RenderData {
 	}
 
 	@Override
-	public void draw(/*GL10 gl*/) {
+	public void draw(GLES20 unused) {
 
 		if (ObjectPicker.readyToDrawWithColor)
 			/*
@@ -65,41 +64,39 @@ public class TexturedRenderData extends RenderData {
 			 * method for all meshes is used to use the picking color instead of
 			 * the texture
 			 */
-			super.draw(/*gl*/);
+			super.draw(unused);
 		else {
 
 			// first disable color_array for save:
-			/*gl.*/glDisableClientState(GLES10.GL_COLOR_ARRAY);
+			glDisableClientState(GLES10.GL_COLOR_ARRAY);
 
 			// Enabled the vertices buffer for writing and to be used during
 			// rendering.
-			/*gl.*/glEnableClientState(GLES10.GL_VERTEX_ARRAY);
+			glEnableClientState(GLES10.GL_VERTEX_ARRAY);
 			// Specifies the location and data format of an array of vertex
 			// coordinates to use when rendering.
-			/*gl.*/glVertexPointer(3, GLES10.GL_FLOAT, 0, vertexBuffer);
+			glVertexPointer(3, GLES10.GL_FLOAT, 0, vertexBuffer);
 
-			/*gl.*/glEnable(GLES10.GL_TEXTURE_2D);
+			glEnable(GLES10.GL_TEXTURE_2D);
 
-			/*gl.*/glTexParameterf(GLES10.GL_TEXTURE_2D, GLES10.GL_TEXTURE_MIN_FILTER,
-					GLES10.GL_LINEAR);
-			/*gl.*/glTexParameterf(GLES10.GL_TEXTURE_2D, GLES10.GL_TEXTURE_MAG_FILTER,
-					GLES10.GL_LINEAR);
+			glTexParameterf(GLES10.GL_TEXTURE_2D, GLES10.GL_TEXTURE_MIN_FILTER, GLES10.GL_LINEAR);
+			glTexParameterf(GLES10.GL_TEXTURE_2D, GLES10.GL_TEXTURE_MAG_FILTER, GLES10.GL_LINEAR);
 
-			/*gl.*/glBindTexture(GLES10.GL_TEXTURE_2D, myTextureId);
-			/*gl.*/glEnableClientState(GLES10.GL_TEXTURE_COORD_ARRAY);
-			/*gl.*/glTexCoordPointer(2, GLES10.GL_FLOAT, 0, textureBuffer);
+			glBindTexture(GLES10.GL_TEXTURE_2D, myTextureId);
+			glEnableClientState(GLES10.GL_TEXTURE_COORD_ARRAY);
+			glTexCoordPointer(2, GLES10.GL_FLOAT, 0, textureBuffer);
 
 			if (normalsBuffer != null) {
 				// Enable normals array (for lightning):
-				/*gl.*/glEnableClientState(GLES10.GL_NORMAL_ARRAY);
-				/*gl.*/glNormalPointer(GLES10.GL_FLOAT, 0, normalsBuffer);
+				glEnableClientState(GLES10.GL_NORMAL_ARRAY);
+				glNormalPointer(GLES10.GL_FLOAT, 0, normalsBuffer);
 			}
 
-			/*gl.*/glDrawArrays(drawMode, 0, verticesCount);
+			glDrawArrays(drawMode, 0, verticesCount);
 
-			/*gl.*/glDisable(GLES10.GL_TEXTURE_2D);
+			glDisable(GLES10.GL_TEXTURE_2D);
 			// Disable the vertices buffer.
-			/*gl.*/glDisableClientState(GLES10.GL_VERTEX_ARRAY);
+			glDisableClientState(GLES10.GL_VERTEX_ARRAY);
 		}
 	}
 

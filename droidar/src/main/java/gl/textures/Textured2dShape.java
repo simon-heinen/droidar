@@ -4,10 +4,10 @@ import gl.Renderable;
 import gl.scenegraph.Shape;
 
 //import javax.microedition.khronos.opengles.GL10;
-import javax.microedition.khronos.opengles.GL11Ext;
 
 import android.graphics.Bitmap;
 import android.opengl.GLES10;
+import android.opengl.GLES20;
 
 import static android.opengl.GLES11Ext.glDrawTexfOES;
 import static android.opengl.GLES20.glBindTexture;
@@ -35,11 +35,10 @@ public class Textured2dShape extends Shape {
 	}
 
 	@Override
-	public void draw(/*GL10 gl,*/ Renderable parent) {
+	public void draw(GLES20 unused, Renderable parent) {
 		if (myRenderData != null) {
-			/*gl.*/glBindTexture(GLES10.GL_TEXTURE_2D, ((TexturedRenderData) myRenderData).myTextureId);
+			glBindTexture(GLES10.GL_TEXTURE_2D, ((TexturedRenderData) myRenderData).myTextureId);
 			/*((GL11Ext) gl).*/glDrawTexfOES(myPosition.x, myPosition.y, myPosition.z, textureWidth, textureHeight);
 		}
 	}
-
 }

@@ -41,7 +41,6 @@ public class SlashDetector implements PhoneGestureDetector {
 
 	@Override
 	public void feedSensorEvent(SensorData sensorData) {
-		gestureProbability = (1 - ALPHA) * gestureProbability + ALPHA
-				* (sensorData.absoluteAcceleration > SLASH_THRESHOLD ? 1 : 0);
+		gestureProbability = (1 - ALPHA) * gestureProbability + ALPHA * (sensorData.absoluteAcceleration > SLASH_THRESHOLD ? 1 : 0);
 	}
 }

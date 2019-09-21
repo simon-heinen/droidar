@@ -47,8 +47,7 @@ public class FullTurnDetector implements PhoneGestureDetector {
 	 * Orientation changes.
 	 */
 	private int lastSeenCoarseOrientation = 0;
-	private long timeOfLastSeenCoarseOrientationChange = System
-			.currentTimeMillis();
+	private long timeOfLastSeenCoarseOrientationChange = System.currentTimeMillis();
 
 	@Override
 	public PhoneGesture getType() {
@@ -78,8 +77,7 @@ public class FullTurnDetector implements PhoneGestureDetector {
 	public void feedSensorEvent(SensorData sensorData) {
 		// Step 1: Get the orientation according to the new (API >= 8) method
 		// (see Sensor class documentation)
-		SensorManager.getRotationMatrix(rotationMatrix, null,
-				sensorData.gravity, sensorData.mag);
+		SensorManager.getRotationMatrix(rotationMatrix, null, sensorData.gravity, sensorData.mag);
 		SensorManager.getOrientation(rotationMatrix, orientationMatrix);
 
 		/*
@@ -104,8 +102,7 @@ public class FullTurnDetector implements PhoneGestureDetector {
 			}
 		} else {
 			this.lastSeenCoarseOrientation = orientationIntCoarse;
-			this.timeOfLastSeenCoarseOrientationChange = System
-					.currentTimeMillis();
+			this.timeOfLastSeenCoarseOrientationChange = System.currentTimeMillis();
 		}
 
 		// Step 4: Set the bin of the seen reading to true

@@ -9,8 +9,7 @@ public class ActionRotateCameraBuffered extends ActionWithSensorProcessing {
 	}
 
 	@Override
-	public void initAlgos() {
-	}
+	public void initAlgos() { }
 
 	@Override
 	public synchronized boolean onAccelChanged(float[] values) {

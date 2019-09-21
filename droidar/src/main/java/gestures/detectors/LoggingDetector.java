@@ -52,19 +52,15 @@ public class LoggingDetector implements PhoneGestureDetector {
 		StringBuilder builder = new StringBuilder();
 
 		if ((logMask & LOG_ABSOLUTE_ACCELERATION) != 0) {
-			builder.append("Abs: ").append(sensorData.absoluteAcceleration)
-					.append("\n");
+			builder.append("Abs: ").append(sensorData.absoluteAcceleration).append("\n");
 		}
 
 		if ((logMask & LOG_GRAVITY) != 0) {
-			builder.append("Gra: ").append(formatArray(sensorData.gravity))
-					.append("\n");
+			builder.append("Gra: ").append(formatArray(sensorData.gravity)).append("\n");
 		}
 
 		if ((logMask & LOG_LINEAR_ACCELERATION) != 0) {
-			builder.append("Lin: ")
-					.append(formatArray(sensorData.linearAcceleration))
-					.append("\n");
+			builder.append("Lin: ").append(formatArray(sensorData.linearAcceleration)).append("\n");
 		}
 
 		Log.d("LoggingDetector", builder.toString());

@@ -1,5 +1,7 @@
 package worldData;
 
+import android.opengl.GLES20;
+
 import gl.HasPosition;
 import gl.Renderable;
 import gl.scenegraph.MeshComponent;
@@ -66,7 +68,7 @@ public class MoveComp implements RenderableEntity {
 	}
 
 	@Override
-	public void render(/*GL10 gl,*/ Renderable parent) {
+	public void render(/*GL10 gl,*/ GLES20 unused, Renderable parent) {
 
 	}
 }

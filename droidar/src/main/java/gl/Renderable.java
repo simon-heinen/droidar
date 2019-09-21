@@ -1,6 +1,5 @@
 package gl;
 
-import android.opengl.GLES10;
 import android.opengl.GLES20;
 
 //import javax.microedition.khronos.opengles.GL10;
@@ -13,5 +12,5 @@ import android.opengl.GLES20;
  */
 public interface Renderable {
 //	void render(GL10 gl, Renderable parent);
-	void render(Renderable parent);
+	void render(GLES20 unused, Renderable parent);
 }

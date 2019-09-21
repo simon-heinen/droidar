@@ -47,7 +47,7 @@ public class SystemTests extends SimpleTesting {
 
 	}
 
-	private void colorTests() throws Exception {
+	private void colorTests() {
 
 		float input = 0x000001;
 		// TODO

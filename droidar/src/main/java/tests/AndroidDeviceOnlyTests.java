@@ -17,7 +17,7 @@ public class AndroidDeviceOnlyTests extends SimpleTesting {
 		calcerTests();
 	}
 
-	private void calcerTests() throws Exception {
+	private void calcerTests() {
 		Calculus.calculateTermResult(myContext, "7+7",
 				new TermResultListener() {
 

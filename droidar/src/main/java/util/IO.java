@@ -54,8 +54,7 @@ public class IO {
 		if (stream == null)
 			return null;
 
-		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-		try {
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream))) {
 			StringBuilder sb = new StringBuilder();
 
 			String line = null;
@@ -65,11 +64,8 @@ public class IO {
 			}
 			stream.close();
 			return sb.toString();
-
 		} catch (Exception e) {
 			Log.e(LOG_TAG, "Could not convert input stream to string");
-		} finally {
-			reader.close();
 		}
 		return null;
 	}

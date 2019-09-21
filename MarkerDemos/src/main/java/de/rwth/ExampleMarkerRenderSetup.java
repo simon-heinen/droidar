@@ -77,8 +77,7 @@ public class ExampleMarkerRenderSetup extends MarkerDetectionSetup {
 		world.add(geoC2);
 
 		Obj hex = new Obj();
-		Shape hexMesh = GLFactory.getInstance().newHexagon(
-				new Color(0, 0, 1, 0.7f));
+		Shape hexMesh = GLFactory.getInstance().newHexagon( new Color(0, 0, 1, 0.7f));
 		hexMesh.getPosition().add(new Vec(0, 0, -1));
 		hexMesh.scaleEqual(4.5f);
 		hex.setComp(hexMesh);
@@ -86,14 +85,12 @@ public class ExampleMarkerRenderSetup extends MarkerDetectionSetup {
 		world.add(hex);
 
 		Obj grid = new Obj();
-		MeshComponent gridMesh = GLFactory.getInstance().newGrid(Color.blue(),
-				1, 10);
+		MeshComponent gridMesh = GLFactory.getInstance().newGrid(Color.blue(), 1, 10);
 		grid.setComp(gridMesh);
 		world.add(grid);
 
 		Obj treangle = new Obj();
-		MeshComponent treangleMesh = GLFactory.getInstance().newTexturedSquare(
-				"worldIconId",
+		MeshComponent treangleMesh = GLFactory.getInstance().newTexturedSquare( "worldIconId",
 				IO.loadBitmapFromId(getActivity()/*myTargetActivity*/, R.drawable.icon));
 		treangleMesh.setPosition(new Vec(0, -2, 1));
 		treangleMesh.setPosition(new Vec(0, 0, 0));

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "441530636083",
+    "firebase_url": "https://tagit-b064e.firebaseio.com",
+    "project_id": "tagit-b064e",
+    "storage_bucket": "tagit-b064e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:441530636083:android:89d2168f0d4b458e",
+        "android_client_info": {
+          "package_name": "de.rwth.GoogleMapsSupport"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "441530636083-g7d42l7bdlqlq3p0s8bo09du21oo23au.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nick.droidar_tagit",
+            "certificate_hash": "a2e85673ae37c053f11a0cb1375dc59e5d353b38"
+          }
+        },
+        {
+          "client_id": "441530636083-heoidpn687oqf27ja2ktdec3bk4oj45g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdRdFa7P-o3uQVtCg2_lZfBWbhu0MYPXE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "441530636083-heoidpn687oqf27ja2ktdec3bk4oj45g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

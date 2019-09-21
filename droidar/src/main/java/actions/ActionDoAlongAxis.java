@@ -29,8 +29,7 @@ public abstract class ActionDoAlongAxis extends Action {
 	 *            25 would be good value to start.The higher the value the
 	 *            slower the movement
 	 */
-	public ActionDoAlongAxis(GLCamera camera, float trackballFactor,
-			float touchscreenFactor) {
+	public ActionDoAlongAxis(GLCamera camera, float trackballFactor, float touchscreenFactor) {
 		myTargetCamera = camera;
 		myTrackballFactor = trackballFactor;
 		myTouchscreenReductionFactor = touchscreenFactor;
@@ -39,16 +38,12 @@ public abstract class ActionDoAlongAxis extends Action {
 	@Override
 	public boolean onTrackballEvent(float x, float y, MotionEvent event) {
 		AlignAcordingToViewAxes(x * myTrackballFactor, -y * myTrackballFactor);
-
 		return true;
 	}
 
 	@Override
-	public boolean onTouchMove(MotionEvent e1, MotionEvent e2,
-			float screenDeltaX, float screenDeltaY) {
-
-		AlignAcordingToViewAxes(screenDeltaX / myTouchscreenReductionFactor,
-				-screenDeltaY / myTouchscreenReductionFactor);
+	public boolean onTouchMove(MotionEvent e1, MotionEvent e2, float screenDeltaX, float screenDeltaY) {
+		AlignAcordingToViewAxes(screenDeltaX / myTouchscreenReductionFactor, -screenDeltaY / myTouchscreenReductionFactor);
 		return true;
 	}
 
@@ -63,12 +58,9 @@ public abstract class ActionDoAlongAxis extends Action {
 	private void AlignAcordingToViewAxes(float x, float y) {
 		movementVec.x = x;
 		movementVec.y = y;
-		movementVec.rotateAroundZAxis(360 - (myTargetCamera
-				.getCameraAnglesInDegree()[0]));
+		movementVec.rotateAroundZAxis(360 - (myTargetCamera.getCameraAnglesInDegree()[0]));
 		doAlongViewAxis(movementVec.x, movementVec.y);
-
 	}
 
 	public abstract void doAlongViewAxis(float x, float y);
-
 }

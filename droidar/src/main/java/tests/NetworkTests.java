@@ -128,10 +128,9 @@ public class NetworkTests extends SimpleTesting {
 	/**
 	 * This will send some text from the device ip to the device ip (but could
 	 * be any other ip as well)
-	 * 
-	 * @throws Exception
+	 *
 	 */
-	private void udpTest() throws Exception {
+	private void udpTest() {
 
 		int targetPort = 5221;
 		final String text = "some text";

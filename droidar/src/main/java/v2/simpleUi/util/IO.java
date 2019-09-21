@@ -62,9 +62,8 @@ public class IO {
 		if (stream == null) {
 			return null;
 		}
-		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 
-		try {
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream))) {
 			StringBuilder sb = new StringBuilder();
 
 			String line = null;
@@ -74,12 +73,8 @@ public class IO {
 			}
 			stream.close();
 			return sb.toString();
-
 		} catch (Exception e) {
 			Log.e(LOG_TAG, "Could not convert input stream to string");
-		}
-		finally {
-			reader.close();
 		}
 		return null;
 	}
@@ -208,16 +203,16 @@ public class IO {
 	}
 
 	public static Object loadSerializableFromPrivateStorage(Context context,
-			String filename) throws StreamCorruptedException,
-			OptionalDataException, IOException, ClassNotFoundException {
+			String filename) throws
+			IOException, ClassNotFoundException {
 		FileInputStream fiStream = context.getApplicationContext()
 				.openFileInput(filename);
 		return loadSerializableFromStream(fiStream);
 	}
 
 	private static Object loadSerializableFromStream(FileInputStream fiStream)
-			throws IOException, StreamCorruptedException,
-			OptionalDataException, ClassNotFoundException {
+			throws IOException,
+			ClassNotFoundException {
 		GZIPInputStream gzipStream = new GZIPInputStream(fiStream);
 		ObjectInputStream inStream = new ObjectInputStream(gzipStream);
 		Object loadedObject = inStream.readObject();

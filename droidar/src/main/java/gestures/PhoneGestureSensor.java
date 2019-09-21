@@ -284,6 +284,8 @@ public class PhoneGestureSensor implements SensorEventListener {
 			result[2] = event.values[2] - gravity[2];
 			break;
 		// TODO: Add support for Sensor.TYPE_LINEAR_ACCELERATION
+			default:
+				break; //throw new IllegalStateException("Unexpected value: " + event.sensor.getType());
 		}
 
 		return result;

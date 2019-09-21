@@ -1,5 +1,7 @@
 package gl.animations;
 
+import android.opengl.GLES20;
+
 import gl.Renderable;
 import gl.scenegraph.MeshComponent;
 
@@ -43,8 +45,8 @@ public class AnimationRotate extends GLAnimation {
 	}
 
 	@Override
-	public void render(/*GL10 gl,*/ Renderable parent) {
-		/*gl.*/glRotatef(angle, rotVec.x, rotVec.y, rotVec.z);
+	public void render(GLES20 unused, Renderable parent) {
+		glRotatef(angle, rotVec.x, rotVec.y, rotVec.z);
 	}
 
 	@Override

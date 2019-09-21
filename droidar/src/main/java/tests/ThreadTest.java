@@ -57,7 +57,7 @@ public class ThreadTest extends SimpleTesting {
 	}
 
 	@Override
-	public void run() throws Exception {
+	public void run() {
 		String x = "0/0";
 		W w = new W(x);
 		/*

@@ -4,8 +4,6 @@ import gl.MarkerObject;
 
 import java.util.HashMap;
 
-import nativeLib.NativeLib;
-
 import nativeLib.notNativeLib;
 import preview.Preview;
 
@@ -21,7 +19,7 @@ public class DetectionThread extends Thread {
 	private GLSurfaceView openglView;
 	private Preview preview;
 	//private NativeLib nativelib;
-	private notNativeLib notNativelib;
+	private notNativeLib nativelib;
 	private float[] mat;
 	private long start = 0;
 	private long now = 0;
@@ -36,7 +34,7 @@ public class DetectionThread extends Thread {
 						   UnrecognizedMarkerListener unrecognizedMarkerListener) {
 		this.openglView = openglView;
 		this.markerObjectMap = markerObjectMap;
-		this.notNativelib = notNativeLib;
+		this.nativelib = notNativeLib;
 		this.unrecognizedMarkerListener = unrecognizedMarkerListener;
 
 		// TODO make size dynamically after the init function.
@@ -74,7 +72,7 @@ public class DetectionThread extends Thread {
 				// Pass the frame to the native code and find the marker information.
 				// The false at the end is a remainder of the calibration.
 //TODO				nativelib.detectMarkers(frame, mat, frameHeight, frameWidth,false);
-				notNativelib.detectMarkers(frame, mat, frameHeight, frameWidth, false);
+				nativelib.detectMarkers(frame, mat, frameHeight, frameWidth, false);
 
 				// Needs to be reworked to. Either just deleted, or changed into
 				// some timer delay

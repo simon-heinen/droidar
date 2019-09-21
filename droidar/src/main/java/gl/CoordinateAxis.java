@@ -22,17 +22,17 @@ public class CoordinateAxis {
 	private static FloatBuffer colorBuffer;
 	private static boolean init = false;
 
-	public static void draw(/*GL10 gl*/) {
+	public static void draw(GLES20 unused) {
 		if (!init)
 			initIt();
-		/*gl.*/glEnableClientState(GLES10.GL_VERTEX_ARRAY);
-		/*gl.*/glEnableClientState(GLES10.GL_COLOR_ARRAY);
+		glEnableClientState(GLES10.GL_VERTEX_ARRAY);
+		glEnableClientState(GLES10.GL_COLOR_ARRAY);
 
-		/*gl.*/glVertexPointer(3, GLES10.GL_FLOAT, 0, vertexBuffer);
-		/*gl.*/glColorPointer(4, GLES10.GL_FLOAT, 0, colorBuffer);
-		/*gl.*/glDrawElements(GLES10.GL_LINES, 6, GLES10.GL_UNSIGNED_BYTE, indexBuffer);
-		/*gl.*/glDisableClientState(GLES10.GL_VERTEX_ARRAY);
-		/*gl.*/glDisableClientState(GLES10.GL_COLOR_ARRAY);
+		glVertexPointer(3, GLES10.GL_FLOAT, 0, vertexBuffer);
+		glColorPointer(4, GLES10.GL_FLOAT, 0, colorBuffer);
+		glDrawElements(GLES10.GL_LINES, 6, GLES10.GL_UNSIGNED_BYTE, indexBuffer);
+		glDisableClientState(GLES10.GL_VERTEX_ARRAY);
+		glDisableClientState(GLES10.GL_COLOR_ARRAY);
 	}
 
 	private static void initIt() {

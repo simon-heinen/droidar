@@ -36,8 +36,7 @@ public class ActionPlaceObject extends ActionUseCameraAngles {
 	 *            elements can be places
 	 */
 	@Deprecated
-	public ActionPlaceObject(GLCamera targetCamera, Wrapper objToPlace,
-			float maxDistance) {
+	public ActionPlaceObject(GLCamera targetCamera, Wrapper objToPlace, float maxDistance) {
 		super(targetCamera);
 		myCamera = targetCamera;
 		myObjWrapper = objToPlace;

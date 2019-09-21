@@ -1,5 +1,7 @@
 package geo;
 
+import android.opengl.GLES20;
+
 import gl.Renderable;
 import gl.scenegraph.MeshComponent;
 
@@ -512,18 +514,18 @@ public class GeoGraph extends AbstractObj implements Container<GeoObj> {
 	}
 
 	@Override
-	public void render(/*GL10 gl,*/ Renderable parent) {
+	public void render(/*GL10 gl,*/ GLES20 unused, Renderable parent) {
 		if (myNodes == null)
 			return;
 		{
 			for (int i = 0; i < myNodes.myLength; i++) {
-				myNodes.get(i).render(/*gl,*/ this);
+				myNodes.get(i).render(,/*gl,*/  this);
 			}
 		}
 		{
 			if ((isPath || useEdges) && myEdges != null) {
 				for (int i = 0; i < myEdges.myLength; i++) {
-					myEdges.get(i).render(/*gl,*/ this);
+					myEdges.get(i).render(,/*gl,*/  this);
 				}
 			}
 		}

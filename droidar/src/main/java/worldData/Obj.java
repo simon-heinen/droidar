@@ -1,5 +1,7 @@
 package worldData;
 
+import android.opengl.GLES20;
+
 import gl.Color;
 import gl.HasColor;
 import gl.HasPosition;
@@ -101,7 +103,7 @@ public class Obj extends AbstractObj implements HasPosition, HasColor {
 	}
 
 	@Override
-	public void render(/*GL10 gl,*/ Renderable parent) {
+	public void render(/*GL10 gl,*/ GLES20 unused, Renderable parent) {
 
 		if (myGraphicsComponent == null)
 			return;
@@ -125,7 +127,7 @@ public class Obj extends AbstractObj implements HasPosition, HasColor {
 			/*gl.*/glColor4f(1, 1, 1, 1);
 		}
 
-		myGraphicsComponent.render(/*gl,*/ this);
+		myGraphicsComponent.render(,/*gl,*/  this);
 	}
 
 	@Override

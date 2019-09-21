@@ -46,9 +46,7 @@ public class UppercutDetector implements PhoneGestureDetector {
 
 		// Integrate to obtain velocity vector. We divide by 1,000,000,000 in
 		// order to obtain the velocity in m/s instead of m/ns.
-		velocity.add(Vec.mult(
-				(sensorData.timestamp - lastTimestamp) / 1000000000f,
-				linearAcceleration));
+		velocity.add(Vec.mult( (sensorData.timestamp - lastTimestamp) / 1000000000f, linearAcceleration));
 
 		// Let the velocity decay minimally to avoid problems of
 		// sensor drifting.
@@ -56,10 +54,8 @@ public class UppercutDetector implements PhoneGestureDetector {
 
 		// Calculate angle between velocity and gravity vector to determine
 		// gesture probability.
-		double scalarProduct = gravity.x * velocity.x + gravity.y * velocity.y
-				+ gravity.z * velocity.z;
-		double currentAngle = Math.acos(scalarProduct
-				/ (gravity.getLength() * velocity.getLength()));
+		double scalarProduct = gravity.x * velocity.x + gravity.y * velocity.y + gravity.z * velocity.z;
+		double currentAngle = Math.acos(scalarProduct / (gravity.getLength() * velocity.getLength()));
 
 		this.angle = 0.2 * this.angle + 0.8 * currentAngle;
 
@@ -68,8 +64,7 @@ public class UppercutDetector implements PhoneGestureDetector {
 			// a little bit for perfect vertical movements (which is rarely the
 			// case, though). Nevertheless, that's why a min function is used in
 			// getProbability().
-			probability = 1.5 / (1 + Math.exp(-10
-					* (this.angle / Math.PI - 0.7)));
+			probability = 1.5 / (1 + Math.exp(-10 * (this.angle / Math.PI - 0.7)));
 		} else {
 			probability *= PROBABILITY_DECAY;
 		}

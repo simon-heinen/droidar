@@ -1,5 +1,7 @@
 package worldData;
 
+import android.opengl.GLES20;
+
 import gl.CoordinateAxis;
 import gl.GLCamera;
 import gl.Renderable;
@@ -85,10 +87,10 @@ public class World implements RenderableEntity, Container<RenderableEntity> {
 	}
 
 	@Override
-	public void render(/*GL10 gl,*/ Renderable parent) {
+	public void render(/*GL10 gl,*/ GLES20 unused, Renderable parent) {
 		// TODO reconstruct why this order is important! or wrong..
 		glLoadScreenPosition(/*gl*/);
-		myCamera.render(/*gl,*/ this);
+		myCamera.render(,/*gl,*/  this);
 		// glLoadRotation(gl);
 		glLoadScale(/*gl*/);
 
@@ -103,7 +105,7 @@ public class World implements RenderableEntity, Container<RenderableEntity> {
 		if (container != null) {
 			for (int i = 0; i < container.myLength; i++) {
 				if (container.get(i) != null)
-					container.get(i).render(/*gl,*/ this);
+					container.get(i).render(,/*gl,*/  this);
 			}
 		}
 	}

@@ -14,7 +14,7 @@ import android.widget.Button;
 
 public abstract class ActionWaitForAccuracy2 extends Action {
 	private static final String TEXT_DIALOG_TITLE = "Do you want to cancel the accuracy detection?";
-	private static final String TEXT_SKIP_ACCURACY_DETECTION = "Skip accuracy detection (not recomended!)";
+	private static final String TEXT_SKIP_ACCURACY_DETECTION = "Skip accuracy detection (not recommended!)";
 
 	// 1 minutes in ms:
 	private static final long MAX_TIME_SINCE_LAST_UPDATE_IN_MS = 1000 * 60 * 1;
@@ -85,8 +85,7 @@ public abstract class ActionWaitForAccuracy2 extends Action {
 	 * @param neededAccuracyInPercent
 	 * @param numberOfMeasurments
 	 */
-	public abstract void updateUI(Activity activity,
-			int neededAccuracyInPercent, int numberOfMeasurments);
+	public abstract void updateUI(Activity activity, int neededAccuracyInPercent, int numberOfMeasurments);
 
 	private void callFirstTimeAccReachedIfNotYetCalled(Location location) {
 		if (!firstTimeReached) {
@@ -107,8 +106,7 @@ public abstract class ActionWaitForAccuracy2 extends Action {
 	 *            remove it from the {@link EventListenerGroup} it was contained
 	 *            in (e.g. the {@link EventManager#onLocationChangedList})
 	 */
-	public abstract void minAccuracyReachedFirstTime(Location location,
-			ActionWaitForAccuracy2 a);
+	public abstract void minAccuracyReachedFirstTime(Location location, ActionWaitForAccuracy2 a);
 
 	private void waitSomeSecondsAndThenRegisterForGPSEvents() {
 
@@ -146,8 +144,7 @@ public abstract class ActionWaitForAccuracy2 extends Action {
 
 			@Override
 			public void onClick(View v) {
-				callFirstTimeAccReachedIfNotYetCalled(GeoUtils
-						.getCurrentLocation(myActivity));
+				callFirstTimeAccReachedIfNotYetCalled(GeoUtils.getCurrentLocation(myActivity));
 				dialog.dismiss();
 			}
 		});

@@ -16,12 +16,13 @@ import android.view.MotionEvent;
 //import com.google.android.maps.MyLocationOverlay;
 //import com.google.android.maps.Overlay;
 
+import com.google.android.libraries.maps.MapView;
+
 import commands.Command;
 import de.rwth.setups.GoogleMapsKey;
 
 /**
- * To get a maps api key you have to use a keytool to generate a MD5 fingerprint
- * for your computer. <br>
+ * To get a maps api key you have to use a keytool to generate a MD5 fingerprint for your computer. <br>
  * <br>
  * The keytool.exe is part of the Java SDK you are using- eg: <br>
  * <br>
@@ -245,7 +246,7 @@ public class GMap extends MapView implements TouchEventInterface {
 	}
 
 	public static GeoPoint toGeoPoint(GeoObj x) {
-		return new Barcode.GeoPoint((int) (x.getLatitude() * 1E6),
+		return new GeoPoint((int) (x.getLatitude() * 1E6),
 				(int) (x.getLongitude() * 1E6));
 	}
 

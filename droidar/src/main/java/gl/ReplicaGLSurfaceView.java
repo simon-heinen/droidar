@@ -158,8 +158,7 @@ import static android.opengl.GLES10.glGetString;
  * </pre>
  */
 @Deprecated
-public class ReplicaGLSurfaceView extends SurfaceView implements
-		SurfaceHolder.Callback {
+public class ReplicaGLSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
 	private final static boolean LOG_THREADS = false;
 	private final static boolean LOG_SURFACE = true;
 	private final static boolean LOG_RENDERER = false;
@@ -224,7 +223,7 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 		// underlying surface is created and destroyed
 		SurfaceHolder holder = getHolder();
 		holder.addCallback(this);
-		holder.setType(SurfaceHolder.SURFACE_TYPE_GPU);
+//obsolete		holder.setType(SurfaceHolder.SURFACE_TYPE_GPU);
 	}
 
 	/**
@@ -386,8 +385,7 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 	 */
 	public void setEGLConfigChooser(int redSize, int greenSize, int blueSize,
 									int alphaSize, int depthSize, int stencilSize) {
-		setEGLConfigChooser(new ComponentSizeChooser(redSize, greenSize,
-				blueSize, alphaSize, depthSize, stencilSize));
+		setEGLConfigChooser(new ComponentSizeChooser(redSize, greenSize, blueSize, alphaSize, depthSize, stencilSize));
 	}
 
 	/**
@@ -419,8 +417,7 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 	 * has been called, then the supplied EGLConfigChooser is responsible for
 	 * choosing an OpenGL ES 2.0-compatible config.
 	 *
-	 * @param version The EGLContext client version to choose. Use 2 for OpenGL ES
-	 *                2.0
+	 * @param version The EGLContext client version to choose. Use 2 for OpenGL ES 2.0
 	 */
 	public void setEGLContextClientVersion(int version) {
 		checkRenderThreadState();
@@ -701,9 +698,7 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 	 * {@link ReplicaGLSurfaceView#setEGLContextFactory(EGLContextFactory)}
 	 */
 	public interface EGLContextFactory {
-		EGLContext createContext(EGL11 egl, EGLDisplay display,
-								 EGLConfig eglConfig);
-
+		EGLContext createContext(EGL11 egl, EGLDisplay display, EGLConfig eglConfig);
 		void destroyContext(EGL11 egl, EGLDisplay display, EGLContext context);
 	}
 
@@ -713,16 +708,12 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 		@Override
 		public EGLContext createContext(EGL11 egl, EGLDisplay display,
 										EGLConfig config) {
-			int[] attrib_list = {EGL_CONTEXT_CLIENT_VERSION,
-					mEGLContextClientVersion, EGL11.EGL_NONE};
-
-			return egl.eglCreateContext(display, config, EGL11.EGL_NO_CONTEXT,
-					mEGLContextClientVersion != 0 ? attrib_list : null);
+			int[] attrib_list = {EGL_CONTEXT_CLIENT_VERSION, mEGLContextClientVersion, EGL11.EGL_NONE};
+			return egl.eglCreateContext(display, config, EGL11.EGL_NO_CONTEXT, mEGLContextClientVersion != 0 ? attrib_list : null);
 		}
 
 		@Override
-		public void destroyContext(EGL11 egl, EGLDisplay display,
-								   EGLContext context) {
+		public void destroyContext(EGL11 egl, EGLDisplay display, EGLContext context) {
 			egl.eglDestroyContext(display, context);
 		}
 	}
@@ -735,25 +726,19 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 	 * {@link ReplicaGLSurfaceView#setEGLWindowSurfaceFactory(EGLWindowSurfaceFactory)}
 	 */
 	public interface EGLWindowSurfaceFactory {
-		EGLSurface createWindowSurface(EGL11 egl, EGLDisplay display,
-									   EGLConfig config, Object nativeWindow);
-
+		EGLSurface createWindowSurface(EGL11 egl, EGLDisplay display, EGLConfig config, Object nativeWindow);
 		void destroySurface(EGL11 egl, EGLDisplay display, EGLSurface surface);
 	}
 
-	private static class DefaultWindowSurfaceFactory implements
-			EGLWindowSurfaceFactory {
+	private static class DefaultWindowSurfaceFactory implements EGLWindowSurfaceFactory {
 
 		@Override
-		public EGLSurface createWindowSurface(EGL11 egl, EGLDisplay display,
-											  EGLConfig config, Object nativeWindow) {
-			return egl.eglCreateWindowSurface(display, config, nativeWindow,
-					null);
+		public EGLSurface createWindowSurface(EGL11 egl, EGLDisplay display, EGLConfig config, Object nativeWindow) {
+			return egl.eglCreateWindowSurface(display, config, nativeWindow, null);
 		}
 
 		@Override
-		public void destroySurface(EGL11 egl, EGLDisplay display,
-								   EGLSurface surface) {
+		public void destroySurface(EGL11 egl, EGLDisplay display,  EGLSurface surface) {
 			egl.eglDestroySurface(display, surface);
 		}
 	}
@@ -795,13 +780,11 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 			int numConfigs = num_config[0];
 
 			if (numConfigs <= 0) {
-				throw new IllegalArgumentException(
-						"No configs match configSpec");
+				throw new IllegalArgumentException("No configs match configSpec");
 			}
 
 			EGLConfig[] configs = new EGLConfig[numConfigs];
-			if (!egl.eglChooseConfig(display, mConfigSpec, configs, numConfigs,
-					num_config)) {
+			if (!egl.eglChooseConfig(display, mConfigSpec, configs, numConfigs, num_config)) {
 				throw new IllegalArgumentException("eglChooseConfig#2 failed");
 			}
 			EGLConfig config = chooseConfig(egl, display, configs);
@@ -811,8 +794,7 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 			return config;
 		}
 
-		abstract EGLConfig chooseConfig(EGL11 egl, EGLDisplay display,
-										EGLConfig[] configs);
+		abstract EGLConfig chooseConfig(EGL11 egl, EGLDisplay display, EGLConfig[] configs);
 
 		protected int[] mConfigSpec;
 
@@ -852,24 +834,17 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 		}
 
 		@Override
-		public EGLConfig chooseConfig(EGL11 egl, EGLDisplay display,
-									  EGLConfig[] configs) {
+		public EGLConfig chooseConfig(EGL11 egl, EGLDisplay display, EGLConfig[] configs) {
 			EGLConfig closestConfig = null;
 			int closestDistance = 1000;
 			for (EGLConfig config : configs) {
-				int d = findConfigAttrib(egl, display, config,
-						EGL11.EGL_DEPTH_SIZE, 0);
-				int s = findConfigAttrib(egl, display, config,
-						EGL11.EGL_STENCIL_SIZE, 0);
+				int d = findConfigAttrib(egl, display, config, EGL11.EGL_DEPTH_SIZE, 0);
+				int s = findConfigAttrib(egl, display, config, EGL11.EGL_STENCIL_SIZE, 0);
 				if (d >= mDepthSize && s >= mStencilSize) {
-					int r = findConfigAttrib(egl, display, config,
-							EGL11.EGL_RED_SIZE, 0);
-					int g = findConfigAttrib(egl, display, config,
-							EGL11.EGL_GREEN_SIZE, 0);
-					int b = findConfigAttrib(egl, display, config,
-							EGL11.EGL_BLUE_SIZE, 0);
-					int a = findConfigAttrib(egl, display, config,
-							EGL11.EGL_ALPHA_SIZE, 0);
+					int r = findConfigAttrib(egl, display, config, EGL11.EGL_RED_SIZE, 0);
+					int g = findConfigAttrib(egl, display, config, EGL11.EGL_GREEN_SIZE, 0);
+					int b = findConfigAttrib(egl, display, config, EGL11.EGL_BLUE_SIZE, 0);
+					int a = findConfigAttrib(egl, display, config, EGL11.EGL_ALPHA_SIZE, 0);
 					int distance = Math.abs(r - mRedSize)
 							+ Math.abs(g - mGreenSize)
 							+ Math.abs(b - mBlueSize)
@@ -883,8 +858,7 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 			return closestConfig;
 		}
 
-		private int findConfigAttrib(EGL11 egl, EGLDisplay display,
-									 EGLConfig config, int attribute, int defaultValue) {
+		private int findConfigAttrib(EGL11 egl, EGLDisplay display,  EGLConfig config, int attribute, int defaultValue) {
 
 			if (egl.eglGetConfigAttrib(display, config, attribute, mValue)) {
 				return mValue[0];
@@ -922,9 +896,7 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 	 */
 
 	private class EglHelper {
-		public EglHelper() {
-
-		}
+		public EglHelper() { }
 
 		/**
 		 * Initialize EGL for a given configuration spec.
@@ -958,8 +930,7 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 			 * Create an OpenGL ES context. This must be done only once, an
 			 * OpenGL context is a somewhat heavy object.
 			 */
-			mEglContext = mEGLContextFactory.createContext(mEgl, mEglDisplay,
-					mEglConfig);
+			mEglContext = mEGLContextFactory.createContext(mEgl, mEglDisplay, mEglConfig);
 			if (mEglContext == null || mEglContext == EGL11.EGL_NO_CONTEXT) {
 				throwEglException("createContext");
 			}
@@ -980,17 +951,14 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 				/*
 				 * Unbind and destroy the old EGL surface, if there is one.
 				 */
-				mEgl.eglMakeCurrent(mEglDisplay, EGL11.EGL_NO_SURFACE,
-						EGL11.EGL_NO_SURFACE, EGL11.EGL_NO_CONTEXT);
-				mEGLWindowSurfaceFactory.destroySurface(mEgl, mEglDisplay,
-						mEglSurface);
+				mEgl.eglMakeCurrent(mEglDisplay, EGL11.EGL_NO_SURFACE, EGL11.EGL_NO_SURFACE, EGL11.EGL_NO_CONTEXT);
+				mEGLWindowSurfaceFactory.destroySurface(mEgl, mEglDisplay, mEglSurface);
 			}
 
 			/*
 			 * Create an EGL surface we can render into.
 			 */
-			mEglSurface = mEGLWindowSurfaceFactory.createWindowSurface(mEgl,
-					mEglDisplay, mEglConfig, holder);
+			mEglSurface = mEGLWindowSurfaceFactory.createWindowSurface(mEgl, mEglDisplay, mEglConfig, holder);
 
 			if (mEglSurface == null || mEglSurface == EGL11.EGL_NO_SURFACE) {
 				throwEglException("createWindowSurface");
@@ -1000,8 +968,7 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 			 * Before we can issue GL commands, we need to make sure the context
 			 * is current and bound to a surface.
 			 */
-			if (!mEgl.eglMakeCurrent(mEglDisplay, mEglSurface, mEglSurface,
-					mEglContext)) {
+			if (!mEgl.eglMakeCurrent(mEglDisplay, mEglSurface, mEglSurface,  mEglContext)) {
 				throwEglException("eglMakeCurrent");
 			}
 
@@ -1042,18 +1009,15 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 
 		public void destroySurface() {
 			if (mEglSurface != null && mEglSurface != EGL11.EGL_NO_SURFACE) {
-				mEgl.eglMakeCurrent(mEglDisplay, EGL11.EGL_NO_SURFACE,
-						EGL11.EGL_NO_SURFACE, EGL11.EGL_NO_CONTEXT);
-				mEGLWindowSurfaceFactory.destroySurface(mEgl, mEglDisplay,
-						mEglSurface);
+				mEgl.eglMakeCurrent(mEglDisplay, EGL11.EGL_NO_SURFACE, EGL11.EGL_NO_SURFACE, EGL11.EGL_NO_CONTEXT);
+				mEGLWindowSurfaceFactory.destroySurface(mEgl, mEglDisplay, mEglSurface);
 				mEglSurface = null;
 			}
 		}
 
 		public void finish() {
 			if (mEglContext != null) {
-				mEGLContextFactory.destroyContext(mEgl, mEglDisplay,
-						mEglContext);
+				mEGLContextFactory.destroyContext(mEgl, mEglDisplay, mEglContext);
 				mEglContext = null;
 			}
 			if (mEglDisplay != null) {
@@ -1063,8 +1027,7 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 		}
 
 		private void throwEglException(String function) {
-			throw new RuntimeException(function + " failed: "
-					+ mEgl.eglGetError());
+			throw new RuntimeException(function + " failed: " + mEgl.eglGetError());
 		}
 
 		/**
@@ -1072,8 +1035,7 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 		 **/
 		public boolean verifyContext() {
 			EGLContext currentContext = mEgl.eglGetCurrentContext();
-			return currentContext != EGL11.EGL_NO_CONTEXT
-					&& mEgl.eglGetError() != EGL11.EGL_CONTEXT_LOST;
+			return currentContext != EGL11.EGL_NO_CONTEXT && mEgl.eglGetError() != EGL11.EGL_CONTEXT_LOST;
 		}
 
 		EGL11 mEgl;
@@ -1092,7 +1054,7 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 	 * sGLThreadManager object. This avoids multiple-lock ordering issues.
 	 */
 	private class GLThread extends Thread {
-		public GLThread(ReplicaRenderer renderer) {
+		GLThread(ReplicaRenderer renderer) {
 			super();
 			mWidth = 0;
 			mHeight = 0;
@@ -1214,9 +1176,7 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 								}
 								// If we don't have an egl surface, try to
 								// acquire one.
-								if ((!mHaveEglContext)
-										&& sGLThreadManager
-										.tryAcquireEglSurfaceLocked(this)) {
+								if ((!mHaveEglContext) && sGLThreadManager.tryAcquireEglSurfaceLocked(this)) {
 									mHaveEglContext = true;
 									mEglHelper.start();
 
@@ -1334,8 +1294,7 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 
 						if (!mEglHelper.swap()) {
 							if (LOG_SURFACE) {
-								Log.i("GLThread", "egl surface lost tid="
-										+ getId());
+								Log.i("GLThread", "egl surface lost tid=" + getId());
 							}
 
 							stopEglLocked();
@@ -1434,8 +1393,7 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 				// Wait for thread to react to resize and render a frame
 				while (!mExited && !mPaused && !mRenderComplete) {
 					if (LOG_SURFACE) {
-						Log.i("Main thread",
-								"onWindowResize waiting for render complete.");
+						Log.i("Main thread", "onWindowResize waiting for render complete.");
 					}
 					try {
 						sGLThreadManager.wait();
@@ -1585,8 +1543,7 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 
 	private void checkRenderThreadState() {
 		if (mGLThread != null) {
-			throw new IllegalStateException(
-					"setRenderer has already been called for this instance.");
+			throw new IllegalStateException("setRenderer has already been called for this instance.");
 		}
 	}
 
@@ -1617,10 +1574,7 @@ public class ReplicaGLSurfaceView extends SurfaceView implements
 				return true;
 			}
 			checkGLESVersion();
-			if (mMultipleGLESContextsAllowed) {
-				return true;
-			}
-			return false;
+			return mMultipleGLESContextsAllowed;
 		}
 
 		/*

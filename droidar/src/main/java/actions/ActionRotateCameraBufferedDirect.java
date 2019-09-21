@@ -57,15 +57,13 @@ public class ActionRotateCameraBufferedDirect extends Action {
 	}
 
 	@Override
-	public boolean onTouchMove(MotionEvent e1, MotionEvent e2,
-			float screenDeltaX, float screenDeltaY) {
+	public boolean onTouchMove(MotionEvent e1, MotionEvent e2, float screenDeltaX, float screenDeltaY) {
 		myTargetCamera.changeZAngleBuffered(screenDeltaY);
 		return true;
 	}
 
 	@Override
 	public synchronized boolean onAccelChanged(float[] values) {
-
 		if (accelAlgo != null)
 			myNewAccelValues = accelAlgo.execute(values);
 		else
@@ -73,7 +71,6 @@ public class ActionRotateCameraBufferedDirect extends Action {
 		accelChanged = true;
 		calc();
 		return true;
-
 	}
 
 	@Override
@@ -85,7 +82,6 @@ public class ActionRotateCameraBufferedDirect extends Action {
 		magnetoChanged = true;
 		calc();
 		return true;
-
 	}
 
 	@Override
@@ -97,7 +93,6 @@ public class ActionRotateCameraBufferedDirect extends Action {
 		orientationDataChanged = true;
 		calc();
 		return true;
-
 	}
 
 	private void calc() {
@@ -121,23 +116,18 @@ public class ActionRotateCameraBufferedDirect extends Action {
 						myMagnetValues = myNewMagnetValues;
 				}
 				// first calc the unrotated matrix:
-				SensorManager.getRotationMatrix(unrotatedMatrix, null,
-						myAccelValues, myMagnetValues);
+				SensorManager.getRotationMatrix(unrotatedMatrix, null, myAccelValues, myMagnetValues);
 			} else if (orientationDataChanged) {
 				orientationDataChanged = false;
 				if (orientationBufferAlgo != null)
-					orientationBufferAlgo.execute(myOrientValues,
-							myNewOrientValues, timeDelta);
+					orientationBufferAlgo.execute(myOrientValues, myNewOrientValues, timeDelta);
 				else
 					myOrientValues = myNewOrientValues;
-				GLUtilityClass.getRotationMatrixFromVector(unrotatedMatrix,
-						myOrientValues);
+				GLUtilityClass.getRotationMatrixFromVector(unrotatedMatrix, myOrientValues);
 			}
 
 			// then rotate it according to the screen rotation:
-			SensorManager.remapCoordinateSystem(unrotatedMatrix,
-					SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X,
-					rotationMatrix);
+			SensorManager.remapCoordinateSystem(unrotatedMatrix, SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X, rotationMatrix);
 
 			myTargetCamera.setRotationMatrix(rotationMatrix, 0);
 		}

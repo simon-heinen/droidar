@@ -27,17 +27,13 @@ public class TexturedShape extends Shape {
 		super(null);
 		myRenderData = new TexturedRenderData();
 		/*
-		 * TODO redesign this so that the input texture is projected on the mesh
-		 * correctly
+		 * TODO redesign this so that the input texture is projected on the mesh correctly
 		 */
 		if (texture != null) {
-			texture = TextureManager.getInstance().resizeBitmapIfNecessary(
-					texture);
-			TextureManager.getInstance().addTexture(
-					(TexturedRenderData) myRenderData, texture, textureName);
+			texture = TextureManager.getInstance().resizeBitmapIfNecessary(texture);
+			TextureManager.getInstance().addTexture((TexturedRenderData) myRenderData, texture, textureName);
 		} else {
-			Log.e("TexturedShape",
-					"got null-bitmap! check bitmap creation process");
+			Log.e("TexturedShape", "got null-bitmap! check bitmap creation process");
 		}
 	}
 
@@ -46,8 +42,7 @@ public class TexturedShape extends Shape {
 		// z coordinate not needed for 2d textures:
 		myTexturePositions.add(new Vec(x, y, 0));
 		myRenderData.updateShape(getMyShapeArray());
-		((TexturedRenderData) myRenderData)
-				.updateTextureBuffer(myTexturePositions);
+		((TexturedRenderData) myRenderData).updateTextureBuffer(myTexturePositions);
 	}
 
 	@Override

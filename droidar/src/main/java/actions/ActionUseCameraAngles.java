@@ -6,11 +6,8 @@ import android.hardware.SensorManager;
 
 /**
  * Use
- * 
+
  * Children of this class can access the angles of the specified camera
- * 
- * 
- * 
  * @author Spobo
  * 
  */
@@ -33,8 +30,7 @@ public abstract class ActionUseCameraAngles extends Action {
 	}
 
 	/**
-	 * this affects how often the updatePitch() and updateRoll() methods are
-	 * called.
+	 * this affects how often the updatePitch() and updateRoll() methods are called.
 	 * 
 	 * @param threshold
 	 *            1 means update on every event 10 means update every 10 events.

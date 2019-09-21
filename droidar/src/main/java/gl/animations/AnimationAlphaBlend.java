@@ -41,8 +41,7 @@ public class AnimationAlphaBlend extends GLAnimation {
 	 * @param accur
 	 *            0.2f ood value to start
 	 */
-	public AnimationAlphaBlend(float speed, Color startColor, Color endColor,
-			float accur) {
+	public AnimationAlphaBlend(float speed, Color startColor, Color endColor, float accur) {
 		mySpeed = speed;
 		myCurrentColor = startColor.copy();
 		myTargetColor = endColor.copy();
@@ -54,8 +53,7 @@ public class AnimationAlphaBlend extends GLAnimation {
 
 	@Override
 	public boolean update(float timeDelta, Updateable parent) {
-		final Vec distance = Color.morphToNewColor(myCurrentColor,
-				myTargetColor, timeDelta * mySpeed);
+		final Vec distance = Color.morphToNewColor(myCurrentColor, myTargetColor, timeDelta * mySpeed);
 
 		if ((Vec.abs(distance.x) < myAccur) && (Vec.abs(distance.y) < myAccur)
 				&& (Vec.abs(distance.z) < myAccur)) {
@@ -71,10 +69,9 @@ public class AnimationAlphaBlend extends GLAnimation {
 	}
 
 	@Override
-	public void render(/*GL10 gl,*/ Renderable parent) {
+	public void render(GLES20 unused, Renderable parent) {
 		if (!ObjectPicker.readyToDrawWithColor)
-			/*gl.*/glColor4f(myCurrentColor.red, myCurrentColor.green, myCurrentColor.blue, myCurrentColor.alpha);
-
+			glColor4f(myCurrentColor.red, myCurrentColor.green, myCurrentColor.blue, myCurrentColor.alpha);
 	}
 
 	@Override

@@ -86,8 +86,7 @@ public abstract class MarkerDetectionSetup extends Setup {
 		int[] constants = new int[2];
 //TODO		nativeLib.initThread(constants, calib.cameraMatrix,	calib.distortionMatrix);
 		notNativeLib.initThread(constants, calib.cameraMatrix, calib.distortionMatrix);
-		myThread = new DetectionThread(nativeLib, myGLSurfaceView,
-				markerObjectMap, _a2_getUnrecognizedMarkerListener());
+		myThread = new DetectionThread(nativeLib, myGLSurfaceView, markerObjectMap, _a2_getUnrecognizedMarkerListener());
 		if (apiLevel <= 5) {
 			cameraPreview = new PreviewPre2_0(getActivity()/*myTargetActivity*/, myThread, cameraSize);
 			Log.d("AR", "API Level: " + apiLevel + " Created Preview Pre2.1");
@@ -163,8 +162,7 @@ public abstract class MarkerDetectionSetup extends Setup {
 		String fileName = settings.getString("calibration", null);
 		if (fileName != null) {
 			try {
-				calib = (CameraCalibration) IO.loadSerializable("/sdcard/"
-						+ CALIB_PATH + "/" + fileName + ".txt");
+				calib = (CameraCalibration) IO.loadSerializable("/sdcard/" + CALIB_PATH + "/" + fileName + ".txt");
 				Log.d("AR", "using old calibration");
 			} catch (Exception e) {
 				Log.d("AR", "default value, file is empty");

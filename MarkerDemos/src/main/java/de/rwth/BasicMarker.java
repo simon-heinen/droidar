@@ -35,15 +35,12 @@ public abstract class BasicMarker implements MarkerObject {
 		float[] markerCenterPosVec = {markerRotMatrix[startOffset + 12],
 				markerRotMatrix[startOffset + 13],
 				markerRotMatrix[startOffset + 14], 1};
-		Matrix.multiplyMV(resultPosVec, 0, invertedCameraMatrix, 0,
-				markerCenterPosVec, 0);
+		Matrix.multiplyMV(resultPosVec, 0, invertedCameraMatrix, 0, markerCenterPosVec, 0);
 
 		Vec camPos = myCamera.getPosition();
-		setObjectPos(new Vec(resultPosVec[0] + camPos.x, resultPosVec[1]
-				+ camPos.y, resultPosVec[2] + camPos.z));
+		setObjectPos(new Vec(resultPosVec[0] + camPos.x, resultPosVec[1] + camPos.y, resultPosVec[2] + camPos.z));
 
-		Matrix.multiplyMM(antiCameraMarkerRotMatrix, 0, invertedCameraMatrix,
-				0, markerRotMatrix, startOffset);
+		Matrix.multiplyMM(antiCameraMarkerRotMatrix, 0, invertedCameraMatrix, 0, markerRotMatrix, startOffset);
 
 		// clear the translation values:
 		antiCameraMarkerRotMatrix[12] = 0;
