@@ -12,22 +12,18 @@ import gl.GLCamera;
 public class ActionMoveCameraBuffered extends ActionDoAlongAxis {
 
 	/**
-	 * @param camera
+	 * @param camera GLCamera
 	 * @param trackballFactor
 	 *            something like 5
 	 * @param touchscreenFactor
 	 *            something like 25
 	 */
-	public ActionMoveCameraBuffered(GLCamera camera, float trackballFactor,
-			float touchscreenFactor) {
-
+	public ActionMoveCameraBuffered(GLCamera camera, float trackballFactor, float touchscreenFactor) {
 		super(camera, trackballFactor, touchscreenFactor);
-
 	}
 
 	@Override
 	public void doAlongViewAxis(float x, float y) {
 		myTargetCamera.changeXYPositionBuffered(x, y);
 	}
-
 }

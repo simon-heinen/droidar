@@ -58,7 +58,7 @@ public class M_HalfHalf implements ModifierInterface, UiDecoratable {
 
 		if (minimumHeigthInDip != null) {
 			// params = new LinearLayout.LayoutParams(
-			// LayoutParams.FILL_PARENT,
+			// LayoutParams.MATCH_PARENT,
 			// MeasureSpec.makeMeasureSpec(
 			// (int) ImageTransform.dipToPixels(
 			// context.getResources(), minimumHeigthInDip),
@@ -83,10 +83,10 @@ public class M_HalfHalf implements ModifierInterface, UiDecoratable {
 
 		if (bothViewsSameHeigth) {
 			LayoutParams lparams = new LinearLayout.LayoutParams(
-					LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT,
+					LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT,
 					weightOfLeft);
 			LayoutParams rparams = new LinearLayout.LayoutParams(
-					LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT,
+					LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT,
 					weightOfRight);
 			left.setLayoutParams(lparams);
 			right.setLayoutParams(rparams);
@@ -97,10 +97,10 @@ public class M_HalfHalf implements ModifierInterface, UiDecoratable {
 		} else {
 			// TODO or always use FILL_PARENT for height?
 			LayoutParams lparams = new LinearLayout.LayoutParams(
-					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT,
+					LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,
 					weightOfLeft);
 			LayoutParams rparams = new LinearLayout.LayoutParams(
-					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT,
+					LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,
 					weightOfRight);
 			left.setLayoutParams(lparams);
 			right.setLayoutParams(rparams);

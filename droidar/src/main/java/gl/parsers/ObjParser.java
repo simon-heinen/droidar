@@ -49,71 +49,78 @@ public class ObjParser {
 	public ObjParser(Resources resources, String resourceID) {
 		this.resources = resources;
 		this.resourceID = resourceID;
-		if (resourceID.indexOf(":") > -1)
+		if (resourceID.contains(":"))
 			this.packageID = resourceID.split(":")[0];
 	}
 
 	public void parse() throws Exception {
 		long startTime = Calendar.getInstance().getTimeInMillis();
 
-		InputStream fileIn = resources.openRawResource(resources.getIdentifier(
-				resourceID, null, null));
-		BufferedReader buffer = new BufferedReader(
-				new InputStreamReader(fileIn));
+		InputStream fileIn = resources.openRawResource(resources.getIdentifier( resourceID, null, null));
 
-		// materialMap = new HashMap<String, ObjMaterial>();
+		try (BufferedReader buffer = new BufferedReader(new InputStreamReader(fileIn))) {
 
-		Log.d(LOG_TAG, "Start parsing object " + resourceID);
-		Log.d(LOG_TAG, "Start time " + startTime);
+			// materialMap = new HashMap<String, ObjMaterial>();
 
-		EfficientList<Vec> vertexList = new EfficientList<Vec>();
-		EfficientList<TexturCoord> textureList = new EfficientList<TexturCoord>();
-		EfficientList<int[]> shapeList = new EfficientList<int[]>();
-		EfficientList<Vec> normalsList = new EfficientList<Vec>();
+			Log.d(LOG_TAG, "Start parsing object " + resourceID);
+			Log.d(LOG_TAG, "Start time " + startTime);
 
-		String line;
+			EfficientList<Vec> vertexList = new EfficientList<>();
+			EfficientList<TexturCoord> textureList = new EfficientList<>();
+			EfficientList<int[]> shapeList = new EfficientList<>();
+			EfficientList<Vec> normalsList = new EfficientList<>();
 
-		while ((line = buffer.readLine()) != null) {
+			String line;
 
-			StringTokenizer lineElements = new StringTokenizer(line, " ");
+			while ((line = buffer.readLine()) != null) {
 
-			if (lineElements.countTokens() == 0)
-				continue;
+				StringTokenizer lineElements = new StringTokenizer(line, " ");
 
-			String type = lineElements.nextToken();
+				if (lineElements.countTokens() == 0)
+					continue;
 
-			if (type.equals(VERTEX)) {
-				Vec vertex = new Vec();
-				vertex.x = Float.parseFloat(lineElements.nextToken());
-				vertex.y = Float.parseFloat(lineElements.nextToken());
-				vertex.z = Float.parseFloat(lineElements.nextToken());
-				vertexList.add(vertex);
-			} else if (type.equals(FACE)) {
-				/*
-				 * something like "f 102 24 91 7" so its a face with 4 vertices
-				 */
-				int verticesCount = lineElements.countTokens() - 1;
-				int[] indiceArray = new int[verticesCount];
-				for (int i = 0; i < verticesCount; i++) {
-					indiceArray[i] = Integer.parseInt(lineElements.nextToken());
+				String type = lineElements.nextToken();
+
+				switch (type) {
+					case VERTEX:
+						Vec vertex = new Vec();
+						vertex.x = Float.parseFloat(lineElements.nextToken());
+						vertex.y = Float.parseFloat(lineElements.nextToken());
+						vertex.z = Float.parseFloat(lineElements.nextToken());
+						vertexList.add(vertex);
+						break;
+					case FACE:
+						/*
+						 * something like "f 102 24 91 7" so its a face with 4 vertices
+						 */
+						int verticesCount = lineElements.countTokens() - 1;
+						int[] indiceArray = new int[verticesCount];
+						for (int i = 0; i < verticesCount; i++) {
+							indiceArray[i] = Integer.parseInt(lineElements.nextToken());
+						}
+						shapeList.add(indiceArray);
+
+						break;
+					case TEXCOORD:
+						TexturCoord texCoord = new TexturCoord(
+								Float.parseFloat(lineElements.nextToken()),
+								Float.parseFloat(lineElements.nextToken()));
+						textureList.add(texCoord);
+						break;
+					case NORMAL:
+						Vec normal = new Vec();
+						normal.x = Float.parseFloat(lineElements.nextToken());
+						normal.y = Float.parseFloat(lineElements.nextToken());
+						normal.z = Float.parseFloat(lineElements.nextToken());
+						normalsList.add(normal);
+						break;
+					case MATERIAL_LIB:
+						loadMaterialLib(lineElements.nextToken());
+						break;
+					case USE_MATERIAL:
+						currentMaterialKey = lineElements.nextToken();
+						break;
 				}
-				shapeList.add(indiceArray);
-
-			} else if (type.equals(TEXCOORD)) {
-				TexturCoord texCoord = new TexturCoord(
-						Float.parseFloat(lineElements.nextToken()),
-						Float.parseFloat(lineElements.nextToken()));
-				textureList.add(texCoord);
-			} else if (type.equals(NORMAL)) {
-				Vec normal = new Vec();
-				normal.x = Float.parseFloat(lineElements.nextToken());
-				normal.y = Float.parseFloat(lineElements.nextToken());
-				normal.z = Float.parseFloat(lineElements.nextToken());
-				normalsList.add(normal);
-			} else if (type.equals(MATERIAL_LIB)) {
-				loadMaterialLib(lineElements.nextToken());
-			} else if (type.equals(USE_MATERIAL)) {
-				currentMaterialKey = lineElements.nextToken();
 			}
 		}
 
@@ -121,7 +128,7 @@ public class ObjParser {
 		Log.d(LOG_TAG, "End time " + (endTime - startTime));
 	}
 
-	public class TexturCoord {
+	public static class TexturCoord {
 		float x;
 		float y;
 
@@ -132,7 +139,7 @@ public class ObjParser {
 	}
 
 	private void loadMaterialLib(String libID) {
-		StringBuffer resourceID = new StringBuffer(packageID);
+		StringBuilder resourceID = new StringBuilder(packageID);
 		StringBuffer libIDSbuf = new StringBuffer(libID);
 		int dotIndex = libIDSbuf.lastIndexOf(".");
 		if (dotIndex > -1)
@@ -164,10 +171,10 @@ public class ObjParser {
 				} else if (type.equals(DIFFUSE_TEX_MAP)) {
 					if (parts.length > 1) {
 						materialMap.get(currentMaterial).diffuseTextureMap = parts[1];
-						StringBuffer texture = new StringBuffer(packageID);
+						StringBuilder texture = new StringBuilder(packageID);
 						texture.append(":drawable/");
 
-						StringBuffer textureName = new StringBuffer(parts[1]);
+						StringBuilder textureName = new StringBuilder(parts[1]);
 						dotIndex = textureName.lastIndexOf(".");
 						if (dotIndex > -1)
 							texture.append(textureName.substring(0, dotIndex));
@@ -224,7 +231,7 @@ public class ObjParser {
 	// }
 	// }
 
-	private class ObjMaterial {
+	private static class ObjMaterial {
 		public String name;
 		public String diffuseTextureMap;
 		public float offsetU;

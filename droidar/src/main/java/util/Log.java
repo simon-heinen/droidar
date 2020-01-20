@@ -63,7 +63,7 @@ public class Log {
 
 			@Override
 			public void v(String logTag, String logText) {
-				android.util.Log.v(logTag, logText);
+				android.util.Log.i(logTag, "v "+logText);
 			}
 
 			@Override
@@ -78,12 +78,12 @@ public class Log {
 
 			@Override
 			public void d(String logTag, String logText) {
-				android.util.Log.d(logTag, logText);
+				android.util.Log.i("d "+logTag, logText);
 			}
 
 			@Override
 			public void print(String logText) {
-				android.util.Log.d("Debug Output", logText);
+				android.util.Log.i("Debug Output", logText);
 			}
 		};
 	}

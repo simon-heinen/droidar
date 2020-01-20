@@ -35,7 +35,7 @@ public abstract class ListModifier extends AbstractModifier {
 		ModifierInterface newItem = newItemRequest(itemType);
 		if (newItem != null) {
 			if (myList == null)
-				myList = new ArrayList<ModifierInterface>();
+				myList = new ArrayList<>();
 			myList.add(newItem);
 			addListItemView(myListView, newItem, myList.size() - 1, context);
 
@@ -95,7 +95,7 @@ public abstract class ListModifier extends AbstractModifier {
 		}
 
 		LayoutParams p = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
 		myListView = new LinearLayout(context);
 		myListView.setOrientation(LinearLayout.VERTICAL);
@@ -161,11 +161,11 @@ public abstract class ListModifier extends AbstractModifier {
 		 * delete button
 		 */
 		LayoutParams p = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		LayoutParams p1 = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 9);
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 9);
 		LayoutParams p2 = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1);
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1);
 
 		final LinearLayout l = new LinearLayout(context);
 		l.setLayoutParams(p);

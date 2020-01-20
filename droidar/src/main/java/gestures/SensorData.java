@@ -38,8 +38,7 @@ public class SensorData {
 		this.timestamp = System.nanoTime();
 		this.gravity = gravity;
 		this.linearAcceleration = linearAcceleration;
-		this.absoluteAcceleration = Math.sqrt(Math
-				.pow(linearAcceleration[0], 2)
+		this.absoluteAcceleration = Math.sqrt(Math.pow(linearAcceleration[0], 2)
 				+ Math.pow(linearAcceleration[1], 2)
 				+ Math.pow(linearAcceleration[2], 2));
 		this.mag = mag;

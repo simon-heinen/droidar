@@ -5,8 +5,7 @@ import java.nio.FloatBuffer;
 import util.Vec;
 
 /**
- * The values for the color channels (eg {@link Color#red} have to be between 0
- * and 1!
+ * The values for the color channels (eg {@link Color#red} have to be between 0 and 1!
  * 
  * @author Spobo
  * 
@@ -79,8 +78,8 @@ public class Color {
 	 * @return
 	 */
 	public int toIntARGB() {
-		// android.graphics.Color.parseColor("#66000000"); //would be
-		// transparent black TODO use somehow
+		// android.graphics.Color.parseColor("#66000000");
+		// would be transparent black TODO use somehow
 		return android.graphics.Color.argb((int) (alpha * 255),
 				(int) (red * 255), (int) (green * 255), (int) (blue * 255));
 	}
@@ -171,8 +170,7 @@ public class Color {
 
 	@Override
 	public String toString() {
-		return "(r:" + this.red + ",g:" + this.green + ",b:" + this.blue
-				+ ",a:" + this.alpha + ")";
+		return "(r:" + this.red + ",g:" + this.green + ",b:" + this.blue + ",a:" + this.alpha + ")";
 	}
 
 	public void copyValues(Color source) {
@@ -234,8 +232,7 @@ public class Color {
 
 	@Override
 	public boolean equals(Object other) {
-		return other instanceof Color ? this.toIntARGB() == ((Color) other)
-				.toIntARGB() : false;
+		return other instanceof Color && this.toIntARGB() == ((Color) other).toIntARGB();
 	}
 
 	@Override

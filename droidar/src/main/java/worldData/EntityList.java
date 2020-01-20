@@ -7,7 +7,7 @@ import util.Log;
 public class EntityList implements Entity, Container<Entity> {
 
 	private static final String LOG_TAG = "RenderList";
-	EfficientList<Entity> myItems = new EfficientList<Entity>();
+	EfficientList<Entity> myItems = new EfficientList<>();
 	private boolean isClearedAtLeastOnce;
 	private Updateable myParent;
 
@@ -32,9 +32,7 @@ public class EntityList implements Entity, Container<Entity> {
 				myItems.remove(myItems.get(i));
 			}
 		}
-		if (myItems.myLength == 0)
-			return false;
-		return true;
+		return myItems.myLength != 0;
 	}
 
 	@Override

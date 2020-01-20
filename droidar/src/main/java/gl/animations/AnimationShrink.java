@@ -1,12 +1,16 @@
 package gl.animations;
 
+import android.opengl.GLES20;
+
 import gl.Renderable;
 
-import javax.microedition.khronos.opengles.GL10;
+//import javax.microedition.khronos.opengles.GL10;
 
 import util.Log;
 import worldData.Updateable;
 import worldData.Visitor;
+
+import static android.opengl.GLES10.glScalef;
 
 public class AnimationShrink extends GLAnimation {
 
@@ -20,8 +24,8 @@ public class AnimationShrink extends GLAnimation {
 	}
 
 	@Override
-	public void render(GL10 gl, Renderable parent) {
-		gl.glScalef(myGrothSize, myGrothSize, myGrothSize);
+	public void render(GLES20 unused, Renderable parent) {
+		glScalef(myGrothSize, myGrothSize, myGrothSize);
 	}
 
 	@Override

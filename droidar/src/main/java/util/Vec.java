@@ -315,9 +315,7 @@ public class Vec {
     // }
 
     private static boolean parallelVecs(Vec vec1, Vec vec2) {
-        if ((vec1.copy().normalize()).equals(vec2.copy().normalize()))
-            return true;
-        return false;
+        return (vec1.copy().normalize()).equals(vec2.copy().normalize());
     }
 
     /**
@@ -330,9 +328,7 @@ public class Vec {
         this.round(factor);
         vec.round(factor);
 
-        if ((x == vec.x) && (y == vec.y) && (z == vec.z))
-            return true;
-        return false;
+        return (x == vec.x) && (y == vec.y) && (z == vec.z);
     }
 
     /**
@@ -696,8 +692,8 @@ public class Vec {
      * Given 2 vectors this calculates the vector which is orthogonal to the
      * plane the two vectors create
      *
-     * @param v1
-     * @param v2
+     * @param uVec Vec
+     * @param vVec Vec
      * @return the orthogonal vector
      */
     public static Vec calcNormalVec(Vec uVec, Vec vVec) {

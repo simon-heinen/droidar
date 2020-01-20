@@ -2,11 +2,14 @@ package gl.animations;
 
 import gl.Renderable;
 
-import javax.microedition.khronos.opengles.GL10;
+//import javax.microedition.khronos.opengles.GL10;
+import android.opengl.GLES20;
 
 import util.Vec;
 import worldData.Updateable;
 import worldData.Visitor;
+
+import static android.opengl.GLES10.glTranslatef;
 
 public class AnimationBounce extends GLAnimation {
 
@@ -22,11 +25,9 @@ public class AnimationBounce extends GLAnimation {
 	 * @param speed
 	 * @param relativeLowerEnd
 	 * @param relativeUperEnd
-	 * @param accuracy
-	 *            should be 0.2f (or something between 0.01f and 0.5f)
+	 * @param accuracy         should be 0.2f (or something between 0.01f and 0.5f)
 	 */
-	public AnimationBounce(int speed, Vec relativeLowerEnd,
-			Vec relativeUperEnd, float accuracy) {
+	public AnimationBounce(int speed, Vec relativeLowerEnd, Vec relativeUperEnd, float accuracy) {
 		this.mySpeed = speed;
 		this.accuracy = accuracy;
 		this.dEnd = relativeLowerEnd.copy();
@@ -58,13 +59,12 @@ public class AnimationBounce extends GLAnimation {
 	}
 
 	@Override
-	public void render(GL10 gl, Renderable parent) {
-		gl.glTranslatef(currentPos.x, currentPos.y, currentPos.z);
+	public void render(GLES20 unused, Renderable parent) {
+		glTranslatef(currentPos.x, currentPos.y, currentPos.z);
 	}
 
 	@Override
 	public boolean accept(Visitor visitor) {
 		return visitor.default_visit(this);
 	}
-
 }

@@ -6,14 +6,17 @@ import gl.scenegraph.Shape;
 
 import java.util.HashMap;
 
-import javax.microedition.khronos.opengles.GL10;
+//import javax.microedition.khronos.opengles.GL10;
 
 import util.Log;
 import util.Vec;
+import v2.simpleUi.util.IO;
 import worldData.Visitor;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.opengl.GLES20;
 import android.widget.TextView;
 
 /**
@@ -23,9 +26,8 @@ import android.widget.TextView;
  * designed for such scenarios. It is slower to render for large numbers of
  * {@link GLText} objects (because of the {@link MeshComponent} overhead) but if
  * you have rapidly changing text you should use this class.
- * 
+ *
  * @author Spobo
- * 
  */
 public class GLText extends MeshComponent {
 
@@ -39,20 +41,16 @@ public class GLText extends MeshComponent {
 	private GLCamera myCamera;
 
 	/**
-	 * @param text
-	 *            The text that should be displayed. Can be changed with
-	 *            {@link GLText#changeTextTo(String)}
+	 * @param text     The text that should be displayed. Can be changed with
+	 *                 {@link GLText#changeTextTo(String)}
 	 * @param context
-	 * @param textMap
-	 *            hte already created characters will be stored in here, so pass
-	 *            a new {@link HashMap} or maybe also a already initialized
-	 *            {@link HashMap} if you want to use a custom font or something
-	 *            similar
-	 * @param glCamera
-	 *            to allow the text to face the camera
+	 * @param textMap  hte already created characters will be stored in here, so pass
+	 *                 a new {@link HashMap} or maybe also a already initialized
+	 *                 {@link HashMap} if you want to use a custom font or something
+	 *                 similar
+	 * @param glCamera to allow the text to face the camera
 	 */
-	public GLText(String text, Context context,
-			HashMap<String, MeshComponent> textMap, GLCamera glCamera) {
+	public GLText(String text, Context context, HashMap<String, MeshComponent> textMap, GLCamera glCamera) {
 		super(null);
 		myText = text;
 		myContext = context;
@@ -66,7 +64,7 @@ public class GLText extends MeshComponent {
 	}
 
 	@Override
-	public void draw(GL10 gl, Renderable parent) {
+	public void draw(GLES20 unused, Renderable parent) {
 		if (!textLoaded) {
 			loadText(myText);
 			textLoaded = true;
@@ -80,7 +78,6 @@ public class GLText extends MeshComponent {
 			this.addChild(m);
 		}
 		this.addAnimation(new AnimationFaceToCamera(myCamera));
-
 	}
 
 	protected MeshComponent loadCharMesh(String s, int charNr, int textLenght) {
@@ -113,8 +110,7 @@ public class GLText extends MeshComponent {
 	}
 
 	protected MeshComponent createNewCharMesh(String s) {
-		MeshComponent mesh = GLFactory.getInstance().newTexturedSquare(
-				"char" + s, generateText(s), CHAR_SIZE);
+		MeshComponent mesh = GLFactory.getInstance().newTexturedSquare("char" + s, generateText(s), CHAR_SIZE);
 		return mesh;
 	}
 
@@ -122,13 +118,12 @@ public class GLText extends MeshComponent {
 		TextView v = new TextView(myContext);
 		v.setTypeface(null, Typeface.BOLD);
 		v.setText(s);
-		return util.IO.loadBitmapFromView(v);
+		return IO.loadBitmapFromView(v);
 	}
 
 	public void changeTextTo(String s) {
 		myText = s;
-		clearChildren();
+		removeAllChildren(); //obsole clearChildren();
 		textLoaded = false;
 	}
-
 }

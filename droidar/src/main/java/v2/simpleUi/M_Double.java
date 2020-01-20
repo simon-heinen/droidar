@@ -1,12 +1,13 @@
 package v2.simpleUi;
 
+import util.Log;
 import v2.simpleUi.uiDecoration.UiDecoratable;
 import v2.simpleUi.uiDecoration.UiDecorator;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.InputType;
-import android.util.Log;
+//import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -43,10 +44,10 @@ public abstract class M_Double implements ModifierInterface, UiDecoratable {
 		l.setGravity(Gravity.CENTER_VERTICAL);
 
 		LayoutParams p = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT,
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,
 				weightOfDescription);
 		LayoutParams p2 = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT,
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,
 				weightOfInputText);
 
 		TextView t = new TextView(context);

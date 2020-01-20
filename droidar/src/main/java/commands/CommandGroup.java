@@ -23,7 +23,7 @@ public class CommandGroup extends UndoableCommand implements Container<Command> 
 		getInfoObject().setShortDescr(string);
 	}
 
-	public EfficientList<Command> myList = new EfficientList<Command>();
+	public EfficientList<Command> myList = new EfficientList<>();
 	private ProcessListener myProcessListener;
 
 	/*
@@ -97,7 +97,7 @@ public class CommandGroup extends UndoableCommand implements Container<Command> 
 	@Override
 	public EfficientList<Command> getAllItems() {
 		if (myList == null)
-			myList = new EfficientList<Command>();
+			myList = new EfficientList<>();
 		return myList;
 	}
 

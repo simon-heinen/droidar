@@ -1,9 +1,11 @@
 package worldData;
 
+import android.opengl.GLES20;
+
 import gl.GLCamera;
 import gl.HasPosition;
 
-import javax.microedition.khronos.opengles.GL10;
+//import javax.microedition.khronos.opengles.GL10;
 
 import util.EfficientList;
 import util.QuadTree;
@@ -36,7 +38,7 @@ public class LargeWorld extends World {
 		myRenderDistance = renderDistance;
 		myRecalcDistanceMin = -recalcDistance;
 		myRecalcDistanceMax = recalcDistance;
-		tree = new QuadTree<RenderableEntity>();
+		tree = new QuadTree<>();
 
 		itemsListener = tree.new ResultListener() {
 
@@ -50,7 +52,7 @@ public class LargeWorld extends World {
 	public EfficientList<RenderableEntity> getItems(Vec position,
 			float maxDistance) {
 
-		final EfficientList<RenderableEntity> result = new EfficientList<RenderableEntity>();
+		final EfficientList<RenderableEntity> result = new EfficientList<>();
 		tree.findInArea(tree.new ResultListener() {
 
 			@Override
@@ -93,7 +95,7 @@ public class LargeWorld extends World {
 	 * expensive so do not call this too often!
 	 */
 	public void rebuildTree() {
-		final EfficientList<RenderableEntity> list = new EfficientList<RenderableEntity>();
+		final EfficientList<RenderableEntity> list = new EfficientList<>();
 		tree.getAllItems(tree.new ResultListener() {
 			@Override
 			public void onResult(RenderableEntity myValue) {
@@ -107,42 +109,36 @@ public class LargeWorld extends World {
 	}
 
 	@Override
-	public void drawElements(GLCamera camera, GL10 gl) {
+	public void drawElements(GLES20 unused, GLCamera camera) {
 
-		EfficientList<RenderableEntity> list = getList(camera.getPosition().x,
-				camera.getPosition().y);
+		EfficientList<RenderableEntity> list = getList(camera.getPosition().x, camera.getPosition().y);
 		for (int i = 0; i < list.myLength; i++) {
 			RenderableEntity obj = list.get(i);
 			if (obj != null)
-				obj.render(gl, this);
+				obj.render(unused, this);
 		}
 		// super.drawElements(camera, gl, stack);
 	}
 
 	@Override
 	public boolean update(float timeDelta, Updateable parent) {
-		EfficientList<RenderableEntity> list = getList(getMyCamera()
-				.getPosition().x, getMyCamera().getPosition().y);
+		EfficientList<RenderableEntity> list = getList(getMyCamera().getPosition().x, getMyCamera().getPosition().y);
 		for (int i = 0; i < list.myLength; i++) {
 			RenderableEntity obj = list.get(i);
-			if (obj != null)
-				obj.update(timeDelta, this);
+			if (obj != null) obj.update(timeDelta, this);
 		}
 		return true;
 	}
 
 	@SuppressWarnings("unchecked")
-	private synchronized EfficientList<RenderableEntity> getList(float x,
-			float y) {
+	private synchronized EfficientList<RenderableEntity> getList(float x, float y) {
 		if (itemsInRange != null
-				&& needsNoRecalculation(x - oldX, myRecalcDistanceMin,
-						myRecalcDistanceMax)
-				&& needsNoRecalculation(y - oldY, myRecalcDistanceMin,
-						myRecalcDistanceMax)) {
+				&& needsNoRecalculation(x - oldX, myRecalcDistanceMin,myRecalcDistanceMax)
+				&& needsNoRecalculation(y - oldY, myRecalcDistanceMin,myRecalcDistanceMax)) {
 			return itemsInRange;
 		} else {
 			if (itemsInRange == null)
-				itemsInRange = new EfficientList<RenderableEntity>();
+				itemsInRange = new EfficientList<>();
 			else
 				itemsInRange.clear();
 			oldX = x;

@@ -20,12 +20,12 @@ import android.widget.TextView;
  */
 public interface UiDecorator {
 
-	public static final int TYPE_CONTAINER = 1;
-	public static final int TYPE_INFO_TEXT = 2;
-	public static final int TYPE_EDIT_TEXT = 3;
-	public static final int TYPE_BUTTON = 4;
-	public static final int TYPE_ICON = 5;
-	public static final int TYPE_CAPTION = 6;
+	int TYPE_CONTAINER = 1;
+	int TYPE_INFO_TEXT = 2;
+	int TYPE_EDIT_TEXT = 3;
+	int TYPE_BUTTON = 4;
+	int TYPE_ICON = 5;
+	int TYPE_CAPTION = 6;
 
 	/**
 	 * @param context
@@ -42,8 +42,8 @@ public interface UiDecorator {
 	 *            the view is a (sub)type of {@link Button})
 	 * @return
 	 */
-	public boolean decorate(Context context, View targetView, final int level,
-			int type);
+    boolean decorate(Context context, View targetView, final int level,
+                     int type);
 
 	/**
 	 * @param context
@@ -60,8 +60,8 @@ public interface UiDecorator {
 	 *            the view is a (sub)type of {@link Button})
 	 * @return
 	 */
-	public boolean decorate(Context context, Button targetView,
-			final int level, int type);
+    boolean decorate(Context context, Button targetView,
+                     final int level, int type);
 
 	/**
 	 * @param context
@@ -78,8 +78,8 @@ public interface UiDecorator {
 	 *            the view is a (sub)type of {@link Button})
 	 * @return
 	 */
-	public boolean decorate(Context context, TextView targetView,
-			final int level, int type);
+    boolean decorate(Context context, TextView targetView,
+                     final int level, int type);
 
 	/**
 	 * @param context
@@ -96,8 +96,8 @@ public interface UiDecorator {
 	 *            the view is a (sub)type of {@link Button})
 	 * @return
 	 */
-	public boolean decorate(Context context, ImageView targetView,
-			final int level, int type);
+    boolean decorate(Context context, ImageView targetView,
+                     final int level, int type);
 
 	/**
 	 * @param context
@@ -114,11 +114,11 @@ public interface UiDecorator {
 	 *            the view is a (sub)type of {@link Button})
 	 * @return
 	 */
-	public boolean decorate(Context context, EditText targetView,
-			final int level, int type);
+    boolean decorate(Context context, EditText targetView,
+                     final int level, int type);
 
-	public int getCurrentLevel();
+	int getCurrentLevel();
 
-	public void setCurrentLevel(int currentLevel);
+	void setCurrentLevel(int currentLevel);
 
 }

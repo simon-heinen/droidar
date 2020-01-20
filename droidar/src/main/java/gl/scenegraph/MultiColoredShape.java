@@ -8,7 +8,7 @@ import util.Vec;
 
 public class MultiColoredShape extends Shape {
 
-	ArrayList<Color> myColors = new ArrayList<Color>();
+	private ArrayList<Color> myColors = new ArrayList<>();
 
 	/**
 	 * no color parameter needed here because the color would be overpainted by

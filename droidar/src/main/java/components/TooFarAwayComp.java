@@ -3,13 +3,14 @@ package components;
 import gl.GLCamera;
 import gl.HasPosition;
 import gl.scenegraph.MeshComponent;
+import util.Log;
 import util.Vec;
 import worldData.Entity;
 import worldData.Obj;
 import worldData.UpdateTimer;
 import worldData.Updateable;
 import worldData.Visitor;
-import android.util.Log;
+//import android.util.Log;
 
 public abstract class TooFarAwayComp implements Entity {
 

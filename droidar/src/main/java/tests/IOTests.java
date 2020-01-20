@@ -1,8 +1,10 @@
 package tests;
 
-import util.IO;
-import util.IO.Settings;
+//import util.IO;
+//import util.IO.Settings;
 import android.app.Activity;
+
+import util.IO;
 
 public class IOTests extends SimpleTesting {
 
@@ -35,7 +37,7 @@ public class IOTests extends SimpleTesting {
 	}
 
 	private void settingsTest() throws Exception {
-		Settings s = new IO.Settings(myTargetActivity, "testSettings");
+		IO.Settings s = new IO.Settings(myTargetActivity, "testSettings");
 		String stringKey = "skey";
 		String stringValue = "svalue";
 		s.storeString(stringKey, stringValue);

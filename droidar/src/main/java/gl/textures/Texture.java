@@ -11,9 +11,8 @@ public class Texture {
 	private String myName;
 	private EfficientList<TexturedRenderData> myList;
 
-	public Texture(TexturedRenderData target, Bitmap textureImage,
-			String textureName) {
-		myList = new EfficientList<TexturedRenderData>();
+	public Texture(TexturedRenderData target, Bitmap textureImage, String textureName) {
+		myList = new EfficientList<>();
 		myList.add(target);
 		myImage = textureImage;
 		myName = textureName;
@@ -34,10 +33,8 @@ public class Texture {
 	}
 
 	public Bitmap getImage() {
-		if (myImage == null
-				&& TextureManager.getInstance().getTextureReloader() != null)
-			myImage = TextureManager.getInstance().getTextureReloader()
-					.reload(myName);
+		if (myImage == null && TextureManager.getInstance().getTextureReloader() != null)
+			myImage = TextureManager.getInstance().getTextureReloader().reload(myName);
 		return myImage;
 	}
 

@@ -10,6 +10,6 @@ public interface UiDecoratable {
 	 * @return true if the decorator could be assigned to all children and their
 	 *         sub-children
 	 */
-	public boolean assignNewDecorator(UiDecorator decorator);
+    boolean assignNewDecorator(UiDecorator decorator);
 
 }

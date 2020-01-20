@@ -12,8 +12,7 @@ import android.view.ViewGroup;
 
 import commands.Command;
 
-public abstract class AbstractObj implements HasInfosInterface, ListItem,
-		SelectionListener, EditItem, RenderableEntity {
+public abstract class AbstractObj implements HasInfosInterface, ListItem, SelectionListener, EditItem, RenderableEntity {
 
 	private MetaInfos myInfoObj;
 	private Command myListClickCommand;
@@ -33,11 +32,7 @@ public abstract class AbstractObj implements HasInfosInterface, ListItem,
 	}
 
 	@Override
-	public boolean HasInfoObject() {
-		if (myInfoObj != null)
-			return true;
-		return false;
-	}
+	public boolean HasInfoObject() { return myInfoObj != null; }
 
 	@Override
 	public Updateable getMyParent() {
@@ -110,11 +105,9 @@ public abstract class AbstractObj implements HasInfosInterface, ListItem,
 	@Override
 	public View getMyListItemView(View viewToUseIfNotNull, ViewGroup parentView) {
 		if (myItemGuiListener != null)
-			return myItemGuiListener.requestItemView(viewToUseIfNotNull,
-					parentView);
+			return myItemGuiListener.requestItemView(viewToUseIfNotNull, parentView);
 		Log.d("GUI", "    -> Loading default view for " + this.getClass());
-		return getInfoObject().getDefaultListItemView(viewToUseIfNotNull,
-				parentView);
+		return getInfoObject().getDefaultListItemView(viewToUseIfNotNull, parentView);
 	}
 
 	public void setMyItemGuiListener(ItemGuiListener myItemGuiListener) {

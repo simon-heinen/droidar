@@ -27,9 +27,9 @@ public abstract class PlusMinusModifier extends AbstractModifier {
 		LinearLayout l = new LinearLayout(context);
 
 		LayoutParams p = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 2);
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 2);
 		LayoutParams p2 = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1);
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1);
 
 		TextView t = new TextView(context);
 		t.setText(getVarName());

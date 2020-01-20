@@ -20,7 +20,7 @@ import android.os.SystemClock;
 public class MemoryAllocationTests extends SimpleTesting {
 
 	@Override
-	public void run() throws Exception {
+	public void run() {
 		int number = 60000;
 		speedTestEffiListA(number);// G1: 57 ms; Nexus: 29ms
 		speedTestEffiListB(number);// G1: 110 ms; Nexus: 32ms
@@ -35,7 +35,7 @@ public class MemoryAllocationTests extends SimpleTesting {
 		Log.d("Test", "EfficientList creation with " + objectOfNumber
 				+ " objects.");
 		start = SystemClock.uptimeMillis();
-		EfficientList<String> list = new EfficientList<String>();
+		EfficientList<String> list = new EfficientList<>();
 		for (int i = 0; i < objectOfNumber; i++) {
 			list.add("Text " + i);
 		}
@@ -47,7 +47,7 @@ public class MemoryAllocationTests extends SimpleTesting {
 		start = SystemClock.uptimeMillis();
 		int l = list.myLength;
 		for (int i = 0; i < l; i++) {
-			if (list.get(i) == "") {
+			if (list.get(i).equals("")) {
 				System.out.println("Will not happen");
 			}
 		}
@@ -62,7 +62,7 @@ public class MemoryAllocationTests extends SimpleTesting {
 		Log.d("Test", "EfficientList creation with " + objectOfNumber
 				+ " objects.");
 		start = SystemClock.uptimeMillis();
-		EfficientList<String> list = new EfficientList<String>();
+		EfficientList<String> list = new EfficientList<>();
 		for (int i = 0; i < objectOfNumber; i++) {
 			list.add("Text " + i);
 		}
@@ -74,7 +74,7 @@ public class MemoryAllocationTests extends SimpleTesting {
 		start = SystemClock.uptimeMillis();
 		int l = list.myLength;
 		for (int i = 0; i < l; i++) {
-			if (list.get(i) == "") {
+			if (list.get(i).equals("")) {
 				System.out.println("Will not happen");
 			}
 		}
@@ -89,7 +89,7 @@ public class MemoryAllocationTests extends SimpleTesting {
 		Log.d("Test", "EfficientList creation with " + objectOfNumber
 				+ " objects.");
 		start = SystemClock.uptimeMillis();
-		EfficientList<String> list = new EfficientList<String>();
+		EfficientList<String> list = new EfficientList<>();
 		for (int i = 0; i < objectOfNumber; i++) {
 			list.add("Text " + i);
 		}
@@ -101,7 +101,7 @@ public class MemoryAllocationTests extends SimpleTesting {
 						+ objectOfNumber + " objects.");
 		start = SystemClock.uptimeMillis();
 		for (int i = 0; i < list.myLength; i++) {
-			if (list.get(i) == "") {
+			if (list.get(i).equals("")) {
 				System.out.println("Will not happen");
 			}
 		}
@@ -115,7 +115,7 @@ public class MemoryAllocationTests extends SimpleTesting {
 
 		Log.d("Test", "ArrayList creation with " + objectOfNumber + " objects.");
 		start = SystemClock.uptimeMillis();
-		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<String> list = new ArrayList<>();
 		for (int i = 0; i < objectOfNumber; i++) {
 			list.add("Text " + i);
 		}
@@ -128,7 +128,7 @@ public class MemoryAllocationTests extends SimpleTesting {
 		int l = list.size();
 		// Object[] a = list.;
 		for (int i = 0; i < l; i++) {
-			if (list.get(i) == "") {
+			if (list.get(i).equals("")) {
 				System.out.println("Will not happen");
 			}
 		}
@@ -140,11 +140,10 @@ public class MemoryAllocationTests extends SimpleTesting {
 	 * The "good" way to do it. This way no iterator objects are created
 	 * 
 	 * @param durationInMS
-	 * @throws Exception
 	 */
-	private void CollectionTestA(int durationInMS) throws Exception {
+	private void CollectionTestA(int durationInMS) {
 
-		ArrayList<String> x = new ArrayList<String>();
+		ArrayList<String> x = new ArrayList<>();
 		for (int j = 0; j < 200; j++) {
 			String s = "String " + j;
 			x.add(s);
@@ -166,11 +165,10 @@ public class MemoryAllocationTests extends SimpleTesting {
 	 * One of the bad ways. THis way many iterator objects will be created!
 	 * 
 	 * @param durationInMS
-	 * @throws Exception
 	 */
-	private void CollectionTestB(int durationInMS) throws Exception {
+	private void CollectionTestB(int durationInMS) {
 
-		ArrayList<String> x = new ArrayList<String>();
+		ArrayList<String> x = new ArrayList<>();
 		for (int j = 0; j < 200; j++) {
 			String s = "String " + j;
 			x.add(s);
@@ -179,12 +177,11 @@ public class MemoryAllocationTests extends SimpleTesting {
 		long start = SystemClock.uptimeMillis();
 		while (SystemClock.uptimeMillis() - start < durationInMS) {
 
-			for (Iterator iterator = x.iterator(); iterator.hasNext();) {
-				String s = (String) iterator.next();
-				if (s == null) {
-					System.out.println("tutut");
-				}
-			}
+            for (String s : x) {
+                if (s == null) {
+                    System.out.println("tutut");
+                }
+            }
 
 		}
 		System.out.println("Allocation Test ends");
@@ -194,11 +191,10 @@ public class MemoryAllocationTests extends SimpleTesting {
 	 * One of the bad ways. THis way many iterator objects will be created!
 	 * 
 	 * @param durationInMS
-	 * @throws Exception
 	 */
-	private void CollectionTestC(int durationInMS) throws Exception {
+	private void CollectionTestC(int durationInMS) {
 
-		ArrayList<String> x = new ArrayList<String>();
+		ArrayList<String> x = new ArrayList<>();
 		for (int j = 0; j < 200; j++) {
 			String s = "String " + j;
 			x.add(s);

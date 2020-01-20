@@ -19,7 +19,7 @@ import android.widget.EditText;
 import de.rwth.R;
 
 /**
- * use the {@link tools.ErrorHandler} instead </br></br></br></br></br></br>
+ * use the {@link v2.simpleUi.util.ErrorHandler} instead </br></br></br></br></br></br>
  * 
  * Register the {@link ErrorHandler} like this: </br>
  * Thread.setDefaultUncaughtExceptionHandler(new ErrorHandler(currentActivity));
@@ -194,7 +194,7 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 	/**
 	 * See {@link ErrorHandler} for details
 	 * 
-	 * @param a
+	 * @param a Activity
 	 */
 	public ErrorHandler(Activity a) {
 		setCurrentActivity(a);
@@ -331,10 +331,12 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 		Properties p = System.getProperties();
 		Enumeration keys = p.keys();
 		String key = "";
+		StringBuilder sBuilder = new StringBuilder(s);
 		while (keys.hasMoreElements()) {
 			key = (String) keys.nextElement();
-			s += "\n > " + key + " = " + (String) p.get(key);
+			sBuilder.append("\n > ").append(key).append(" = ").append((String) p.get(key));
 		}
+		s = sBuilder.toString();
 
 		s += " \n \n [You can add a description of what you were doing here]:";
 		s += " \n ...";

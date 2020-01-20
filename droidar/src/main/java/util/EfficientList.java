@@ -75,9 +75,7 @@ public class EfficientList<T> {
 	protected Object[] resizeArray(int oldSize, Object[] a) {
 		Object[] x = new Object[oldSize * 2];
 		// copy old values:
-		for (int i = 0; i < oldSize; i++) {
-			x[i] = a[i];
-		}
+		if (oldSize >= 0) System.arraycopy(a, 0, x, 0, oldSize);
 		return x;
 	}
 
@@ -180,10 +178,10 @@ public class EfficientList<T> {
 	// }
 
 	public static String arrayToString(Object[] o, int size) {
-		String s = "array(size=" + size + ", realSize=" + o.length + ") [";
-		for (int i = 0; i < o.length; i++) {
-			s += o[i] + ", ";
-		}
+		StringBuilder s = new StringBuilder("array(size=" + size + ", realSize=" + o.length + ") [");
+        for (Object value : o) {
+            s.append(value).append(", ");
+        }
 		return s + "]";
 	}
 
@@ -225,7 +223,7 @@ public class EfficientList<T> {
 	}
 
 	public EfficientList<T> copy() {
-		EfficientList<T> result = new EfficientList<T>(myLength);
+		EfficientList<T> result = new EfficientList<>(myLength);
 		for (int i = 0; i < this.myLength; i++) {
 			result.add(this.get(i));
 		}

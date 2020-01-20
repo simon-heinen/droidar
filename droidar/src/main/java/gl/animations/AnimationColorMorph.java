@@ -1,10 +1,12 @@
 package gl.animations;
 
+import android.opengl.GLES20;
+
 import gl.Color;
 import gl.HasColor;
 import gl.Renderable;
 
-import javax.microedition.khronos.opengles.GL10;
+//import javax.microedition.khronos.opengles.GL10;
 
 import util.Log;
 import util.Vec;
@@ -23,18 +25,14 @@ public class AnimationColorMorph extends GLAnimation {
 	}
 
 	@Override
-	public void render(GL10 gl, Renderable parent) {
+	public void render(GLES20 unused, Renderable parent) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public boolean update(float timeDelta, Updateable parent) {
-
 		if (parent instanceof HasColor) {
-			Vec colorDistance = Color.morphToNewColor(
-					((HasColor) parent).getColor(), myTargetColor, timeDelta
-							/ myDurationInMS);
+			Vec colorDistance = Color.morphToNewColor(((HasColor) parent).getColor(), myTargetColor, timeDelta / myDurationInMS);
 			if (!(colorDistance.getLength() > MIN_DISTANCE)) {
 				Log.d("NodeListener", "color morph finnished for " + parent);
 			}

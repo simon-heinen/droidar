@@ -199,7 +199,7 @@ public class CustomListActivity extends ListActivity {
 		// check settings and load if necessary:
 		if (mySettings == null) {
 			Log.w("ListActivity", "mySetup was null, trying to reload it..");
-			if (activityId != "") {
+			if (!activityId.equals("")) {
 				Object x = ActivityConnector.getInstance().getObj(activityId);
 				if (x instanceof ListSettings) {
 					mySettings = (ListSettings) x;

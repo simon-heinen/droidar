@@ -10,7 +10,7 @@ public class FeedbackReports {
 		return myInstance;
 	}
 
-	private EfficientList<ActionFeedback> myFeedbacks = new EfficientList<ActionFeedback>();
+	private EfficientList<ActionFeedback> myFeedbacks = new EfficientList<>();
 
 	public void addFeedback(ActionFeedback feedback) {
 		if (feedback != null)

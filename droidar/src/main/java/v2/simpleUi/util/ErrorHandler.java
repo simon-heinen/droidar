@@ -8,13 +8,14 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Properties;
 
+import util.Log;
 import v2.simpleUi.M_Button;
 import v2.simpleUi.M_Caption;
 import v2.simpleUi.M_Checkbox;
 import v2.simpleUi.M_Container;
 import v2.simpleUi.M_InfoText;
 import v2.simpleUi.M_TextInput;
-import android.R;
+//import android.R;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -25,7 +26,7 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
+//import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -182,7 +183,7 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 	private static String myMailSubject = "Error in DroidAR";
 
 	/**
-	 * DO NOT DELETE THIS CONSTURUCTOR!
+	 * DO NOT DELETE THIS CONSTRUCTOR!
 	 * 
 	 * use the {@link ErrorHandler#ErrorHandler(Activity) constructor instead}.
 	 * This constructor is required by the Android system and the
@@ -191,7 +192,7 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 	 * {@link ErrorHandler#setCurrentActivity(Activity)} later!
 	 */
 	@Deprecated
-	// DO NOT DELETE THIS CONSTURUCTOR!
+	// DO NOT DELETE THIS CONSTRUCTOR!
 	public ErrorHandler() {
 		if (defaultHandler == null) {
 			defaultHandler = Thread.getDefaultUncaughtExceptionHandler();
@@ -210,10 +211,8 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 		}
 	}
 
-	public static void showErrorActivity(Activity a, Exception errorToShow,
-			boolean keepBrokenProcessRunning) {
-		showErrorActivity(a, throwableToString(errorToShow), null,
-				keepBrokenProcessRunning);
+	public static void showErrorActivity(Activity a, Exception errorToShow, boolean keepBrokenProcessRunning) {
+		showErrorActivity(a, throwableToString(errorToShow), null, keepBrokenProcessRunning);
 	}
 
 	/**
@@ -223,10 +222,8 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 	 *            something like "file://"+"/sdcard/folderA/fileB.jpg"
 	 * @param keepBrokenProcessRunning
 	 */
-	public static void showErrorActivity(Activity a, Exception errorToShow,
-			String[] optionalFilePathToSend, boolean keepBrokenProcessRunning) {
-		showErrorActivity(a, throwableToString(errorToShow),
-				optionalFilePathToSend, keepBrokenProcessRunning);
+	public static void showErrorActivity(Activity a, Exception errorToShow, String[] optionalFilePathToSend, boolean keepBrokenProcessRunning) {
+		showErrorActivity(a, throwableToString(errorToShow), optionalFilePathToSend, keepBrokenProcessRunning);
 	}
 
 	public static String throwableToString(Throwable t) {
@@ -280,10 +277,8 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		String myErrorText = getIntent().getExtras().getString(
-				PASSED_ERROR_TEXT_ID);
-		String[] errorFiles = getIntent().getExtras().getStringArray(
-				PASSED_FILE_ID);
+		String myErrorText = getIntent().getExtras().getString( PASSED_ERROR_TEXT_ID);
+		String[] errorFiles = getIntent().getExtras().getStringArray( PASSED_FILE_ID);
 		/*
 		 * because this is a new process even the static fields will be reseted!
 		 * the correct values can be restored by passing them in the intent
@@ -293,10 +288,8 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 		setErrorContentView(this, myErrorText, errorFiles);
 	}
 
-	private static void setErrorContentView(final Activity a,
-			String myErrorText, String[] errorFilePaths) {
-		View v = loadModifier(a, myErrorText, myDeveloperMailAdress,
-				addDebugInfosToErrorMessage(a), errorFilePaths);
+	private static void setErrorContentView(final Activity a, String myErrorText, String[] errorFilePaths) {
+		View v = loadModifier(a, myErrorText, myDeveloperMailAdress, addDebugInfosToErrorMessage(a), errorFilePaths);
 		a.setContentView(v);
 	}
 
@@ -316,7 +309,7 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 		} else {
 			c.add(new M_Caption("The application crashed"));
 		}
-		c.add(new M_InfoText(R.drawable.ic_dialog_alert,
+		c.add(new M_InfoText(android.R.drawable.ic_dialog_alert,
 				"We are sorry the application had a problem "
 						+ "with your device. \n\n You can send "
 						+ "the error to us so that we can fix this bug."));
@@ -344,8 +337,7 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 		};
 
 		if (exceptionText != null && !exceptionText.equals("")) {
-			problemDescr
-					.setInfoText("You can add some information about the problem here..");
+			problemDescr.setInfoText("You can add some information about the problem here..");
 		} else {
 			problemDescr.setInfoText("Write your problem down here...");
 		}
@@ -433,8 +425,7 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 
 	public static void sendMail(Context context, String emailText) {
 		// need to "send multiple" to get more than one attachment
-		Intent emailIntent = new Intent(
-				android.content.Intent.ACTION_SEND_MULTIPLE);
+		Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
 		if (!includeFiles || savedErrorFilePaths == null
 				|| savedErrorFilePaths.length == 1) {
 			// if no files appended use the default intent type
@@ -448,10 +439,10 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 		emailIntent.putExtra(Intent.EXTRA_TEXT, emailText);
 		if (includeFiles && savedErrorFilePaths != null) {
 			// has to be an ArrayList
-			ArrayList<Uri> uris = new ArrayList<Uri>();
+			ArrayList<Uri> uris = new ArrayList<>();
 			// convert from paths to Android friendly Parcelable Uri's
-			for (int i = 0; i < savedErrorFilePaths.length; i++) {
-				File fileIn = new File(savedErrorFilePaths[i]);
+			for (String savedErrorFilePath : savedErrorFilePaths) {
+				File fileIn = new File(savedErrorFilePath);
 				Uri u = Uri.fromFile(fileIn);
 				if (fileIn.exists()) {
 					uris.add(u);
@@ -473,12 +464,12 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 			s += "\n APP Version Name: " + pInfo.versionName;
 			s += "\n APP Version Code: " + pInfo.versionCode;
 			s += "\n";
-		} catch (NameNotFoundException e) {
+		} catch (NameNotFoundException ignored) {
 		}
 
 		s += "\n OS Version: " + System.getProperty("os.version") + " ("
 				+ android.os.Build.VERSION.INCREMENTAL + ")";
-		s += "\n OS API Level: " + android.os.Build.VERSION.SDK;
+		s += "\n OS API Level: " + android.os.Build.VERSION.SDK_INT;
 		s += "\n Device: " + android.os.Build.DEVICE;
 		s += "\n Model (and Product): " + android.os.Build.MODEL + " ("
 				+ android.os.Build.PRODUCT + ")";
@@ -505,10 +496,12 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 		Properties p = System.getProperties();
 		Enumeration keys = p.keys();
 		String key = "";
+		StringBuilder sBuilder = new StringBuilder(s);
 		while (keys.hasMoreElements()) {
 			key = (String) keys.nextElement();
-			s += "\n > " + key + " = " + (String) p.get(key);
+			sBuilder.append("\n > ").append(key).append(" = ").append((String) p.get(key));
 		}
+		s = sBuilder.toString();
 
 		return s;
 	}
@@ -545,8 +538,7 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 	 *            set this value also in the manifest where the error handler
 	 *            activity is registered
 	 */
-	public static void registerNewErrorHandler(Activity a,
-			String data_android_mimeType) {
+	public static void registerNewErrorHandler(Activity a, String data_android_mimeType) {
 		registerNewErrorHandler(a);
 		DATA_ANDROID_MIME_TYPE = data_android_mimeType;
 	}
@@ -559,8 +551,7 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 	 */
 	@Deprecated
 	public static void registerNewErrorHandler(Activity currentActivity) {
-		Thread.setDefaultUncaughtExceptionHandler(new ErrorHandler(
-				currentActivity));
+		Thread.setDefaultUncaughtExceptionHandler(new ErrorHandler(currentActivity));
 	}
 
 }

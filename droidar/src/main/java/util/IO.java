@@ -54,19 +54,16 @@ public class IO {
 		if (stream == null)
 			return null;
 
-		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					stream));
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream))) {
 			StringBuilder sb = new StringBuilder();
 
 			String line = null;
 
 			while ((line = reader.readLine()) != null) {
-				sb.append(line + "\n");
+				sb.append(line).append("\n");
 			}
 			stream.close();
 			return sb.toString();
-
 		} catch (Exception e) {
 			Log.e(LOG_TAG, "Could not convert input stream to string");
 		}
@@ -268,7 +265,7 @@ public class IO {
 				e = myActivity.getSharedPreferences(mySettingsName, mode)
 						.edit();
 			e.putString(key, value);
-			e.commit();
+			e.apply();
 		}
 
 		public void storeBool(String key, boolean value) {
@@ -276,7 +273,7 @@ public class IO {
 				e = myActivity.getSharedPreferences(mySettingsName, mode)
 						.edit();
 			e.putBoolean(key, value);
-			e.commit();
+			e.apply();
 		}
 
 		public void storeInt(String key, int value) {
@@ -284,7 +281,7 @@ public class IO {
 				e = myActivity.getSharedPreferences(mySettingsName, mode)
 						.edit();
 			e.putInt(key, value);
-			e.commit();
+			e.apply();
 		}
 	}
 

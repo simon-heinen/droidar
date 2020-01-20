@@ -9,6 +9,6 @@ public interface EditItem {
 	 *            {@link SimpleUIv1} class
 	 * @param message
 	 */
-	public void customizeScreen(ModifierGroup group, Object message);
+    void customizeScreen(ModifierGroup group, Object message);
 
 }

@@ -36,8 +36,7 @@ public class Calculus {
 	 * @param mOffset
 	 * @return
 	 */
-	public static boolean invertM(float[] mInv, int mInvOffset, float[] m,
-			int mOffset) {
+	public static boolean invertM(float[] mInv, int mInvOffset, float[] m, int mOffset) {
 		// Invert a 4 x 4 matrix using Cramer's Rule
 
 		// transpose matrix
@@ -120,7 +119,8 @@ public class Calculus {
 	}
 
 	public interface TermResultListener {
-		public void returnResult(String result);
+		@android.webkit.JavascriptInterface
+		void returnResult(String result);
 	}
 
 	/**
@@ -132,13 +132,11 @@ public class Calculus {
 	 * @param resultListener
 	 */
 	@Deprecated
-	public static void calculateTermResult(Context context, String inputTerm,
-			TermResultListener resultListener) {
+	public static void calculateTermResult(Context context, String inputTerm, TermResultListener resultListener) {
 		WebView webView = new WebView(context);
 		webView.getSettings().setJavaScriptEnabled(true);
 		webView.addJavascriptInterface(resultListener, "JavaCallback");
-		webView.loadUrl("javascript:window.JavaCallback" + ".returnResult("
-				+ inputTerm + ")");
+		webView.loadUrl("javascript:window.JavaCallback" + ".returnResult("+ inputTerm + ")");
 	}
 
 	public static float[] createIdentityMatrix() {

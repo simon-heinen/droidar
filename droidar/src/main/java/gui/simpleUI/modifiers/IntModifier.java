@@ -26,9 +26,9 @@ public abstract class IntModifier extends AbstractModifier {
 		l.setGravity(Gravity.CENTER_VERTICAL);
 
 		LayoutParams p = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 2);
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 2);
 		LayoutParams p2 = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1);
+				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1);
 
 		TextView t = new TextView(context);
 		t.setLayoutParams(p);

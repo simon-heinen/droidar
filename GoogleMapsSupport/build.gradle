@@ -1,0 +1,39 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 29
+        applicationId = 'de.rwth.GoogleMapsSupport'
+        versionCode = 1
+        versionName = '1.0'
+        multiDexEnabled = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    compileOptions {
+        targetCompatibility = 1.8
+        sourceCompatibility = 1.8
+    }
+}
+
+dependencies {
+    implementation project(path: ':droidar')
+//    implementation 'com.google.android.gms:play-services:12.0.1'
+    implementation 'com.google.android.gms:play-services-basement:17.1.0'
+    implementation 'com.google.android.gms:play-services-base:17.1.0'
+    implementation 'com.google.android.gms:play-services-gcm:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation name:'maps-sdk-3.0.0-beta', ext:'aar'
+    implementation 'com.google.maps.android:android-maps-utils-sdk-v3-compat:0.1'
+//    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+}
+
+//apply plugin: 'com.google.gms.google-services'

@@ -1,12 +1,15 @@
 package gl;
 
+import android.opengl.GLES10;
+import android.opengl.GLES20;
+
 import gl.scenegraph.MeshComponent;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.HashMap;
 
-import javax.microedition.khronos.opengles.GL10;
+//import javax.microedition.khronos.opengles.GL10;
 
 import listeners.SelectionListener;
 import system.Setup;
@@ -15,6 +18,8 @@ import util.Wrapper;
 
 import commands.Command;
 import commands.system.CommandDeviceVibrate;
+
+import static android.opengl.GLES20.glReadPixels;
 
 public class ObjectPicker {
 
@@ -35,7 +40,7 @@ public class ObjectPicker {
 	 * might also be a problem with this to string-key-concept because 0 15 10
 	 * will be the same key as 0 151 0!
 	 */
-	private HashMap<String, Wrapper> myObjectLookUpTable = new HashMap<String, Wrapper>();
+	private HashMap<String, Wrapper> myObjectLookUpTable = new HashMap<>();
 	public int x = 0;
 	public int y = 0;
 
@@ -46,14 +51,13 @@ public class ObjectPicker {
 		this.myFeedbackCommand = myFeedbackCommand;
 	}
 
-	public void pickObject(GL10 gl) {
+	public void pickObject(GLES20 unused) {
 		readyToDrawWithColor = false;
 
 		ByteBuffer pixelBuffer = ByteBuffer.allocateDirect(4);
 		pixelBuffer.order(ByteOrder.nativeOrder());
-		gl.glReadPixels(x, y, 1, 1, GL10.GL_RGBA, GL10.GL_UNSIGNED_BYTE,
-				pixelBuffer);
-		byte b[] = new byte[4];
+		glReadPixels(x, y, 1, 1, GLES10.GL_RGBA, GLES10.GL_UNSIGNED_BYTE, pixelBuffer);
+		byte[] b = new byte[4];
 		pixelBuffer.get(b);
 		findObjectForValue(b);
 	}
@@ -66,8 +70,7 @@ public class ObjectPicker {
 		Log.v(LOG_TAG, "   > Picked object: " + wrapper);
 
 		if (wrapper == null && !key.equals("000")) {
-			Log.d(LOG_TAG,
-					"   > Possible picking problem found! Trying to fix it");
+			Log.d(LOG_TAG, "   > Possible picking problem found! Trying to fix it");
 			wrapper = tryToFindCorrectObjectFor(b);
 		}
 
@@ -135,15 +138,13 @@ public class ObjectPicker {
 						// Log.d("Color Picking", "possible key=" + k);
 						Wrapper w = myObjectLookUpTable.get(k);
 						if (w != null) {
-							Log.d(LOG_TAG, "Solution found. Modifing key to "
-									+ k);
+							Log.d(LOG_TAG, "Solution found. Modifing key to " + k);
 							/*
 							 * Actually the key isn't modified, the wrapper is
 							 * just registered with the other value too, so that
 							 * the Wrapper will be found the next time
 							 */
-							myObjectLookUpTable
-									.put(getKey(b[0], b[1], b[2]), w);
+							myObjectLookUpTable.put(getKey(b[0], b[1], b[2]), w);
 							return w;
 						}
 					}
@@ -152,15 +153,13 @@ public class ObjectPicker {
 						// Log.d("Color Picking", "possible key=" + k);
 						Wrapper w = myObjectLookUpTable.get(k);
 						if (w != null) {
-							Log.d(LOG_TAG, "Solution found. Modifing key to "
-									+ k);
+							Log.d(LOG_TAG, "Solution found. Modifing key to " + k);
 							/*
 							 * Actually the key isn't modified, the wrapper is
 							 * just registered with the other value too, so that
 							 * the Wrapper will be found the next time
 							 */
-							myObjectLookUpTable
-									.put(getKey(b[0], b[1], b[2]), w);
+							myObjectLookUpTable.put(getKey(b[0], b[1], b[2]), w);
 							return w;
 						}
 					}
@@ -216,16 +215,14 @@ public class ObjectPicker {
 		Color myPickColor = getBestColor(prefferedColor);
 		byte[] b = getByteArrayFromColor(myPickColor);
 		String key = "" + b[0] + b[1] + b[2];
-		Log.v(LOG_TAG, "   > New Color byte[]: {" + b[0] + ", " + b[1] + ", "
-				+ b[2] + ", " + b[3] + "}");
+		Log.v(LOG_TAG, "   > New Color byte[]: {" + b[0] + ", " + b[1] + ", " + b[2] + ", " + b[3] + "}");
 		Log.v(LOG_TAG, "   > New Color key: " + key);
 		myObjectLookUpTable.put(key, info);
 		return myPickColor;
 	}
 
 	/**
-	 * TODO write better algo? if alpha is set everything is darker as normal
-	 * color so consider this
+	 * TODO write better algo? if alpha is set everything is darker as normal color so consider this
 	 * 
 	 * @param x
 	 * @return
@@ -254,8 +251,7 @@ public class ObjectPicker {
 				c.green = 0;
 				endlessLoop = true;
 			} else {
-				Log.e(LOG_TAG,
-						"Woot.. All picking colors were taken.. and there are really a lot of colors.. double rainbow");
+				Log.e(LOG_TAG, "Woot.. All picking colors were taken.. and there are really a lot of colors.. double rainbow");
 				return new Color(0, 0, 0, 0);
 			}
 		}
@@ -265,9 +261,7 @@ public class ObjectPicker {
 	private boolean isAlreadyTaken(Color c) {
 		byte[] b = getByteArrayFromColor(c);
 		String key = "" + b[0] + b[1] + b[2];
-		if (myObjectLookUpTable.get(key) != null)
-			return true;
-		return false;
+		return myObjectLookUpTable.get(key) != null;
 	}
 
 	public static byte[] getByteArrayFromColor(Color c) {
@@ -289,16 +283,12 @@ public class ObjectPicker {
 	 */
 	public static byte floatToByteColorValue(float f, boolean oldDevice) {
 
-		/*
-		 * TODO:
-		 * 
-		 * currently this method does 0.895 -> -28 and opengl returns -27
-		 * 
-		 * -28 = 0xe4 in signed byte = 228 decimal if you treat the 0xe4 as
-		 * unsigned. 228/255 = 0.894 in float
-		 * 
-		 * fix this and get -27 returned instead of -28
-		 */
+//		  TODO: currently this method does 0.895 -> -28 and opengl returns -27
+//
+//		  -28 = 0xe4 in signed byte = 228 decimal if you treat the 0xe4 as
+//		  unsigned. 228/255 = 0.894 in float
+//
+//		  fix this and get -27 returned instead of -28
 
 		if (oldDevice) {
 			/*
@@ -330,7 +320,6 @@ public class ObjectPicker {
 	 * @return
 	 */
 	public static float rgb565to888(float f) {
-
 		return 1 << 1;
 	}
 

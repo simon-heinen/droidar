@@ -72,9 +72,7 @@ public abstract class Command implements ListItem, HasInfosInterface {
 
 	@Override
 	public boolean HasInfoObject() {
-		if (myInfoObj != null)
-			return true;
-		return false;
+		return myInfoObj != null;
 	}
 
 }

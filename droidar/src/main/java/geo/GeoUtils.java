@@ -93,7 +93,7 @@ public class GeoUtils {
 		try {
 			List<Address> locations = myGeoCoder.getFromLocation(
 					location.getLatitude(), location.getLongitude(), 1);
-			if (locations.size() > 0) {
+			if (!locations.isEmpty()) {
 				return locations.get(0);
 			}
 
@@ -113,7 +113,7 @@ public class GeoUtils {
 		try {
 			List<Address> addresses = myGeoCoder
 					.getFromLocationName(address, 5);
-			if (addresses.size() > 0) {
+			if (!addresses.isEmpty()) {
 				GeoObj g = new GeoObj(addresses.get(0));
 				g.getInfoObject().setShortDescr(
 						address + " (" + g.getInfoObject().getShortDescr()
@@ -140,7 +140,7 @@ public class GeoUtils {
 		try {
 			List<Address> addresses = myGeoCoder.getFromLocationName(address,
 					maxResults);
-			if (addresses.size() > 0) {
+			if (!addresses.isEmpty()) {
 				GeoGraph result = new GeoGraph();
 				for (int i = 0; i < addresses.size(); i++) {
 					result.add(new GeoObj(addresses.get(i)));
@@ -156,7 +156,7 @@ public class GeoUtils {
 	public String getStreetFor(GeoObj geoPos) {
 		try {
 			return getBestAddressForLocation(geoPos).getAddressLine(0);
-		} catch (Exception e) {
+		} catch (Exception ignored) {
 		}
 		return null;
 	}
@@ -165,7 +165,7 @@ public class GeoUtils {
 		try {
 			return getBestAddressForLocation(currentPos).getAddressLine(1)
 					.split(" ")[1];
-		} catch (Exception e) {
+		} catch (Exception ignored) {
 		}
 		return null;
 	}
@@ -357,7 +357,6 @@ public class GeoUtils {
 
 	@Deprecated
 	private Document getDocumentFromUrl(String url) throws IOException,
-			MalformedURLException, ProtocolException,
 			FactoryConfigurationError, ParserConfigurationException,
 			SAXException {
 		HttpURLConnection urlConnection = (HttpURLConnection) new URL(url)
@@ -383,13 +382,13 @@ public class GeoUtils {
 			urlString.append("&dirflg=w");
 		}
 		urlString.append("&saddr=");// from
-		urlString.append(Double.toString(startPos.getLatitude()));
+		urlString.append(startPos.getLatitude());
 		urlString.append(",");
-		urlString.append(Double.toString(startPos.getLongitude()));
+		urlString.append(startPos.getLongitude());
 		urlString.append("&daddr=");// to
-		urlString.append(Double.toString(destPos.getLatitude()));
+		urlString.append(destPos.getLatitude());
 		urlString.append(",");
-		urlString.append(Double.toString(destPos.getLongitude()));
+		urlString.append(destPos.getLongitude());
 		urlString.append("&;ie=UTF8&0&om=0&output=kml");
 		return urlString.toString();
 	}

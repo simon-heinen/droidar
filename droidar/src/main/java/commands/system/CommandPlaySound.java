@@ -39,17 +39,11 @@ public class CommandPlaySound extends Command {
 				mp.prepare();
 				mp.start();
 				return true;
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-				return false;
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-				return false;
-			} catch (IOException e) {
+			} catch (IllegalArgumentException | IOException | IllegalStateException e) {
 				e.printStackTrace();
 				return false;
 			}
-		}
+        }
 		return false;
 	}
 

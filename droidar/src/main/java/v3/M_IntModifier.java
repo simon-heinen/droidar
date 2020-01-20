@@ -4,8 +4,10 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
-import android.util.Log;
+//import android.util.Log;
 import android.widget.EditText;
+
+import util.Log;
 
 public abstract class M_IntModifier extends M_TextModifier {
 	private Integer minimumValue;
@@ -65,12 +67,12 @@ public abstract class M_IntModifier extends M_TextModifier {
 						long v = Long.parseLong(s.toString());
 						if (v < min) {
 							s.clear();
-							s.append("" + min);
+							s.append("").append(String.valueOf(min));
 						} else if (v > max) {
 							s.clear();
-							s.append("" + max);
+							s.append("").append(String.valueOf(max));
 						}
-					} catch (NumberFormatException e) {
+					} catch (NumberFormatException ignored) {
 					}
 				}
 			}

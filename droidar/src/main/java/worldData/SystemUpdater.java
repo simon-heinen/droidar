@@ -1,8 +1,10 @@
 package worldData;
 
 import util.EfficientList;
+import util.Log;
+
 import android.os.SystemClock;
-import android.util.Log;
+//import android.util.Log;
 
 public class SystemUpdater implements Runnable {
 
@@ -22,7 +24,7 @@ public class SystemUpdater implements Runnable {
 	private boolean notKilled = true;
 	private long lastTimeInMs;
 
-	private EfficientList<Updateable> myObjectsToUpdate = new EfficientList<Updateable>();
+	private EfficientList<Updateable> myObjectsToUpdate = new EfficientList<>();
 
 	@Override
 	public void run() {

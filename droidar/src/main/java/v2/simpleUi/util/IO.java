@@ -30,9 +30,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
-import android.util.Log;
+//import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+
+import util.Log;
 
 public class IO {
 
@@ -51,7 +53,7 @@ public class IO {
 			Log.i(LOG_TAG, "image loaded: " + b);
 			return b;
 		} catch (Exception ex) {
-			Log.e("bitmap loading exeption", "" + ex);
+			Log.e("bitmap loading exception", "" + ex);
 			return null;
 		}
 	}
@@ -61,19 +63,16 @@ public class IO {
 			return null;
 		}
 
-		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					stream));
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream))) {
 			StringBuilder sb = new StringBuilder();
 
 			String line = null;
 
 			while ((line = reader.readLine()) != null) {
-				sb.append(line + "\n");
+				sb.append(line).append("\n");
 			}
 			stream.close();
 			return sb.toString();
-
 		} catch (Exception e) {
 			Log.e(LOG_TAG, "Could not convert input stream to string");
 		}
@@ -101,14 +100,12 @@ public class IO {
 	public static Bitmap loadBitmapFromURL(String url) {
 
 		try {
-			HttpURLConnection connection = (HttpURLConnection) new URL(url)
-					.openConnection();
+			HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
 			int length = connection.getContentLength();
 			if (length > -1) {
 				BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
 				bitmapOptions.inPreferredConfig = Bitmap.Config.RGB_565;
-				return BitmapFactory.decodeStream(connection.getInputStream(),
-						null, bitmapOptions);
+				return BitmapFactory.decodeStream(connection.getInputStream(), null, bitmapOptions);
 			}
 		} catch (Exception e) {
 			Log.e(LOG_TAG, "Error while loading an image from an URL: " + e);
@@ -129,8 +126,7 @@ public class IO {
 			v.measure(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
 			// then create a bitmap to store the views drawings:
-			Bitmap b = Bitmap.createBitmap(v.getMeasuredWidth(),
-					v.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+			Bitmap b = Bitmap.createBitmap(v.getMeasuredWidth(), v.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
 			// wrap the bitmap:
 			Canvas c = new Canvas(b);
 			// set the view size to the mesured values:
@@ -139,8 +135,7 @@ public class IO {
 			v.draw(c);
 			return b;
 		} else {
-			Bitmap b = Bitmap.createBitmap(v.getMeasuredWidth(),
-					v.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+			Bitmap b = Bitmap.createBitmap(v.getMeasuredWidth(), v.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
 			Canvas c = new Canvas(b);
 			v.draw(c);
 			return b;
@@ -154,8 +149,7 @@ public class IO {
 	 *            something like "R.drawable.icon"
 	 * @return
 	 */
-	public static Drawable loadDrawableFromId(Context context, int id)
-			throws NotFoundException {
+	public static Drawable loadDrawableFromId(Context context, int id) throws NotFoundException {
 		return context.getResources().getDrawable(id);
 	}
 
@@ -165,26 +159,22 @@ public class IO {
 	 * @param objectToSave
 	 * @throws IOException
 	 */
-	public static void saveSerializableToExternalStorage(String filename,
-			Serializable objectToSave) throws IOException {
+	public static void saveSerializableToExternalStorage(String filename, Serializable objectToSave) throws IOException {
 		FileOutputStream foStream = new FileOutputStream(filename);
 		saveSerializableToStream(objectToSave, foStream);
 	}
 
-	public static void saveSerializableToPrivateStorage(Context context,
-			String filename, Serializable objectToSave) throws IOException {
-		FileOutputStream fileOut = context.openFileOutput(filename,
-				Activity.MODE_PRIVATE);
+	public static void saveSerializableToPrivateStorage(Context context, String filename, Serializable objectToSave) throws IOException {
+		FileOutputStream fileOut = context.openFileOutput(filename, Activity.MODE_PRIVATE);
 		saveSerializableToStream(objectToSave, fileOut);
 	}
 
-	private static void saveSerializableToStream(Serializable objectToSave,
-			FileOutputStream foStream) throws IOException {
+	private static void saveSerializableToStream(Serializable objectToSave, FileOutputStream foStream) throws IOException {
 		GZIPOutputStream gzioStream = new GZIPOutputStream(foStream);
-		ObjectOutputStream outStream = new ObjectOutputStream(gzioStream);
-		outStream.writeObject(objectToSave);
-		outStream.flush();
-		outStream.close();
+		try (ObjectOutputStream outStream = new ObjectOutputStream(gzioStream)) {
+			outStream.writeObject(objectToSave);
+			outStream.flush();
+		}
 	}
 
 	/**
@@ -197,27 +187,23 @@ public class IO {
 	 * @throws StreamCorruptedException
 	 */
 	public static Object loadSerializableFromExternalStorage(String filename)
-			throws StreamCorruptedException, OptionalDataException,
-			IOException, ClassNotFoundException {
+			throws StreamCorruptedException, OptionalDataException, IOException, ClassNotFoundException {
 		FileInputStream fiStream = new FileInputStream(filename);
 		return loadSerializableFromStream(fiStream);
 	}
 
-	public static Object loadSerializableFromPrivateStorage(Context context,
-			String filename) throws StreamCorruptedException,
-			OptionalDataException, IOException, ClassNotFoundException {
-		FileInputStream fiStream = context.getApplicationContext()
-				.openFileInput(filename);
+	public static Object loadSerializableFromPrivateStorage(Context context, String filename) throws
+			IOException, ClassNotFoundException {
+		FileInputStream fiStream = context.getApplicationContext().openFileInput(filename);
 		return loadSerializableFromStream(fiStream);
 	}
 
-	private static Object loadSerializableFromStream(FileInputStream fiStream)
-			throws IOException, StreamCorruptedException,
-			OptionalDataException, ClassNotFoundException {
+	private static Object loadSerializableFromStream(FileInputStream fiStream) throws IOException, ClassNotFoundException {
 		GZIPInputStream gzipStream = new GZIPInputStream(fiStream);
-		ObjectInputStream inStream = new ObjectInputStream(gzipStream);
-		Object loadedObject = inStream.readObject();
-		inStream.close();
+		Object loadedObject;
+		try (ObjectInputStream inStream = new ObjectInputStream(gzipStream)) {
+			loadedObject = inStream.readObject();
+		}
 		return loadedObject;
 	}
 
@@ -247,8 +233,7 @@ public class IO {
 		}
 
 		public String loadString(String key) {
-			return context.getSharedPreferences(mySettingsName, mode)
-					.getString(key, null);
+			return context.getSharedPreferences(mySettingsName, mode).getString(key, null);
 		}
 
 		/**
@@ -259,8 +244,7 @@ public class IO {
 		 * @return
 		 */
 		public boolean loadBool(String key, boolean defaultValue) {
-			return context.getSharedPreferences(mySettingsName, mode)
-					.getBoolean(key, defaultValue);
+			return context.getSharedPreferences(mySettingsName, mode).getBoolean(key, defaultValue);
 		}
 
 		/**
@@ -271,8 +255,7 @@ public class IO {
 		 * @return
 		 */
 		public int loadInt(String key, int defaultValue) {
-			return context.getSharedPreferences(mySettingsName, mode).getInt(
-					key, defaultValue);
+			return context.getSharedPreferences(mySettingsName, mode).getInt(key, defaultValue);
 		}
 
 		public void storeString(String key, String value) {
@@ -280,7 +263,7 @@ public class IO {
 				e = context.getSharedPreferences(mySettingsName, mode).edit();
 			}
 			e.putString(key, value);
-			e.commit();
+			e.apply();
 		}
 
 		public void storeBool(String key, boolean value) {
@@ -288,7 +271,7 @@ public class IO {
 				e = context.getSharedPreferences(mySettingsName, mode).edit();
 			}
 			e.putBoolean(key, value);
-			e.commit();
+			e.apply();
 		}
 
 		public void storeInt(String key, int value) {
@@ -296,7 +279,7 @@ public class IO {
 				e = context.getSharedPreferences(mySettingsName, mode).edit();
 			}
 			e.putInt(key, value);
-			e.commit();
+			e.apply();
 		}
 	}
 
@@ -337,8 +320,7 @@ public class IO {
 	 * @return
 	 */
 	public static boolean renameFile(String oldPath, String newName) {
-		File source = new File(Environment.getExternalStorageDirectory(),
-				oldPath);
+		File source = new File(Environment.getExternalStorageDirectory(), oldPath);
 		File dest = new File(source.getParent(), newName);
 		return source.renameTo(dest);
 	}
@@ -353,54 +335,45 @@ public class IO {
 	 * @param targetLocation
 	 * @throws IOException
 	 */
-	public static void copy(File sourceLocation, File targetLocation)
-			throws IOException {
+	public static void copy(File sourceLocation, File targetLocation) throws IOException {
 
 		if (sourceLocation.isDirectory()) {
 			if (!targetLocation.exists() && !targetLocation.mkdirs()) {
-				throw new IOException("Cannot create dir "
-						+ targetLocation.getAbsolutePath());
+				throw new IOException("Cannot create dir " + targetLocation.getAbsolutePath());
 			}
 
 			String[] children = sourceLocation.list();
-			for (int i = 0; i < children.length; i++) {
-				copy(new File(sourceLocation, children[i]), new File(
-						targetLocation, children[i]));
+			for (String child : children) {
+				copy(new File(sourceLocation, child), new File( targetLocation, child));
 			}
 		} else {
 			// make sure the directory we plan to store the recording in exists
 			File directory = targetLocation.getParentFile();
 			if (directory != null && !directory.exists() && !directory.mkdirs()) {
-				throw new IOException("Cannot create dir "
-						+ directory.getAbsolutePath());
+				throw new IOException("Cannot create dir " + directory.getAbsolutePath());
 			}
 
-			InputStream in = new FileInputStream(sourceLocation);
-			OutputStream out = new FileOutputStream(targetLocation);
-
-			// Copy the bits from instream to outstream
-			byte[] buf = new byte[1024];
-			int len;
-			while ((len = in.read(buf)) > 0) {
-				out.write(buf, 0, len);
+			try (InputStream in = new FileInputStream(sourceLocation);
+				 OutputStream out = new FileOutputStream(targetLocation)) {
+				// Copy the bits from instream to outstream
+				byte[] buf = new byte[1024];
+				int len;
+				while ((len = in.read(buf)) > 0) {
+					out.write(buf, 0, len);
+				}
 			}
-			in.close();
-			out.close();
 		}
 	}
 
 	public static Bitmap loadBitmapFromAssetsFolder(Context context,
 			String fileName) {
 		try {
-			Log.e(LOG_TAG, "Trying to load " + fileName
-					+ " from assets folder!");
+			Log.e(LOG_TAG, "Trying to load " + fileName + " from assets folder!");
 			BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
 			bitmapOptions.inPreferredConfig = Bitmap.Config.RGB_565;
-			return BitmapFactory.decodeStream(context.getAssets()
-					.open(fileName), null, bitmapOptions);
+			return BitmapFactory.decodeStream(context.getAssets().open(fileName), null, bitmapOptions);
 		} catch (Exception e) {
-			Log.e(LOG_TAG, "Could not load " + fileName
-					+ " from assets folder!");
+			Log.e(LOG_TAG, "Could not load " + fileName + " from assets folder!");
 		}
 		return null;
 	}

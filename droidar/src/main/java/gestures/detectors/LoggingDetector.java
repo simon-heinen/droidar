@@ -1,10 +1,14 @@
 package gestures.detectors;
 
-import android.util.Log;
+//import android.util.Log;
+
+import java.util.Locale;
+
 import gestures.PhoneGesture;
 import gestures.PhoneGestureDetector;
 import gestures.SensorData;
 import gestures.StandardPhoneGesture;
+import util.Log;
 
 /**
  * A dummy detector that's simply printing out the measured sensor data to the
@@ -48,19 +52,15 @@ public class LoggingDetector implements PhoneGestureDetector {
 		StringBuilder builder = new StringBuilder();
 
 		if ((logMask & LOG_ABSOLUTE_ACCELERATION) != 0) {
-			builder.append("Abs: ").append(sensorData.absoluteAcceleration)
-					.append("\n");
+			builder.append("Abs: ").append(sensorData.absoluteAcceleration).append("\n");
 		}
 
 		if ((logMask & LOG_GRAVITY) != 0) {
-			builder.append("Gra: ").append(formatArray(sensorData.gravity))
-					.append("\n");
+			builder.append("Gra: ").append(formatArray(sensorData.gravity)).append("\n");
 		}
 
 		if ((logMask & LOG_LINEAR_ACCELERATION) != 0) {
-			builder.append("Lin: ")
-					.append(formatArray(sensorData.linearAcceleration))
-					.append("\n");
+			builder.append("Lin: ").append(formatArray(sensorData.linearAcceleration)).append("\n");
 		}
 
 		Log.d("LoggingDetector", builder.toString());
@@ -69,7 +69,7 @@ public class LoggingDetector implements PhoneGestureDetector {
 	private String formatArray(float[] array) {
 		StringBuilder builder = new StringBuilder("[ ");
 		for (double value : array) {
-			builder.append(String.format("% 8.4f ", value));
+			builder.append(String.format(Locale.US, "% 8.4f ", value));
 		}
 		return builder.append("]").toString();
 	}

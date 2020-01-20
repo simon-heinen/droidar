@@ -10,13 +10,13 @@ public interface GLCamRotationController {
 	 * @param rotMatrix
 	 * @param offset
 	 */
-	public abstract void setRotationMatrix(float[] rotMatrix, int offset);
+    void setRotationMatrix(float[] rotMatrix, int offset);
 
 	/**
 	 * This will reset the rotation vector of the virtual camera
 	 */
 	@Deprecated
-	public abstract void resetBufferedAngle();
+    void resetBufferedAngle();
 
 	/**
 	 * This will change the z value of the camera-rotation by adding/subtracting
@@ -25,6 +25,6 @@ public interface GLCamRotationController {
 	 * @param deltaZ
 	 */
 	@Deprecated
-	public abstract void changeZAngleBuffered(float deltaZ);
+    void changeZAngleBuffered(float deltaZ);
 
 }

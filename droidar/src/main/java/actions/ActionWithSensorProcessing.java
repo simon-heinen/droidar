@@ -49,15 +49,13 @@ public abstract class ActionWithSensorProcessing extends Action {
 	protected abstract void initAlgos();
 
 	@Override
-	public boolean onTouchMove(MotionEvent e1, MotionEvent e2,
-			float screenDeltaX, float screenDeltaY) {
+	public boolean onTouchMove(MotionEvent e1, MotionEvent e2, float screenDeltaX, float screenDeltaY) {
 		myTargetCamera.changeZAngleBuffered(screenDeltaY);
 		return true;
 	}
 
 	@Override
 	public synchronized boolean onAccelChanged(float[] values) {
-
 		if (accelAlgo != null) {
 			myNewAccelValues = accelAlgo.execute(values);
 		} else {
@@ -77,7 +75,6 @@ public abstract class ActionWithSensorProcessing extends Action {
 		}
 		magnetoChanged = true;
 		return true;
-
 	}
 
 	@Override
@@ -89,7 +86,6 @@ public abstract class ActionWithSensorProcessing extends Action {
 		}
 		orientationDataChanged = true;
 		return true;
-
 	}
 
 	@Override
@@ -100,8 +96,7 @@ public abstract class ActionWithSensorProcessing extends Action {
 				if (accelChanged) {
 					accelChanged = false;
 					if (accelBufferAlgo != null) {
-						accelBufferAlgo.execute(myAccelValues,
-								myNewAccelValues, timeDelta);
+						accelBufferAlgo.execute(myAccelValues, myNewAccelValues, timeDelta);
 					} else {
 						myAccelValues = myNewAccelValues;
 					}
@@ -109,8 +104,7 @@ public abstract class ActionWithSensorProcessing extends Action {
 				if (magnetoChanged) {
 					magnetoChanged = false;
 					if (magnetBufferAlgo != null) {
-						magnetBufferAlgo.execute(myMagnetValues,
-								myNewMagnetValues, timeDelta);
+						magnetBufferAlgo.execute(myMagnetValues, myNewMagnetValues, timeDelta);
 					} else {
 						myMagnetValues = myNewMagnetValues;
 					}
@@ -121,13 +115,11 @@ public abstract class ActionWithSensorProcessing extends Action {
 			} else if (orientationDataChanged) {
 				orientationDataChanged = false;
 				if (orientationBufferAlgo != null) {
-					orientationBufferAlgo.execute(myOrientValues,
-							myNewOrientValues, timeDelta);
+					orientationBufferAlgo.execute(myOrientValues, myNewOrientValues, timeDelta);
 				} else {
 					myOrientValues = myNewOrientValues;
 				}
-				GLUtilityClass.getRotationMatrixFromVector(unrotatedMatrix,
-						myOrientValues);
+				GLUtilityClass.getRotationMatrixFromVector(unrotatedMatrix, myOrientValues);
 			}
 
 			/*

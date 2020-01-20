@@ -23,7 +23,7 @@ public class ActivityConnector {
 	private static ActivityConnector myInstance = new ActivityConnector();
 	public static final String KEY_IDENTIFIER = "key";
 
-	private HashMap<String, Object> myHashMap = new HashMap<String, Object>();
+	private HashMap<String, Object> myHashMap = new HashMap<>();
 	private int id;
 
 	private ActivityConnector() {
@@ -68,8 +68,7 @@ public class ActivityConnector {
 	 *            the object to pass (null if nothing should be passed)
 	 */
 	@SuppressWarnings("unchecked")
-	public void startActivity(Activity currentActivity,
-			Class ActivityClassToShow, Object objectToPass) {
+	public void startActivity(Activity currentActivity, Class ActivityClassToShow, Object objectToPass) {
 		Intent intent = new Intent(currentActivity, ActivityClassToShow);
 		if (objectToPass != null) {
 			String key = addTransfairObject(currentActivity, objectToPass);
@@ -88,8 +87,7 @@ public class ActivityConnector {
 	public Object loadObjFromNewlyCreatedActivity(Activity theNewActivity) {
 		if (theNewActivity == null)
 			return null;
-		String key = theNewActivity.getIntent().getExtras()
-				.getString(KEY_IDENTIFIER);
+		String key = theNewActivity.getIntent().getExtras().getString(KEY_IDENTIFIER);
 		Object o = getObj(key);
 		// TODO remove o from the hashmap now?:
 		// myHashMap.remove(key);
