@@ -46,6 +46,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import org.jetbrains.annotations.Nullable;
+
 import commands.Command;
 import commands.CommandGroup;
 import commands.system.CommandDeviceVibrate;
@@ -290,7 +292,7 @@ public abstract class Setup {
 		// myTargetActivity.addContentView(myOverlayView, new LayoutParams(
 		// LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
-		addOverlaysAndShowInfoScreen();
+		addOverlaysAndShowInfoScreen(changeLoadingText());
 
 		debugLogDoSetupStep(STEP_DONE);
 	}
@@ -333,10 +335,22 @@ public abstract class Setup {
 
 	}
 
-	private void addOverlaysAndShowInfoScreen() {
+	/**
+	 * This method has to be set in any Setup's subclasses if the loading screen text needs to be changed.
+	 * Note: default loading text - " Loading ... ".
+	 * @return loadingText to be set in addOverlaysAndShowInfoScreen(String loadingText)
+	 * in the InfoScreenSetting object to be created
+	 */
+	public String changeLoadingText() {
+		return null;
+	}
+
+	private void addOverlaysAndShowInfoScreen(@Nullable String loadingText) {
 		debugLogDoSetupStep(STEP11);
-		InfoScreenSettings infoScreenData = new InfoScreenSettings(
-				myTargetActivity);
+		InfoScreenSettings infoScreenData = new InfoScreenSettings(getActivity()/*myTargetActivity*/);
+		if (loadingText != null) {
+			infoScreenData.setLoadingText(loadingText);
+		}
 		if (isOldDeviceWhereNothingWorksAsExpected) {
 			Log.d(LOG_TAG, "This is an old device (old Android version)");
 			addOverlaysInCrazyOrder();
