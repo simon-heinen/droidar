@@ -24,17 +24,20 @@ public class ImageTransform {
 	 *            (nearly no round corners)
 	 * @return the result
 	 */
-	public static Bitmap createBitmapWithRoundCorners(Bitmap bitmap, float factor) {
+	public static Bitmap createBitmapWithRoundCorners(Bitmap bitmap,
+			float factor) {
 		int width = bitmap.getWidth();
 		int height = bitmap.getHeight();
 
-		Bitmap result = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_4444);
+		Bitmap result = Bitmap.createBitmap(width, height,
+				Bitmap.Config.ARGB_4444);
 		Canvas canvas = new Canvas(result);
 		Rect rect = new Rect(0, 0, width, height);
 		RectF roundCornerFrameRect = new RectF(rect);
 		float cornerRadius = width / factor;
 		Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		canvas.drawRoundRect(roundCornerFrameRect, cornerRadius, cornerRadius, paint);
+		canvas.drawRoundRect(roundCornerFrameRect, cornerRadius, cornerRadius,
+				paint);
 		paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
 		canvas.drawBitmap(bitmap, rect, rect, paint);
 		return result;
@@ -89,7 +92,8 @@ public class ImageTransform {
 	 */
 	@Deprecated
 	public static float dipToPixels(View v, float sizeInDip) {
-		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, sizeInDip, v.getResources().getDisplayMetrics());
+		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+				sizeInDip, v.getResources().getDisplayMetrics());
 	}
 
 	/**
@@ -102,14 +106,15 @@ public class ImageTransform {
 	 * @return
 	 */
 	public static float dipToPixels(Resources resources, Integer sizeInDip) {
-		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, sizeInDip, resources.getDisplayMetrics());
+		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+				sizeInDip, resources.getDisplayMetrics());
 	}
 
 	/**
 	 * The Eclipse UI editor cant preview ressources loaded from the assets
 	 * folder so a dummy bitmap is used instead
 	 * 
-	 * @param v
+	 * @param context
 	 * @param id
 	 * @return
 	 */
@@ -135,7 +140,8 @@ public class ImageTransform {
 	public static void drawCircle(View v, Canvas canvas, float cx, float cy,
 			float radius, Paint paint) {
 		if (v.isInEditMode()) {
-			RectF arcRect = new RectF(cx - radius, cy - radius, cx + radius, cy + radius);
+			RectF arcRect = new RectF(cx - radius, cy - radius, cx + radius, cy
+					+ radius);
 			// Draw the Minutes-Arc into that rectangle
 			canvas.drawArc(arcRect, -90, 360, false, paint);
 		} else {
@@ -154,7 +160,8 @@ public class ImageTransform {
 	 */
 	@Deprecated
 	public static Bitmap createRoundedCornerBitmap(Bitmap bitmap, int pixels) {
-		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
+		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+				bitmap.getHeight(), bitmap.getConfig());
 		Canvas canvas = new Canvas(output);
 
 		final Paint paint = new Paint();
@@ -180,10 +187,13 @@ public class ImageTransform {
 	 *            try 1.5f; (1 would be no smoothing at all)
 	 * @return
 	 */
-	public static Bitmap rotateBitmap(Bitmap bitmap, int angle, float smoothingFactor) {
-		Bitmap result = ImageTransform.resizeBitmap(bitmap, bitmap.getHeight() * smoothingFactor, bitmap.getWidth() * smoothingFactor);
+	public static Bitmap rotateBitmap(Bitmap bitmap, int angle,
+			float smoothingFactor) {
+		Bitmap result = ImageTransform.resizeBitmap(bitmap, bitmap.getHeight()
+				* smoothingFactor, bitmap.getWidth() * smoothingFactor);
 		result = rotateBitmap(result, angle);
-		result = ImageTransform.resizeBitmap(result, result.getHeight() / smoothingFactor, result.getWidth() / smoothingFactor);
+		result = ImageTransform.resizeBitmap(result, result.getHeight()
+				/ smoothingFactor, result.getWidth() / smoothingFactor);
 		return result;
 	}
 
@@ -207,7 +217,7 @@ public class ImageTransform {
 		if (width == height)
 			return bitmap;
 
-		int size = Math.max(width, height);
+		int size = width > height ? width : height;
 
 		Bitmap newB = Bitmap.createBitmap(size, size, bitmap.getConfig());
 		Canvas c = new Canvas(newB);
@@ -229,14 +239,16 @@ public class ImageTransform {
 		int width = bitmap.getWidth();
 		int height = bitmap.getHeight();
 
-		Bitmap newB = Bitmap.createBitmap(width + 2 * marginSize, height + 2 * marginSize, bitmap.getConfig());
+		Bitmap newB = Bitmap.createBitmap(width + 2 * marginSize, height + 2
+				* marginSize, bitmap.getConfig());
 		Canvas c = new Canvas(newB);
 		c.drawBitmap(bitmap, marginSize, marginSize, new Paint());
 
 		return newB;
 	}
 
-	public static Bitmap resizeBitmap(Bitmap bitmap, float newHeight, float newWidth) {
+	public static Bitmap resizeBitmap(Bitmap bitmap, float newHeight,
+			float newWidth) {
 		int width = bitmap.getWidth();
 		int height = bitmap.getHeight();
 		float scaleWidth = ((float) newWidth) / width;
@@ -274,8 +286,10 @@ public class ImageTransform {
 			Bitmap resultBitmap, float[] filterKernel, float mOverInWMinInB,
 			float gammaValue, float mOutWMinOutB, float mInBlack,
 			float mOutBlack) {
-		int[] mInPixels = new int[sourceBitmap.getHeight() * sourceBitmap.getWidth()];
-		int[] mOutPixels = new int[resultBitmap.getHeight() * resultBitmap.getWidth()];
+		int[] mInPixels = new int[sourceBitmap.getHeight()
+				* sourceBitmap.getWidth()];
+		int[] mOutPixels = new int[resultBitmap.getHeight()
+				* resultBitmap.getWidth()];
 		sourceBitmap.getPixels(mInPixels, 0, sourceBitmap.getWidth(), 0, 0,
 				sourceBitmap.getWidth(), sourceBitmap.getHeight());
 
@@ -284,9 +298,12 @@ public class ImageTransform {
 			float g = (float) ((mInPixels[i] >> 8) & 0xff);
 			float b = (float) ((mInPixels[i] >> 16) & 0xff);
 
-			float tr = r * filterKernel[0] + g * filterKernel[3] + b * filterKernel[6];
-			float tg = r * filterKernel[1] + g * filterKernel[4] + b * filterKernel[7];
-			float tb = r * filterKernel[2] + g * filterKernel[5] + b * filterKernel[8];
+			float tr = r * filterKernel[0] + g * filterKernel[3] + b
+					* filterKernel[6];
+			float tg = r * filterKernel[1] + g * filterKernel[4] + b
+					* filterKernel[7];
+			float tb = r * filterKernel[2] + g * filterKernel[5] + b
+					* filterKernel[8];
 			r = tr;
 			g = tg;
 			b = tb;
@@ -331,7 +348,8 @@ public class ImageTransform {
 			if (b > 255.f)
 				b = 255.f;
 
-			mOutPixels[i] = ((int) r) + (((int) g) << 8) + (((int) b) << 16) + (mInPixels[i] & 0xff000000);
+			mOutPixels[i] = ((int) r) + (((int) g) << 8) + (((int) b) << 16)
+					+ (mInPixels[i] & 0xff000000);
 		}
 
 		resultBitmap.setPixels(mOutPixels, 0, resultBitmap.getWidth(), 0, 0,

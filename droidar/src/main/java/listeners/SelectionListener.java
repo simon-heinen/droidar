@@ -6,21 +6,13 @@ import commands.Command;
 
 public interface SelectionListener {
 
-	Command getOnClickCommand();
+	public Command getOnClickCommand();
 
-	Command getOnLongClickCommand();
+	public Command getOnLongClickCommand();
 
-	Command getOnMapClickCommand();
+	public Command getOnMapClickCommand();
 
-	Command getOnDoubleClickCommand();
-
-	/**
-	 * This will enable the selection mechanism (like color-picking in the
-	 * {@link MeshComponent}) if possible
-	 * 
-	 * @param c
-	 */
-    void setOnClickCommand(Command c);
+	public Command getOnDoubleClickCommand();
 
 	/**
 	 * This will enable the selection mechanism (like color-picking in the
@@ -28,7 +20,7 @@ public interface SelectionListener {
 	 * 
 	 * @param c
 	 */
-    void setOnDoubleClickCommand(Command c);
+	public void setOnClickCommand(Command c);
 
 	/**
 	 * This will enable the selection mechanism (like color-picking in the
@@ -36,8 +28,16 @@ public interface SelectionListener {
 	 * 
 	 * @param c
 	 */
-    void setOnLongClickCommand(Command c);
+	public void setOnDoubleClickCommand(Command c);
 
-	void setOnMapClickCommand(Command c);
+	/**
+	 * This will enable the selection mechanism (like color-picking in the
+	 * {@link MeshComponent}) if possible
+	 * 
+	 * @param c
+	 */
+	public void setOnLongClickCommand(Command c);
+
+	public void setOnMapClickCommand(Command c);
 
 }

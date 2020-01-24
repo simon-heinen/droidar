@@ -5,12 +5,12 @@ import android.view.View;
 
 public interface ModifierInterface {
 
-	View getView(Context context);
+	public abstract View getView(Context context);
 
 	/**
 	 * @return false if window should not be closed because something could not
 	 *         be saved
 	 */
-    boolean save();
+	public abstract boolean save();
 
 }

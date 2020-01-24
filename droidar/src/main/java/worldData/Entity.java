@@ -13,7 +13,7 @@ public interface Entity extends Updateable, Visitable {
 	 * 
 	 * @return
 	 */
-    Updateable getMyParent();
+	public Updateable getMyParent();
 
 	/**
 	 * This should be called as the first thing in
@@ -26,6 +26,6 @@ public interface Entity extends Updateable, Visitable {
 	 * 
 	 * @param parent
 	 */
-    void setMyParent(Updateable parent);
+	public void setMyParent(Updateable parent);
 
 }

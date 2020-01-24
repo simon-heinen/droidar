@@ -2,7 +2,7 @@ package tests;
 
 public class ThreadTest extends SimpleTesting {
 
-	private static class TestRunnalbe1 implements Runnable {
+	private class TestRunnalbe1 implements Runnable {
 		W w;
 
 		public TestRunnalbe1(W w) {
@@ -25,7 +25,7 @@ public class ThreadTest extends SimpleTesting {
 		}
 	}
 
-	private static class TestRunnalbe2 implements Runnable {
+	private class TestRunnalbe2 implements Runnable {
 		W w;
 
 		public TestRunnalbe2(W w) {
@@ -48,7 +48,7 @@ public class ThreadTest extends SimpleTesting {
 		}
 	}
 
-	private static class W {
+	private class W {
 		public volatile String x;
 
 		public W(String x) {
@@ -57,7 +57,7 @@ public class ThreadTest extends SimpleTesting {
 	}
 
 	@Override
-	public void run() {
+	public void run() throws Exception {
 		String x = "0/0";
 		W w = new W(x);
 		/*

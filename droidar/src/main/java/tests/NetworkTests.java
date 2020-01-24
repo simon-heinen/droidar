@@ -11,7 +11,7 @@ import util.Log;
 public class NetworkTests extends SimpleTesting {
 
 	@Override
-	public void run() {
+	public void run() throws Exception {
 		udpTest();
 		// tcpTest();
 		// tcpThreadTest();
@@ -128,9 +128,10 @@ public class NetworkTests extends SimpleTesting {
 	/**
 	 * This will send some text from the device ip to the device ip (but could
 	 * be any other ip as well)
-	 *
+	 * 
+	 * @throws Exception
 	 */
-	private void udpTest() {
+	private void udpTest() throws Exception {
 
 		int targetPort = 5221;
 		final String text = "some text";

@@ -4,8 +4,8 @@ import android.app.Activity;
 
 public interface UIConfig {
 
-	Theme loadTheme();
+	public Theme loadTheme();
 
-	ModifierInterface loadCloseButtonsFor(
-            final Activity currentActivity, final ModifierGroup group);
+	public ModifierInterface loadCloseButtonsFor(
+			final Activity currentActivity, final ModifierGroup group);
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import v2.simpleUi.customViews.ExpandableLinearLayout;
 import v2.simpleUi.customViews.ExpandableLinearLayout.OnExpandListener;
-//import android.R;
+import android.R;
 import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,7 +27,7 @@ public class M_Container2 extends ArrayList<ModifierInterface> implements
 	public M_Container2(String title) {
 
 		final M_IconButtonWithText expandButton = new M_IconButtonWithText(
-				android.R.drawable.arrow_up_float) {
+				R.drawable.arrow_up_float) {
 			@Override
 			public void onClick(Context context, ImageView clickedButton) {
 				expandablePanel.switchBetweenCollapsedAndExpandedMode();
@@ -47,12 +47,12 @@ public class M_Container2 extends ArrayList<ModifierInterface> implements
 
 			@Override
 			public void onExpandFinished(Context context, View content) {
-				expandButton.setIconId(android.R.drawable.arrow_up_float);
+				expandButton.setIconId(R.drawable.arrow_up_float);
 			}
 
 			@Override
 			public void onCollapseFinished(Context context, View content) {
-				expandButton.setIconId(android.R.drawable.arrow_down_float);
+				expandButton.setIconId(R.drawable.arrow_down_float);
 			}
 
 			@Override

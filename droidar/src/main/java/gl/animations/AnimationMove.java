@@ -1,16 +1,12 @@
 package gl.animations;
 
-import android.opengl.GLES20;
-
 import gl.Renderable;
 
-//import javax.microedition.khronos.opengles.GL10;
+import javax.microedition.khronos.opengles.GL10;
 
 import util.Vec;
 import worldData.Updateable;
 import worldData.Visitor;
-
-import static android.opengl.GLES10.glTranslatef;
 
 public class AnimationMove extends GLAnimation {
 
@@ -27,8 +23,8 @@ public class AnimationMove extends GLAnimation {
 	}
 
 	@Override
-	public void render(GLES20 unused, Renderable parent) {
-		glTranslatef(pos.x, pos.y, pos.z);
+	public void render(GL10 gl, Renderable parent) {
+		gl.glTranslatef(pos.x, pos.y, pos.z);
 	}
 
 	@Override

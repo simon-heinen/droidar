@@ -3,20 +3,17 @@ package v2.simpleUi;
 import java.util.Date;
 import java.util.HashMap;
 
-//import android.R;
+import android.R;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-//import android.util.Log;
-import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-
-import util.Log;
 
 /**
  * Don't forget to add<br>
@@ -101,11 +98,13 @@ public class SimpleUI extends Activity {
 	 *            e.g. a {@link M_Container} which is filled with all the items
 	 * @return
 	 */
-	public static boolean showUi(Context currentActivity, ModifierInterface contentToShow) {
-		if (contentToShow != null) {
-			Intent intent = new Intent(currentActivity, SimpleUI.class);
+	public static boolean showUi(Context context,
+			ModifierInterface modifierToDisplay) {
+		if (modifierToDisplay != null) {
+			Intent intent = new Intent(context, SimpleUI.class);
 			try {
-				String key = storeObjectInTransfairList(currentActivity, contentToShow);
+				String key = storeObjectInTransfairList(context,
+						modifierToDisplay);
 				/*
 				 * The key to the object will be stored in the extras of the
 				 * intent:
@@ -114,7 +113,7 @@ public class SimpleUI extends Activity {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			startActivity(currentActivity, intent);
+			startActivity(context, intent);
 			return true;
 		}
 		return false;
@@ -132,47 +131,56 @@ public class SimpleUI extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if (DEBUG) Log.i(LOG_TAG, "onPause" + " by " + this);
+		if (DEBUG)
+			Log.i(LOG_TAG, "onPause" + " by " + this);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if (DEBUG) Log.v(LOG_TAG, "onResume" + " by " + this);
+		if (DEBUG)
+			Log.v(LOG_TAG, "onResume" + " by " + this);
 	}
 
 	@Override
 	protected void onRestart() {
 		super.onRestart();
-		if (DEBUG) Log.v(LOG_TAG, "onRestart" + " by " + this);
+		if (DEBUG)
+			Log.v(LOG_TAG, "onRestart" + " by " + this);
 	}
 
 	@Override
 	protected void onDestroy() {
-		if (DEBUG) Log.v(LOG_TAG, "onDestroy" + " by " + this);
+		if (DEBUG)
+			Log.v(LOG_TAG, "onDestroy" + " by " + this);
 		super.onDestroy();
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
-		if (DEBUG) Log.v(LOG_TAG, "onStart" + " by " + this);
+		if (DEBUG)
+			Log.v(LOG_TAG, "onStart" + " by " + this);
 	}
 
 	@Override
 	protected void onStop() {
-		if (DEBUG) Log.v(LOG_TAG, "onStop" + " by " + this);
+		if (DEBUG)
+			Log.v(LOG_TAG, "onStop" + " by " + this);
 		super.onStop();
 	}
 
 	/**
-	 * @param itemToDisplay Object
+	 * @param itemToDisplay
 	 * @return the key for the location where it is stored
 	 */
-	private static String storeObjectInTransfairList(Context c, Object itemToDisplay) {
+	private static String storeObjectInTransfairList(Context c,
+			Object itemToDisplay) {
+
 		String newKey = new Date().toString() + itemToDisplay.toString();
 		getApplication(c).getTransferList().put(newKey, itemToDisplay);
-		if (DEBUG) getApplication(c).getTransferList();
+		if (DEBUG)
+			getApplication(c).getTransferList();
 		return newKey;
 	}
 
@@ -189,14 +197,16 @@ public class SimpleUI extends Activity {
 			if (app != null) {
 				HashMap<String, Object> tr = null;
 				if (application != null && app != application) {
-					if (DEBUG) Log.w(LOG_TAG, "new application and already "
+					if (DEBUG)
+						Log.w(LOG_TAG, "new application and already "
 								+ "loaded application were not "
 								+ "equal! Replacing old reference");
 					tr = application.getTransferList();
 				}
 				application = app;
 				// try to resque all the objects from the old list:
-				if (tr != null) application.getTransferList().putAll(tr);
+				if (tr != null)
+					application.getTransferList().putAll(tr);
 			}
 		}
 		if (application == null) {
@@ -207,20 +217,24 @@ public class SimpleUI extends Activity {
 	}
 
 	private Object loadObjectFromTransfairList(String key) {
-		HashMap<String, Object> transfairList = getApplication(this).getTransferList();
+		HashMap<String, Object> transfairList = getApplication(this)
+				.getTransferList();
 		if (key == null) {
-			if (DEBUG) Log.i(LOG_TAG, "passed key was null, will"
+			if (DEBUG)
+				Log.i(LOG_TAG, "passed key was null, will"
 						+ " try to load content from static method");
 			return null;
 		}
 		if (transfairList == null) {
-			if (DEBUG) Log.i(LOG_TAG, "transfairList object was null, so "
+			if (DEBUG)
+				Log.i(LOG_TAG, "transfairList object was null, so "
 						+ "storeObjectInTransfairList was "
 						+ "never called before!");
 			return null;
 		}
 		Object o = transfairList.get(key);
-		if (DEBUG) Log.v(LOG_TAG, "Returning " + o + " for the passed key=" + key);
+		if (DEBUG)
+			Log.v(LOG_TAG, "Returning " + o + " for the passed key=" + key);
 		// transfairList.remove(key);
 		return o;
 	}
@@ -232,23 +246,28 @@ public class SimpleUI extends Activity {
 		super.onCreate(savedInstanceState);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		if (DEBUG) Log.i(LOG_TAG, "onCreate" + " by " + this);
+		if (DEBUG)
+			Log.i(LOG_TAG, "onCreate" + " by " + this);
 		try {
 
 			String key = null;
-			if (savedInstanceState != null) key = savedInstanceState.getString(TRANSFAIR_KEY_ID);
+			if (savedInstanceState != null)
+				key = savedInstanceState.getString(TRANSFAIR_KEY_ID);
 			else if (getIntent() != null && getIntent().getExtras() != null)
 				key = getIntent().getExtras().getString(TRANSFAIR_KEY_ID);
-			else Log.i(LOG_TAG, "On create got no information what to display");
+			else
+				Log.i(LOG_TAG, "On create got no information what to display");
 
-			if (DEBUG) Log.i(LOG_TAG, "onCreate got key=" + key);
+			if (DEBUG)
+				Log.i(LOG_TAG, "onCreate got key=" + key);
 
 			ViewToShow = loadContentToViewField(key);
-			if (DEBUG) Log.d(LOG_TAG, "Loaded " + ViewToShow);
+			if (DEBUG)
+				Log.d(LOG_TAG, "Loaded " + ViewToShow);
 			if (ViewToShow != null) {
 				try {
 					((ViewGroup) ViewToShow.getParent()).removeView(ViewToShow);
-				} catch (Exception ignored) {
+				} catch (Exception e) {
 				}
 				setContentView(ViewToShow);
 			} else {
@@ -268,7 +287,8 @@ public class SimpleUI extends Activity {
 			myModifier = ((ModifierInterface) o);
 			return ((ModifierInterface) o).getView(this);
 		}
-		if (o instanceof View) return (View) o;
+		if (o instanceof View)
+			return (View) o;
 		return null;
 	}
 
@@ -287,11 +307,11 @@ public class SimpleUI extends Activity {
 	 * content is loaded dynamically so this is necessary to switch the
 	 * application back to a valid state.
 	 * 
-	 * @return M_Container
+	 * @return
 	 */
 	public M_Container createErrorInfo() {
 		M_Container c = new M_Container();
-		c.add(new M_InfoText(android.R.drawable.ic_dialog_alert,
+		c.add(new M_InfoText(R.drawable.ic_dialog_alert,
 				"The application was closed by Android, it has to be reopened! "
 						+ "Please reopen the application by "
 						+ "clicking the icon in the application list."));
@@ -307,7 +327,7 @@ public class SimpleUI extends Activity {
 				int FLAG_ACTIVITY_CLEAR_TASK = 32768;
 				i.setFlags(Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY
 						| Intent.FLAG_ACTIVITY_NEW_TASK
-						| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+						| FLAG_ACTIVITY_CLEAR_TASK);
 				startActivity(i);
 				// if (DEBUG)
 				// Log.w(LOG_TAG, "Killing complete process");
@@ -345,13 +365,14 @@ public class SimpleUI extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (myModifier instanceof SimpleUiActivityResultListener) {
-			((SimpleUiActivityResultListener) myModifier).onActivityResult( this, requestCode, resultCode, data);
+			((SimpleUiActivityResultListener) myModifier).onActivityResult(
+					this, requestCode, resultCode, data);
 		} else
 			super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override
-	protected void onSaveInstanceState(@NonNull Bundle outState) {
+	protected void onSaveInstanceState(Bundle outState) {
 		if (DEBUG)
 			Log.v(LOG_TAG, "onSaveInstanceState" + " by " + this);
 		if (ViewToShow != null) {
@@ -366,7 +387,8 @@ public class SimpleUI extends Activity {
 			outState.putString(TRANSFAIR_KEY_ID, key);
 		} else {
 			if (DEBUG)
-				Log.e(LOG_TAG, "Could not save the modifierToShow " + "field because it was null!");
+				Log.e(LOG_TAG, "Could not save the modifierToShow "
+						+ "field because it was null!");
 		}
 		super.onSaveInstanceState(outState);
 	}

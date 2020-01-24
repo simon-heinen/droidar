@@ -215,7 +215,7 @@ public class GuiSetup {
 	public void addViewToBottomRight(View v, float weight, int heightInPixels) {
 		bottomRightView.addView(v);
 		LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, heightInPixels);
+				LayoutParams.FILL_PARENT, heightInPixels);
 		p.weight = weight;
 		bottomRightView.setLayoutParams(p);
 	}
@@ -233,7 +233,7 @@ public class GuiSetup {
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				if (keyCode == KeyEvent.KEYCODE_ENTER) {
 					String text = t.getText().toString();
-					if (!text.isEmpty()) {
+					if (text.length() > 0) {
 						t.setText("");
 						Log.d(LOG_TAG, "Gui-searchbar fiering text: '" + text
 								+ "'(length=" + text.length() + ")!");

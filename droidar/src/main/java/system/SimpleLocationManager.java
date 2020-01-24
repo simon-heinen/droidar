@@ -115,7 +115,7 @@ public abstract class SimpleLocationManager {
 	/**
 	 * This method buffers the location and passes the buffered location down to
 	 * the locationListeners
-	 *
+	 * 
 	 * @param location
 	 * @param listenersToInform
 	 */
@@ -171,7 +171,8 @@ public abstract class SimpleLocationManager {
 				LocationManager lm = getLocationManager();
 				Criteria criteria = new Criteria();
 				criteria.setAccuracy(accuracy);
-				return lm.getLastKnownLocation(lm.getBestProvider(criteria, true));
+				return lm.getLastKnownLocation(lm.getBestProvider(criteria,
+						true));
 			} catch (Exception e) {
 				Log.e(LOG_TAG, "Could not receive the current location");
 				e.printStackTrace();
@@ -192,7 +193,7 @@ public abstract class SimpleLocationManager {
 	 * {@link LocationEventListener} and register it at
 	 * {@link EventManager#addOnLocationChangedAction(LocationEventListener)}
 	 * instead of calling this method here frequently.
-	 *
+	 * 
 	 * @return
 	 */
 	public Location getCurrentLocation() {
@@ -224,7 +225,7 @@ public abstract class SimpleLocationManager {
 							break;
 						}
 					}
-				} catch (Exception ignored) {
+				} catch (Exception e) {
 				}
 			}
 		}
@@ -295,7 +296,8 @@ public abstract class SimpleLocationManager {
 			Log.i(LOG_TAG, "    > provider=" + provider);
 			Log.i(LOG_TAG, "    > minMsBeforUpdate=" + minMsBeforUpdate);
 			Log.i(LOG_TAG, "    > minDistForUpdate=" + minDistForUpdate);
-			getLocationManager().requestLocationUpdates(provider, minMsBeforUpdate, minDistForUpdate, gpslistener);
+			getLocationManager().requestLocationUpdates(provider,
+					minMsBeforUpdate, minDistForUpdate, gpslistener);
 		}
 
 		if (stepListener == null) {
@@ -359,7 +361,7 @@ public abstract class SimpleLocationManager {
 
 	private boolean addToListeners(LocationListener locationListener) {
 		if (myListeners == null) {
-			myListeners = new ArrayList<>();
+			myListeners = new ArrayList<LocationListener>();
 		}
 		if (!myListeners.contains(locationListener)) {
 			Log.i(LOG_TAG, "Adding listener " + locationListener + " to list");

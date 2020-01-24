@@ -18,7 +18,7 @@ public interface PhoneGestureDetector {
 	 * 
 	 * @return The gesture type detected by this class.
 	 */
-    PhoneGesture getType();
+	public PhoneGesture getType();
 
 	/**
 	 * Returns the probability with which the gesture represented by the
@@ -27,7 +27,7 @@ public interface PhoneGestureDetector {
 	 * @return A value between [0, 1] indicating the probability with which the
 	 *         detected gesture is currently happening.
 	 */
-    double getProbability();
+	public double getProbability();
 
 	/**
 	 * Will be called from the Sensor whenever new accelerometer readings are
@@ -40,5 +40,5 @@ public interface PhoneGestureDetector {
 	 * @param sensorData
 	 *            Data collected by the PhoneGestureSensor.
 	 */
-    void feedSensorEvent(SensorData sensorData);
+	public void feedSensorEvent(SensorData sensorData);
 }

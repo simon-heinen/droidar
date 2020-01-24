@@ -6,25 +6,25 @@ import java.util.List;
 
 public class NameGenerator {
 
-	private List<String> vocals = new ArrayList<>();
-	private List<String> startConsonants = new ArrayList<>();
-	private List<String> endConsonants = new ArrayList<>();
-	private List<String> nameInstructions = new ArrayList<>();
+	private List<String> vocals = new ArrayList<String>();
+	private List<String> startConsonants = new ArrayList<String>();
+	private List<String> endConsonants = new ArrayList<String>();
+	private List<String> nameInstructions = new ArrayList<String>();
 
 	public NameGenerator() {
-		String[] demoVocals = { "a", "e", "i", "o", "u", "ei", "ai", "ou", "j",
+		String demoVocals[] = { "a", "e", "i", "o", "u", "ei", "ai", "ou", "j",
 				"ji", "y", "oi", "au", "oo" };
 
-		String[] demoStartConsonants = { "b", "c", "d", "f", "g", "h", "k",
+		String demoStartConsonants[] = { "b", "c", "d", "f", "g", "h", "k",
 				"l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "z",
 				"ch", "bl", "br", "fl", "gl", "gr", "kl", "pr", "pl", "st",
 				"sh", "th", "tw" };
 
-		String[] demoEndConsonants = { "b", "d", "f", "g", "h", "k", "l", "m",
+		String demoEndConsonants[] = { "b", "d", "f", "g", "h", "k", "l", "m",
 				"n", "p", "r", "s", "t", "v", "w", "z", "ch", "gh", "nn", "st",
 				"sh", "th", "tt", "ss", "pf", "nt" };
 
-		String[] nameInstructions = { "vd", "cvdvd", "cvd", "vdvd", "vdvdvd" };
+		String nameInstructions[] = { "vd", "cvdvd", "cvd", "vdvd", "vdvdvd" };
 
 		this.vocals.addAll(Arrays.asList(demoVocals));
 		this.startConsonants.addAll(Arrays.asList(demoStartConsonants));
@@ -77,25 +77,25 @@ public class NameGenerator {
 	}
 
 	private String getNameByInstructions(String nameInstructions) {
-		StringBuilder name = new StringBuilder();
+		String name = "";
 		int l = nameInstructions.length();
 
 		for (int i = 0; i < l; i++) {
 			char x = nameInstructions.charAt(0);
 			switch (x) {
 			case 'v':
-				name.append(getRandomElementFrom(vocals));
+				name += getRandomElementFrom(vocals);
 				break;
 			case 'c':
-				name.append(getRandomElementFrom(startConsonants));
+				name += getRandomElementFrom(startConsonants);
 				break;
 			case 'd':
-				name.append(getRandomElementFrom(endConsonants));
+				name += getRandomElementFrom(endConsonants);
 				break;
 			}
 			nameInstructions = nameInstructions.substring(1);
 		}
-		return name.toString();
+		return name;
 	}
 
 	private String firstCharUppercase(String name) {

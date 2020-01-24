@@ -3,10 +3,8 @@ package v3;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-//import android.util.Log;
+import android.util.Log;
 import android.widget.EditText;
-
-import util.Log;
 
 public abstract class M_DoubleModifier extends M_TextModifier {
 	private Double minimumValue;
@@ -66,12 +64,12 @@ public abstract class M_DoubleModifier extends M_TextModifier {
 						double v = Double.parseDouble(s.toString());
 						if (v < min) {
 							s.clear();
-							s.append("").append(String.valueOf(min));
+							s.append("" + min);
 						} else if (v > max) {
 							s.clear();
-							s.append("").append(String.valueOf(max));
+							s.append("" + max);
 						}
-					} catch (NumberFormatException ignored) {
+					} catch (NumberFormatException e) {
 					}
 				}
 			}

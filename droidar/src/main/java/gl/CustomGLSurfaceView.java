@@ -27,7 +27,8 @@ import commands.Command;
  * @author Spobo
  * 
  */
-public class CustomGLSurfaceView extends GLSurfaceView implements TouchEventInterface {
+public class CustomGLSurfaceView extends GLSurfaceView implements
+		TouchEventInterface {
 
 	private static final long TOUCH_INPUT_SLEEP_TIME = 20;
 
@@ -68,10 +69,16 @@ public class CustomGLSurfaceView extends GLSurfaceView implements TouchEventInte
 		}
 
 		int screenOrientation = Setup.getScreenOrientation();
-		LANDSCAPE_MODE = screenOrientation == Surface.ROTATION_90 || screenOrientation == Surface.ROTATION_270;
+		if (screenOrientation == Surface.ROTATION_90
+				|| screenOrientation == Surface.ROTATION_270) {
+			LANDSCAPE_MODE = true;
+		} else {
+			LANDSCAPE_MODE = false;
+		}
 
 		this.setFocusableInTouchMode(true);
-		myGestureDetector = new GestureDetector(context, new CustomGestureListener(this));
+		myGestureDetector = new GestureDetector(context,
+				new CustomGestureListener(this));
 
 		// Set 8888 pixel format because that's required for
 		// a translucent window:
@@ -108,7 +115,7 @@ public class CustomGLSurfaceView extends GLSurfaceView implements TouchEventInte
 
 	public void addOnTouchMoveListener(TouchMoveListener onTouchListener) {
 		if (onTouchListeners == null) {
-			this.onTouchListeners = new ArrayList<>();
+			this.onTouchListeners = new ArrayList<TouchMoveListener>();
 		}
 		this.onTouchListeners.add(onTouchListener);
 	}
@@ -215,10 +222,12 @@ public class CustomGLSurfaceView extends GLSurfaceView implements TouchEventInte
 	}
 
 	@Override
-	public void onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+	public void onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+			float distanceY) {
 		if (onTouchListeners != null) {
 			for (int i = 0; i < onTouchListeners.size(); i++) {
-				onTouchListeners.get(i).onTouchMove(e1, e2, distanceX, distanceY);
+				onTouchListeners.get(i).onTouchMove(e1, e2, distanceX,
+						distanceY);
 			}
 		}
 	}

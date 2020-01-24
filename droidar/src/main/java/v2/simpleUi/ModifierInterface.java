@@ -5,13 +5,13 @@ import android.view.View;
 
 public interface ModifierInterface {
 
-	int DEFAULT_PADDING = 4;
+	public static final int DEFAULT_PADDING = 4;
 
-	View getView(Context context);
+	public abstract View getView(Context context);
 
 	/**
 	 * @return true if the save procedure was successful
 	 */
-    boolean save();
+	public abstract boolean save();
 
 }

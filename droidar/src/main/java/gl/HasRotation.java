@@ -3,7 +3,8 @@ package gl;
 import util.Vec;
 
 public interface HasRotation {
-	Vec getRotation();
+
+	public Vec getRotation();
 
 	/**
 	 * Will rotate the object COUNTERCLOCKWISE
@@ -12,5 +13,5 @@ public interface HasRotation {
 	 *            An example to rotate an object 45 degree CLOCKWISE around the
 	 *            Z axis would be "new Vec(0,0,-45)"
 	 */
-    void setRotation(Vec rotation);
+	public void setRotation(Vec rotation);
 }

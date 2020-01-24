@@ -19,7 +19,7 @@ import gui.simpleUI.SimpleUIv1;
 
 import java.util.ArrayList;
 
-//import javax.microedition.khronos.opengles.GL10;
+import javax.microedition.khronos.opengles.GL10;
 
 import listeners.SetupListener;
 import util.EfficientList;
@@ -32,7 +32,6 @@ import actions.ActionCalcRelativePos;
 import actions.ActionRotateCameraBuffered;
 import android.app.Activity;
 import android.content.res.Configuration;
-import android.opengl.GLES10;
 import android.os.Build;
 import android.os.SystemClock;
 import android.view.Display;
@@ -319,8 +318,8 @@ public abstract class Setup {
 	 * @return true if lightning should be enabled
 	 */
 	public boolean _a2_initLightning(ArrayList<LightSource> lights) {
-		lights.add(LightSource.newDefaultAmbientLight(GLES10.GL_LIGHT0));
-		lights.add(LightSource.newDefaultSpotLight(GLES10.GL_LIGHT1, new Vec(5,
+		lights.add(LightSource.newDefaultAmbientLight(GL10.GL_LIGHT0));
+		lights.add(LightSource.newDefaultSpotLight(GL10.GL_LIGHT1, new Vec(5,
 				5, 5), new Vec(0, 0, 0)));
 		// TODO lights.add(LightSource.newDefaultDayLight(GL10.GL_LIGHT1, new
 		// Date()));
@@ -330,13 +329,14 @@ public abstract class Setup {
 	public void initializeCamera() {
 
 		debugLogDoSetupStep(STEP7);
-		myCameraView = initCameraView(getActivity()/*myTargetActivity*/);
+		myCameraView = initCameraView(myTargetActivity);
 
 	}
 
 	private void addOverlaysAndShowInfoScreen() {
 		debugLogDoSetupStep(STEP11);
-		InfoScreenSettings infoScreenData = new InfoScreenSettings(getActivity()/*myTargetActivity*/);
+		InfoScreenSettings infoScreenData = new InfoScreenSettings(
+				myTargetActivity);
 		if (isOldDeviceWhereNothingWorksAsExpected) {
 			Log.d(LOG_TAG, "This is an old device (old Android version)");
 			addOverlaysInCrazyOrder();
@@ -373,7 +373,8 @@ public abstract class Setup {
 		TextureManager.resetInstance();
 		TaskManager.resetInstance();
 		GLFactory.resetInstance();
-		ObjectPicker.resetInstance(new CommandDeviceVibrate(getActivity()/*myTargetActivity*/, 30));
+		ObjectPicker.resetInstance(new CommandDeviceVibrate(myTargetActivity,
+				30));
 		CommandProcessor.resetInstance();
 		FeedbackReports.resetInstance(); // TODO really reset it?
 
@@ -410,7 +411,9 @@ public abstract class Setup {
 	}
 
 	private void showInfoDialog(InfoScreenSettings infoScreenData) {
-		ActivityConnector.getInstance().startActivity(getActivity()/*myTargetActivity*/, InfoScreen.class, infoScreenData);
+		ActivityConnector.getInstance().startActivity(myTargetActivity,
+				InfoScreen.class, infoScreenData);
+
 	}
 
 	private void addOverlaysInCrazyOrder() {
@@ -427,7 +430,7 @@ public abstract class Setup {
 
 	private void addGUIOverlay() {
 		// add overlay view as an content view to the activity:
-		getActivity()/*myTargetActivity*/.addContentView(myOverlayView, new LayoutParams(
+		myTargetActivity.addContentView(myOverlayView, new LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 	}
 
@@ -435,14 +438,14 @@ public abstract class Setup {
 		if (Integer.parseInt(android.os.Build.VERSION.SDK) >= Build.VERSION_CODES.ECLAIR) {
 			myGLSurfaceView.setZOrderMediaOverlay(true);
 		}
-		getActivity()/*myTargetActivity*/.addContentView(myGLSurfaceView, new LayoutParams(
+		myTargetActivity.addContentView(myGLSurfaceView, new LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 	}
 
 	public void addCameraOverlay() {
 		if (myCameraView != null) {
 			Log.d(LOG_TAG, "Camera preview added as view");
-			getActivity()/*myTargetActivity*/.addContentView(myCameraView, new LayoutParams(
+			myTargetActivity.addContentView(myCameraView, new LayoutParams(
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 		} else {
 			Log.e(LOG_TAG,
@@ -451,7 +454,7 @@ public abstract class Setup {
 	}
 
 	private static void loadDeviceDependentSettings(Activity activity) {
-		if (/*Integer.parseInt*/(android.os.Build.VERSION.SDK_INT) <= Build.VERSION_CODES.DONUT) {
+		if (Integer.parseInt(android.os.Build.VERSION.SDK) <= Build.VERSION_CODES.DONUT) {
 			/*
 			 * Here is the problem: OpenGL seems to have rounding errors on
 			 * different gpus (see ObjectPicker.floatToByteColorValue) Thus the
@@ -469,8 +472,8 @@ public abstract class Setup {
 				Display display = ((WindowManager) activity
 						.getSystemService(Activity.WINDOW_SERVICE))
 						.getDefaultDisplay();
-				screenOrientation = display.getRotation();
-//						(Integer) display.getClass().getMethod("getRotation", (Class<?>) null).invoke(display, (Object) null);
+				screenOrientation = (Integer) display.getClass()
+						.getMethod("getRotation", (Class<?>) null).invoke(display, (Object) null);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -589,7 +592,7 @@ public abstract class Setup {
 	 * @param worldUpdater
 	 */
 	public abstract void _c_addActionsToEvents(EventManager eventManager,
-			CustomGLSurfaceView arView, SystemUpdater worldUpdater);
+			CustomGLSurfaceView arView, SystemUpdater updater);
 
 	/**
 	 * All elements (normally that should only be {@link World}s) which should
@@ -613,7 +616,8 @@ public abstract class Setup {
 	 * @param activity
 	 *            use this as the context for new views
 	 */
-	public void _e1_addElementsToOverlay(FrameLayout overlayView, Activity activity) {
+	public void _e1_addElementsToOverlay(FrameLayout overlayView,
+			Activity activity) {
 		// the main.xml layout is loaded and the guiSetup is created for
 		// customization. then the customized view is added to overlayView
 		View sourceView = View.inflate(activity, defaultArLayoutId, null);
@@ -820,7 +824,8 @@ public abstract class Setup {
 	}
 
 	public void resumeEventManager() {
-		EventManager.getInstance().resumeEventListeners(getActivity()/*myTargetActivity*/, useAccelAndMagnetoSensors);
+		EventManager.getInstance().resumeEventListeners(myTargetActivity,
+				useAccelAndMagnetoSensors);
 	}
 
 	public void pauseUpdater() {
@@ -896,4 +901,5 @@ public abstract class Setup {
 					.getHeight();
 		}
 	}
+
 }

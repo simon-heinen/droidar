@@ -39,9 +39,9 @@ public class InfoText extends AbstractModifier {
 		if (myName != null) {
 			LinearLayout l = new LinearLayout(context);
 			LayoutParams p = new LinearLayout.LayoutParams(
-					LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1);
+					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1);
 			LayoutParams p2 = new LinearLayout.LayoutParams(
-					LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1);
+					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1);
 			TextView t = new TextView(context);
 			t.setText(myName);
 			t.setLayoutParams(p);

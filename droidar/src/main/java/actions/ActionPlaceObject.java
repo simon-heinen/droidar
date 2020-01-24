@@ -8,7 +8,7 @@ import worldData.Obj;
 
 import components.ViewPosCalcerComp;
 
-//import de.rwth.setups.PlaceObjectsSetupTwo;
+import de.rwth.setups.PlaceObjectsSetupTwo;
 
 /**
  * Don't use this {@link Action} anymore, instead use a
@@ -36,7 +36,8 @@ public class ActionPlaceObject extends ActionUseCameraAngles {
 	 *            elements can be places
 	 */
 	@Deprecated
-	public ActionPlaceObject(GLCamera targetCamera, Wrapper objToPlace, float maxDistance) {
+	public ActionPlaceObject(GLCamera targetCamera, Wrapper objToPlace,
+			float maxDistance) {
 		super(targetCamera);
 		myCamera = targetCamera;
 		myObjWrapper = objToPlace;

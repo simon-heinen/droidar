@@ -1,17 +1,13 @@
 package gl.animations;
 
-import android.opengl.GLES20;
-
 import gl.Renderable;
 import gl.scenegraph.MeshComponent;
 
-//import javax.microedition.khronos.opengles.GL10;
+import javax.microedition.khronos.opengles.GL10;
 
 import util.Vec;
 import worldData.Updateable;
 import worldData.Visitor;
-
-import static android.opengl.GLES10.glRotatef;
 
 /**
  * This animation rotates a {@link MeshComponent}
@@ -45,8 +41,8 @@ public class AnimationRotate extends GLAnimation {
 	}
 
 	@Override
-	public void render(GLES20 unused, Renderable parent) {
-		glRotatef(angle, rotVec.x, rotVec.y, rotVec.z);
+	public void render(GL10 gl, Renderable parent) {
+		gl.glRotatef(angle, rotVec.x, rotVec.y, rotVec.z);
 	}
 
 	@Override

@@ -4,11 +4,10 @@ import geo.GeoGraph;
 import geo.GeoObj;
 import gl.GLCamera;
 import gl.GLFactory;
-import util.Log;
 import util.Vec;
 import worldData.World;
 import actions.ActionCalcRelativePos;
-//import android.util.Log;
+import android.util.Log;
 
 import commands.DebugCommandPositionEvent;
 
@@ -219,13 +218,13 @@ public class GeoTests extends SimpleTesting {
 		assertFalse(isEastOf(posD, camera));
 	}
 
-	private boolean isNorthOf(GeoObj a, GLCamera b) {
+	private boolean isNorthOf(GeoObj a, GLCamera b) throws Exception {
 		float dist = a.getVirtualPosition().y - b.getMyNewPosition().y;
 		Log.v(LOG_TAG, "north dist=" + dist);
 		return (dist > 0);
 	}
 
-	private boolean isEastOf(GeoObj a, GLCamera b) {
+	private boolean isEastOf(GeoObj a, GLCamera b) throws Exception {
 		float dist = a.getVirtualPosition().x - b.getMyNewPosition().x;
 		Log.v(LOG_TAG, "east dist=" + dist);
 		return (dist > 0);
@@ -313,7 +312,7 @@ public class GeoTests extends SimpleTesting {
 
 	}
 
-	private void t7() {
+	private void t7() throws Exception {
 		// TODO create test to check distance calculation of GeoObj. for example
 		// one left from 0 lat one right from 0 lat
 	}

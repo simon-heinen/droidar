@@ -45,7 +45,9 @@ public class EfficientListQualified<T> extends EfficientList<T> {
 		if (quali != null) {
 			float[] x = new float[oldSize * 2];
 			// copy old values:
-            if (oldSize >= 0) System.arraycopy(quali, 0, x, 0, oldSize);
+			for (int i = 0; i < oldSize; i++) {
+				x[i] = quali[i];
+			}
 			quali = x;
 		}
 		return super.resizeArray(oldSize, a);

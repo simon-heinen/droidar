@@ -29,7 +29,7 @@ public class M_Container extends ArrayList<ModifierInterface> implements
 		LinearLayout mostOuterBox = new LinearLayout(target);
 
 		LayoutParams layParams = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1);
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1);
 
 		containerForAllItems.setLayoutParams(layParams);
 		containerForAllItems.setPadding(MOST_OUTER_PADDING, MOST_OUTER_PADDING,

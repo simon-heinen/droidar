@@ -27,7 +27,8 @@ public class ActionBufferedCameraAR extends Action {
 	 *            is the horizontal value (should be around 8, smaller is
 	 *            faster)
 	 */
-	public ActionBufferedCameraAR(GLCamera glCamera, float sensityX, float sensityY) {
+	public ActionBufferedCameraAR(GLCamera glCamera, float sensityX,
+			float sensityY) {
 		myTargetCamera = glCamera;
 		TOUCH_SENSITY_X = sensityX;
 		TOUCH_SENSITY_Y = sensityY;
@@ -43,7 +44,8 @@ public class ActionBufferedCameraAR extends Action {
 	}
 
 	@Override
-	public boolean onTouchMove(MotionEvent e1, MotionEvent e2, float screenDeltaX, float screenDeltaY) {
+	public boolean onTouchMove(MotionEvent e1, MotionEvent e2,
+			float screenDeltaX, float screenDeltaY) {
 		screenDeltaX = screenDeltaX / TOUCH_SENSITY_X;
 		screenDeltaY = -screenDeltaY / TOUCH_SENSITY_Y;
 		myTargetCamera.changeZAngleBuffered(screenDeltaX);

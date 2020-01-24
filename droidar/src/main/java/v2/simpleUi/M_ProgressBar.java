@@ -37,9 +37,9 @@ public abstract class M_ProgressBar implements ModifierInterface, UiDecoratable 
 		container.setOrientation(LinearLayout.VERTICAL);
 		container.setGravity(Gravity.CENTER_VERTICAL);
 		LayoutParams p = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 2);
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 2);
 		LayoutParams p2 = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1);
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1);
 
 		nameText = new TextView(context);
 		nameText.setText(getVarName());

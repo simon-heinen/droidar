@@ -26,9 +26,9 @@ public abstract class DoubleModifier extends AbstractModifier {
 		l.setGravity(Gravity.CENTER_VERTICAL);
 
 		LayoutParams p = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 2);
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 2);
 		LayoutParams p2 = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1);
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1);
 
 		TextView t = new TextView(context);
 		t.setLayoutParams(p);

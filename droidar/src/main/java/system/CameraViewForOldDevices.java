@@ -22,4 +22,5 @@ public class CameraViewForOldDevices extends CameraView {
 			myCamera.setParameters(p);
 		}
 	}
+
 }

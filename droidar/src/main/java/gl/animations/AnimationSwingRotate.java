@@ -1,16 +1,12 @@
 package gl.animations;
 
-import android.opengl.GLES20;
-
 import gl.Renderable;
 
-//import javax.microedition.khronos.opengles.GL10;
+import javax.microedition.khronos.opengles.GL10;
 
 import util.Vec;
 import worldData.Updateable;
 import worldData.Visitor;
-
-import static android.opengl.GLES10.glRotatef;
 
 /**
  * This animation simulated the movement of a metronome. For more details see
@@ -43,7 +39,8 @@ public class AnimationSwingRotate extends GLAnimation {
 	 * @param accuracy
 	 *            should be 0.2f (or something between 0.01f and 0.5f)
 	 */
-	public AnimationSwingRotate(float speed, Vec lowerEnd, Vec upperEnd, float accuracy) {
+	public AnimationSwingRotate(float speed, Vec lowerEnd, Vec upperEnd,
+			float accuracy) {
 		this.speed = speed;
 		this.accuracy = accuracy;
 		this.dEnd = lowerEnd.copy();
@@ -78,10 +75,10 @@ public class AnimationSwingRotate extends GLAnimation {
 	}
 
 	@Override
-	public void render(GLES20 unused, Renderable parent) {
-		glRotatef(currentPos.z, 0, 0, 1);
-		glRotatef(currentPos.x, 1, 0, 0);
-		glRotatef(currentPos.y, 0, 1, 0);
+	public void render(GL10 gl, Renderable parent) {
+		gl.glRotatef(currentPos.z, 0, 0, 1);
+		gl.glRotatef(currentPos.x, 1, 0, 0);
+		gl.glRotatef(currentPos.y, 0, 1, 0);
 	}
 
 }

@@ -15,11 +15,11 @@ public interface HasInfosInterface {
 	 * @return normally not null, on default a infoObject is initialized of
 	 *         there was none before this request
 	 */
-    MetaInfos getInfoObject();
+	public MetaInfos getInfoObject();
 
 	/**
 	 * @return true if the object currently has a info object
 	 */
-    boolean HasInfoObject();
+	public boolean HasInfoObject();
 
 }

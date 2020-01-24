@@ -42,7 +42,8 @@ public class GLUtilityClass {
 			return null;
 		// short is 2 bytes, therefore we multiply the number if
 		// vertices with 2.
-		ByteBuffer indiceBiteBuffer = ByteBuffer.allocateDirect(source.length * 2);
+		ByteBuffer indiceBiteBuffer = ByteBuffer
+				.allocateDirect(source.length * 2);
 		indiceBiteBuffer.order(ByteOrder.nativeOrder());
 		ShortBuffer targetBuffer = indiceBiteBuffer.asShortBuffer();
 		targetBuffer.put(source);
@@ -54,15 +55,17 @@ public class GLUtilityClass {
 	 * this is a copy from
 	 * {@link SensorManager#getRotationMatrixFromVector(float[] R, float[] rotationVector)}
 	 * in newer android versions. Code from:
-	 * http://android.git.kernel.org/?p=platform/frameworks/base.git;a=blob;f=core/java/android/hardware/SensorManager.java
-	 * to keep compatibility to older Android versions
+	 * http://android.git.kernel.org/?p=platform/frameworks/base
+	 * .git;a=blob;f=core/java/android/hardware/SensorManager.java to keep
+	 * compatibility to older Android versions
 	 * 
 	 * TODO the "if lenght==3" stuff could be removed?
 	 * 
 	 * @param R
 	 * @param rotationVector
 	 */
-	public static void getRotationMatrixFromVector(float[] R, float[] rotationVector) {
+	public static void getRotationMatrixFromVector(float[] R,
+			float[] rotationVector) {
 
 		float q0;
 		float q1 = rotationVector[0];
@@ -122,7 +125,8 @@ public class GLUtilityClass {
 	/**
 	 * source:
 	 * 
-	 * http://code.google.com/p/gl2-android/source/browse/trunk/src/com/badlogic/gdx/GL2Test.java
+	 * http://code.google.com/p/gl2-android/source/browse/trunk/src/com/badlogic
+	 * /gdx/GL2Test.java
 	 * 
 	 * @param context
 	 * @return

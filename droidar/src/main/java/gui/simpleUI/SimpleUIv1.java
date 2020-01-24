@@ -86,7 +86,7 @@ public class SimpleUIv1 extends Activity {
 		group.addModifier(config.loadCloseButtonsFor(target, group));
 
 		LayoutParams layParams = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1);
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1);
 
 		LinearLayout containerForAllItems = new LinearLayout(target);
 		containerForAllItems.setLayoutParams(layParams);
@@ -158,7 +158,7 @@ public class SimpleUIv1 extends Activity {
 	private static String addTransfairObject(Context context,
 			EditItem itemToDisplay, Object message, UIConfig config) {
 		if (transfairList == null)
-			transfairList = new HashMap<>();
+			transfairList = new HashMap<String, Object>();
 		String newKey = context.toString();
 		transfairList.put(newKey, itemToDisplay);
 		transfairList.put(newKey + MESSAGE, message);

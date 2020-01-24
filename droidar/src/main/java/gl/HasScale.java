@@ -3,6 +3,7 @@ package gl;
 import util.Vec;
 
 public interface HasScale {
-	Vec getScale();
-	void setScale(Vec scale);
+	public Vec getScale();
+
+	public void setScale(Vec scale);
 }

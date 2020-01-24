@@ -24,4 +24,5 @@ public class ActionMoveCameraUnbuffered extends Action {
 		myCamera.changePositionUnbuffered(y * myFactor, x * myFactor);
 		return true;
 	}
+
 }

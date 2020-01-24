@@ -6,8 +6,11 @@ import android.hardware.SensorManager;
 
 /**
  * Use
-
+ * 
  * Children of this class can access the angles of the specified camera
+ * 
+ * 
+ * 
  * @author Spobo
  * 
  */
@@ -19,7 +22,7 @@ public abstract class ActionUseCameraAngles extends Action {
 	@Deprecated
 	private int accelThreshold = 10;
 	/**
-	 * should represent {@link SensorManager#getOrientation(float[], float[])}
+	 * sould represent {@link SensorManager#getOrientation(float[], float[])}
 	 */
 	@Deprecated
 	private float[] myAngles = new float[3];
@@ -30,7 +33,8 @@ public abstract class ActionUseCameraAngles extends Action {
 	}
 
 	/**
-	 * this affects how often the updatePitch() and updateRoll() methods are called.
+	 * this affects how often the updatePitch() and updateRoll() methods are
+	 * called.
 	 * 
 	 * @param threshold
 	 *            1 means update on every event 10 means update every 10 events.

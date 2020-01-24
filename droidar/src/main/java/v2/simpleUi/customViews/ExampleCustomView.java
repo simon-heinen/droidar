@@ -1,6 +1,5 @@
 package v2.simpleUi.customViews;
 
-import util.Log;
 import v2.simpleUi.util.ImageTransform;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -12,7 +11,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.graphics.Xfermode;
 import android.util.AttributeSet;
-//import android.util.Log;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 

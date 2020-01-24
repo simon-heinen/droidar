@@ -25,6 +25,7 @@ public class TextUtils {
 	 */
 	public void setTextFont(Context context, String fontName) {
 		textTypeface = Typeface.createFromAsset(context.getAssets(), fontName);
+
 	}
 
 	public void setTextSize(int textSize) {

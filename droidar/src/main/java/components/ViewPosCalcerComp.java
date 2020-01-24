@@ -1,13 +1,12 @@
 package components;
 
 import gl.GLCamera;
-import util.Log;
 import util.Vec;
 import worldData.Entity;
 import worldData.UpdateTimer;
 import worldData.Updateable;
 import worldData.Visitor;
-//import android.util.Log;
+import android.util.Log;
 
 public abstract class ViewPosCalcerComp implements Entity {
 

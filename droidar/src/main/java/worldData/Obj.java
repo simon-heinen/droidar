@@ -1,7 +1,5 @@
 package worldData;
 
-import android.opengl.GLES20;
-
 import gl.Color;
 import gl.HasColor;
 import gl.HasPosition;
@@ -9,18 +7,16 @@ import gl.ObjectPicker;
 import gl.Renderable;
 import gl.scenegraph.MeshComponent;
 
-//import javax.microedition.khronos.opengles.GL10;
+import javax.microedition.khronos.opengles.GL10;
 
 import util.EfficientList;
 import util.Vec;
 
 import commands.Command;
 
-import static android.opengl.GLES10.glColor4f;
-
 public class Obj extends AbstractObj implements HasPosition, HasColor {
 
-	EfficientList<Entity> myComponents = new EfficientList<>();
+	EfficientList<Entity> myComponents = new EfficientList<Entity>();
 
 	public void setMyComponents(EfficientList<Entity> myComponents) {
 		this.myComponents = myComponents;
@@ -73,16 +69,16 @@ public class Obj extends AbstractObj implements HasPosition, HasColor {
 	 * @param uniqueCompName
 	 *            look into {@link Consts} and there the COMP_.. strings for
 	 *            component types
-	 * @param uniqueCompName
+	 * @param comp
 	 */
-	public void setComp(Entity uniqueCompName) {
+	public void setComp(Entity comp) {
 		// TODO rename to add.. and return boolean if could be added
 		// TODO put the String info in the comp itself or remove it, its crap
-		if (uniqueCompName instanceof MeshComponent) {
-			setMyGraphicsComponent((MeshComponent) uniqueCompName);
+		if (comp instanceof MeshComponent) {
+			setMyGraphicsComponent((MeshComponent) comp);
 		}
-		if (uniqueCompName != null && myComponents.contains(uniqueCompName) == -1)
-			myComponents.add(uniqueCompName);
+		if (comp != null && myComponents.contains(comp) == -1)
+			myComponents.add(comp);
 	}
 
 	/**
@@ -103,9 +99,10 @@ public class Obj extends AbstractObj implements HasPosition, HasColor {
 	}
 
 	@Override
-	public void render(GLES20 unused, Renderable parent) {
+	public void render(GL10 gl, Renderable parent) {
 
-		if (myGraphicsComponent == null) return;
+		if (myGraphicsComponent == null)
+			return;
 
 		/*
 		 * nessecary for objects with picking disabled (wich cant be clicked).
@@ -118,15 +115,15 @@ public class Obj extends AbstractObj implements HasPosition, HasColor {
 		 * meshGroup wont have the correct selection color!
 		 */
 		if (ObjectPicker.readyToDrawWithColor) {
-			glColor4f(0, 0, 0, 1);
+			gl.glColor4f(0, 0, 0, 1);
 		} else {
 			/*
 			 * before drawing a new object, reset the color to white TODO
 			 */
-			glColor4f(1, 1, 1, 1);
+			gl.glColor4f(1, 1, 1, 1);
 		}
 
-		myGraphicsComponent.render(unused, this);
+		myGraphicsComponent.render(gl, this);
 	}
 
 	@Override
@@ -155,7 +152,9 @@ public class Obj extends AbstractObj implements HasPosition, HasColor {
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public boolean hasComponent(Class componentSubclass) {
-		return getComp(componentSubclass) != null;
+		if (getComp(componentSubclass) != null)
+			return true;
+		return false;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -230,11 +229,4 @@ public class Obj extends AbstractObj implements HasPosition, HasColor {
 	// myInfoObj.setShortDescr(name);
 	// }
 
-	@Override
-	public String toString() {
-		return "Obj{" +
-				"myComponents=" + myComponents +
-				", myGraphicsComponent=" + myGraphicsComponent +
-				'}';
-	}
 }

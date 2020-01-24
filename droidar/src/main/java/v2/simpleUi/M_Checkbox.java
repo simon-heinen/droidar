@@ -39,10 +39,10 @@ public abstract class M_Checkbox implements ModifierInterface, UiDecoratable {
 		l.setPadding(DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING,
 				DEFAULT_PADDING);
 		LayoutParams p = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT,
 				weightOfDescription);
 		LayoutParams p2 = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT,
 				weightOfInputText);
 
 		TextView t = new TextView(context);

@@ -1,0 +1,20 @@
+{
+         "name":"AAAAAA",
+         "type":"Mensa",
+         "descr":"AAAAAA",
+         "lati":1.1,
+         "longi":1.1,
+         "alti":0,
+         "url":"AAAAAA",
+         "iconUrl":"AAAAAA",
+         "commentsUrl":"AAAAAA",
+         "openingHours":"AAAAAA",
+         "address":{
+            "building":"AAAAAA",
+            "floor":"AAAAAA",
+            "street":"AAAAAA",
+            "city":"Aachen",
+            "postalCode":"52070",
+            "buildingPlanLink":"AAAAAA"
+         }
+}
