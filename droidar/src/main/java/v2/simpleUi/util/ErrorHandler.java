@@ -528,8 +528,7 @@ public class ErrorHandler extends Activity implements UncaughtExceptionHandler {
 		}
 	}
 
-	public static void enableEmailReports(String developerEmailAdress,
-			String emailTitle) {
+	public static void enableEmailReports(String developerEmailAdress, String emailTitle) {
 		myDeveloperMailAdress = developerEmailAdress;
 		myMailSubject = emailTitle;
 	}
