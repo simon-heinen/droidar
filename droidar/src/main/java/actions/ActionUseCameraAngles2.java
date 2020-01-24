@@ -14,7 +14,8 @@ import android.view.Surface;
  * @author Simon Heinen
  * 
  */
-public abstract class ActionUseCameraAngles2 implements OrientationChangedListener {
+public abstract class ActionUseCameraAngles2 implements
+		OrientationChangedListener {
 
 	private float[] mag;
 	private float[] accel;
@@ -76,7 +77,8 @@ public abstract class ActionUseCameraAngles2 implements OrientationChangedListen
 			 */
 			if (screenRotation == Surface.ROTATION_90) {
 				// then rotate it according to the screen rotation:
-				SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X, outR);
+				SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_Y,
+						SensorManager.AXIS_MINUS_X, outR);
 			} else {
 				outR = R;
 			}

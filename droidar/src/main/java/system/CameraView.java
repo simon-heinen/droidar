@@ -27,6 +27,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 	public CameraView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		intiCameraView(context);
+
 	}
 
 	private void intiCameraView(Context context) {
@@ -35,7 +36,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 		mHolder = getHolder();
 		Log.d("Activity", "Camera holder created");
 		mHolder.addCallback(this);
-//		mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+		mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 	}
 
 	@Override
@@ -52,7 +53,8 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	@Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+	public void surfaceChanged(SurfaceHolder holder, int format, int width,
+			int height) {
 		// Now that the size is known, set up the camera parameters and
 		// begin the preview.
 		// Camera.Parameters parameters = mCamera.getParameters();
@@ -64,19 +66,22 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	/**
-	 * http://stackoverflow.com/questions/3841122/android-camera-preview-is-sideways
+	 * http://stackoverflow.com/questions/3841122/android-camera-preview-is-
+	 * sideways
 	 */
 	public void setPreviewAccordingToScreenOrientation(int width, int height) {
 		Parameters parameters = myCamera.getParameters();
-		Display display = ((WindowManager) this.getContext().getSystemService(Activity.WINDOW_SERVICE)).getDefaultDisplay();
+		Display display = ((WindowManager) this.getContext().getSystemService(
+				Activity.WINDOW_SERVICE)).getDefaultDisplay();
 		/*
 		 * int rotation = display.getRotation();
+		 * 
 		 * this does not work on older devices so use reflection
 		 */
 		int rotation = 0;
 		try {
-//			rotation = (Integer) display.getClass().getMethod("getRotation", (Class<?>) null).invoke(display, (Object) null);
-			rotation = display.getRotation();
+			rotation = (Integer) display.getClass()
+					.getMethod("getRotation", (Class<?>) null).invoke(display, (Object) null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -104,11 +109,12 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 	private void setDisplayOrientation(int inDegree) {
 		/*
 		 * myCamera.setDisplayOrientation(inDegree);
+		 * 
 		 * does not work on older devices so use reflection
 		 */
 		try {
-			myCamera.setDisplayOrientation(inDegree);
-//			myCamera.getClass().getMethod("setDisplayOrientation", int.class).invoke(myCamera, inDegree);
+			myCamera.getClass().getMethod("setDisplayOrientation", int.class)
+					.invoke(myCamera, inDegree);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -126,9 +132,11 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 	public void resumeCamera() {
 		if (myCamera != null) {
 			myCamera.startPreview();
-			Log.d("Activity","Camera preview started (camera=" + myCamera+ ")");
+			Log.d("Activity", "Camera preview started (camera=" + myCamera
+					+ ")");
 		} else {
-			Log.d("Activity","Camera preview not started because no camera set til now");
+			Log.d("Activity",
+					"Camera preview not started because no camera set til now");
 		}
 	}
 
@@ -147,4 +155,5 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 			Log.d("Activity", "Camera released");
 		}
 	}
+
 }

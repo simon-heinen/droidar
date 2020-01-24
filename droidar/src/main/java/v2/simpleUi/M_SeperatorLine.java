@@ -15,7 +15,7 @@ public abstract class M_SeperatorLine implements ModifierInterface {
 	@Override
 	public View getView(Context context) {
 		line = new LinearLayout(context);
-		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,
+		LayoutParams lp = new LayoutParams(LayoutParams.FILL_PARENT,
 				(int) ImageTransform.dipToPixels(line.getResources(),
 						getHeigthInDip()));
 		int p = 10;

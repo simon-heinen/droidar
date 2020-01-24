@@ -1,18 +1,14 @@
 package gl.animations;
 
-import android.opengl.GLES20;
-
 import gl.Color;
 import gl.ObjectPicker;
 import gl.Renderable;
 
-//import javax.microedition.khronos.opengles.GL10;
+import javax.microedition.khronos.opengles.GL10;
 
 import util.Vec;
 import worldData.Updateable;
 import worldData.Visitor;
-
-import static android.opengl.GLES10.glColor4f;
 
 public class AnimationColorBounce extends GLAnimation {
 
@@ -66,9 +62,12 @@ public class AnimationColorBounce extends GLAnimation {
 	}
 
 	@Override
-	public void render(GLES20 unused, Renderable parent) {
+	public void render(GL10 gl, Renderable parent) {
+
 		if (!ObjectPicker.readyToDrawWithColor)
-			glColor4f(myCurrentColor.red, myCurrentColor.green, myCurrentColor.blue, myCurrentColor.alpha);
+			gl.glColor4f(myCurrentColor.red, myCurrentColor.green,
+					myCurrentColor.blue, myCurrentColor.alpha);
+
 	}
 
 	@Override

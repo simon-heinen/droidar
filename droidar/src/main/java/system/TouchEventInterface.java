@@ -19,15 +19,15 @@ public interface TouchEventInterface {
 
 	void onDoubleTap(MotionEvent e);
 
-	Command getOnTabCommand();
+	public Command getOnTabCommand();
 
-	Command getOnLongPressCommand();
+	public Command getOnLongPressCommand();
 
-	Command getOnDoubleTabCommand();
+	public Command getOnDoubleTabCommand();
 
-	void setOnTabCommand(Command c);
+	public void setOnTabCommand(Command c);
 
-	void setOnLongPressCommand(Command c);
+	public void setOnLongPressCommand(Command c);
 
 	/**
 	 * double tab commands should only be in situations when not too many other
@@ -37,7 +37,7 @@ public interface TouchEventInterface {
 	 * 
 	 * @param c
 	 */
-    void setOnDoubleTabCommand(Command c);
+	public void setOnDoubleTabCommand(Command c);
 
 	/**
 	 * see

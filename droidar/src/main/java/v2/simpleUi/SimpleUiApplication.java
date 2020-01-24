@@ -27,7 +27,7 @@ public class SimpleUiApplication extends Application {
 
 	public HashMap<String, Object> getTransferList() {
 		if (transferList == null) {
-			transferList = new HashMap<>();
+			transferList = new HashMap<String, Object>();
 		}
 		return transferList;
 	}

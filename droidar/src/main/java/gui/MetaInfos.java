@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 import listeners.ItemSelectedListener;
 import util.EfficientList;
-//import util.IO;
+import util.IO;
 import util.Log;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -20,7 +20,6 @@ import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.view.ViewGroup;
 import de.rwth.R;
-import v2.simpleUi.util.IO;
 
 /**
  * The {@link MetaInfos} object should be used to separate the information an
@@ -113,7 +112,7 @@ public class MetaInfos implements EditItem {
 	 */
 	private Bitmap myIcon;
 
-	private EfficientList<InfoElement> longDescr = new EfficientList<>();
+	private EfficientList<InfoElement> longDescr = new EfficientList<InfoElement>();
 	private String shortDescr = "";
 	private Color myColor;
 	/**
@@ -218,12 +217,12 @@ public class MetaInfos implements EditItem {
 	}
 
 	public void addTextToLongDescr(String info) {
-		if (!info.equals(""))
+		if (info != "")
 			longDescr.add(new InfoElement(info));
 	}
 
 	public void addDataToLongDescr(String key, String value) {
-		if (!key.equals("") && !value.equals(""))
+		if (key != "" && value != "")
 			longDescr.add(new InfoElement(key, value));
 	}
 
@@ -239,23 +238,21 @@ public class MetaInfos implements EditItem {
 	}
 
 	public void setShortDescr(String name) {
-		if (!name.equals(""))
+		if (name != "")
 			shortDescr = name;
 	}
 
 	public void extractInfos(Address a) {
-		String s;
+		String s = "";
 		if (a.getFeatureName() != null)
 			setShortDescr(a.getFeatureName());
 		else {
 			setShortDescr(a.getAddressLine(0));
 		}
 		int i = 0;
-		StringBuilder sBuilder = new StringBuilder();
 		for (i = 0; i < a.getMaxAddressLineIndex(); i++) {
-			sBuilder.append(a.getAddressLine(i)).append("\n");
+			s += a.getAddressLine(i) + "\n";
 		}
-		s = sBuilder.toString();
 		s += a.getAddressLine(i);
 		if (a.getPostalCode() != null)
 			s += a.getPostalCode() + " ";
@@ -307,7 +304,9 @@ public class MetaInfos implements EditItem {
 	}
 
 	public boolean isSelected() {
-		return mySelectedInfos != null;
+		if (mySelectedInfos != null)
+			return true;
+		return false;
 	}
 
 	public boolean setDeselected() {
@@ -368,7 +367,7 @@ public class MetaInfos implements EditItem {
 	}
 
 	public void setMyIconURL(String url) {
-		if (url != null)
+		if (url != "")
 			myIconURL = url;
 	}
 
@@ -378,7 +377,8 @@ public class MetaInfos implements EditItem {
 		if (message instanceof String) {
 			String m = (String) message;
 
-			String[] keywords = { "Edit", "edit", "editscreen", "edit mode", "editmode", "Editmode" }; // TODO
+			String[] keywords = { "Edit", "edit", "editscreen", "edit mode",
+					"editmode", "Editmode" }; // TODO
 
 			if (Arrays.asList(keywords).contains(m)) {
 				getEditUI(group);

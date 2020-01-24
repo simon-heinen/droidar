@@ -1,2 +1,1 @@
-include ":droidar", ":SimpleUITests", "ModelLoaderAdapters", ":MarkerDemos", ":GoogleMapsSupport", "ARMarker", "TechDemo"
-//include ':openCVLibrary'
+include ":droidar"

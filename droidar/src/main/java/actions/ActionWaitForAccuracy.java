@@ -5,7 +5,7 @@ import system.EventManager;
 import android.app.Activity;
 import android.app.Dialog;
 import android.location.Location;
-//import android.util.Log;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import de.rwth.R;
-import util.Log;
 
 public abstract class ActionWaitForAccuracy extends Action {
 
@@ -21,7 +20,7 @@ public abstract class ActionWaitForAccuracy extends Action {
 
 	private static final String TEXT_POSITION_ACCURACY = "Position Accuracy ";
 
-	private static final String TEXT_SKIP_ACCURACY_DETECTION = "Skip accuracy detection (not recommended!)";
+	private static final String TEXT_SKIP_ACCURACY_DETECTION = "Skip accuracy detection (not recomended!)";
 
 	// 1 minutes in ms:
 	private static final long MAX_TIME_SINCE_LAST_UPDATE_IN_MS = 1000 * 60 * 1;
@@ -67,7 +66,8 @@ public abstract class ActionWaitForAccuracy extends Action {
 			myCurrentAccuracy = l.getAccuracy();
 			long passedTime = System.currentTimeMillis() - l.getTime();
 			Log.i(LOG_TAG, "Last known pos accuracy=" + myCurrentAccuracy);
-			Log.i(LOG_TAG, "Last known pos age=" + (passedTime / 1000f / 10f) + " minutes");
+			Log.i(LOG_TAG, "Last known pos age=" + (passedTime / 1000f / 10f)
+					+ " minutes");
 			if (passedTime <= MAX_TIME_SINCE_LAST_UPDATE_IN_MS) {
 				onLocationChanged(l);
 			} else {
@@ -122,7 +122,8 @@ public abstract class ActionWaitForAccuracy extends Action {
 			ActionWaitForAccuracy a);
 
 	public View getView() {
-		viewContainer = View.inflate(myActivity, R.layout.action_wait_for_accuracy_view, null);
+		viewContainer = View.inflate(myActivity,
+				R.layout.action_wait_for_accuracy_view, null);
 		accText = (TextView) viewContainer.findViewById(R.id.awfa_accText);
 		warningText = (Button) viewContainer.findViewById(R.id.awfa_warning);
 		warningText.setOnClickListener(new OnClickListener() {
@@ -162,7 +163,7 @@ public abstract class ActionWaitForAccuracy extends Action {
 			public void run() {
 				try {
 					Thread.sleep(5000);
-				} catch (InterruptedException ignored) {
+				} catch (InterruptedException e) {
 				}
 				EventManager.getInstance().registerLocationUpdates();
 				onGPSActivatedEvent();
@@ -196,7 +197,8 @@ public abstract class ActionWaitForAccuracy extends Action {
 			@Override
 			public void onClick(View v) {
 				Log.d(LOG_TAG, "Trying to skip accuracy detection");
-				callFirstTimeAccReachedIfNotYetCalled(GeoUtils.getCurrentLocation(myActivity));
+				callFirstTimeAccReachedIfNotYetCalled(GeoUtils
+						.getCurrentLocation(myActivity));
 				hideUI();
 				dialog.dismiss();
 			}

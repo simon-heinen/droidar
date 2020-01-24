@@ -12,6 +12,7 @@ public class ConcreteSimpleLocationManager extends SimpleLocationManager {
 
 	/**
 	 * <1 accuracy less important
+	 * 
 	 * >1 accuracy more important
 	 */
 	private static final float ACCURACY_WEIGHTING = 1f;
@@ -43,7 +44,8 @@ public class ConcreteSimpleLocationManager extends SimpleLocationManager {
 	}
 
 	@Override
-	public void onLocationEventFromGPS(Location location, ArrayList<LocationListener> listenersToInform) {
+	public void onLocationEventFromGPS(Location location,
+			ArrayList<LocationListener> listenersToInform) {
 		if (currentPosition == null) {
 			currentPosition = new Location("AveragePosition");
 		}
@@ -55,7 +57,8 @@ public class ConcreteSimpleLocationManager extends SimpleLocationManager {
 	}
 
 	@Override
-	public void onLocationEventFromSteps(Location location, ArrayList<LocationListener> listenersToInform) {
+	public void onLocationEventFromSteps(Location location,
+			ArrayList<LocationListener> listenersToInform) {
 		lastStepPos = location;
 		onLocationEventFromGPS(location, listenersToInform);
 	}
@@ -86,7 +89,8 @@ public class ConcreteSimpleLocationManager extends SimpleLocationManager {
 		 * anzI=i*(i+1)/2
 		 */
 		int numberOfLocations = lastPositions.size();
-		Log.d(LOG_TAG, "Calculating average of " + numberOfLocations + " locations");
+		Log.d(LOG_TAG, "Calculating average of " + numberOfLocations
+				+ " locations");
 		for (int i = 0; i < numberOfLocations; i++) {
 			Location l = lastPositions.get(i);
 			float acc = ACCURACY_WEIGHTING / l.getAccuracy();
@@ -126,7 +130,7 @@ public class ConcreteSimpleLocationManager extends SimpleLocationManager {
 	@Override
 	public void setMaxNrOfBufferedLocations(int maxNrOfBufferedLocations) {
 		if (lastPositions == null) {
-			lastPositions = new LimitedQueue<>(maxNrOfBufferedLocations);
+			lastPositions = new LimitedQueue<Location>(maxNrOfBufferedLocations);
 		} else {
 			lastPositions.setLimit(maxNrOfBufferedLocations);
 		}
@@ -134,7 +138,7 @@ public class ConcreteSimpleLocationManager extends SimpleLocationManager {
 
 	private void addToLastLocationsList(Location location) {
 		if (lastPositions == null) {
-			lastPositions = new LimitedQueue<>(MAX_NUMBR_OF_LOCATIONS);
+			lastPositions = new LimitedQueue<Location>(MAX_NUMBR_OF_LOCATIONS);
 		}
 		lastPositions.add(location);
 	}

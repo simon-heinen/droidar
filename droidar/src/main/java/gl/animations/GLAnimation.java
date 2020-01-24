@@ -1,8 +1,5 @@
 package gl.animations;
 
-import android.opengl.GLES20;
-
-import gl.Renderable;
 import util.Log;
 import worldData.RenderableEntity;
 import worldData.Updateable;
@@ -21,13 +18,16 @@ public abstract class GLAnimation implements RenderableEntity {
 
 	@Override
 	public Updateable getMyParent() {
-		Log.e(LOG_TAG, "Get parent called which is not " + "implemented for this component!");
+		Log.e(LOG_TAG, "Get parent called which is not "
+				+ "implemented for this component!");
 		return null;
 	}
 
 	@Override
 	public void setMyParent(Updateable parent) {
 		// can't have children so the parent does not have to be stored
-		Log.e(LOG_TAG, "Set parent called which is not " + "implemented for this component!");
+		Log.e(LOG_TAG, "Set parent called which is not "
+				+ "implemented for this component!");
 	}
+
 }

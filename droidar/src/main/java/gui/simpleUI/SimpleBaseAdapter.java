@@ -46,9 +46,9 @@ public class SimpleBaseAdapter extends BaseAdapter {
 		 *            the position in the list
 		 * @return
 		 */
-		View getView(Context context, View convertView,
-					 ViewGroup parent, SimpleBaseAdapter simpleBaseAdapter,
-					 List<HasItsOwnView> containerList, int positionInList);
+		public View getView(Context context, View convertView,
+				ViewGroup parent, SimpleBaseAdapter simpleBaseAdapter,
+				List<HasItsOwnView> containerList, int positionInList);
 	}
 
 	private static final int UPDATE_SPEED = 1000;

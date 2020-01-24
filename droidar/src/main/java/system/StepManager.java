@@ -42,7 +42,7 @@ public class StepManager implements SensorEventListener {
 
 	public interface OnStepListener {
 
-		void onStep(double compassAngle, double steplength);
+		public void onStep(double compassAngle, double steplength);
 	}
 
 	private void registerSensors(Context context) {
@@ -80,7 +80,7 @@ public class StepManager implements SensorEventListener {
 
 	public void registerStepListener(Context context, OnStepListener l) {
 		if (listeners == null) {
-			listeners = new ArrayList<>();
+			listeners = new ArrayList<OnStepListener>();
 			registerSensors(context);
 			start();
 		}
@@ -137,7 +137,8 @@ public class StepManager implements SensorEventListener {
 	 * @param bearing
 	 * @return
 	 */
-	public static Location newLocationOneStepFurther(Location l, double d, double bearing) {
+	public static Location newLocationOneStepFurther(Location l, double d,
+			double bearing) {
 		bearing = Math.toRadians(bearing);
 		double R = 6378100; // m equatorial radius
 		double lat1 = Math.toRadians(l.getLatitude());
@@ -182,7 +183,9 @@ public class StepManager implements SensorEventListener {
 	};
 
 	@Override
-	public void onAccuracyChanged(Sensor sensor, int accuracy) { }
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+	}
 
 	final float alpha = 0.8f;
 	float[] bufferedAccel = { .0f, .0f, .0f };

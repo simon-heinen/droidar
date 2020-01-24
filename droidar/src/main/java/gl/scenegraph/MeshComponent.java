@@ -11,7 +11,7 @@ import gl.ObjectPicker;
 import gl.Renderable;
 import gl.animations.GLAnimation;
 
-//import javax.microedition.khronos.opengles.GL10;
+import javax.microedition.khronos.opengles.GL10;
 
 import listeners.SelectionListener;
 import system.Container;
@@ -22,22 +22,10 @@ import util.Wrapper;
 import worldData.Obj;
 import worldData.RenderableEntity;
 import worldData.Updateable;
-
-import android.opengl.GLES20;
 import android.opengl.Matrix;
-
-import java.util.Arrays;
 
 import commands.Command;
 import commands.undoable.UndoableCommand;
-
-import static android.opengl.GLES10.glColor4f;
-import static android.opengl.GLES10.glMultMatrixf;
-import static android.opengl.GLES10.glPopMatrix;
-import static android.opengl.GLES10.glPushMatrix;
-import static android.opengl.GLES10.glRotatef;
-import static android.opengl.GLES10.glScalef;
-import static android.opengl.GLES10.glTranslatef;
 
 /**
  * This is a subclass of {@link RenderableEntity} and it can be used for any
@@ -52,7 +40,8 @@ import static android.opengl.GLES10.glTranslatef;
  * @author Spobo
  * 
  */
-public abstract class MeshComponent implements RenderableEntity, SelectionListener, HasPosition, HasColor, HasRotation, HasScale {
+public abstract class MeshComponent implements RenderableEntity,
+		SelectionListener, HasPosition, HasColor, HasRotation, HasScale {
 
 	private static final String LOG_TAG = "MeshComp";
 	/**
@@ -84,8 +73,8 @@ public abstract class MeshComponent implements RenderableEntity, SelectionListen
 
 	/**
 	 * how to extract euler angles from a rotation matrix
-	 * http://paulbourke.net/geometry/eulerangle/
-	 * TODO provide a method for this extraction
+	 * http://paulbourke.net/geometry/eulerangle/ TODO provide a method for this
+	 * extraction
 	 */
 	private float[] markerRotationMatrix;
 
@@ -147,9 +136,12 @@ public abstract class MeshComponent implements RenderableEntity, SelectionListen
 	 */
 	public Vec getWorldCoordsFromModelSpacePosition(Vec modelSpaceCoords) {
 		float[] resultVec = new float[3];
-		float[] modelSpaceCoordsVec = { modelSpaceCoords.x, modelSpaceCoords.y, modelSpaceCoords.z };
-		Matrix.multiplyMV(resultVec, 0, markerRotationMatrix, 0, modelSpaceCoordsVec, 0);
-		return new Vec(resultVec[0] + myPosition.x, resultVec[1] + myPosition.y, resultVec[2] + myPosition.z);
+		float[] modelSpaceCoordsVec = { modelSpaceCoords.x, modelSpaceCoords.y,
+				modelSpaceCoords.z };
+		Matrix.multiplyMV(resultVec, 0, markerRotationMatrix, 0,
+				modelSpaceCoordsVec, 0);
+		return new Vec(resultVec[0] + myPosition.x,
+				resultVec[1] + myPosition.y, resultVec[2] + myPosition.z);
 	}
 
 	@Override
@@ -180,14 +172,15 @@ public abstract class MeshComponent implements RenderableEntity, SelectionListen
 		this.myScale = new Vec(scaleRate, scaleRate, scaleRate);
 	}
 
-	private void loadPosition(GLES20 unused) {
+	private void loadPosition(GL10 gl) {
 		if (myPosition != null)
-			glTranslatef(myPosition.x, myPosition.y, myPosition.z);
+			gl.glTranslatef(myPosition.x, myPosition.y, myPosition.z);
 	}
 
-	private void loadRotation(GLES20 unused) {
+	private void loadRotation(GL10 gl) {
+
 		if (markerRotationMatrix != null) {
-			glMultMatrixf(markerRotationMatrix, 0);
+			gl.glMultMatrixf(markerRotationMatrix, 0);
 		}
 
 		if (myRotation != null) {
@@ -201,57 +194,60 @@ public abstract class MeshComponent implements RenderableEntity, SelectionListen
 			 * x-axis rotation wrong. so z x y is the best rotation order but
 			 * normaly z y x would work too:
 			 */
-			/*gl.*/glRotatef(myRotation.z, 0, 0, 1);
-			/*gl.*/glRotatef(myRotation.x, 1, 0, 0);
-			/*gl.*/glRotatef(myRotation.y, 0, 1, 0);
+			gl.glRotatef(myRotation.z, 0, 0, 1);
+			gl.glRotatef(myRotation.x, 1, 0, 0);
+			gl.glRotatef(myRotation.y, 0, 1, 0);
 		}
 
 	}
 
-	private void setScale(GLES20 unused) {
+	private void setScale(GL10 gl) {
 		if (myScale != null)
-			glScalef(myScale.x, myScale.y, myScale.z);
+			gl.glScalef(myScale.x, myScale.y, myScale.z);
 	}
 
 	@Override
-	public synchronized void render(GLES20 unused, Renderable parent) {
+	public synchronized void render(GL10 gl, Renderable parent) {
 
 		// store current matrix and then modify it:
-		glPushMatrix();
-		loadPosition(unused);
-		setScale(unused);
-		loadRotation(unused);
+		gl.glPushMatrix();
+		loadPosition(gl);
+		setScale(gl);
+		loadRotation(gl);
 
 		if (ObjectPicker.readyToDrawWithColor) {
 			if (myPickColor != null) {
-				glColor4f(myPickColor.red, myPickColor.green, myPickColor.blue, myPickColor.alpha);
+				gl.glColor4f(myPickColor.red, myPickColor.green,
+						myPickColor.blue, myPickColor.alpha);
 			} else {
-				Log.d("Object Picker", "Object " + this + " had no picking color");
+				Log.d("Object Picker", "Object " + this
+						+ " had no picking color");
 			}
 		} else if (myColor != null) {
-			glColor4f(myColor.red, myColor.green, myColor.blue, myColor.alpha);
+			gl.glColor4f(myColor.red, myColor.green, myColor.blue,
+					myColor.alpha);
 		}
 
 		if (myChildren != null) {
-			myChildren.render(unused, this);
+			myChildren.render(gl, this);
 		}
 
-		draw(unused, parent);
+		draw(gl, parent);
 		// restore old matrix:
-		glPopMatrix();
+		gl.glPopMatrix();
 	}
 
 	/**
-	 * Don't override the {@link Renderable#render(GLES20, Renderable)} method if
+	 * Don't override the {@link Renderable#render(GL10, Renderable)} method if
 	 * you are creating a subclass of {@link MeshComponent}. Instead implement
 	 * this method and all the translation and rotation abilities of the
 	 * {@link MeshComponent} will be applied automatically
 	 * 
-	 * //@param gl
-	 * @param unused
+	 * @param gl
 	 * @param parent
+	 * @param stack
 	 */
-	public abstract void draw(GLES20 unused, Renderable parent);
+	public abstract void draw(GL10 gl, Renderable parent);
 
 	@Override
 	public boolean update(float timeDelta, Updateable parent) {
@@ -298,7 +294,8 @@ public abstract class MeshComponent implements RenderableEntity, SelectionListen
 
 		Wrapper selectionsWrapper = new Wrapper(selectionInterface);
 
-		myPickColor = ObjectPicker.getInstance().registerMesh(selectionsWrapper, c);
+		myPickColor = ObjectPicker.getInstance().registerMesh(
+				selectionsWrapper, c);
 		Log.v(LOG_TAG, "   > myPickColor=" + myPickColor);
 	}
 
@@ -326,6 +323,7 @@ public abstract class MeshComponent implements RenderableEntity, SelectionListen
 
 	@Override
 	public Command getOnClickCommand() {
+
 		// if (myOnClickCommand == null)
 		// return getMyParentObj().getOnClickCommand();
 		return myOnClickCommand;
@@ -398,7 +396,6 @@ public abstract class MeshComponent implements RenderableEntity, SelectionListen
 
 	@Override
 	public MeshComponent clone() throws CloneNotSupportedException {
-		MeshComponent meshComponent = (MeshComponent) super.clone();
 		Log.e("", "MeshComponent.clone() subclass missed, add it there");
 		return null;
 	}
@@ -413,7 +410,8 @@ public abstract class MeshComponent implements RenderableEntity, SelectionListen
 	public static void addChildToTargetsChildGroup(MeshComponent target,
 			RenderableEntity a, boolean insertAtBeginnung) {
 		if (a == null) {
-			Log.e(LOG_TAG, "Request to add NULL object as a child to " + target + " was denied!");
+			Log.e(LOG_TAG, "Request to add NULL object as a child to " + target
+					+ " was denied!");
 			return;
 		}
 
@@ -487,7 +485,8 @@ public abstract class MeshComponent implements RenderableEntity, SelectionListen
 	// @Override TODO
 	private boolean find(RenderableEntity entity, boolean andRemove) {
 		if (myChildren == entity) {
-			if (andRemove) this.removeAllChildren(); //obsolete				this.clearChildren();
+			if (andRemove)
+				clearChildren();
 			return true;
 		}
 		if (myChildren instanceof Container) {
@@ -500,7 +499,8 @@ public abstract class MeshComponent implements RenderableEntity, SelectionListen
 	}
 
 	public void removeAllAnimations() {
-		if (myChildren instanceof GLAnimation) this.removeAllChildren(); //obsolete			this.clearChildren();
+		if (myChildren instanceof GLAnimation)
+			this.clearChildren();
 		if (myChildren instanceof Container)
 			removeAllElementsOfType(((Container) myChildren), GLAnimation.class);
 	}
@@ -515,7 +515,8 @@ public abstract class MeshComponent implements RenderableEntity, SelectionListen
 	 *            object of the specified class-type is found in the passed
 	 *            {@link Container} it will be removes
 	 */
-	public static void removeAllElementsOfType(Container c, Class classTypeToRemove) {
+	public static void removeAllElementsOfType(Container c,
+			Class classTypeToRemove) {
 		EfficientList list = c.getAllItems();
 		for (int i = 0; i < list.myLength; i++) {
 			if (classTypeToRemove.isAssignableFrom(list.get(i).getClass())) {
@@ -528,22 +529,4 @@ public abstract class MeshComponent implements RenderableEntity, SelectionListen
 		return myChildren;
 	}
 
-	@Override
-	public String toString() {
-		return "MeshComponent{" +
-				"myPosition=" + myPosition +
-				", myRotation=" + myRotation +
-				", myScale=" + myScale +
-				", myColor=" + myColor +
-				", myPickColor=" + myPickColor +
-				", graficAnimationActive=" + graficAnimationActive +
-				", myChildren=" + myChildren +
-				", myParent=" + myParent +
-				", myOnClickCommand=" + myOnClickCommand +
-				", myOnLongClickCommand=" + myOnLongClickCommand +
-				", myOnMapClickCommand=" + myOnMapClickCommand +
-				", myOnDoubleClickCommand=" + myOnDoubleClickCommand +
-				", markerRotationMatrix=" + Arrays.toString(markerRotationMatrix) +
-				'}';
-	}
 }

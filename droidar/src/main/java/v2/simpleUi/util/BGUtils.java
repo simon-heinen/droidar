@@ -94,10 +94,12 @@ public class BGUtils {
 	}
 
 	public void applyTo(View v) {
-		if (colorsInGradient != null && gradientOrientation != null && cornerRadii != null) {
-			GradientDrawable s = new GradientDrawable(gradientOrientation, colorsInGradient);
+		if (colorsInGradient != null && gradientOrientation != null
+				&& cornerRadii != null) {
+			GradientDrawable s = new GradientDrawable(gradientOrientation,
+					colorsInGradient);
 			s.setCornerRadii(cornerRadii);
-			v.setBackground/*Drawable*/(s);
+			v.setBackgroundDrawable(s);
 		}
 	}
 
@@ -108,7 +110,8 @@ public class BGUtils {
 	 * @param leftBottom
 	 * @return
 	 */
-	public static float[] genCornerArray(int leftTop, int rightTop, int rightBottom, int leftBottom) {
+	public static float[] genCornerArray(int leftTop, int rightTop,
+			int rightBottom, int leftBottom) {
 		float[] a = new float[8];
 		int i = 0;
 		a[i++] = leftTop;
@@ -127,15 +130,18 @@ public class BGUtils {
 	}
 
 	public static BGUtils newGrayBackground() {
-		return new BGUtils(Orientation.BL_TR, BGUtils.createGrayGradient1(), BGUtils.genCornerArray(15));
+		return new BGUtils(Orientation.BL_TR, BGUtils.createGrayGradient1(),
+				BGUtils.genCornerArray(15));
 	}
 
 	public static BGUtils newRedBackground() {
-		return new BGUtils(Orientation.BL_TR, BGUtils.createRedGradient(), BGUtils.genCornerArray(10));
+		return new BGUtils(Orientation.BL_TR, BGUtils.createRedGradient(),
+				BGUtils.genCornerArray(10));
 	}
 
 	public static BGUtils newGreenBackground() {
-		return new BGUtils(Orientation.BL_TR, BGUtils.createGreenGradient(), BGUtils.genCornerArray(10));
+		return new BGUtils(Orientation.BL_TR, BGUtils.createGreenGradient(),
+				BGUtils.genCornerArray(10));
 	}
 
 	/**

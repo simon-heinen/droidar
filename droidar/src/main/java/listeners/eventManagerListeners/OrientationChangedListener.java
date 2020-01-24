@@ -10,7 +10,7 @@ public interface OrientationChangedListener {
 	 * @param values
 	 * @return
 	 */
-    boolean onOrientationChanged(float[] values);
+	public abstract boolean onOrientationChanged(float[] values);
 
 	/**
 	 * see
@@ -19,7 +19,7 @@ public interface OrientationChangedListener {
 	 * @param values
 	 * @return
 	 */
-    boolean onMagnetChanged(float[] values);
+	public boolean onMagnetChanged(float[] values);
 
 	/**
 	 * see
@@ -28,5 +28,5 @@ public interface OrientationChangedListener {
 	 * @param values
 	 * @return
 	 */
-    boolean onAccelChanged(float[] values);
+	public abstract boolean onAccelChanged(float[] values);
 }

@@ -33,7 +33,7 @@ public abstract class M_IconButtonWithText implements ModifierInterface,
 
 		LinearLayout l = new LinearLayout(context);
 
-		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
+		LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT,
 				LayoutParams.WRAP_CONTENT);
 
 		l.setOrientation(LinearLayout.VERTICAL);
@@ -42,7 +42,7 @@ public abstract class M_IconButtonWithText implements ModifierInterface,
 		// l.setGravity(Gravity.CENTER_HORIZONTAL);
 
 		imageButton = new ImageView(context);
-		LayoutParams imparams = new LayoutParams(LayoutParams.MATCH_PARENT,
+		LayoutParams imparams = new LayoutParams(LayoutParams.FILL_PARENT,
 				LayoutParams.WRAP_CONTENT);
 		int p = 3;
 		imparams.setMargins(p, p, p, p);

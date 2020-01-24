@@ -1,6 +1,5 @@
 package v2.simpleUi;
 
-import util.Log;
 import v2.simpleUi.uiDecoration.UiDecoratable;
 import v2.simpleUi.uiDecoration.UiDecorator;
 import android.content.Context;
@@ -12,7 +11,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
-//import android.util.Log;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -65,10 +64,10 @@ public abstract class M_Integer implements ModifierInterface, UiDecoratable {
 		l.setGravity(Gravity.CENTER_VERTICAL);
 
 		LayoutParams p = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT,
 				weightOfDescription);
 		LayoutParams p2 = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT,
 				weightOfInputText);
 
 		TextView t = new TextView(context);
@@ -124,12 +123,12 @@ public abstract class M_Integer implements ModifierInterface, UiDecoratable {
 						long v = Long.parseLong(s.toString());
 						if (v < min) {
 							s.clear();
-							s.append("").append(String.valueOf(min));
+							s.append("" + min);
 						} else if (v > max) {
 							s.clear();
-							s.append("").append(String.valueOf(max));
+							s.append("" + max);
 						}
-					} catch (NumberFormatException ignored) {
+					} catch (NumberFormatException e) {
 					}
 				}
 			}

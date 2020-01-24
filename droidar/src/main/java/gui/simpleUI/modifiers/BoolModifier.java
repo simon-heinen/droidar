@@ -10,8 +10,6 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import static v2.simpleUi.ModifierInterface.DEFAULT_PADDING;
-
 public abstract class BoolModifier extends AbstractModifier {
 
 	private CheckBox e;
@@ -20,13 +18,13 @@ public abstract class BoolModifier extends AbstractModifier {
 	public View getView(Context context) {
 		LinearLayout l = new LinearLayout(context);
 		l.setGravity(Gravity.CENTER_VERTICAL);
-		l.setPadding(DEFAULT_PADDING, DEFAULT_PADDING,
-				DEFAULT_PADDING, DEFAULT_PADDING);
+		l.setPadding(SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING,
+				SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING);
 
 		LayoutParams p = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 2);
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 2);
 		LayoutParams p2 = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1);
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1);
 
 		TextView t = new TextView(context);
 		t.setLayoutParams(p);

@@ -29,7 +29,7 @@
 
         <gui.RadarView
             android:id="@+id/radarView1"
-            android:layout_width="0dp"
+            android:layout_width="120dip"
             android:layout_height="120dip"
             android:layout_weight="0.04" />
 

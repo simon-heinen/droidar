@@ -1,20 +1,15 @@
 package worldData;
 
-import android.opengl.GLES20;
-
-import gl.CoordinateAxis;
+import gl.CordinateAxis;
 import gl.GLCamera;
 import gl.Renderable;
 
-//import javax.microedition.khronos.opengles.GL10;
+import javax.microedition.khronos.opengles.GL10;
 
 import system.Container;
 import util.EfficientList;
 import util.Log;
 import util.Vec;
-
-import static android.opengl.GLES10.glScalef;
-import static android.opengl.GLES10.glTranslatef;
 
 //TODO not the best way to extend ArrayList here..
 public class World implements RenderableEntity, Container<RenderableEntity> {
@@ -48,7 +43,8 @@ public class World implements RenderableEntity, Container<RenderableEntity> {
 		if (x == null) {
 			return false;
 		}
-		if (container == null) container = new EfficientList<>();
+		if (container == null)
+			container = new EfficientList<RenderableEntity>();
 		/*
 		 * check if obj already added before adding it to the world!
 		 */
@@ -60,9 +56,10 @@ public class World implements RenderableEntity, Container<RenderableEntity> {
 		return container.add(x);
 	}
 
-	private void glLoadScreenPosition(GLES20 unused) {
+	private void glLoadScreenPosition(GL10 gl) {
 		if (myScreenPosition != null)
-			glTranslatef(myScreenPosition.x, myScreenPosition.y, myScreenPosition.z);
+			gl.glTranslatef(myScreenPosition.x, myScreenPosition.y,
+					myScreenPosition.z);
 	}
 
 	// private void glLoadRotation(GL10 gl) {
@@ -80,28 +77,32 @@ public class World implements RenderableEntity, Container<RenderableEntity> {
 		return v.default_visit((Container) this);
 	}
 
-	private void glLoadScale(GLES20 unused) {
-		if (myScale != null) glScalef(myScale.x, myScale.y, myScale.z);
+	private void glLoadScale(GL10 gl) {
+		if (myScale != null)
+			gl.glScalef(myScale.x, myScale.y, myScale.z);
 	}
 
 	@Override
-	public void render(GLES20 unused, Renderable parent) {
+	public void render(GL10 gl, Renderable parent) {
 		// TODO reconstruct why this order is important! or wrong..
-		glLoadScreenPosition(unused);
-		myCamera.render(unused, this);
+		glLoadScreenPosition(gl);
+		myCamera.render(gl, this);
 		// glLoadRotation(gl);
-		glLoadScale(unused);
+		glLoadScale(gl);
 
 		// TODO remove the coordinate axes here:
-		CoordinateAxis.draw(unused);
-		drawElements(unused, myCamera);
+
+		CordinateAxis.draw(gl);
+
+		drawElements(myCamera, gl);
+
 	}
 
-	public void drawElements(GLES20 unused, GLCamera camera) {
+	public void drawElements(GLCamera camera, GL10 gl) {
 		if (container != null) {
 			for (int i = 0; i < container.myLength; i++) {
 				if (container.get(i) != null)
-					container.get(i).render(unused, this);
+					container.get(i).render(gl, this);
 			}
 		}
 	}
@@ -114,6 +115,7 @@ public class World implements RenderableEntity, Container<RenderableEntity> {
 	@Override
 	public void setMyParent(Updateable parent) {
 		myParent = parent;
+
 	}
 
 	@Override
@@ -196,26 +198,15 @@ public class World implements RenderableEntity, Container<RenderableEntity> {
 	@Override
 	public boolean insert(int pos, RenderableEntity item) {
 		if (container == null)
-			container = new EfficientList<>();
+			container = new EfficientList<RenderableEntity>();
 		return container.insert(pos, item);
 	}
 
 	@Override
 	public EfficientList<RenderableEntity> getAllItems() {
 		if (container == null)
-			container = new EfficientList<>();
+			container = new EfficientList<RenderableEntity>();
 		return container;
 	}
 
-	@Override
-	public String toString() {
-		return "World{" +
-				"myScreenPosition=" + myScreenPosition +
-				", myScale=" + myScale +
-				", container=" + container +
-				", myCamera=" + myCamera +
-				", wasBeenClearedAtLeastOnce=" + wasBeenClearedAtLeastOnce +
-				", myParent=" + myParent +
-				'}';
-	}
 }

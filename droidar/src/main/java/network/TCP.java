@@ -14,8 +14,8 @@ import java.util.Enumeration;
 
 public class TCP {
 
-	public interface ResponseListener {
-		void onResponse(String responseMessage);
+	public static interface ResponseListener {
+		public void onResponse(String responseMessage);
 	}
 
 	public static class Client {
@@ -30,6 +30,8 @@ public class TCP {
 				myWriter = new PrintWriter(mySocket.getOutputStream());
 				myReader = new BufferedReader(new InputStreamReader(
 						mySocket.getInputStream()));
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -63,8 +65,8 @@ public class TCP {
 
 	}
 
-	public interface MessageListener {
-		void onMessage(String message, Responder response);
+	public static interface MessageListener {
+		public void onMessage(String message, Responder response);
 	}
 
 	public static class Responder {
@@ -146,7 +148,7 @@ public class TCP {
 						.getInetAddresses(); ipAddresses.hasMoreElements();) {
 					InetAddress inetAddress = ipAddresses.nextElement();
 					if (!inetAddress.isLoopbackAddress()) {
-						return inetAddress.getHostAddress();
+						return inetAddress.getHostAddress().toString();
 					}
 				}
 			}

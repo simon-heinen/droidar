@@ -2,7 +2,6 @@ package gamelogic;
 
 import gui.SimpleCustomView;
 import util.ImageTransform;
-import util.Log;
 import worldData.Entity;
 import worldData.Updateable;
 import worldData.Visitor;
@@ -16,7 +15,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.graphics.Xfermode;
 import android.util.AttributeSet;
-//import android.util.Log;
+import android.util.Log;
 import de.rwth.R;
 
 public class GameElementView extends SimpleCustomView implements Entity {
@@ -202,7 +201,7 @@ public class GameElementView extends SimpleCustomView implements Entity {
 			GameAction a = (GameAction) parent;
 			float prog = a.getCooldownProgress();
 			float max = a.getCooldownTime();
-			if (!Float.isNaN(prog) && !Float.isNaN(max)) {
+			if (prog != Float.NaN && max != Float.NaN) {
 				if (prog + timeDelta < max) {
 					a.setCooldownProgress(prog + timeDelta);
 					this.setLoadingAngle((prog + timeDelta) / max * 360);

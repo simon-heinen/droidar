@@ -73,10 +73,10 @@ public abstract class M_TextModifier implements ModifierInterface,
 		l.setGravity(Gravity.CENTER_VERTICAL);
 
 		LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT,
 				weightOfDescription);
 		LinearLayout.LayoutParams p2 = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT,
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT,
 				weightOfInputText);
 
 		TextView t = new TextView(context);

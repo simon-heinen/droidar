@@ -81,18 +81,17 @@ public class CommandProcessorList extends ArrayList<UndoableCommand> {
 
 	@Override
 	public String toString() {
-        StringBuilder sBuilder = new StringBuilder("Command List {myPos=" + currentPos + "}: (");
-        for (int i = 0; i < this.size(); i++) {
+		String s = "Command List {myPos=" + currentPos + "}: (";
+		for (int i = 0; i < this.size(); i++) {
 			if (i == currentPos)
-				sBuilder.append(" [[[");
-			sBuilder.append("<").append(i).append(">").append(this.get(i).toString());
+				s += " [[[";
+			s += "<" + i + ">" + this.get(i).toString();
 			if (i == currentPos)
-				sBuilder.append("]]] ");
+				s += "]]] ";
 			if (i + 1 < this.size())
-				sBuilder.append(", ");
+				s += ", ";
 		}
-        String s = sBuilder.toString();
-        s += ")";
+		s += ")";
 		return s;
 	}
 

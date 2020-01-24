@@ -1,18 +1,14 @@
 package gl.animations;
 
-import android.opengl.GLES20;
-
 import gl.Color;
 import gl.ObjectPicker;
 import gl.Renderable;
 
-//import javax.microedition.khronos.opengles.GL10;
+import javax.microedition.khronos.opengles.GL10;
 
 import util.Vec;
 import worldData.Updateable;
 import worldData.Visitor;
-
-import static android.opengl.GLES10.glColor4f;
 
 /**
  * TODO what is the difference between this and ColorMorph? what was the intend?
@@ -41,7 +37,8 @@ public class AnimationAlphaBlend extends GLAnimation {
 	 * @param accur
 	 *            0.2f ood value to start
 	 */
-	public AnimationAlphaBlend(float speed, Color startColor, Color endColor, float accur) {
+	public AnimationAlphaBlend(float speed, Color startColor, Color endColor,
+			float accur) {
 		mySpeed = speed;
 		myCurrentColor = startColor.copy();
 		myTargetColor = endColor.copy();
@@ -53,7 +50,8 @@ public class AnimationAlphaBlend extends GLAnimation {
 
 	@Override
 	public boolean update(float timeDelta, Updateable parent) {
-		final Vec distance = Color.morphToNewColor(myCurrentColor, myTargetColor, timeDelta * mySpeed);
+		final Vec distance = Color.morphToNewColor(myCurrentColor,
+				myTargetColor, timeDelta * mySpeed);
 
 		if ((Vec.abs(distance.x) < myAccur) && (Vec.abs(distance.y) < myAccur)
 				&& (Vec.abs(distance.z) < myAccur)) {
@@ -69,9 +67,11 @@ public class AnimationAlphaBlend extends GLAnimation {
 	}
 
 	@Override
-	public void render(GLES20 unused, Renderable parent) {
+	public void render(GL10 gl, Renderable parent) {
 		if (!ObjectPicker.readyToDrawWithColor)
-			glColor4f(myCurrentColor.red, myCurrentColor.green, myCurrentColor.blue, myCurrentColor.alpha);
+			gl.glColor4f(myCurrentColor.red, myCurrentColor.green,
+					myCurrentColor.blue, myCurrentColor.alpha);
+
 	}
 
 	@Override

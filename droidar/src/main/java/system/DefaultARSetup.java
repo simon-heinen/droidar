@@ -16,7 +16,7 @@ import actions.ActionMoveCameraBuffered;
 import actions.ActionRotateCameraBuffered;
 import actions.ActionWASDMovement;
 import actions.ActionWaitForAccuracy;
-//import android.R;
+import android.R;
 import android.app.Activity;
 import android.location.Location;
 
@@ -75,27 +75,33 @@ public abstract class DefaultARSetup extends Setup {
 	 * @param world
 	 * @param objectFactory
 	 */
-	public abstract void addObjectsTo(GL1Renderer renderer, World world, GLFactory objectFactory);
+	public abstract void addObjectsTo(GL1Renderer renderer, World world,
+			GLFactory objectFactory);
 
 	@Override
-	public void _b_addWorldsToRenderer(GL1Renderer renderer, GLFactory objectFactory, GeoObj currentPosition) {
+	public void _b_addWorldsToRenderer(GL1Renderer renderer,
+			GLFactory objectFactory, GeoObj currentPosition) {
 		myRenderer = renderer;
 		renderer.addRenderElement(world);
 	}
 
 	@Override
-	public void _c_addActionsToEvents(final EventManager eventManager, CustomGLSurfaceView arView, SystemUpdater worldUpdater) {
+	public void _c_addActionsToEvents(final EventManager eventManager,
+			CustomGLSurfaceView arView, SystemUpdater updater) {
 		wasdAction = new ActionWASDMovement(camera, 25, 50, 20);
 		rotateGLCameraAction = new ActionRotateCameraBuffered(camera);
 		eventManager.addOnOrientationChangedAction(rotateGLCameraAction);
 
 		arView.addOnTouchMoveListener(wasdAction);
 		// eventManager.addOnOrientationChangedAction(rotateGLCameraAction);
-		eventManager.addOnTrackballAction(new ActionMoveCameraBuffered(camera, 5, 25));
-		eventManager.addOnLocationChangedAction(new ActionCalcRelativePos(world, camera));
+		eventManager.addOnTrackballAction(new ActionMoveCameraBuffered(camera,
+				5, 25));
+		eventManager.addOnLocationChangedAction(new ActionCalcRelativePos(
+				world, camera));
 		minAccuracyAction = new ActionWaitForAccuracy(getActivity(), 24.0f, 10) {
 			@Override
-			public void minAccuracyReachedFirstTime(Location l, ActionWaitForAccuracy a) {
+			public void minAccuracyReachedFirstTime(Location l,
+					ActionWaitForAccuracy a) {
 				callAddObjectsToWorldIfNotCalledAlready();
 				if (!eventManager.getOnLocationChangedAction().remove(a)) {
 					Log.e(LOG_TAG,
@@ -110,7 +116,8 @@ public abstract class DefaultARSetup extends Setup {
 		if (!addObjCalledOneTieme) {
 			addObjectsTo(myRenderer, world, GLFactory.getInstance());
 		} else {
-			Log.w(LOG_TAG, "callAddObjectsToWorldIfNotCalledAlready() " + "called more then one time!");
+			Log.w(LOG_TAG, "callAddObjectsToWorldIfNotCalledAlready() "
+					+ "called more then one time!");
 		}
 		addObjCalledOneTieme = true;
 	}
@@ -128,7 +135,7 @@ public abstract class DefaultARSetup extends Setup {
 
 		guiSetup.addViewToTop(minAccuracyAction.getView());
 
-		guiSetup.addImangeButtonToRightView(android.R.drawable.arrow_up_float,
+		guiSetup.addImangeButtonToRightView(R.drawable.arrow_up_float,
 				new Command() {
 					@Override
 					public boolean execute() {
@@ -136,7 +143,7 @@ public abstract class DefaultARSetup extends Setup {
 						return false;
 					}
 				});
-		guiSetup.addImangeButtonToRightView(android.R.drawable.arrow_down_float,
+		guiSetup.addImangeButtonToRightView(R.drawable.arrow_down_float,
 				new Command() {
 					@Override
 					public boolean execute() {

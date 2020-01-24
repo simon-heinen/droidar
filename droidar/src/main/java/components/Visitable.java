@@ -12,5 +12,5 @@ public interface Visitable {
 	 *         so its up to you as the developer what to return and if you need
 	 *         this returned value
 	 */
-    boolean accept(Visitor visitor);
+	public boolean accept(Visitor visitor);
 }

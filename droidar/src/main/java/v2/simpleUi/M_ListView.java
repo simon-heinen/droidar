@@ -43,7 +43,7 @@ public abstract class M_ListView implements ModifierInterface {
 		};
 		int size = (int) ImageTransform.dipToPixels(v.getResources(),
 				getListHeigthInDip());
-		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, size);
+		LayoutParams lp = new LayoutParams(LayoutParams.FILL_PARENT, size);
 		int p = 5;
 		lp.setMargins(2 * p, p, 2 * p, p);
 		v.setLayoutParams(lp);

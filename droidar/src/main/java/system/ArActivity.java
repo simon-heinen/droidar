@@ -46,12 +46,15 @@ public class ArActivity extends Activity {
 
 	public static void startWithSetup(Activity currentActivity, Setup setupToUse) {
 		ArActivity.staticSetupHolder = setupToUse;
-		currentActivity.startActivity(new Intent(currentActivity, ArActivity.class));
+		currentActivity.startActivity(new Intent(currentActivity,
+				ArActivity.class));
 	}
 
-	public static void startWithSetupForResult(Activity currentActivity, Setup setupToUse, int requestCode) {
+	public static void startWithSetupForResult(Activity currentActivity,
+			Setup setupToUse, int requestCode) {
 		ArActivity.staticSetupHolder = setupToUse;
-		currentActivity.startActivityForResult(new Intent(currentActivity, ArActivity.class), requestCode);
+		currentActivity.startActivityForResult(new Intent(currentActivity,
+				ArActivity.class), requestCode);
 	}
 
 	private void runSetup() {
@@ -102,7 +105,8 @@ public class ArActivity extends Activity {
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if ((mySetupToUse != null) && (mySetupToUse.onKeyDown(this, keyCode, event)))
+		if ((mySetupToUse != null)
+				&& (mySetupToUse.onKeyDown(this, keyCode, event)))
 			return true;
 		return super.onKeyDown(keyCode, event);
 	}

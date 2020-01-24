@@ -1,0 +1,27 @@
+
+	<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/ScrollView01" android:layout_height="fill_parent" android:layout_width="fill_parent">
+
+	<LinearLayout 
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:padding="10dp">
+<TextView android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:id="@+id/Edit_Dialog_Text" />
+
+
+
+
+
+
+<LinearLayout android:id="@+id/LinearLayout01" android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_marginTop="5dip"><EditText android:id="@+id/EditText01" android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_weight="1" android:lines="1" android:inputType="numberDecimal"></EditText><TextView android:id="@+id/TextView01" android:layout_margin="3dip" android:layout_height="fill_parent" android:layout_width="fill_parent" android:layout_weight="0.7"></TextView>
+</LinearLayout>
+<LinearLayout android:id="@+id/LinearLayout01" android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_marginTop="5dip"><EditText android:id="@+id/EditText02" android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_weight="1" android:lines="1" android:inputType="numberDecimal"></EditText><TextView android:id="@+id/TextView02" android:layout_margin="3dip" android:layout_height="fill_parent" android:layout_width="fill_parent" android:layout_weight="0.7"></TextView>
+</LinearLayout>
+<LinearLayout android:id="@+id/LinearLayout01" android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_marginTop="5dip">
+<LinearLayout android:id="@+id/LinearLayout01" android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_marginTop="5dip" android:orientation="vertical" android:layout_weight="1"><EditText android:id="@+id/EditText03" android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_weight="1" android:lines="1" android:inputType="numberDecimal"></EditText><EditText android:id="@+id/EditText04" android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_weight="1" android:lines="1" android:inputType="numberDecimal"></EditText>
+</LinearLayout><TextView android:id="@+id/TextView03" android:layout_margin="3dip" android:layout_height="fill_parent" android:layout_width="fill_parent" android:layout_weight="0.7"></TextView></LinearLayout>
+
+<LinearLayout android:id="@+id/LinearLayout02" android:layout_height="wrap_content" android:layout_width="fill_parent"><Button android:layout_height="wrap_content" android:id="@+id/Edit_Button" android:layout_width="wrap_content"></Button></LinearLayout>
+
+
+</LinearLayout></ScrollView>

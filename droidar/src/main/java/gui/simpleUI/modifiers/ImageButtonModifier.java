@@ -23,7 +23,7 @@ public abstract class ImageButtonModifier extends AbstractModifier {
 
 		l = new LinearLayout(context);
 
-		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
+		LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT,
 				LayoutParams.WRAP_CONTENT);
 
 		l.setLayoutParams(params);

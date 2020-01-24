@@ -4,8 +4,8 @@ import android.view.MotionEvent;
 
 public interface TouchMoveListener {
 
-	boolean onTouchMove(MotionEvent e1, MotionEvent e2,
-                        float screenDeltaX, float screenDeltaY);
+	public boolean onTouchMove(MotionEvent e1, MotionEvent e2,
+			float screenDeltaX, float screenDeltaY);
 
-	boolean onReleaseTouchMove();
+	public boolean onReleaseTouchMove();
 }

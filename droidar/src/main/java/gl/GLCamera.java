@@ -2,7 +2,7 @@ package gl;
 
 import geo.GeoObj;
 
-//import javax.microedition.khronos.opengles.GL10;
+import javax.microedition.khronos.opengles.GL10;
 
 import system.EventManager;
 import util.Calculus;
@@ -13,14 +13,7 @@ import worldData.MoveComp;
 import worldData.Updateable;
 import actions.ActionUseCameraAngles2;
 import android.location.Location;
-import android.opengl.GLES20;
 import android.opengl.Matrix;
-
-import java.util.Arrays;
-
-import static android.opengl.GLES10.glMultMatrixf;
-import static android.opengl.GLES10.glRotatef;
-import static android.opengl.GLES10.glTranslatef;
 
 /**
  * This is the virtual camera needed to display a virtual world. The 3 important
@@ -31,7 +24,8 @@ import static android.opengl.GLES10.glTranslatef;
  * @author Spobo
  * 
  */
-public class GLCamera implements Updateable, HasDebugInformation, Renderable, HasPosition, HasRotation, GLCamRotationController {
+public class GLCamera implements Updateable, HasDebugInformation, Renderable,
+		HasPosition, HasRotation, GLCamRotationController {
 
 	private static final String LOG_TAG = "GLCamera";
 
@@ -92,8 +86,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable, Ha
 	private final float[] cameraAnglesInDegree = new float[3];
 	float[] initDir = new float[4];
 	private final float[] rotDirection = new float[4];
-	@Deprecated
-	public boolean forceAngleCalculation = false;
+	// public boolean forceAngleCalculation = false;
 
 	private final MoveComp myMover = new MoveComp(3);
 
@@ -197,7 +190,8 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable, Ha
 	 *            the vertical screen-coordinates (from 0 to screen-height).
 	 *            Just pass the value you get from the Android onClick event
 	 */
-	public void getPickingRay(Vec rayPosition, Vec rayDirection, float x, float y) {
+	public void getPickingRay(Vec rayPosition, Vec rayDirection, float x,
+			float y) {
 
 		if (rayDirection == null) {
 			Log.e(LOG_TAG, "Passed direction vector object was null");
@@ -206,7 +200,8 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable, Ha
 
 		// convert to opengl screen coords:
 		x = (x - GLRenderer.halfWidth) / GLRenderer.halfWidth;
-		y = (GLRenderer.height - y - GLRenderer.halfHeight) / GLRenderer.halfHeight;
+		y = (GLRenderer.height - y - GLRenderer.halfHeight)
+				/ GLRenderer.halfHeight;
 
 		Matrix.invertM(invRotMatrix, 0, rotationMatrix, matrixOffset);
 
@@ -222,7 +217,8 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable, Ha
 			}
 		}
 		float[] rayDir = new float[4];
-		float[] initDir = { x * GLRenderer.nearHeight * GLRenderer.aspectRatio, y * GLRenderer.nearHeight, -GLRenderer.minViewDistance, 0.0f };
+		float[] initDir = { x * GLRenderer.nearHeight * GLRenderer.aspectRatio,
+				y * GLRenderer.nearHeight, -GLRenderer.minViewDistance, 0.0f };
 		Matrix.multiplyMV(rayDir, 0, invRotMatrix, 0, initDir, 0);
 		rayDirection.x = rayDir[0];
 		rayDirection.y = rayDir[1];
@@ -230,7 +226,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable, Ha
 	}
 
 	/**
-	 * not yet ready for use
+	 * not jet ready for use
 	 * 
 	 * @param virtualWorldPosition
 	 * @return
@@ -238,7 +234,8 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable, Ha
 	@Deprecated
 	public float[] getScreenCoordinatesFor(Vec virtualWorldPosition) {
 		float[] rayPos = new float[4];
-		float[] initPos = { virtualWorldPosition.x, virtualWorldPosition.y, virtualWorldPosition.z, 1.0f };
+		float[] initPos = { virtualWorldPosition.x, virtualWorldPosition.y,
+				virtualWorldPosition.z, 1.0f };
 		Matrix.multiplyMV(rayPos, 0, rotationMatrix, matrixOffset, initPos, 0);
 		// TODO
 		return rayPos;
@@ -327,28 +324,28 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable, Ha
 	/**
 	 * This method will be called by the virtual world to load the camera
 	 * parameters like the position and the rotation
-	 * // @param gl
-	 * @param
-	 * @param unused
+	 * 
+	 * @param gl
 	 * @param parent
+	 * @param
 	 */
 	@Override
-	public synchronized void render(GLES20 unused, Renderable parent) {
+	public synchronized void render(GL10 gl, Renderable parent) {
 
 		// if the camera sould not be in the center of the rotation it has to be
 		// moved out before rotating:
-		glLoadPosition(unused, myOffset);
+		glLoadPosition(gl, myOffset);
 
 		synchronized (rotMatrLock) {
 			// load rotation matrix:
-			glMultMatrixf(rotationMatrix, matrixOffset);
+			gl.glMultMatrixf(rotationMatrix, matrixOffset);
 		}
 
 		// rotate Camera TODO use for manual rotation:
-		glLoadRotation(unused, myRotationVec);
+		glLoadRotation(gl, myRotationVec);
 
 		// set the point where to rotate around
-		glLoadPosition(unused, myPosition);
+		glLoadPosition(gl, myPosition);
 	}
 
 	/*
@@ -387,18 +384,19 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable, Ha
 		// TODO not a good idea to use myAnglesInRadians2 here, maybe additional
 		// helper var?:
 		Matrix.multiplyMV(rotDirection, 0, invRotMatrix, 0, initDir, 0);
-		cameraAnglesInDegree[0] = Vec.getRotationAroundZAxis(rotDirection[1], rotDirection[0]);
+		cameraAnglesInDegree[0] = Vec.getRotationAroundZAxis(rotDirection[1],
+				rotDirection[0]);
 	}
 
-	private void glLoadPosition(GLES20 unused, Vec vec) {
+	private void glLoadPosition(GL10 gl, Vec vec) {
 		if (vec != null) {
 			// if you want to set the center to 0 0 5 you have to move the
 			// camera -5 units OUT of the screen
-			glTranslatef(-vec.x, -vec.y, -vec.z);
+			gl.glTranslatef(-vec.x, -vec.y, -vec.z);
 		}
 	}
 
-	private void glLoadRotation(GLES20 unused, Vec vec) {
+	private void glLoadRotation(GL10 gl, Vec vec) {
 		/*
 		 * a very important point is that its something completely different
 		 * when you change the rotation order to x y z ! the order y x z is
@@ -413,9 +411,9 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable, Ha
 		 * the camera.
 		 */
 		if (vec != null) {
-			glRotatef(vec.y, 0, 1, 0);
-			glRotatef(vec.x, 1, 0, 0);
-			glRotatef(vec.z, 0, 0, 1);
+			gl.glRotatef(vec.y, 0, 1, 0);
+			gl.glRotatef(vec.x, 1, 0, 0);
+			gl.glRotatef(vec.z, 0, 0, 1);
 		}
 	}
 
@@ -648,14 +646,16 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable, Ha
 	 * @return a Vector with x=Longitude, y=Latitude, z=Altitude
 	 */
 	public Vec getGPSPositionVec() {
-		GeoObj zeroPos = EventManager.getInstance().getZeroPositionLocationObject();
+		GeoObj zeroPos = EventManager.getInstance()
+				.getZeroPositionLocationObject();
 		return GeoObj.calcGPSPosition(this.getPosition(),
 				zeroPos.getLatitude(), zeroPos.getLongitude(),
 				zeroPos.getAltitude());
 	}
 
 	public void setGpsPos(GeoObj newPos) {
-		Vec pos = newPos.getVirtualPosition(EventManager.getInstance().getZeroPositionLocationObject());
+		Vec pos = newPos.getVirtualPosition(EventManager.getInstance()
+				.getZeroPositionLocationObject());
 		setNewPosition(pos);
 	}
 
@@ -684,7 +684,7 @@ public class GLCamera implements Updateable, HasDebugInformation, Renderable, Ha
 		Log.w(LOG_TAG, "   > myNewOffset=" + myNewOffset);
 		Log.w(LOG_TAG, "   > myRotationVec=" + myRotationVec);
 		Log.w(LOG_TAG, "   > myNewRotationVec=" + myNewRotationVec);
-		Log.w(LOG_TAG, "   > rotationMatrix=" + Arrays.toString(rotationMatrix));
+		Log.w(LOG_TAG, "   > rotationMatrix=" + rotationMatrix);
 	}
 
 	public boolean isSensorInputEnabled() {

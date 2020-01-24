@@ -1,24 +1,14 @@
 package gl;
 
-import android.opengl.GLES10;
-import android.opengl.GLES20;
-
 import gl.scenegraph.MeshComponent;
 
 import java.util.Date;
 
-//import javax.microedition.khronos.opengles.GL10;
+import javax.microedition.khronos.opengles.GL10;
 
 import util.Log;
 import util.Vec;
 import worldData.Visitor;
-
-import static android.opengl.GLES10.glDisable;
-import static android.opengl.GLES10.glEnable;
-import static android.opengl.GLES10.glLightf;
-import static android.opengl.GLES10.glLightfv;
-import static android.opengl.GLES10.glMaterialf;
-import static android.opengl.GLES10.glMaterialfv;
 
 /**
  * Great tutorials:
@@ -101,59 +91,67 @@ public class LightSource extends MeshComponent {
 		this.myLightId = glLightId;
 	}
 
-	public void switchOn(GLES20 unused) {
+	public void switchOn(GL10 gl) {
 
 		Log.d(LOG_TAG, "Now switching lightsource " + myLightId + " to on!");
 
-		glEnable(myLightId);
+		gl.glEnable(myLightId);
 
 		// if it has an ambient component enable it:
-		if (ambientLightColor != null) glLightfv(myLightId, GLES10.GL_AMBIENT, ambientLightColor, 0);
+		if (ambientLightColor != null)
+			gl.glLightfv(myLightId, GL10.GL_AMBIENT, ambientLightColor, 0);
 
-		if (diffuseLightColor != null) glLightfv(myLightId, GLES10.GL_DIFFUSE, diffuseLightColor, 0);
+		if (diffuseLightColor != null)
+			gl.glLightfv(myLightId, GL10.GL_DIFFUSE, diffuseLightColor, 0);
 
-		if (specularLightColor != null) glLightfv(myLightId, GLES10.GL_SPECULAR, specularLightColor, 0);
+		if (specularLightColor != null)
+			gl.glLightfv(myLightId, GL10.GL_SPECULAR, specularLightColor, 0);
 
-		if (myPosition != null) glLightfv(myLightId, GLES10.GL_POSITION, myPosition.getArrayVersion(), 0);
+		if (myPosition != null)
+			gl.glLightfv(myLightId, GL10.GL_POSITION,
+					myPosition.getArrayVersion(), 0);
 
 		// if it is a spotlight:
 		if (mySpotDirection != null) {
-			glLightfv(myLightId, GLES10.GL_SPOT_DIRECTION, GLUtilityClass.createAndInitFloatBuffer(mySpotDirection));
-			glLightf(myLightId, GLES10.GL_SPOT_CUTOFF, cutoffAngle);
+			gl.glLightfv(myLightId, GL10.GL_SPOT_DIRECTION,
+					GLUtilityClass.createAndInitFloatBuffer(mySpotDirection));
+			gl.glLightf(myLightId, GL10.GL_SPOT_CUTOFF, cutoffAngle);
 		}
 
-		setDefaultSimpleMaterialStuff(unused);
+		setDefaultSimpleMaterialStuff(gl);
 
 	}
 
 	// default material values which should be overwritten by each mesh later:
 	private float x = 0.3f;
-	private float[] materialAmbient = new float[] { x, x, x, 1 };
-	private float[] materialDiffuse = new float[] { x, x, x, 1 };
-	private float[] materialSpecular = new float[] { x, x, x, 1 };
+	private float materialAmbient[] = new float[] { x, x, x, 1 };
+	private float materialDiffuse[] = new float[] { x, x, x, 1 };
+	private float materialSpecular[] = new float[] { x, x, x, 1 };
 
 	/**
 	 * TODO move this somewhere else, if material is used it should be set to
 	 * default values by each mesh individually!
-	 *
-	 * //@param gl
-	 * @param unused
+	 * 
+	 * @param gl
 	 */
-	private void setDefaultSimpleMaterialStuff(GLES20 unused) {
+	private void setDefaultSimpleMaterialStuff(GL10 gl) {
 		/*
 		 * A default material is defined here but all objects should define a
 		 * custom one if they have a special type of meterial!
 		 */
-		glMaterialfv(GLES10.GL_FRONT_AND_BACK, GLES10.GL_AMBIENT, materialAmbient, 0);
-		glMaterialfv(GLES10.GL_FRONT_AND_BACK, GLES10.GL_DIFFUSE, materialDiffuse, 0);
-		glMaterialfv(GLES10.GL_FRONT_AND_BACK, GLES10.GL_SPECULAR, materialSpecular, 0);
-		glMaterialf(GLES10.GL_FRONT_AND_BACK, GLES10.GL_SHININESS, 5.0f);
+		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_AMBIENT,
+				materialAmbient, 0);
+		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_DIFFUSE,
+				materialDiffuse, 0);
+		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SPECULAR,
+				materialSpecular, 0);
+		gl.glMaterialf(GL10.GL_FRONT_AND_BACK, GL10.GL_SHININESS, 5.0f);
 
 		// otherMaterialStuffThatDoesNotWork(gl);
 
 		// use the colors of the meshes, this should not be set if every element
 		// has a correct material i think.. not sure
-		glEnable(GLES10.GL_COLOR_MATERIAL);
+		gl.glEnable(GL10.GL_COLOR_MATERIAL);
 
 	}
 
@@ -183,8 +181,8 @@ public class LightSource extends MeshComponent {
 	// gl.glMaterialf(GL10.GL_FRONT_AND_BACK, GL10.GL_SHININESS, 128.0f);
 	// }
 
-	public void switchOff(GLES20 unused) {
-		/*gl.*/glDisable(myLightId);
+	public void switchOff(GL10 gl) {
+		gl.glDisable(myLightId);
 	}
 
 	public static LightSource newDefaultAmbientLight(int lightId) {
@@ -195,7 +193,8 @@ public class LightSource extends MeshComponent {
 		return l;
 	}
 
-	public static LightSource newDefaultDefuseLight(int lightId, Vec lightPosition) {
+	public static LightSource newDefaultDefuseLight(int lightId,
+			Vec lightPosition) {
 		LightSource l = new LightSource(lightId);
 		float b = 0.7f;
 		float[] color = { b, b, b, 1 };
@@ -204,15 +203,18 @@ public class LightSource extends MeshComponent {
 		return l;
 	}
 
-	public static LightSource newDefaultSpotLight(int lightId, Vec lightPosition, Vec lightTargetPosition) {
+	public static LightSource newDefaultSpotLight(int lightId,
+			Vec lightPosition, Vec lightTargetPosition) {
 		LightSource l = new LightSource(lightId);
 		float b = 0.2f;
 		float[] color = { b, b, b, 1 };
 		l.specularLightColor = color;
 		l.myPosition = lightPosition.copy();
 		if (lightTargetPosition != null) {
-			Vec directionVec = Vec.sub(lightTargetPosition, lightPosition).normalize();
-			float[] direction = { directionVec.x, directionVec.y, directionVec.z };
+			Vec directionVec = Vec.sub(lightTargetPosition, lightPosition)
+					.normalize();
+			float[] direction = { directionVec.x, directionVec.y,
+					directionVec.z };
 			l.mySpotDirection = direction;
 		}
 		return l;
@@ -223,7 +225,9 @@ public class LightSource extends MeshComponent {
 	 * the correct place
 	 * 
 	 * http://www.srrb.noaa.gov/highlights/sunrise/calcdetails.html
+	 * 
 	 * and
+	 * 
 	 * http://www.srrb.noaa.gov/highlights/sunrise/program.txt
 	 * 
 	 * @param lightId
@@ -249,7 +253,7 @@ public class LightSource extends MeshComponent {
 	}
 
 	@Override
-	public void draw(GLES20 unused, Renderable parent) {
+	public void draw(GL10 gl, Renderable parent) {
 		/*
 		 * the lightsource can be added as a normal mesh to the world to allow
 		 * movements
@@ -263,7 +267,8 @@ public class LightSource extends MeshComponent {
 		if (myPosition == null) {
 			myPosition = new Vec();
 		}
-		glLightfv(myLightId, GLES10.GL_POSITION, myPosition.getArrayVersion(), 0);
+		gl.glLightfv(myLightId, GL10.GL_POSITION, myPosition.getArrayVersion(),
+				0);
 	}
 
 }

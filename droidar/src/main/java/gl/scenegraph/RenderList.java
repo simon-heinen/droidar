@@ -1,10 +1,8 @@
 package gl.scenegraph;
 
-import android.opengl.GLES20;
-
 import gl.Renderable;
 
-//import javax.microedition.khronos.opengles.GL10;
+import javax.microedition.khronos.opengles.GL10;
 
 import system.Container;
 import util.EfficientList;
@@ -13,17 +11,18 @@ import worldData.RenderableEntity;
 import worldData.Updateable;
 import worldData.Visitor;
 
-public class RenderList implements RenderableEntity, Container<RenderableEntity> {
+public class RenderList implements RenderableEntity,
+		Container<RenderableEntity> {
 
 	private static final String LOG_TAG = "RenderList";
-	EfficientList<RenderableEntity> myItems = new EfficientList<>();
+	EfficientList<RenderableEntity> myItems = new EfficientList<RenderableEntity>();
 	private boolean isClearedAtLeastOnce;
 	private Updateable myParent;
 
 	@Override
-	public void render(GLES20 unused, Renderable parent) {
+	public void render(GL10 gl, Renderable parent) {
 		for (int i = 0; i < myItems.myLength; i++) {
-			myItems.get(i).render(unused,  parent);
+			myItems.get(i).render(gl, parent);
 		}
 	}
 
@@ -48,7 +47,9 @@ public class RenderList implements RenderableEntity, Container<RenderableEntity>
 				myItems.remove(myItems.get(i));
 			}
 		}
-		return myItems.myLength != 0;
+		if (myItems.myLength == 0)
+			return false;
+		return true;
 	}
 
 	@Override

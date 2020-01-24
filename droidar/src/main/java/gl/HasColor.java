@@ -1,6 +1,7 @@
 package gl;
 
 public interface HasColor {
-	Color getColor();
-	void setColor(Color c);
+	public Color getColor();
+
+	public void setColor(Color c);
 }

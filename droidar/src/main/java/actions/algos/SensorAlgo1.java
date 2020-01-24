@@ -33,7 +33,8 @@ public class SensorAlgo1 extends Algo {
 	private float checkAndCalc(float oldV, float newV) {
 		float delta = oldV - newV;
 		/*
-		 * if the new value is very different from the old one, morph to the new one
+		 * if the new value is very different from the old one, morph to the new
+		 * one
 		 */
 		if (delta < -myBarrier || myBarrier < delta) {
 			return (oldV + newV) / 2;

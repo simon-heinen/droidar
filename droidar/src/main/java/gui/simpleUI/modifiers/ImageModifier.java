@@ -26,7 +26,7 @@ public abstract class ImageModifier extends AbstractModifier {
 	@Override
 	public View getView(final Context context) {
 		LayoutParams p = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1);
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1);
 
 		LinearLayout l = new LinearLayout(context);
 		l.setPadding(SimpleUIv1.DEFAULT_PADDING, SimpleUIv1.DEFAULT_PADDING,

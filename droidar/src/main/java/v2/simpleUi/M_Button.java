@@ -21,7 +21,7 @@ public abstract class M_Button implements ModifierInterface, UiDecoratable {
 	public View getView(final Context context) {
 
 		final Button b = new Button(context);
-		b.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+		b.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
 				LayoutParams.WRAP_CONTENT));
 		b.setOnClickListener(new OnClickListener() {
 			@Override

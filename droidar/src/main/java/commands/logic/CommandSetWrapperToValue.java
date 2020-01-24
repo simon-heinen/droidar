@@ -169,6 +169,8 @@ public class CommandSetWrapperToValue extends UndoableCommand {
 			myW.setTo(myIBackup);
 			return true;
 		case Wrapper:
+			myW.setTo(myOBackup);
+			return true;
 		case Object:
 			myW.setTo(myOBackup);
 			return true;

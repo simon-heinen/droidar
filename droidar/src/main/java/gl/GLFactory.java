@@ -11,19 +11,17 @@ import gl.textures.Textured2dShape;
 import gl.textures.TexturedRenderData;
 import gl.textures.TexturedShape;
 
-//import javax.microedition.khronos.opengles.GL10;
+import javax.microedition.khronos.opengles.GL10;
 
-//import util.IO;
+import util.IO;
 import util.Log;
 import util.Vec;
-import v2.simpleUi.util.IO;
 import worldData.Obj;
 import worldData.Visitor;
 import worldData.World;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
-import android.opengl.GLES20;
 import android.widget.TextView;
 
 /**
@@ -41,10 +39,13 @@ import android.widget.TextView;
  * 
  */
 public class GLFactory {
+
 	private static final String LOG_TAG = "GLFactory";
+
 	private static GLFactory myInstance = new GLFactory();
 
-	private GLFactory() { }
+	private GLFactory() {
+	}
 
 	public static GLFactory getInstance() {
 		return myInstance;
@@ -134,8 +135,10 @@ public class GLFactory {
 	 * @param heightInMeters
 	 * @return
 	 */
-	public MeshComponent newTexturedSquare(Context context, int iconId, float heightInMeters) {
-		return newTexturedSquare("" + iconId, IO.loadBitmapFromId(context, iconId), heightInMeters);
+	public MeshComponent newTexturedSquare(Context context, int iconId,
+			float heightInMeters) {
+		return newTexturedSquare("" + iconId,
+				IO.loadBitmapFromId(context, iconId), heightInMeters);
 	}
 
 	/**
@@ -153,10 +156,12 @@ public class GLFactory {
 	 *            the square will have this height and width
 	 * @return
 	 */
-	public MeshComponent newTexturedSquare(String bitmapName, Bitmap bitmap, float heightInMeters) {
+	public MeshComponent newTexturedSquare(String bitmapName, Bitmap bitmap,
+			float heightInMeters) {
 
 		if (bitmapName == null) {
-			Log.e(LOG_TAG, "No bitmap id set, can't be added to Texture Manager!");
+			Log.e(LOG_TAG,
+					"No bitmap id set, can't be added to Texture Manager!");
 			return null;
 		}
 
@@ -219,7 +224,8 @@ public class GLFactory {
 		return a;
 	}
 
-	private MeshComponent newArrow(float x, float y, float height, Color top, Color edge1, Color bottom, Color edge2) {
+	private MeshComponent newArrow(float x, float y, float height, Color top,
+			Color edge1, Color bottom, Color edge2) {
 
 		MeshComponent pyr = new Shape(null);
 
@@ -262,12 +268,14 @@ public class GLFactory {
 		return o;
 	}
 
-	private void addRotateAnimation(MeshComponent target, int speed, Vec rotationVec) {
+	private void addRotateAnimation(MeshComponent target, int speed,
+			Vec rotationVec) {
 		AnimationRotate a = new AnimationRotate(speed, rotationVec);
 		target.addAnimation(a);
 	}
 
-	public MeshComponent newGrid(Color netColor, float spaceBetweenNetStrings, int lineCount) {
+	public MeshComponent newGrid(Color netColor, float spaceBetweenNetStrings,
+			int lineCount) {
 		Shape s = new Shape(netColor);
 		s.setLineDrawing();
 		float coord = (lineCount - 1) * spaceBetweenNetStrings / 2;
@@ -301,11 +309,13 @@ public class GLFactory {
 		MeshComponent earthBox = new Shape();
 		earthRing.addChild(earthBox);
 
-		MeshComponent sun = GLFactory.getInstance().newNSidedPolygonWithGaps( 20, Color.red());
+		MeshComponent sun = GLFactory.getInstance().newNSidedPolygonWithGaps(
+				20, Color.red());
 		GLFactory.getInstance().addRotateAnimation(sun, 30, new Vec(1, 1, 1));
 		sunBox.addChild(sun);
 
-		GLFactory.getInstance().addRotateAnimation(earthRing, 40, new Vec(0.5f, 0.3f, 1));
+		GLFactory.getInstance().addRotateAnimation(earthRing, 40,
+				new Vec(0.5f, 0.3f, 1));
 		earthBox.setPosition(new Vec(3, 0, 0));
 		sunBox.addChild(earthRing);
 
@@ -318,7 +328,8 @@ public class GLFactory {
 		MeshComponent moon = GLFactory.getInstance().newCircle(Color.white());
 		moon.setPosition(new Vec(1, 0, 0));
 		moon.scaleEqual(0.2f);
-		GLFactory.getInstance().addRotateAnimation(moonring, 80, new Vec(0, 1, -1));
+		GLFactory.getInstance().addRotateAnimation(moonring, 80,
+				new Vec(0, 1, -1));
 		moonring.addChild(moon);
 
 		earthBox.addChild(moonring);
@@ -412,13 +423,15 @@ public class GLFactory {
 	}
 
 	public Shape newDirectedPath(GeoObj from, GeoObj to, Color color) {
-		return GLFactory.getInstance().newDirectedPath( to.getVirtualPosition(from), color);
+		return GLFactory.getInstance().newDirectedPath(
+				to.getVirtualPosition(from), color);
 	}
 
 	public Shape newDirectedPath(Vec lineEndPos, Color c) {
 
 		Shape s = new Shape(c);
-		Vec orth = Vec.getOrthogonalHorizontal(lineEndPos).normalize().mult(0.9f);
+		Vec orth = Vec.getOrthogonalHorizontal(lineEndPos).normalize()
+				.mult(0.9f);
 		Vec orthClone = orth.getNegativeClone();
 		float down = 0.5f;
 		Vec l = lineEndPos.copy().setLength(0.3f);
@@ -440,7 +453,8 @@ public class GLFactory {
 	}
 
 	public MeshComponent newUndirectedPath(GeoObj from, GeoObj to, Color color) {
-		return GLFactory.getInstance().newUndirectedPath(to.getVirtualPosition(from), color);
+		return GLFactory.getInstance().newUndirectedPath(
+				to.getVirtualPosition(from), color);
 	}
 
 	public Shape newUndirectedPath(Vec lineEnd, Color c) {
@@ -511,7 +525,8 @@ public class GLFactory {
 		return s;
 	}
 
-	private static final float HEIGHT_TO_SIDE_FACTOR = (float) (2f / Math.sqrt(3f));
+	private static final float HEIGHT_TO_SIDE_FACTOR = (float) (2f / Math
+			.sqrt(3f));
 
 	public Shape newPyramid(Vec center, float height, Color color) {
 		Shape p = new Shape(color);
@@ -561,8 +576,8 @@ public class GLFactory {
 			}
 
 			@Override
-			public void draw(GLES20 unused, Renderable parent) {
-				CoordinateAxis.draw(unused);
+			public void draw(GL10 gl, Renderable parent) {
+				CordinateAxis.draw(gl);
 			}
 
 		};
@@ -574,12 +589,13 @@ public class GLFactory {
 	 * 
 	 * @param textToDisplay
 	 * @param textPosition
-	 * //@param textSize
+	 * @param textSize
 	 * @param context
 	 * @param glCamera
 	 * @return
 	 */
-	public Obj newTextObject(String textToDisplay, Vec textPosition, Context context, GLCamera glCamera) {
+	public Obj newTextObject(String textToDisplay, Vec textPosition,
+			Context context, GLCamera glCamera) {
 
 		float textSize = 1;
 
@@ -590,7 +606,8 @@ public class GLFactory {
 		v.setText(textToDisplay);
 
 		Obj o = new Obj();
-		MeshComponent mesh = this.newTexturedSquare("textBitmap" + textToDisplay, util.IO.loadBitmapFromView(v), textSize);
+		MeshComponent mesh = this.newTexturedSquare("textBitmap"
+				+ textToDisplay, util.IO.loadBitmapFromView(v), textSize);
 		mesh.setPosition(textPosition);
 		mesh.addAnimation(new AnimationFaceToCamera(glCamera));
 		o.setComp(mesh);
@@ -614,10 +631,12 @@ public class GLFactory {
 	public GeoObj newIconFacingToCamera(double latitude, double longitude,
 			Bitmap bitmap, String uniqueBitmapName, float heightInMeters,
 			GLCamera glCamera) {
-		MeshComponent triangleMesh = GLFactory.getInstance().newTexturedSquare(uniqueBitmapName, bitmap, heightInMeters);
+		MeshComponent triangleMesh = GLFactory.getInstance().newTexturedSquare(
+				uniqueBitmapName, bitmap, heightInMeters);
 		triangleMesh.addChild(new AnimationFaceToCamera(glCamera, 0.5f));
 		GeoObj o = new GeoObj(latitude, longitude);
 		o.setComp(triangleMesh);
 		return o;
 	}
+
 }
