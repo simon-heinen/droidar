@@ -1,7 +1,11 @@
 package gui;
 
 import gl.Color;
+import v4.M_Background;
+import v4.M_Text;
+
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,22 +21,24 @@ import android.widget.TextView;
  * 
  */
 public class InfoScreenSettings {
+	private final LinearLayout myLinLayout;
+	private final Context myContext;
 
-	private LinearLayout myLinLayout;
-	private Context myContext;
-	public Color backgroundColor;
 	private String myCloseButtonText = "Close";
 	public boolean hasCloseButton = true;
 	public int padding = 10;
 	public int iconPadding = 3;
 	public int spacerPadding = 0;
-	private String myLoadingText = " Loading... ";
+	private M_Text myLoadingText = new M_Text(
+			" Loading... ", Typeface.DEFAULT,
+			14, Color.white().toIntARGB(),
+			new M_Background(Color.blackTransparent().toIntARGB(),
+					0, 0, 0));
 	private boolean closeInstantly;
 
 	public InfoScreenSettings(Context c) {
 		myContext = c;
 		myLinLayout = new LinearLayout(c);
-		backgroundColor = new Color(0, 0, 0, 0.5f);
 		myLinLayout.setOrientation(LinearLayout.VERTICAL);
 		myLinLayout.setPadding(padding, padding, padding, padding);
 		// myLinLayout.setLayoutParams(params)
@@ -67,10 +73,6 @@ public class InfoScreenSettings {
 		myLinLayout.addView(l);
 	}
 
-	public String getLoadingText() {
-		return myLoadingText;
-	}
-
 	public String getCloseButtonText() {
 		return myCloseButtonText;
 	}
@@ -79,7 +81,11 @@ public class InfoScreenSettings {
 		this.myCloseButtonText = closeButtonText;
 	}
 
-	public void setLoadingText(String myLoadingText) {
+	public M_Text getLoadingText() {
+		return myLoadingText;
+	}
+
+	public void setLoadingText(M_Text myLoadingText) {
 		this.myLoadingText = myLoadingText;
 	}
 
@@ -91,4 +97,7 @@ public class InfoScreenSettings {
 		closeInstantly = true;
 	}
 
+	public void setBackground(M_Background background) {
+		myLoadingText.setBackground(background);
+	}
 }

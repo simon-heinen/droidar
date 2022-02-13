@@ -2,6 +2,8 @@ package gui;
 
 import system.ActivityConnector;
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,9 +11,13 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import de.rwth.R;
+import v4.M_Background;
+import v4.M_Text;
+import v4.utils.UiUtils;
 
 /**
  * This screen can be used to display an introduction to the user when the AR
@@ -41,26 +47,25 @@ public class InfoScreen extends Activity {
 			myInfoSettings = (InfoScreenSettings) infos;
 			addContent((ScrollView) findViewById(R.id.infoScreenScrollview));
 		}
-
 	}
 
 	private void addContent(ScrollView s) {
 		try {
 			InfoScreenSettings infos = getInfoScreenSettings();
-			if (infos.backgroundColor != null)
-				s.setBackgroundColor(infos.backgroundColor.toIntARGB());
 			LinearLayout linLayBox = infos.getLinLayout();
 			fixPossibleParentProblem(linLayBox);
 			s.addView(linLayBox);
 			if (!infos.closeInstantly()) {
 				infos.getLinLayout().addView(newCloseButton(infos));
 			} else {
-				infos.getLinLayout().addView(newLoadingInfo(infos));
+				addContentView(newLoadingInfo(infos), new RelativeLayout.LayoutParams(
+						RelativeLayout.LayoutParams.WRAP_CONTENT,
+						RelativeLayout.LayoutParams.WRAP_CONTENT
+				));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	private void fixPossibleParentProblem(LinearLayout linLayBox) {
@@ -84,16 +89,33 @@ public class InfoScreen extends Activity {
 	}
 
 	private View newLoadingInfo(InfoScreenSettings infos) {
+		M_Text text = infos.getLoadingText();
+
 		TextView t = new TextView(this);
-		t.setText(infos.getLoadingText());
+		t.setText(text.getText());
+		t.setTypeface(text.getFont());
+		t.setTextSize(text.getSize());
+		t.setTextColor(text.getColor());
+		t.measure(0, 0);
+		t.setBackground(createDrawable(text.getBackground()));
+
 		return t;
+	}
+
+	private Drawable createDrawable(M_Background background) {
+		GradientDrawable drawable = (GradientDrawable) getResources().getDrawable(R.drawable.droidar_round_border);
+		if (drawable != null) {
+			drawable.setColor(background.getColor());
+			drawable.setStroke(background.getStrokeWidth(), background.getStrokeColor());
+			drawable.setCornerRadius(UiUtils.dpToPx(getApplication(), background.getCornerRadiusDp()));
+		}
+		return drawable;
 	}
 
 	private View newCloseButton(InfoScreenSettings infos) {
 		Button b = new Button(this);
 		b.setText(infos.getCloseButtonText());
 		b.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				InfoScreen.this.finish();
@@ -107,7 +129,6 @@ public class InfoScreen extends Activity {
 		super.onPostResume();
 
 		new Thread(new Runnable() {
-
 			@Override
 			public void run() {
 				try {

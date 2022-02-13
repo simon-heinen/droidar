@@ -50,6 +50,8 @@ import listeners.SetupListener;
 import util.EfficientList;
 import util.Log;
 import util.Vec;
+import v4.M_Background;
+import v4.M_Text;
 import worldData.SystemUpdater;
 import worldData.World;
 
@@ -291,7 +293,7 @@ public abstract class Setup {
         // myTargetActivity.addContentView(myOverlayView, new LayoutParams(
         // LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
-        addOverlaysAndShowInfoScreen(changeLoadingText());
+        addOverlaysAndShowInfoScreen(changeLoadingText(), changeLoadingBackground());
 
         debugLogDoSetupStep(STEP_DONE);
     }
@@ -337,18 +339,36 @@ public abstract class Setup {
      * This method has to be set in any Setup's subclasses if the loading screen text needs to be changed.
      * Note: default loading text - " Loading ... ".
      *
-     * @return loadingText to be set in addOverlaysAndShowInfoScreen(String loadingText)
-     * in the InfoScreenSetting object to be created
+     * @return loadingText to be set in
+     * addOverlaysAndShowInfoScreen(@Nullable M_Text loadingText,
+     *                              @Nullable M_Background loadingBackground)
+     * in the InfoScreenSettings object to be created
      */
-    public String changeLoadingText() {
+    public M_Text changeLoadingText() {
         return null;
     }
 
-    private void addOverlaysAndShowInfoScreen(@Nullable String loadingText) {
+    /**
+     * This method has to be set in any Setup's subclasses if the loading screen needs to be changed.
+     *
+     * @return background to be set in
+     * addOverlaysAndShowInfoScreen(@Nullable M_Text loadingText,
+     *                              @Nullable M_Background loadingBackground)
+     * in the InfoScreenSettings object to be created
+     */
+    public M_Background changeLoadingBackground() {
+        return null;
+    }
+
+    private void addOverlaysAndShowInfoScreen(@Nullable M_Text loadingText,
+                                              @Nullable M_Background loadingBackground) {
         debugLogDoSetupStep(STEP11);
         InfoScreenSettings infoScreenData = new InfoScreenSettings(getActivity()/*myTargetActivity*/);
         if (loadingText != null) {
             infoScreenData.setLoadingText(loadingText);
+        }
+        if (loadingBackground != null) {
+            infoScreenData.setBackground(loadingBackground);
         }
         if (isOldDeviceWhereNothingWorksAsExpected) {
             Log.d(LOG_TAG, "This is an old device (old Android version)");

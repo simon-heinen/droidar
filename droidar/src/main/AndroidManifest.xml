@@ -41,7 +41,8 @@
         <activity
             android:name="v2.simpleUi.util.ErrorHandler"
             android:process=":myexeptionprocess"
-            android:taskAffinity="v2.simpleUi.util.ErrorHandler">
+            android:taskAffinity="v2.simpleUi.util.ErrorHandler"
+            android:exported="true">
             <intent-filter tools:ignore="AppLinkUrlError">
                 <category android:name="android.intent.category.DEFAULT" />
                 <action android:name="android.intent.action.VIEW" />
@@ -51,7 +52,7 @@
         <!-- is needed to display information on application startup -->
         <activity
             android:name="gui.InfoScreen"
-            android:theme="@android:style/Theme.Dialog" />
+            android:theme="@android:style/Theme.Holo.Dialog" />
         <!-- an activity to easily display any kind of ui -->
         <activity
             android:name="v2.simpleUi.SimpleUI"
