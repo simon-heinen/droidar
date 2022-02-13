@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:id="@+id/LinearLayout01" xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="fill_parent" android:layout_width="fill_parent" android:orientation="vertical" android:background="#FF880000"><EditText android:text="@+id/EditText01" android:id="@+id/errorText" android:layout_height="fill_parent" android:layout_width="fill_parent" android:textSize="17dip" android:textColor="#FFFFFFFF" android:scrollbars="vertical" android:scrollHorizontally="true" android:layout_weight="1" android:background="#00000000"></EditText>
+<Button android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="4" android:id="@+id/errorMailButton" android:text="Report error to developer.." android:visibility="gone"></Button>
+</LinearLayout>

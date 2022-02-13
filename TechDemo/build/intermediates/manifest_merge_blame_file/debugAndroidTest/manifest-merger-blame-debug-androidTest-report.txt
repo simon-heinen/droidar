@@ -1,0 +1,33 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="de.rwth.TechDemoLauncher.test" >
+4
+5    <uses-sdk
+5-->/home/rrt/OneDrive/MEGA/application/resources/droidar/TechDemo/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger7046498022434936697.xml:5:5-74
+6        android:minSdkVersion="19"
+6-->/home/rrt/OneDrive/MEGA/application/resources/droidar/TechDemo/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger7046498022434936697.xml:5:15-41
+7        android:targetSdkVersion="29" />
+7-->/home/rrt/OneDrive/MEGA/application/resources/droidar/TechDemo/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger7046498022434936697.xml:5:42-71
+8
+9    <instrumentation
+9-->/home/rrt/OneDrive/MEGA/application/resources/droidar/TechDemo/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger7046498022434936697.xml:11:5-15:74
+10        android:name="com.android.test.runner.MultiDexTestRunner"
+10-->/home/rrt/OneDrive/MEGA/application/resources/droidar/TechDemo/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger7046498022434936697.xml:11:22-79
+11        android:functionalTest="false"
+11-->/home/rrt/OneDrive/MEGA/application/resources/droidar/TechDemo/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger7046498022434936697.xml:14:22-52
+12        android:handleProfiling="false"
+12-->/home/rrt/OneDrive/MEGA/application/resources/droidar/TechDemo/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger7046498022434936697.xml:13:22-53
+13        android:label="Tests for de.rwth.TechDemoLauncher"
+13-->/home/rrt/OneDrive/MEGA/application/resources/droidar/TechDemo/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger7046498022434936697.xml:15:22-72
+14        android:targetPackage="de.rwth.TechDemoLauncher" />
+14-->/home/rrt/OneDrive/MEGA/application/resources/droidar/TechDemo/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger7046498022434936697.xml:12:22-70
+15
+16    <application android:debuggable="true" >
+16-->/home/rrt/OneDrive/MEGA/application/resources/droidar/TechDemo/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger7046498022434936697.xml:7:5-9:19
+16-->/home/rrt/OneDrive/MEGA/application/resources/droidar/TechDemo/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger7046498022434936697.xml:7:18-43
+17        <uses-library android:name="android.test.runner" />
+17-->/home/rrt/OneDrive/MEGA/application/resources/droidar/TechDemo/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger7046498022434936697.xml:8:9-60
+17-->/home/rrt/OneDrive/MEGA/application/resources/droidar/TechDemo/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger7046498022434936697.xml:8:23-57
+18    </application>
+19
+20</manifest>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical" android:id="@+id/main_view" android:background="#00000000">
+
+	<LinearLayout android:layout_width="fill_parent" android:layout_alignParentTop="true"
+		android:id="@+id/LLA_top" android:layout_height="wrap_content">
+
+		<HorizontalScrollView android:layout_height="wrap_content"
+			android:id="@+id/sTop" android:layout_width="wrap_content"
+			android:fadingEdgeLength="40dip" android:scrollbars="horizontal"
+			android:layout_marginTop="3dip">
+
+			<LinearLayout android:id="@+id/LinLay_top"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:gravity="center_vertical"></LinearLayout>
+		</HorizontalScrollView>
+	</LinearLayout>
+
+
+	<LinearLayout android:layout_height="fill_parent"
+		android:orientation="vertical" android:layout_above="@+id/LLA_bottom"
+		android:layout_below="@+id/LLA_top" android:layout_width="wrap_content"
+		android:id="@+id/LLA_left">
+
+
+		<ScrollView android:layout_width="wrap_content"
+			android:fadingEdgeLength="30dip" android:layout_height="wrap_content"
+			android:id="@+id/sLeft" android:scrollbars="vertical">
+			<LinearLayout android:id="@+id/LinLay_left"
+				android:orientation="vertical" android:layout_width="wrap_content"
+				android:layout_height="wrap_content"></LinearLayout>
+		</ScrollView>
+	</LinearLayout>
+
+	<LinearLayout android:layout_height="fill_parent"
+		android:layout_alignParentRight="true" android:orientation="vertical"
+		android:layout_above="@+id/LLA_bottom" android:layout_below="@+id/LLA_top"
+		android:layout_width="wrap_content" android:id="@+id/LLA_right">
+
+		<ScrollView android:layout_width="wrap_content"
+			android:fadingEdgeLength="30dip" android:layout_height="wrap_content"
+			android:id="@+id/sRight" android:scrollbars="vertical">
+			<LinearLayout android:id="@+id/LinLay_right"
+				android:orientation="vertical" android:layout_width="wrap_content"
+				android:layout_height="wrap_content"></LinearLayout>
+		</ScrollView>
+	</LinearLayout>
+
+
+	<LinearLayout android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:layout_alignParentBottom="true"
+		android:id="@+id/LLA_bottom">
+
+
+		<HorizontalScrollView android:layout_height="fill_parent"
+			android:id="@+id/sBottom" android:fadingEdgeLength="25dip"
+			android:scrollbars="horizontal" android:layout_width="fill_parent" android:layout_weight="1">
+
+			<LinearLayout android:id="@+id/LinLay_bottom"
+				android:layout_width="fill_parent" android:layout_height="fill_parent"
+				android:gravity="center_vertical"></LinearLayout>
+		</HorizontalScrollView>
+
+		<LinearLayout android:id="@+id/LinLay_bottomRight"
+			android:layout_width="wrap_content" android:layout_height="fill_parent"
+			android:gravity="center"></LinearLayout>
+	</LinearLayout>
+
+
+
+</RelativeLayout>
